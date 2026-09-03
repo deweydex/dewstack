@@ -1,20 +1,22 @@
-# dewadaba: Web Authoring and Databases
+# dewstack: Web Authoring and Databases
 
 This is the course site for two QQI Level 5 modules taught together: Web Authoring (5N1910) and Database Methods (5N0783). The front page is a plan for the course with every link a student needs. The tutorials and the database pages sit behind those links.
 
 The site is plain HTML, CSS and JavaScript. There is no build step and no server. Open `index.html` in a browser and it works.
 
+The front page has reading settings, under a button below the header: theme, typeface (including Atkinson Hyperlegible and OpenDyslexic), text size, line width, and high contrast. Choices are saved on the reader's device.
+
 ## Where everything is
 
 | What | On the web | The code |
 |---|---|---|
-| This site, the front page | [deweydex.github.io/dewadaba](https://deweydex.github.io/dewadaba/) | [github.com/deweydex/dewadaba](https://github.com/deweydex/dewadaba) |
+| This site, the front page | [deweydex.github.io/dewstack](https://deweydex.github.io/dewstack/) | [github.com/deweydex/dewstack](https://github.com/deweydex/dewstack) |
 | The starter site students fork, with its 25 exercises | [deweydex.github.io/web](https://deweydex.github.io/web/) | [github.com/deweydex/web](https://github.com/deweydex/web) |
-| The tutorials: thirteen lessons, GitHub guides, templates, examples, troubleshooting, quick reference | [dewadaba/tutorials](https://deweydex.github.io/dewadaba/tutorials/) | `tutorials/` in this repository |
-| The SQL playground | [dewadaba/databases/playground](https://deweydex.github.io/dewadaba/databases/playground/) | `databases/playground/` |
-| The SQL playground, teacher version, with solutions and notes | [teacher.html](https://deweydex.github.io/dewadaba/databases/playground/teacher.html) | `databases/playground/teacher.html` |
-| The SQL quiz | [tentacular-plushies-quiz-final.html](https://deweydex.github.io/dewadaba/tutorials/tentacular-plushies-quiz-final.html) | `tutorials/tentacular-plushies-quiz-final.html` |
-| The SQLite notebook | [Open in Google Colab](https://colab.research.google.com/github/deweydex/dewadaba/blob/main/databases/sqlite_tutorial.ipynb) | `databases/sqlite_tutorial.ipynb` |
+| The tutorials: thirteen lessons, GitHub guides, templates, examples, troubleshooting, quick reference | [dewstack/tutorials](https://deweydex.github.io/dewstack/tutorials/) | `tutorials/` in this repository |
+| The SQL playground | [dewstack/databases/playground](https://deweydex.github.io/dewstack/databases/playground/) | `databases/playground/` |
+| The SQL playground, teacher version, with solutions and notes | [teacher.html](https://deweydex.github.io/dewstack/databases/playground/teacher.html) | `databases/playground/teacher.html` |
+| The SQL quiz | [tentacular-plushies-quiz-final.html](https://deweydex.github.io/dewstack/tutorials/tentacular-plushies-quiz-final.html) | `tutorials/tentacular-plushies-quiz-final.html` |
+| The SQLite notebook | [Open in Google Colab](https://colab.research.google.com/github/deweydex/dewstack/blob/main/databases/sqlite_tutorial.ipynb) | `databases/sqlite_tutorial.ipynb` |
 | The plan for this repository | | [PLAN.md](PLAN.md) |
 
 ## For students: how to begin
@@ -41,7 +43,7 @@ The tutorials under `tutorials/` are a complete site of their own, with a front 
 
 To read it, open `index.html` in a browser. Every link is relative, so the tutorials and the playground work from a folder on your computer.
 
-To publish your own copy, first fork this repository. Then open the fork's Settings, choose Pages, and under Source choose "Deploy from a branch", with the branch `main` and the folder `/ (root)`. Save, wait a minute, and your copy is at `https://your-username.github.io/dewadaba/`.
+To publish your own copy, first fork this repository. Then open the fork's Settings, choose Pages, and under Source choose "Deploy from a branch", with the branch `main` and the folder `/ (root)`. Save, wait a minute, and your copy is at `https://your-username.github.io/dewstack/`.
 
 Two things to know. File names matter: the front page must be called `index.html`, in lower case, at the top of the repository. And the SQL playground loads its database engine from the internet the first time it opens. On a computer with no connection, the playground shows an error until it is online.
 
@@ -60,6 +62,7 @@ If a query does not run, read the error under the editor. The usual causes are a
 | Path | What it is |
 |---|---|
 | `index.html`, `styles.css` | The front page and its stylesheet. |
+| `assets/` | The front page's reading settings (theme, typeface, text size, line width, high contrast): `settings.css`, `settings.js`, and the two self-hosted typefaces in `fonts/` with `fonts.css`. |
 | `tutorials/` | The tutorial site: `lessons/` (thirteen lessons), `github-guides/` (seven guides, in HTML and Markdown), `examples/`, `templates/`, the troubleshooting, reference, design-resources and project-ideas pages, the SQL quiz, and the site's own `css/`, `js/` and front page. |
 | `databases/playground/` | The interactive HTML, CSS and SQL tutorial. Queries run in the browser through SQL.js. `teacher.html` is the version with solutions. |
 | `databases/sqlite_tutorial.ipynb` | SQLite in a Jupyter notebook, with dinosaurs for data. |
@@ -71,6 +74,7 @@ Everything here was copied from the repository it used to live in. Nothing was m
 
 - `tutorials/` is `deweydex/WADB_Tutorials`, minus four working-notes files that were never part of the site.
 - `databases/playground/` is `deweydex/HTML-CSS-SQL-JS`. The front page's stylesheet is a copy of the playground's.
+- The reading settings follow dewlab's, and the two accessible typefaces are copied from dewlab's `assets/vendor/` (see `assets/fonts/README.md`).
 - `databases/sqlite_tutorial.ipynb` is from the course site's assets.
 - The starter site is `deweydex/web`, which stays in its own repository so that a student's fork holds their site and nothing else.
 

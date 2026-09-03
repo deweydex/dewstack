@@ -10,9 +10,15 @@
         student needs. The tutorials, the database pages and the starter site
         each live in their own folder or repository and are linked from here.
         The stylesheet is the one the SQL playground uses, so the two pages
-        look alike.
+        look alike. assets/settings.css, loaded after it, re-points the
+        colours, typeface, text size and line width at the reader's own
+        choices, which assets/settings.js reads and saves. The script sits in
+        the head so a saved choice applies before the page first paints.
     -->
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="assets/fonts.css">
+    <link rel="stylesheet" href="assets/settings.css">
+    <script src="assets/settings.js"></script>
 </head>
 <body>
     <header>
@@ -25,6 +31,46 @@
             <a href="#step-4">4. Projects</a>
         </nav>
     </header>
+
+    <details class="ds-settings" id="ds-settings">
+        <summary>Reading settings</summary>
+        <form>
+            <fieldset>
+                <legend>Theme</legend>
+                <label><input type="radio" name="theme" value="system"> Same as my device</label>
+                <label><input type="radio" name="theme" value="light"> Light</label>
+                <label><input type="radio" name="theme" value="dark"> Dark</label>
+            </fieldset>
+            <fieldset>
+                <legend>Typeface</legend>
+                <label><input type="radio" name="font" value="sans"> Sans-serif</label>
+                <label><input type="radio" name="font" value="serif"> Serif</label>
+                <label><input type="radio" name="font" value="atkinson"> Atkinson Hyperlegible</label>
+                <label><input type="radio" name="font" value="opendyslexic"> OpenDyslexic</label>
+            </fieldset>
+            <fieldset>
+                <legend>Text size</legend>
+                <label for="ds-size">Smaller to larger</label>
+                <input type="range" id="ds-size" min="14" max="24" step="1" value="16">
+                <output id="ds-size-out" for="ds-size">16 px</output>
+            </fieldset>
+            <fieldset>
+                <legend>Line width</legend>
+                <label><input type="radio" name="width" value="44"> Narrow</label>
+                <label><input type="radio" name="width" value="60"> Normal</label>
+                <label><input type="radio" name="width" value="75"> Wide</label>
+            </fieldset>
+            <fieldset>
+                <legend>High contrast</legend>
+                <label><input type="radio" name="contrast" value="normal"> Off</label>
+                <label><input type="radio" name="contrast" value="high"> On</label>
+            </fieldset>
+            <div class="ds-actions">
+                <button type="button" id="ds-reset">Back to the defaults</button>
+            </div>
+            <p class="ds-note">Your choices are saved on this device and apply to this page. The tutorials have a theme switch of their own.</p>
+        </form>
+    </details>
 
     <main>
         <section id="how" class="tutorial-section">
@@ -79,7 +125,7 @@
                     <ul>
                         <li><a href="databases/playground/index.html">The SQL playground</a>: type a query, run it, and see the result</li>
                         <li><a href="tutorials/tentacular-plushies-quiz-final.html">The SQL quiz</a>: practice questions on a small shop database</li>
-                        <li><a href="https://colab.research.google.com/github/deweydex/dewadaba/blob/main/databases/sqlite_tutorial.ipynb">The SQLite notebook</a>, opened in Google Colab, or <a href="databases/sqlite_tutorial.ipynb">the notebook file</a> to download</li>
+                        <li><a href="https://colab.research.google.com/github/deweydex/dewstack/blob/main/databases/sqlite_tutorial.ipynb">The SQLite notebook</a>, opened in Google Colab, or <a href="databases/sqlite_tutorial.ipynb">the notebook file</a> to download</li>
                         <li><a href="databases/playground/teacher.html">The playground, teacher version</a>, with solutions and notes</li>
                     </ul>
                 </div>
@@ -96,7 +142,7 @@
     </main>
 
     <footer>
-        <p>Web Authoring and Databases, from <a href="https://jsaaron.com">Joshua Aaron</a>. The code for this site is at <a href="https://github.com/deweydex/dewadaba">github.com/deweydex/dewadaba</a>.</p>
+        <p>Web Authoring and Databases, from <a href="https://jsaaron.com">Joshua Aaron</a>. The code for this site is at <a href="https://github.com/deweydex/dewstack">github.com/deweydex/dewstack</a>.</p>
     </footer>
 </body>
 </html>
