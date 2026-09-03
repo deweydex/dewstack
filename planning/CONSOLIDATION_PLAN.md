@@ -155,6 +155,29 @@ accessibility.
 phone widths, run axe, and read the README against the eight checks. Record
 what is found in the ledger before changing anything.
 
+*Done 2026-09-03. What the audit found:*
+
+- Both pages have a `main` landmark, one `h1`, headings in order, a focus
+  style on every link, and no sideways scroll at 390 pixels. This is a
+  better starting point than any page in `WADB_Tutorials`.
+- Two colour choices fail contrast. The accent blue `#3498db` under white
+  button text measures 3.15 to 1 on both pages. The muted grey `#7f8c8d` on
+  the light background measures 3.29 to 1 on three elements of the About
+  page. Both are variables in `styles.css`, so each is a one-line change.
+  Exercise 13 asks the student to change these colours, which is a chance
+  to say what contrast is and why the defaults were chosen.
+- The `nav` has no label and there is no skip link. Both are small
+  additions, and the comment beside each is a chance to teach them.
+- `README.md` averages eleven words a sentence, which is well inside the
+  target. It has twenty-six em dashes, most of them carrying the sense of
+  the sentence, and one reversal ("that's not failure, that's
+  information"). Idioms to replace: "sit with it", "wander off the path",
+  "click" in the sense of understanding, "kick in", "comfort with
+  indeterminacy", "feel free".
+- `CONCEPTS.md` averages eleven and a half words a sentence. Eight em
+  dashes, one reversal, and "boxes all the way down".
+- No emoji in either file.
+
 **Step 2. The plain-language pass on `README.md` and `CONCEPTS.md`.** What a
 first read already shows:
 
@@ -281,7 +304,7 @@ The source file is not touched.
 | Item | From | To | Status |
 |---|---|---|---|
 | README course map | this plan, section 4 | `README.md` | drafted 2026-09-03, awaiting Josh's read; the `HTML-CSS-SQL-JS` Pages link is unverified |
-| `web` audit | `deweydex/web` | ledger | not started |
+| `web` audit | `deweydex/web` | section 5, step 1 | done 2026-09-03 |
 | `web` plain-language pass | `deweydex/web` | in place | not started |
 | Build step and hello page | `dewlab` | `build.py`, `assets/`, `tutorials/` | not started |
 | SQL tutorial | `HTML-CSS-SQL-JS/index.html` | `tutorials/databases/` | not started |
