@@ -1,0 +1,345 @@
+/* 
+    Project Ideas Page Styles
+    
+    This file contains styles for the project ideas page that provides
+    beginner-friendly project suggestions for students to practice their skills.
+    
+    Students can learn how to organize content in cards, create visual
+    hierarchy, and style difficulty indicators.
+*/
+
+.projects-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+}
+
+.projects-header {
+    margin-bottom: 3rem;
+    text-align: center;
+}
+
+.projects-header h1 {
+    color: var(--primary-color, #2563eb);
+    margin-bottom: 1rem;
+    font-size: 2.5rem;
+}
+
+.intro-text {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: var(--text-color, #334155);
+    max-width: 800px;
+    margin: 0 auto 1rem;
+}
+
+/* 
+    Project Category
+    
+    Groups projects by skill level or topic.
+*/
+.project-category {
+    margin-bottom: 4rem;
+    padding-bottom: 3rem;
+    border-bottom: 2px solid #e2e8f0;
+}
+
+.project-category:last-of-type {
+    border-bottom: none;
+}
+
+.category-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    padding: 1.5rem;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border-radius: 8px;
+}
+
+.category-number {
+    font-size: 2rem;
+    font-weight: 700;
+    background-color: rgba(255, 255, 255, 0.2);
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.category-title {
+    flex: 1;
+    font-size: 1.75rem;
+    font-weight: 600;
+}
+
+.category-subtitle {
+    font-size: 0.95rem;
+    opacity: 0.9;
+    font-weight: 400;
+}
+
+@media (max-width: 768px) {
+    .category-header {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .category-title {
+        font-size: 1.5rem;
+    }
+    
+    .category-subtitle {
+        font-size: 0.85rem;
+    }
+}
+
+/* 
+    Project Card
+    
+    Individual project suggestion with details.
+*/
+.project-card {
+    background-color: white;
+    border: 1px solid var(--border-color, #e2e8f0);
+    border-radius: 8px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.project-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.project-card:last-child {
+    margin-bottom: 0;
+}
+
+.project-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid #e2e8f0;
+}
+
+.project-header h3 {
+    margin: 0;
+    color: var(--primary-color, #2563eb);
+    font-size: 1.5rem;
+}
+
+/* 
+    Difficulty Badges
+    
+    Visual indicators for project difficulty level.
+*/
+.project-difficulty {
+    padding: 0.25rem 0.75rem;
+    border-radius: 12px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.project-difficulty.easy {
+    background-color: #d1fae5;
+    color: #065f46;
+}
+
+.project-difficulty.medium {
+    background-color: #fef3c7;
+    color: #92400e;
+}
+
+.project-difficulty.hard {
+    background-color: #fee2e2;
+    color: #991b1b;
+}
+
+.project-description {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: var(--text-color, #334155);
+    margin-bottom: 1.5rem;
+}
+
+/* 
+    Project Sections
+    
+    Skills, checklist, and lessons sections within each project card.
+*/
+.project-skills,
+.project-checklist,
+.project-lessons {
+    margin-bottom: 1.5rem;
+    padding: 1rem;
+    background-color: #f8fafc;
+    border-radius: 6px;
+    border-left: 3px solid var(--primary-color, #2563eb);
+}
+
+.project-skills strong,
+.project-checklist strong,
+.project-lessons strong {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: var(--primary-color, #2563eb);
+    font-size: 0.95rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.project-skills ul,
+.project-checklist ul {
+    margin: 0.5rem 0 0 0;
+    padding-left: 1.5rem;
+}
+
+.project-skills li,
+.project-checklist li {
+    margin-bottom: 0.5rem;
+    line-height: 1.6;
+    color: var(--text-color, #334155);
+}
+
+.project-lessons {
+    background-color: #e0f2fe;
+    border-left-color: #2563eb;
+}
+
+.project-lessons a {
+    color: var(--primary-color, #2563eb);
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.project-lessons a:hover {
+    text-decoration: underline;
+}
+
+/* 
+    Tips Section
+    
+    General tips for success with projects.
+*/
+.project-tips {
+    margin-top: 4rem;
+    padding-top: 3rem;
+    border-top: 2px solid #e2e8f0;
+}
+
+.project-tips h2 {
+    color: var(--primary-color, #2563eb);
+    margin-bottom: 2rem;
+    text-align: center;
+    font-size: 2rem;
+}
+
+.tip-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+}
+
+.tip-card {
+    background-color: white;
+    border: 1px solid var(--border-color, #e2e8f0);
+    border-radius: 8px;
+    padding: 1.5rem;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.tip-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.tip-card h3 {
+    color: var(--primary-color, #2563eb);
+    margin-top: 0;
+    margin-bottom: 0.75rem;
+    font-size: 1.25rem;
+}
+
+.tip-card p {
+    color: var(--text-color, #334155);
+    line-height: 1.7;
+    margin: 0;
+}
+
+.tip-card a {
+    color: var(--primary-color, #2563eb);
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.tip-card a:hover {
+    text-decoration: underline;
+}
+
+/* 
+    Footer
+    
+    Navigation back to home.
+*/
+.projects-footer {
+    margin-top: 4rem;
+    padding-top: 2rem;
+    border-top: 2px solid #e2e8f0;
+    text-align: center;
+}
+
+.projects-footer p {
+    margin-bottom: 0.5rem;
+    color: var(--text-color, #334155);
+}
+
+.projects-footer a {
+    color: var(--primary-color, #2563eb);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.projects-footer a:hover {
+    text-decoration: underline;
+}
+
+/* 
+    Responsive Design
+    
+    Adjust layout for smaller screens.
+*/
+@media (max-width: 768px) {
+    .projects-container {
+        padding: 1rem 0.5rem;
+    }
+
+    .projects-header h1 {
+        font-size: 2rem;
+    }
+
+    .project-card {
+        padding: 1.5rem;
+    }
+
+    .project-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+
+    .tip-grid {
+        grid-template-columns: 1fr;
+    }
+}
+

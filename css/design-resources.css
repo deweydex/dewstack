@@ -1,0 +1,97 @@
+/* 
+    Design Resources Page Styles
+    
+    This file contains styles specific to the design resources page.
+    Includes example boxes and resource-specific components.
+*/
+
+/* 
+    Resource Container
+    
+    Limits the width of resource content for optimal readability.
+*/
+.resource-container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+/* 
+    Resource Section
+    
+    Groups related design resource content together
+    with consistent spacing.
+*/
+.resource-section {
+    margin-bottom: 3rem;
+}
+
+.resource-section h2 {
+    color: #2563eb;
+    border-bottom: 2px solid #2563eb;
+    padding-bottom: 0.5rem;
+    margin-bottom: 1.5rem;
+}
+
+/* 
+    Example Box
+    
+    Used to demonstrate good and bad design examples.
+    Provides visual comparison for design principles.
+*/
+.example-box {
+    background-color: #f0f9ff;
+    padding: 1.5rem;
+    border-radius: 8px;
+    margin: 1.5rem 0;
+    border-left: 4px solid #2563eb;
+}
+
+/* 
+    Bad Example Box
+    
+    Distinctive styling to highlight poor design examples.
+    Red border and background help distinguish from good examples.
+*/
+.bad-example {
+    background-color: #fef2f2;
+    border-left-color: #dc2626;
+}
+
+/* 
+    Good Example Box
+    
+    Green border and background indicate positive design examples.
+    Helps students quickly identify best practices.
+*/
+.good-example {
+    background-color: #f0fdf4;
+    border-left-color: #16a34a;
+}
+
+/* 
+    Resource Page Navigation Links
+    
+    Navigation links specific to the design resources page.
+*/
+.resource-nav-links {
+    margin-bottom: 2rem;
+}
+
+.resource-nav-links a {
+    color: var(--primary-color);
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.resource-nav-links a:hover {
+    color: var(--primary-dark);
+    text-decoration: underline;
+}
+
+.resource-nav-links a:focus {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 2px;
+    border-radius: 4px;
+}
+

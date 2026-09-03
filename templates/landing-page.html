@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<!--
+    ====================================================================
+    HOW TO USE THIS TEMPLATE
+    ====================================================================
+
+    VIEWING THE CODE:
+    To see this HTML code, you have several options:
+
+    1. Right-click on this page in your browser and select "View Page Source"
+       (or "View Source" in some browsers)
+
+    2. Press Ctrl+U (Windows/Linux) or Cmd+Option+U (Mac) to view source
+
+    3. Open this file directly in a text editor like Notepad, TextEdit,
+       or VS Code to see and edit the code
+
+    EDITING THE CODE:
+
+    1. Save this file to your computer (Right-click -> Save As)
+
+    2. Open the saved file in a text editor
+
+    3. Look for placeholder text in curly braces {like this} or brackets [like this]
+       and replace it with your own content
+
+    4. After making changes, save the file and refresh your browser to see updates
+
+    PLACEHOLDER NOTATION:
+    Throughout this template, you'll see placeholders like:
+    - {your content here} - Replace with your actual content
+    - [edit this] - Indicates something you should customize
+    - {your title} - Replace with your page title
+
+    These placeholders show you exactly what to change!
+
+    ====================================================================
+
+    Landing Page Template (Advanced)
+
+    This advanced template demonstrates:
+    - Responsive hero section with call-to-action
+    - Feature cards with icons (using emoji or you can add images)
+    - Responsive images with srcset for different screen sizes
+    - Modern navigation with smooth scrolling
+    - Social proof/testimonial section
+    - Newsletter signup form
+    - Mobile-first responsive design
+    - CSS Grid and Flexbox layouts
+
+    Perfect for: Product launches, service pages, event promotions,
+    marketing campaigns
+
+    This template incorporates concepts from:
+    - Lesson 05: Responsive Design
+    - Lesson 09: Working with Images
+    - Lesson 10: Working with Links
+
+    ====================================================================
+-->
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="{Brief description of your product/service for search engines}">
+    <title>{Your Product Name} - Landing Page</title>
+    <style>
+        /*
+            ========================================
+            CSS RESET AND VARIABLES
+            ========================================
+        */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            /*
+                CSS VARIABLES - Change these to customize your color scheme!
+                Use these throughout the stylesheet for consistent branding
+            */
+            --primary-color: #2563eb;      /* Main brand color - blue */
+            --secondary-color: #7c3aed;    /* Accent color - purple */
+            --text-dark: #1f2937;          /* Dark text */
+            --text-light: #6b7280;         /* Light gray text */
+            --background: #ffffff;         /* Background */
+            --background-light: #f9fafb;   /* Light gray background */
+            --border-color: #e5e7eb;       /* Border color */
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            /* System font stack for native look on each platform */
+            line-height: 1.6;
+            color: var(--text-dark);
+            background: var(--background);
+        }
+
+        /*
+            ========================================
+            NAVIGATION BAR (Fixed to top)
+            ========================================
+        */
+        .navbar {
+            background: rgba(255, 255, 255, 0.95);
+            /* Semi-transparent white for modern glassmorphism effect */
+            backdrop-filter: blur(10px);
+            /* Blur effect for content behind navbar */
+            position: fixed;
+            /* Stays at top when scrolling */
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            /* Appears above all other content */
+            padding: 1rem 2rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-dark);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            /* Smooth color transition on hover */
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+
+        .cta-button {
+            background: var(--primary-color);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .cta-button:hover {
+            background: var(--secondary-color);
+            transform: translateY(-2px);
+            /* Subtle lift effect on hover */
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+        }
+
+        /*
+            ========================================
+            HERO SECTION - First Impression!
+            ========================================
+        */
+        .hero {
+            margin-top: 80px;
+            /* Space for fixed navbar */
+            padding: 6rem 2rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            /* Gradient background - customize these colors! */
+            color: white;
+            text-align: center;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            font-weight: 800;
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            margin-bottom: 2rem;
+            opacity: 0.95;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary {
+            background: white;
+            color: var(--primary-color);
+            padding: 1rem 2rem;
+            border-radius: 0.5rem;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+            padding: 1rem 2rem;
+            border-radius: 0.5rem;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .btn-secondary:hover {
+            background: white;
+            color: var(--primary-color);
+        }
+
+        /*
+            ========================================
+            FEATURES SECTION - Grid Layout
+            ========================================
+        */
+        .features {
+            padding: 6rem 2rem;
+            background: var(--background-light);
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: var(--text-dark);
+        }
+
+        .features-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            /*
+                CSS GRID for responsive layout
+                Creates 3 columns on large screens, adapts to smaller screens
+            */
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            /* Using emoji as icons - you can replace with actual icon images */
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--text-dark);
+        }
+
+        .feature-card p {
+            color: var(--text-light);
+            line-height: 1.8;
+        }
+
+        /*
+            ========================================
+            RESPONSIVE IMAGES SECTION
+            Demonstrates Lesson 09 concepts
+            ========================================
+        */
+        .showcase {
+            padding: 6rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .showcase-content {
+            display: flex;
+            align-items: center;
+            gap: 4rem;
+            margin-bottom: 4rem;
+        }
+
+        .showcase-content:nth-child(even) {
+            flex-direction: row-reverse;
+            /* Alternates image position for visual variety */
+        }
+
+        .showcase-text {
+            flex: 1;
+        }
+
+        .showcase-text h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: var(--text-dark);
+        }
+
+        .showcase-text p {
+            color: var(--text-light);
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+
+        .showcase-image {
+            flex: 1;
+        }
+
+        .showcase-image img {
+            width: 100%;
+            height: auto;
+            border-radius: 1rem;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        /*
+            ========================================
+            TESTIMONIALS/SOCIAL PROOF
+            ========================================
+        */
+        .testimonials {
+            padding: 6rem 2rem;
+            background: var(--background-light);
+        }
+
+        .testimonials-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .testimonial-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .testimonial-text {
+            font-style: italic;
+            color: var(--text-light);
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .author-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--primary-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 1.25rem;
+        }
+
+        .author-info h4 {
+            color: var(--text-dark);
+            font-size: 1rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .author-info p {
+            color: var(--text-light);
+            font-size: 0.875rem;
+        }
+
+        /*
+            ========================================
+            NEWSLETTER/CTA SECTION
+            ========================================
+        */
+        .newsletter {
+            padding: 6rem 2rem;
+            background: var(--primary-color);
+            color: white;
+            text-align: center;
+        }
+
+        .newsletter-content {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .newsletter h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .newsletter p {
+            font-size: 1.125rem;
+            margin-bottom: 2rem;
+            opacity: 0.95;
+        }
+
+        .newsletter-form {
+            display: flex;
+            gap: 1rem;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .newsletter-form input {
+            flex: 1;
+            padding: 1rem;
+            border: none;
+            border-radius: 0.5rem;
+            font-size: 1rem;
+        }
+
+        .newsletter-form button {
+            background: var(--text-dark);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .newsletter-form button:hover {
+            background: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+
+        /*
+            ========================================
+            FOOTER
+            ========================================
+        */
+        footer {
+            background: var(--text-dark);
+            color: white;
+            padding: 4rem 2rem 2rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1rem;
+            color: white;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section a:hover {
+            color: white;
+        }
+
+        .footer-bottom {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        /*
+            ========================================
+            RESPONSIVE DESIGN
+            Mobile-First Approach from Lesson 05
+            ========================================
+        */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                /* Hide navigation on mobile - you could add a hamburger menu */
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+            }
+
+            .showcase-content {
+                flex-direction: column !important;
+                gap: 2rem;
+            }
+
+            .newsletter-form {
+                flex-direction: column;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+        }
+
+        /* Smooth scrolling for anchor links */
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
+</head>
+<body>
+    <!--
+        ========================================
+        NAVIGATION BAR
+        ========================================
+    -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="#" class="logo">{Your Logo}</a>
+            <ul class="nav-links">
+                <li><a href="#features">Features</a></li>
+                <li><a href="#showcase">Showcase</a></li>
+                <li><a href="#testimonials">Testimonials</a></li>
+                <li><a href="#newsletter">Sign Up</a></li>
+            </ul>
+            <a href="#newsletter" class="cta-button">Get Started</a>
+        </div>
+    </nav>
+
+    <!--
+        ========================================
+        HERO SECTION
+        ========================================
+    -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>{Your Amazing Product/Service}</h1>
+            <p>{Brief description of what makes your product/service special and how it helps your customers solve their problems}</p>
+            <div class="hero-buttons">
+                <a href="#newsletter" class="btn-primary">Start Free Trial</a>
+                <a href="#showcase" class="btn-secondary">Learn More</a>
+            </div>
+        </div>
+    </section>
+
+    <!--
+        ========================================
+        FEATURES SECTION
+        ========================================
+    -->
+    <section id="features" class="features">
+        <h2 class="section-title">Why Choose {Your Product}?</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">🚀</div>
+                <h3>{Feature Name 1}</h3>
+                <p>{Description of this feature and how it benefits users. Be specific about the value it provides}</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">⚡</div>
+                <h3>{Feature Name 2}</h3>
+                <p>{Description of this feature and how it benefits users. Focus on solving a specific problem}</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">🎯</div>
+                <h3>{Feature Name 3}</h3>
+                <p>{Description of this feature and how it benefits users. Highlight what makes this unique}</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">🔒</div>
+                <h3>{Feature Name 4}</h3>
+                <p>{Description of this feature. Maybe security, reliability, or trust-building feature}</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">💡</div>
+                <h3>{Feature Name 5}</h3>
+                <p>{Description of this feature. Could be innovation, ease of use, or time-saving aspect}</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">📊</div>
+                <h3>{Feature Name 6}</h3>
+                <p>{Description of this feature. Analytics, insights, or data-driven benefits}</p>
+            </div>
+        </div>
+    </section>
+
+    <!--
+        ========================================
+        SHOWCASE SECTION
+        Demonstrates responsive images from Lesson 09
+        ========================================
+
+        USING REAL IMAGES:
+        Replace the placeholder text with actual image tags:
+        <img src="your-image.jpg" alt="Description of image">
+
+        For responsive images, use srcset:
+        <img
+            src="image-800w.jpg"
+            srcset="image-400w.jpg 400w,
+                    image-800w.jpg 800w,
+                    image-1200w.jpg 1200w"
+            sizes="(max-width: 768px) 100vw, 50vw"
+            alt="Description">
+    -->
+    <section id="showcase" class="showcase">
+        <div class="showcase-content">
+            <div class="showcase-text">
+                <h2>{Showcase Feature 1}</h2>
+                <p>{Detailed explanation of this feature. Include specific benefits, use cases, and why it matters to your customers}</p>
+                <p>{Additional details or secondary benefits}</p>
+            </div>
+            <div class="showcase-image">
+                <!-- Replace with actual image -->
+                <div style="width: 100%; height: 300px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 1rem; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.25rem;">
+                    {Add your product screenshot here}
+                </div>
+            </div>
+        </div>
+
+        <div class="showcase-content">
+            <div class="showcase-text">
+                <h2>{Showcase Feature 2}</h2>
+                <p>{Another important feature or benefit. Focus on concrete results or improvements}</p>
+                <p>{Supporting details or user benefits}</p>
+            </div>
+            <div class="showcase-image">
+                <!-- Replace with actual image -->
+                <div style="width: 100%; height: 300px; background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); border-radius: 1rem; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.25rem;">
+                    {Add your product screenshot here}
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!--
+        ========================================
+        TESTIMONIALS SECTION
+        ========================================
+    -->
+    <section id="testimonials" class="testimonials">
+        <h2 class="section-title">What Our Customers Say</h2>
+        <div class="testimonials-grid">
+            <div class="testimonial-card">
+                <p class="testimonial-text">"{Customer testimonial quote. Share specific results, improvements, or positive experiences. Make it authentic and relatable}"</p>
+                <div class="testimonial-author">
+                    <div class="author-avatar">JD</div>
+                    <div class="author-info">
+                        <h4>{Customer Name}</h4>
+                        <p>{Customer Title/Company}</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="testimonial-card">
+                <p class="testimonial-text">"{Another testimonial highlighting different benefits or use cases. Focus on transformation or problem-solving}"</p>
+                <div class="testimonial-author">
+                    <div class="author-avatar">SK</div>
+                    <div class="author-info">
+                        <h4>{Customer Name}</h4>
+                        <p>{Customer Title/Company}</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="testimonial-card">
+                <p class="testimonial-text">"{Third testimonial. Could emphasize ease of use, support quality, or specific measurable results}"</p>
+                <div class="testimonial-author">
+                    <div class="author-avatar">AL</div>
+                    <div class="author-info">
+                        <h4>{Customer Name}</h4>
+                        <p>{Customer Title/Company}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!--
+        ========================================
+        NEWSLETTER/SIGNUP SECTION
+        ========================================
+    -->
+    <section id="newsletter" class="newsletter">
+        <div class="newsletter-content">
+            <h2>Ready to Get Started?</h2>
+            <p>{Compelling call-to-action text. What will users get by signing up? Free trial? Newsletter? Early access?}</p>
+            <form class="newsletter-form" action="#" method="POST">
+                <input type="email" placeholder="Enter your email address" required>
+                <button type="submit">Get Started</button>
+            </form>
+            <p style="font-size: 0.875rem; margin-top: 1rem; opacity: 0.8;">No credit card required. Cancel anytime.</p>
+        </div>
+    </section>
+
+    <!--
+        ========================================
+        FOOTER
+        ========================================
+    -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>{Your Company}</h3>
+                <p>{Brief company description or mission statement}</p>
+            </div>
+
+            <div class="footer-section">
+                <h3>Product</h3>
+                <ul>
+                    <li><a href="#">Features</a></li>
+                    <li><a href="#">Pricing</a></li>
+                    <li><a href="#">Use Cases</a></li>
+                    <li><a href="#">FAQ</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h3>Company</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Blog</a></li>
+                    <li><a href="#">Careers</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h3>Legal</h3>
+                <ul>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms of Service</a></li>
+                    <li><a href="#">Cookie Policy</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2024 {Your Company Name}. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>

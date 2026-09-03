@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<!-- 
+    About Page
+    
+    This page provides information about the tutorial site, including
+    pedagogical approaches, teaching philosophy, and attributions.
+    
+    Students can learn about the educational principles behind the
+    tutorials and understand how the content is structured.
+-->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About - Web Authoring and Databases</title>
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/navigation.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/guides.css">
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    
+    <!-- 
+        Navigation Header
+        
+        All pages use a consistent navigation structure with a hamburger menu
+        that opens a side overlay panel. The menu button is positioned on the left,
+        followed by the site title and subtitle.
+    -->
+    <header>
+        <nav class="navbar minimal">
+            <div class="container">
+                <button class="menu-toggle" aria-label="Open navigation menu" aria-expanded="false">
+                    ☰ Menu
+                </button>
+                <div class="site-header-content">
+                    <a href="index.html" class="logo">Web Authoring and Databases</a>
+                    <p class="site-subtitle">
+                        A series of tutorials (and experiments) from 
+                        <a href="https://jsaaron.com" target="_blank" rel="noopener noreferrer">Joshua Aaron</a> | 
+                        <a href="https://github.com/jsaaron" target="_blank" rel="noopener noreferrer">GitHub</a>
+                    </p>
+                </div>
+                
+                <!-- Header right side - About link -->
+                <div class="header-right">
+                    <a href="about.html">About</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="menu-overlay"></div>
+
+    <ul class="nav-links">
+        <li><a href="index.html#home">Home</a></li>
+                    <li><a href="index.html#start">Start Here: Your Own Site</a></li>
+                            <li class="nav-section-header">Lessons</li>
+        <li><a href="lessons/01-html-basics.html">01. HTML Basics</a></li>
+        <li><a href="lessons/02-html-semantics.html">02. Semantic HTML</a></li>
+        <li><a href="lessons/03-css-basics.html">03. CSS Basics</a></li>
+        <li><a href="lessons/04-css-layout.html">04. CSS Layout</a></li>
+        <li><a href="lessons/05-responsive-design.html">05. Responsive Design</a></li>
+        <li><a href="lessons/06-github-setup.html">06. GitHub Setup</a></li>
+        <li><a href="lessons/07-github-workflow.html">07. GitHub Workflow</a></li>
+        <li><a href="lessons/08-github-pages.html">08. GitHub Pages</a></li>
+        <li><a href="lessons/09-images.html">09. Working with Images</a></li>
+        <li><a href="lessons/10-links.html">10. Working with Links</a></li>
+        <li class="nav-section-header">Databases</li>
+                    <li><a href="databases/playground/index.html">SQL Playground</a></li>
+                    <li><a href="databases/playground/teacher.html">Playground: Teacher Version</a></li>
+                    <li><a href="databases/quiz.html">SQL Quiz</a></li>
+                    <li><a href="databases/sqlite_tutorial.ipynb">SQLite Notebook</a></li>
+                    <li class="nav-section-header">Resources</li>
+        <li><a href="index.html#examples">Examples</a></li>
+        <li><a href="index.html#templates">Templates</a></li>
+        <li><a href="index.html#github">GitHub Guides</a></li>
+        <li><a href="design-resources.html">Design Resources</a></li>
+        <li><a href="troubleshooting.html">Troubleshooting</a></li>
+        <li><a href="reference.html">Quick Reference</a></li>
+        <li><a href="project-ideas.html">Project Ideas</a></li>
+        <li><a href="about.html">About</a></li>
+    </ul>
+
+    <main id="main-content">
+        <div class="container" style="max-width: 800px; padding: 2rem 1rem;">
+            <h1>About This Tutorial</h1>
+            
+            <section style="margin-bottom: 3rem;">
+                <h2>Pedagogical Approach</h2>
+                
+                <p>This tutorial series is designed with specific educational principles in mind, informed by research and best practices in adult learning and critical pedagogy. The approach emphasizes <strong>student-centered learning</strong>, <strong>accessibility</strong>, and <strong>practical application</strong>.</p>
+                
+                <h3>Teaching Philosophy</h3>
+                
+                <p>The educational philosophy behind this tutorial draws from several important thinkers and practitioners in education:</p>
+                
+                <p><strong>Paulo Freire</strong> emphasized dialogical learning and problem-posing education that engages learners as active participants rather than passive recipients. This tutorial encourages you to experiment, make mistakes, and learn through practice rather than memorization.</p>
+                
+                <p><strong>John Dewey</strong> argued that education should connect to life experiences and that learning happens through doing. Throughout these tutorials, you'll work with real examples, build actual projects, and see how concepts apply to practical situations.</p>
+                
+                <p><strong>Alfie Kohn</strong> critiques traditional grading and emphasizes intrinsic motivation over external rewards. This tutorial focuses on learning for understanding rather than simply completing assignments. Assessment is <em>for</em> learning, not just <em>of</em> learning—each practice exercise helps you understand concepts better.</p>
+                
+                <p><strong>bell hooks</strong> wrote about engaged pedagogy and teaching practices that acknowledge and honor diverse student experiences. This tutorial assumes no prior knowledge, provides multiple ways to understand concepts, and recognizes that learners come with different backgrounds and learning styles.</p>
+                
+                <p><strong>Patrick J. Finn</strong> and <strong>Robert P. Moses</strong> both emphasized the importance of making knowledge accessible and demystifying technical subjects. This tutorial breaks down web development concepts into clear, understandable explanations without assuming prior technical knowledge.</p>
+                
+                <h3>Core Educational Principles</h3>
+                
+                <p><strong>Scaffolding</strong>: Concepts are introduced gradually, with each lesson building on previous knowledge. You start with the basics of HTML before moving to CSS, and build from simple examples to more complex projects. This ensures you have a solid foundation before tackling more advanced topics.</p>
+                
+                <p><strong>Transparency</strong>: Learning outcomes are stated clearly at the beginning of each lesson. You know exactly what you'll be able to do after completing each section. Examples of completed work are provided so you can see what success looks like.</p>
+                
+                <p><strong>Multiple Representations</strong>: Concepts are explained in prose, demonstrated with code examples, and reinforced through practice exercises. Different learners process information differently, so multiple approaches help ensure understanding.</p>
+                
+                <p><strong>Equity and Accessibility</strong>: This tutorial is designed to be accessible to learners from diverse backgrounds. Technical terms are defined when introduced, concepts are explained without assuming prior knowledge, and the structure accommodates different learning speeds and styles.</p>
+                
+                <p><strong>Critical Thinking</strong>: Rather than just memorizing syntax, you're encouraged to understand <em>why</em> things work the way they do. Each concept includes explanations of the reasoning behind it, helping you develop analytical skills that extend beyond this specific tutorial.</p>
+                
+                <h3>Content Structure</h3>
+                
+                <p>Each lesson follows a consistent structure designed to support learning:</p>
+                
+                <ul>
+                    <li><strong>Learning Outcomes</strong>: Clear statements of what you'll be able to do after completing the lesson</li>
+                    <li><strong>Prerequisites</strong>: What you need to know before starting (often nothing for early lessons)</li>
+                    <li><strong>Conceptual Explanations</strong>: Prose explanations that explain the "why" behind concepts, not just the "what"</li>
+                    <li><strong>Worked Examples</strong>: Complete, step-by-step examples showing how to apply concepts</li>
+                    <li><strong>Practice Opportunities</strong>: Exercises with graduated difficulty to build skills gradually</li>
+                    <li><strong>Bibliography</strong>: References to quality educational resources for further learning</li>
+                </ul>
+                
+                <p>This structure is informed by educational research showing that explicit learning objectives, worked examples, and deliberate practice all contribute to effective learning outcomes.</p>
+            </section>
+            
+            <section style="margin-bottom: 3rem;">
+                <h2>Attributions and Acknowledgments</h2>
+                
+                <p>This tutorial site was built using several tools and resources:</p>
+                
+                <h3>Development Tools</h3>
+                
+                <p>This site was built in <strong>Visual Studio Code</strong> (VS Code), a free, open-source code editor developed by Microsoft. VS Code provides excellent support for HTML, CSS, and JavaScript development.</p>
+                
+                <p>The development process was assisted by <strong>Cursor</strong>, an AI-powered code editor, and <strong>Claude</strong> (by Anthropic), an AI assistant that helped with content creation, code structure, and pedagogical planning. These AI tools supported the development of this educational resource while maintaining focus on human-centered learning principles.</p>
+                
+                <h3>Educational Resources</h3>
+                
+                <p>The content draws from and references several high-quality educational sources:</p>
+                
+                <ul>
+                    <li><strong>MDN Web Docs</strong>: Comprehensive documentation for web technologies, providing authoritative information on HTML, CSS, and JavaScript</li>
+                    <li><strong>W3Schools</strong>: Beginner-friendly tutorials and reference materials for web development</li>
+                    <li><strong>Khan Academy</strong>: Free educational content that influenced the tutorial structure and explanation style</li>
+                    <li><strong>The Odin Project</strong>: Open-source curriculum for web development that informed the learning path</li>
+                    <li><strong>GitHub Documentation</strong>: Official guides and resources for understanding version control and GitHub features</li>
+                </ul>
+                
+                <h3>Inspiration and Pedagogy</h3>
+                
+                <p>The educational approach is informed by the work of:</p>
+                
+                <ul>
+                    <li><strong>Paulo Freire</strong>: <em>Pedagogy of the Oppressed</em> - Critical pedagogy and dialogical learning</li>
+                    <li><strong>John Dewey</strong>: <em>Experience and Education</em> - Experiential learning principles</li>
+                    <li><strong>Alfie Kohn</strong>: <em>Punished by Rewards</em> - Intrinsic motivation and assessment for learning</li>
+                    <li><strong>bell hooks</strong>: <em>Teaching to Transgress</em> - Engaged pedagogy and inclusive teaching</li>
+                    <li><strong>Patrick J. Finn</strong>: <em>Literacy with an Attitude</em> - Democratic access to knowledge</li>
+                    <li><strong>Robert P. Moses</strong>: <em>Radical Equations</em> - Making technical knowledge accessible</li>
+                </ul>
+                
+                <h3>About the Creator</h3>
+                
+                <p>This tutorial series was created by <strong>Joshua Aaron</strong>, an educator focused on making technical knowledge accessible and supporting diverse learners. The tutorials are designed specifically for QQI Level 5 students (Irish Further Education) but are freely available to anyone interested in learning web development.</p>
+                
+                <p>You can learn more about Joshua Aaron's work at <a href="https://jsaaron.com" target="_blank" rel="noopener noreferrer">jsaaron.com</a> or view other projects on <a href="https://github.com/jsaaron" target="_blank" rel="noopener noreferrer">GitHub</a>.</p>
+            </section>
+            
+            <section style="margin-bottom: 3rem;">
+                <h2>How to Use This Tutorial</h2>
+                
+                <p>This tutorial is designed to guide you from complete beginner to publishing your own website. Here are some recommendations for getting the most out of your learning:</p>
+                
+                <h3>Learning Path</h3>
+                
+                <p>Start with the lessons in order, beginning with <strong>HTML Basics</strong>. Each lesson builds on previous concepts, so working through them sequentially helps you understand how everything connects. Don't rush—take time to complete the practice exercises and experiment with the examples provided.</p>
+                
+                <p>As you progress through lessons, refer to the code examples when you need to see concepts in action. Study how the examples are structured and try modifying them to see how changes affect the result. Use the starter templates when you're ready to build your own projects—they provide foundations you can customize.</p>
+                
+                <h3>Practice and Experimentation</h3>
+                
+                <p>Web development is a skill built through practice. Every lesson includes opportunities to apply what you've learned. Take time to experiment, make mistakes, and learn from them. This tutorial provides the foundation, but your curiosity and practice will take you further.</p>
+                
+                <h3>Getting Help</h3>
+                
+                <p>If you encounter problems, check the <a href="troubleshooting.html">Troubleshooting</a> guide for common issues and solutions. The <a href="reference.html">Quick Reference</a> provides a handy lookup for HTML tags and CSS properties you've learned.</p>
+            </section>
+            
+            <section style="margin-bottom: 3rem;">
+                <h2>Open Source and Sharing</h2>
+                
+                <p>This tutorial site is an educational resource that aims to make web development accessible to everyone. Feel free to use it for learning, share it with others, and adapt the concepts for your own teaching or learning purposes.</p>
+                
+                <p>If you find errors or have suggestions for improvement, contributions are welcome through the project's GitHub repository.</p>
+            </section>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; Web Authoring and Databases | Created by <a href="https://jsaaron.com" target="_blank" rel="noopener noreferrer">Joshua Aaron</a></p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
+

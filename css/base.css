@@ -1,0 +1,107 @@
+/* 
+    CSS Reset and Base Styles
+    
+    This file contains the foundational styles shared across all pages.
+    Students can learn from these patterns to create consistent, professional designs.
+*/
+
+/* 
+    Universal Reset
+    The asterisk (*) is a universal selector that targets all elements.
+    This removes default browser styling so we can build styles from scratch.
+    box-sizing: border-box makes width calculations include padding and borders,
+    which makes layout calculations much easier and more predictable.
+*/
+* {
+    margin: 0;              /* Removes default margins browsers add */
+    padding: 0;             /* Removes default padding browsers add */
+    box-sizing: border-box; /* Makes width include padding and borders */
+}
+
+/* 
+    Skip to Content Link
+    
+    The skip link is visually hidden by default but appears when focused.
+    This allows keyboard users to skip past the navigation and jump directly
+    to the main content. position: absolute removes it from normal flow,
+    and negative positioning moves it off-screen. When focused, it becomes
+    visible at the top of the page.
+*/
+.skip-link {
+    position: absolute;
+    top: -40px;
+    left: 0;
+    background-color: var(--primary-color);
+    color: white;
+    padding: 8px 16px;
+    text-decoration: none;
+    z-index: 1000;
+    border-radius: 0 0 4px 0;
+    font-weight: 600;
+}
+
+.skip-link:focus {
+    top: 0;
+    outline: 3px solid white;
+    outline-offset: 2px;
+}
+
+/* 
+    CSS Custom Properties (CSS Variables)
+    
+    Custom properties allow us to define values once and reuse them throughout
+    the stylesheet. This makes it easy to change colors, spacing, or other
+    values consistently across the entire site. If you want to change the
+    primary color, you only need to change it in one place.
+    
+    Variables are defined using --variable-name: value;
+    They're accessed using var(--variable-name)
+    
+    This pattern makes maintaining and updating styles much easier.
+*/
+:root {
+    --primary-color: #2563eb;        /* Main brand color - blue */
+    --primary-dark: #1e40af;         /* Darker shade of primary for hover states */
+    --secondary-color: #10b981;       /* Accent color - green */
+    --text-color: #1f2937;           /* Main text color - dark gray */
+    --text-light: #4b5563;           /* Lighter text for less important content - darkened for better contrast */
+    --bg-color: #ffffff;             /* Main background - white */
+    --bg-light: #f9fafb;            /* Light gray for section backgrounds */
+    --border-color: #e5e7eb;        /* Subtle border color */
+    --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);      /* Subtle shadow for cards */
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1); /* Larger shadow for depth */
+}
+
+/* 
+    Body Styles
+    
+    The body element styles apply to the entire page and serve as defaults
+    for all other elements unless overridden. Setting font-family here means
+    all text uses this font unless a more specific rule changes it.
+*/
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    /* 
+        Font stack: browsers try each font in order until they find one
+        installed on the user's computer. This ensures good typography
+        across different operating systems.
+    */
+    line-height: 1.6;  /* Spacing between lines of text - improves readability */
+    color: var(--text-color);           /* Uses our custom color variable */
+    background-color: var(--bg-color);  /* Sets page background to white */
+}
+
+/* 
+    Container Class
+    
+    This is a common pattern for limiting content width and centering it.
+    max-width prevents content from becoming too wide on large screens,
+    which improves readability. margin: 0 auto centers the container
+    horizontally. Padding adds space on the sides for smaller screens.
+*/
+.container {
+    max-width: 1200px;  /* Content won't exceed 1200px wide */
+    margin: 0 auto;      /* Centers the container: 0 top/bottom, auto left/right */
+    padding: 0 20px;     /* Adds 20px padding on left and right sides */
+}
+

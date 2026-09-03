@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<!-- 
+    This is the main homepage for the HTML and CSS tutorial website.
+    
+    The page structure demonstrates semantic HTML5:
+    - Header contains site navigation
+    - Main contains all primary content sections
+    - Footer contains site information
+    
+    Students can learn from this code by examining how semantic HTML
+    is used to structure a complete website page.
+-->
+<html lang="en">
+<head>
+    <!-- 
+        The head section contains metadata about the page.
+        This information is not visible to users but is important
+        for browsers, search engines, and accessibility tools.
+    -->
+    <meta charset="UTF-8">
+    <!-- 
+        Character encoding tells the browser which character set to use.
+        UTF-8 supports most languages and special characters.
+    -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- 
+        Viewport meta tag is essential for responsive design.
+        It tells mobile browsers to use the device width instead of
+        assuming a desktop width, making the site mobile-friendly.
+    -->
+    <title>Web Authoring and Databases</title>
+    <!-- 
+        The title appears in the browser tab and in search results.
+        It should be descriptive and concise.
+    -->
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/navigation.css">
+    <link rel="stylesheet" href="css/home.css">
+    <link rel="stylesheet" href="css/search.css">
+    <link rel="stylesheet" href="css/stylesheet-switcher.css">
+    <!--
+        Links to external CSS files that style this page.
+        base.css contains foundational styles shared across all pages.
+        navigation.css contains header and navigation styles.
+        home.css contains homepage-specific styles.
+        stylesheet-switcher.css styles the theme switcher component.
+        This demonstrates separation of concerns: base styles, navigation,
+        and page-specific styles are organized into separate files.
+    -->
+</head>
+<body>
+    <!-- 
+        The body contains all visible content on the page.
+        This is where users see headings, paragraphs, links, etc.
+    -->
+    <!-- 
+        Skip to Content Link
+        
+        This link allows keyboard users to skip past the navigation and jump
+        directly to the main content. It's visually hidden by default but becomes
+        visible when focused. This improves accessibility for users who navigate
+        with keyboards or screen readers.
+    -->
+    <a href="#home" class="skip-link">Skip to main content</a>
+    
+    <!-- 
+        Navigation Header
+        
+        The header contains the hamburger menu button (on the left), site title,
+        and subtitle. Clicking the hamburger menu opens a side overlay navigation
+        panel that slides in from the left with a dark backdrop.
+    -->
+    <header>
+        <!-- 
+            Header element contains introductory content or navigation.
+            Semantic HTML5 element that helps screen readers and
+            search engines understand the page structure.
+        -->
+        <nav class="navbar minimal">
+            <!-- 
+                Navigation element wraps the header content.
+                The 'navbar minimal' class is used consistently across all pages.
+                The navigation menu is accessed via the hamburger button and opens
+                as a side overlay panel with a backdrop.
+            -->
+            <div class="container">
+                <!-- 
+                    Container div limits content width and centers it.
+                    This is a common pattern for responsive design.
+                -->
+                <button class="menu-toggle" aria-label="Open navigation menu" aria-expanded="false">
+                    ☰ Menu
+                </button>
+                <!-- 
+                    Hamburger menu button positioned on the left.
+                    Opens the side overlay navigation menu.
+                -->
+                <div class="site-header-content">
+                    <h1 class="logo">Web Authoring and Databases</h1>
+                    <!-- 
+                        Main site title/logo. Using h1 indicates this is
+                        the primary heading of the entire page.
+                    -->
+                    <p class="site-subtitle">
+                        A series of tutorials (and experiments) from 
+                        <a href="https://jsaaron.com" target="_blank" rel="noopener noreferrer">Joshua Aaron</a> | 
+                        <a href="https://github.com/jsaaron" target="_blank" rel="noopener noreferrer">GitHub</a>
+                    </p>
+                    <!-- 
+                        Site subtitle with attribution to the creator.
+                        Links to Joshua Aaron's website and GitHub profile.
+                    -->
+                </div>
+                
+                <!-- Header right side - About link -->
+                <div class="header-right">
+                    <a href="about.html">About</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- 
+        Menu Overlay Backdrop
+        Darkens the page when the navigation menu is open.
+    -->
+    <div class="menu-overlay"></div>
+
+    <!-- 
+        Navigation Menu (Side Overlay)
+        Slides in from the left when the hamburger menu is clicked.
+    -->
+                <ul class="nav-links">
+                    <!-- 
+                        Unordered list for navigation items.
+                        Lists are semantic and accessible for navigation.
+                    -->
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="index.html#start">Start Here: Your Own Site</a></li>
+                                        <!-- 
+                        Each list item contains an anchor (link) tag.
+                        The href with # links to sections on the same page
+                        (internal navigation).
+                    -->
+                    <li class="nav-section-header">Lessons</li>
+                    <li><a href="lessons/01-html-basics.html">01. HTML Basics</a></li>
+                    <li><a href="lessons/02-html-semantics.html">02. Semantic HTML</a></li>
+                    <li><a href="lessons/03-css-basics.html">03. CSS Basics</a></li>
+                    <li><a href="lessons/04-css-layout.html">04. CSS Layout</a></li>
+                    <li><a href="lessons/05-responsive-design.html">05. Responsive Design</a></li>
+                    <li><a href="lessons/06-github-setup.html">06. GitHub Setup</a></li>
+                    <li><a href="lessons/07-github-workflow.html">07. GitHub Workflow</a></li>
+                    <li><a href="lessons/08-github-pages.html">08. GitHub Pages</a></li>
+                    <li><a href="lessons/09-images.html">09. Working with Images</a></li>
+                    <li><a href="lessons/10-links.html">10. Working with Links</a></li>
+                    <li><a href="lessons/11-flexbox-grid-advanced.html">11. Advanced Flexbox & Grid</a></li>
+                    <li><a href="lessons/12-component-design.html">12. Component Design</a></li>
+                    <li><a href="lessons/13-css-animations.html">13. CSS Animations</a></li>
+                    <li class="nav-section-header">Databases</li>
+                    <li><a href="databases/playground/index.html">SQL Playground</a></li>
+                    <li><a href="databases/playground/teacher.html">Playground: Teacher Version</a></li>
+                    <li><a href="databases/quiz.html">SQL Quiz</a></li>
+                    <li><a href="databases/sqlite_tutorial.ipynb">SQLite Notebook</a></li>
+                    <li class="nav-section-header">Resources</li>
+                    <li><a href="#examples">Examples</a></li>
+                    <li><a href="#templates">Templates</a></li>
+                    <li><a href="#github">GitHub Guides</a></li>
+                    <li><a href="design-resources.html">Design Resources</a></li>
+                    <li><a href="troubleshooting.html">Troubleshooting</a></li>
+                    <li><a href="reference.html">Quick Reference</a></li>
+                    <li><a href="project-ideas.html">Project Ideas</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <!-- 
+                        This link goes to a separate page (not a section).
+                        No # means it's a file path, not an anchor link.
+                    -->
+                </ul>
+
+    <!-- Main Content Area -->
+    <main>
+        <section id="home" class="hero">
+            <div class="container">
+                <h2>Web Authoring and Databases</h2>
+                <p class="hero-subtitle">Tutorials, guides and templates for the Level 5 Web Authoring and Database Methods modules</p>
+                <div class="hero-content">
+                    <div class="hero-text">
+                        <p>This site has two halves. In the first half, you build a website in HTML and CSS and publish it on GitHub Pages. In the second half, you work with databases: tables, SQL queries and a little Python.</p>
+                        <p>Start with your own site. Come back here whenever you need a guide, a template, a longer explanation, or a place to practise SQL.</p>
+                        <div class="cta-buttons">
+                            <a href="#start" class="btn btn-primary">Start Here</a>
+                            <a href="#databases" class="btn btn-secondary">Databases</a>
+                        </div>
+                    </div>
+                    <div class="hero-preview">
+                        <div class="code-preview">
+                            <pre><code>SELECT name, diet
+FROM dinosaurs
+WHERE length_meters &gt; 10
+ORDER BY name;</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="start" class="github-section">
+            <div class="container">
+                <h2>Start Here: Build Your Own Site</h2>
+                <p class="section-intro">The quickest way to learn HTML and CSS is to change a real page and watch what happens.</p>
+                <div style="max-width: 800px; margin: 0 auto; text-align: left;">
+                    <p>We have a starter site for exactly that. It is a small portfolio with three files: a home page, an about page and a stylesheet. The code is full of comments that explain what each part does. Its README is a list of numbered exercises. Each exercise asks you to change one thing, save, and look at the result.</p>
+                    <p>Here is how to begin. First, fork the starter repository on GitHub. Then turn on GitHub Pages in your fork's settings. Then open the README and start at exercise 1. Your site is live from the second exercise, so every change you make is visible at a real web address.</p>
+                    <div class="cta-buttons" style="margin-top: 1.5rem;">
+                        <a href="https://github.com/deweydex/web" class="btn btn-primary" target="_blank" rel="noopener noreferrer">Fork the Starter</a>
+                        <a href="https://deweydex.github.io/web/" class="btn btn-secondary" target="_blank" rel="noopener noreferrer">See the Starter Site</a>
+                        <a href="github-guides/05-github-pages.html" class="btn btn-secondary">How to Turn On GitHub Pages</a>
+                    </div>
+                    <p style="margin-top: 1.5rem;">When an exercise leaves you with a question, the lessons below have the longer explanation. When you want to see a finished page, the examples and templates are further down.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="lessons" class="lessons-section">
+            <div class="container">
+                <h2>Lessons: The Longer Explanations</h2>
+                <p class="section-intro">The starter exercises show you what happens. These lessons explain why. Lessons 1 to 10 cover the same ground as the exercises, in more depth. Lessons 11 to 13 cover Flexbox, Grid, components and animation. You will need those for the web authoring project.</p>
+                
+                <div class="overall-progress">
+                    <div class="progress-bar-container">
+                        <div class="progress-bar-fill" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                    <div class="progress-text">0 of 13 lessons completed</div>
+                </div>
+                
+                <div class="lessons-grid">
+                    <a href="lessons/01-html-basics.html" class="lesson-card">
+                        <div class="lesson-number">01</div>
+                        <h3>HTML Basics</h3>
+                        <p>Learn the foundation of web pages: tags, elements, and structure</p>
+                        <span class="lesson-link">Start Lesson</span>
+                    </a>
+                    <a href="lessons/02-html-semantics.html" class="lesson-card">
+                        <div class="lesson-number">02</div>
+                        <h3>Semantic HTML</h3>
+                        <p>Use meaningful tags to create well-structured, accessible pages</p>
+                        <span class="lesson-link">Start Lesson →</span>
+                    </a>
+                    <a href="lessons/03-css-basics.html" class="lesson-card">
+                        <div class="lesson-number">03</div>
+                        <h3>CSS Basics</h3>
+                        <p>Add style and visual appeal to your HTML pages</p>
+                        <span class="lesson-link">Start Lesson →</span>
+                    </a>
+                    <a href="lessons/04-css-layout.html" class="lesson-card">
+                        <div class="lesson-number">04</div>
+                        <h3>CSS Layout</h3>
+                        <p>Master layout techniques: flexbox, grid, and positioning</p>
+                        <span class="lesson-link">Start Lesson →</span>
+                    </a>
+                    <a href="lessons/05-responsive-design.html" class="lesson-card">
+                        <div class="lesson-number">05</div>
+                        <h3>Responsive Design</h3>
+                        <p>Make your websites look great on all devices</p>
+                        <span class="lesson-link">Start Lesson →</span>
+                    </a>
+                    <a href="lessons/06-github-setup.html" class="lesson-card">
+                        <div class="lesson-number">06</div>
+                        <h3>GitHub Setup</h3>
+                        <p>Create your GitHub account and first repository</p>
+                        <span class="lesson-link">Start Lesson →</span>
+                    </a>
+                    <a href="lessons/07-github-workflow.html" class="lesson-card">
+                        <div class="lesson-number">07</div>
+                        <h3>GitHub Workflow</h3>
+                        <p>Learn commits, branches, and pull requests</p>
+                        <span class="lesson-link">Start Lesson →</span>
+                    </a>
+                    <a href="lessons/08-github-pages.html" class="lesson-card">
+                        <div class="lesson-number">08</div>
+                        <h3>GitHub Pages</h3>
+                        <p>Deploy your website for the world to see</p>
+                        <span class="lesson-link">Start Lesson →</span>
+                    </a>
+                    <a href="lessons/09-images.html" class="lesson-card">
+                        <div class="lesson-number">09</div>
+                        <h3>Working with Images</h3>
+                        <p>Add and optimize images for the web</p>
+                        <span class="lesson-link">Start Lesson →</span>
+                    </a>
+                    <a href="lessons/10-links.html" class="lesson-card">
+                        <div class="lesson-number">10</div>
+                        <h3>Working with Links</h3>
+                        <p>Create navigation and hyperlinks between pages</p>
+                        <span class="lesson-link">Start Lesson →</span>
+                    </a>
+                    <a href="lessons/11-flexbox-grid-advanced.html" class="lesson-card">
+                        <div class="lesson-number">11</div>
+                        <h3>Advanced Flexbox & Grid</h3>
+                        <p>Master advanced layout techniques including named grid areas, auto-fit, and combining Grid with Flexbox</p>
+                        <span class="lesson-link">Start Lesson →</span>
+                    </a>
+                    <a href="lessons/12-component-design.html" class="lesson-card">
+                        <div class="lesson-number">12</div>
+                        <h3>Component Design</h3>
+                        <p>Learn BEM methodology, design systems, CSS variables, and how to build maintainable component libraries</p>
+                        <span class="lesson-link">Start Lesson →</span>
+                    </a>
+                    <a href="lessons/13-css-animations.html" class="lesson-card">
+                        <div class="lesson-number">13</div>
+                        <h3>CSS Animations</h3>
+                        <p>Create stunning animations with transitions, keyframes, 3D transforms, and pure CSS interactivity</p>
+                        <span class="lesson-link">Start Lesson →</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <section id="databases" class="examples-section">
+            <div class="container">
+                <h2>Databases: Tables, Queries and SQL</h2>
+                <p class="section-intro">A database keeps information in tables. SQL is the language you use to ask a table a question.</p>
+                <div style="max-width: 800px; margin: 0 auto 2rem auto; text-align: left;">
+                    <p>Everything in this section runs inside your browser. Nothing is installed and nothing you type is sent anywhere. Start with the playground. Then try the quiz. The notebook covers the same ideas in Python, for the second half of the module.</p>
+                </div>
+                <div class="examples-grid">
+                    <a href="databases/playground/index.html" class="example-card">
+                        <h3>SQL Playground</h3>
+                        <p>Type a query, run it, and see the result. Starts with short HTML and CSS refreshers, then SELECT, WHERE, ORDER BY and JOIN.</p>
+                        <span class="example-link">Open the Playground &rarr;</span>
+                    </a>
+                    <a href="databases/quiz.html" class="example-card">
+                        <h3>SQL Quiz</h3>
+                        <p>Practice questions on a small shop database. Write the query and check your answer.</p>
+                        <span class="example-link">Take the Quiz &rarr;</span>
+                    </a>
+                    <a href="https://colab.research.google.com/github/deweydex/dewadaba/blob/main/databases/sqlite_tutorial.ipynb" class="example-card" target="_blank" rel="noopener noreferrer">
+                        <h3>SQLite in a Notebook</h3>
+                        <p>The same ideas in a Jupyter notebook, with dinosaurs for data. Opens in Google Colab. You can also <a href="databases/sqlite_tutorial.ipynb">download the notebook file</a>.</p>
+                        <span class="example-link">Open in Colab &rarr;</span>
+                    </a>
+                    <a href="databases/playground/teacher.html" class="example-card">
+                        <h3>Teacher Version</h3>
+                        <p>The playground with worked solutions and teaching notes.</p>
+                        <span class="example-link">Open the Teacher Version &rarr;</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <section id="examples" class="examples-section">
+            <div class="container">
+                <h2>Code Examples</h2>
+                <p class="section-intro">Study real examples from simple to complex</p>
+                <div class="examples-grid">
+                    <a href="examples/hello-world.html" class="example-card">
+                        <h3>Hello World</h3>
+                        <p>Your very first HTML page</p>
+                        <span class="example-link">View Example</span>
+                    </a>
+                    <a href="examples/first-page.html" class="example-card">
+                        <h3>First Page</h3>
+                        <p>A complete page with HTML and CSS</p>
+                        <span class="example-link">View Example →</span>
+                    </a>
+                    <a href="examples/resume-template.html" class="example-card">
+                        <h3>Resume Template</h3>
+                        <p>Learn to structure content effectively</p>
+                        <span class="example-link">View Example →</span>
+                    </a>
+                    <a href="examples/portfolio-starter.html" class="example-card">
+                        <h3>Portfolio Starter</h3>
+                        <p>Build a showcase for your work</p>
+                        <span class="example-link">View Example →</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <section id="templates" class="templates-section">
+            <div class="container">
+                <h2>Starter Templates</h2>
+                <p class="section-intro">Ready-to-use templates with detailed comments</p>
+                <div class="templates-grid">
+                    <a href="templates/basic.html" class="template-card">
+                        <h3>Basic HTML</h3>
+                        <p>Minimal template to get started</p>
+                        <span class="template-link">Get Template</span>
+                    </a>
+                    <a href="templates/website-starter.html" class="template-card">
+                        <h3>Website Starter</h3>
+                        <p>Full-featured page template</p>
+                        <span class="template-link">Get Template →</span>
+                    </a>
+                    <a href="templates/portfolio.html" class="template-card">
+                        <h3>Portfolio</h3>
+                        <p>Professional portfolio template</p>
+                        <span class="template-link">Get Template →</span>
+                    </a>
+                    <a href="templates/blog.html" class="template-card">
+                        <h3>Blog</h3>
+                        <p>Blog layout template</p>
+                        <span class="template-link">Get Template →</span>
+                    </a>
+                    <a href="templates/landing-page.html" class="template-card">
+                        <h3>Landing Page</h3>
+                        <p>Modern marketing page with hero, features, and responsive images</p>
+                        <span class="template-link">Get Template →</span>
+                    </a>
+                    <a href="templates/photo-gallery.html" class="template-card">
+                        <h3>Photo Gallery</h3>
+                        <p>Responsive image grid with lightbox and lazy loading</p>
+                        <span class="template-link">Get Template →</span>
+                    </a>
+                    <a href="templates/rotating-cube.html" class="template-card">
+                        <h3>3D Rotating Cube</h3>
+                        <p>Mesmerizing 3D cube using perspective and 3D transforms</p>
+                        <span class="template-link">Get Template →</span>
+                    </a>
+                    <a href="templates/spiral-animation.html" class="template-card">
+                        <h3>Spiral Animation</h3>
+                        <p>Mathematical spiral pattern using polar coordinates</p>
+                        <span class="template-link">Get Template →</span>
+                    </a>
+                    <a href="templates/accordion-faq.html" class="template-card">
+                        <h3>Accordion FAQ</h3>
+                        <p>Pure CSS accordion using the checkbox hack</p>
+                        <span class="template-link">Get Template →</span>
+                    </a>
+                    <a href="templates/tabbed-interface.html" class="template-card">
+                        <h3>Tabbed Interface</h3>
+                        <p>Tab system using :target pseudo-class</p>
+                        <span class="template-link">Get Template →</span>
+                    </a>
+                    <a href="templates/modal-system.html" class="template-card">
+                        <h3>Modal System</h3>
+                        <p>Modal dialogs with animations using :target</p>
+                        <span class="template-link">Get Template →</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <section id="github" class="github-section">
+            <div class="container">
+                <h2>GitHub Guides</h2>
+                <p class="section-intro">Step-by-step guides for using GitHub with your projects</p>
+                <div class="github-guides-list">
+                    <div class="guide-item">
+                        <span class="guide-number">01</span>
+                        <div class="guide-content">
+                            <h3><a href="github-guides/01-getting-started.html">Getting Started with GitHub</a></h3>
+                            <p>Create your account and understand the basics</p>
+                        </div>
+                    </div>
+                    <div class="guide-item">
+                        <span class="guide-number">02</span>
+                        <div class="guide-content">
+                            <h3><a href="github-guides/02-creating-repo.html">Creating Your First Repository</a></h3>
+                            <p>Learn how to create and initialize a repo</p>
+                        </div>
+                    </div>
+                    <div class="guide-item">
+                        <span class="guide-number">03</span>
+                        <div class="guide-content">
+                            <h3><a href="github-guides/03-first-commit.html">Making Your First Commit</a></h3>
+                            <p>Save your code with version control</p>
+                        </div>
+                    </div>
+                    <div class="guide-item">
+                        <span class="guide-number">04</span>
+                        <div class="guide-content">
+                            <h3><a href="github-guides/04-branches-prs.html">Branches and Pull Requests</a></h3>
+                            <p>Organize your work and collaborate effectively</p>
+                        </div>
+                    </div>
+                    <div class="guide-item">
+                        <span class="guide-number">05</span>
+                        <div class="guide-content">
+                            <h3><a href="github-guides/05-github-pages.html">Deploying with GitHub Pages</a></h3>
+                            <p>Publish your website for free</p>
+                        </div>
+                    </div>
+                    <div class="guide-item">
+                        <span class="guide-number">06</span>
+                        <div class="guide-content">
+                            <h3><a href="github-guides/06-collaboration.html">Collaboration Workflows</a></h3>
+                            <p>Work with others on shared projects</p>
+                        </div>
+                    </div>
+                    <div class="guide-item">
+                        <span class="guide-number">07</span>
+                        <div class="guide-content">
+                            <h3><a href="github-guides/07-browser-devtools.html">Using Browser Developer Tools</a></h3>
+                            <p>Inspect elements, debug code, and test changes</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="design" class="design-section" style="background-color: #f0fdf4; padding: 4rem 0;">
+            <div class="container">
+                <h2>Design Resources</h2>
+                <p class="section-intro">Learn about typography, readability, and accessibility</p>
+                <div style="max-width: 600px; margin: 2rem auto; text-align: center;">
+                    <p style="margin-bottom: 2rem;">Understanding good design principles helps you create websites that are not only functional but also professional, readable, and accessible to everyone.</p>
+                    <a href="design-resources.html" class="btn btn-primary">Explore Design Resources</a>
+                </div>
+            </div>
+        </section>
+
+        <section id="troubleshooting" class="troubleshooting-section" style="background-color: #fef3c7; padding: 4rem 0;">
+            <div class="container">
+                <h2>Having Trouble?</h2>
+                <p class="section-intro">Common problems and step-by-step solutions</p>
+                <div style="max-width: 600px; margin: 2rem auto; text-align: center;">
+                    <p style="margin-bottom: 2rem;">Encountering issues while learning is completely normal. Our troubleshooting guide helps you solve common problems like CSS not working, images not loading, or files not displaying correctly. Each solution includes explanations of why problems occur, so you learn to diagnose issues yourself.</p>
+                    <a href="troubleshooting.html" class="btn btn-primary">View Troubleshooting Guide</a>
+                </div>
+            </div>
+        </section>
+
+        <section id="reference" class="reference-section" style="background-color: #e0f2fe; padding: 4rem 0;">
+            <div class="container">
+                <h2>Quick Reference</h2>
+                <p class="section-intro">Quick lookup for HTML tags and CSS properties</p>
+                <div style="max-width: 600px; margin: 2rem auto; text-align: center;">
+                    <p style="margin-bottom: 2rem;">Need to remember the syntax for an HTML tag or CSS property? Our quick reference guide provides easy-to-scan cards with examples for all the common tags and properties you'll use while building websites. Perfect for bookmarking and referencing while you code.</p>
+                    <a href="reference.html" class="btn btn-primary">Open Quick Reference</a>
+                </div>
+            </div>
+        </section>
+
+        <section id="projects" class="projects-section" style="background-color: #f0fdf4; padding: 4rem 0;">
+            <div class="container">
+                <h2>Project Ideas</h2>
+                <p class="section-intro">Practice your skills with real projects</p>
+                <div style="max-width: 600px; margin: 2rem auto; text-align: center;">
+                    <p style="margin-bottom: 2rem;">Ready to build something? Our project ideas guide provides beginner-friendly projects that progress from simple to complex. Each project includes a checklist, required skills, and links to relevant lessons to help you succeed.</p>
+                    <a href="project-ideas.html" class="btn btn-primary">View Project Ideas</a>
+                </div>
+            </div>
+        </section>
+
+        <section id="explore" class="explore-section" style="background-color: #f0f9ff; padding: 4rem 0;">
+            <div class="container">
+                <h2>How to Use This Site</h2>
+                <p class="section-intro">There is an order that works, and it is not front to back.</p>
+                <div style="max-width: 800px; margin: 0 auto; text-align: left;">
+                    <p>First, fork the starter and do its exercises. That is where most of the learning happens. Second, when an exercise raises a question, read the lesson that answers it. Third, when you begin the web authoring project, read lessons 11 to 13 and look at the templates. Fourth, when the module turns to databases, open the playground.</p>
+                    <p>The GitHub guides are step-by-step instructions. Use them the moment you need them, and come back to them as often as you like. The troubleshooting page is for when something does not work and you cannot see why. That happens to everyone.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; Web Authoring and Databases | Created by <a href="https://jsaaron.com" target="_blank" rel="noopener noreferrer">Joshua Aaron</a></p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script src="js/progress-tracker.js"></script>
+    <script src="js/search.js"></script>
+    <script src="js/stylesheet-switcher.js"></script>
+</body>
+</html>
+

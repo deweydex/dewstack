@@ -1,0 +1,170 @@
+/* 
+    Stylesheet Switcher Component Styles
+    
+    This file contains styles for the theme switcher component that allows
+    users to change the visual appearance of the site by swapping CSS files.
+    This demonstrates the power of CSS to transform a page without changing HTML.
+*/
+
+/* Stylesheet Switcher Container */
+.stylesheet-switcher {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 2000;
+    background-color: var(--bg-color);
+    border: 2px solid var(--border-color);
+    border-radius: 12px;
+    padding: 1rem;
+    box-shadow: var(--shadow-lg);
+    max-width: 320px;
+    transition: all 0.3s ease;
+}
+
+/* Collapsed state - shows as a small button */
+.stylesheet-switcher.collapsed {
+    padding: 0.5rem;
+    max-width: auto;
+    cursor: pointer;
+}
+
+.stylesheet-switcher.collapsed .switcher-content {
+    display: none;
+}
+
+.stylesheet-switcher.collapsed .switcher-toggle {
+    display: block;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 0.5rem;
+    color: var(--primary-color);
+}
+
+/* Expanded state */
+.stylesheet-switcher.expanded .switcher-toggle {
+    display: block;
+    background: none;
+    border: none;
+    font-size: 1.25rem;
+    cursor: pointer;
+    padding: 0;
+    margin-bottom: 0.5rem;
+    color: var(--text-color);
+    text-align: right;
+    width: 100%;
+}
+
+.stylesheet-switcher.expanded .switcher-content {
+    display: block;
+}
+
+.switcher-toggle {
+    display: none;
+}
+
+.switcher-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.75rem;
+}
+
+.switcher-title {
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--text-color);
+    margin: 0;
+}
+
+.switcher-subtitle {
+    font-size: 0.75rem;
+    color: var(--text-light);
+    margin-top: 0.25rem;
+}
+
+/* Theme buttons container */
+.theme-options {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.5rem;
+    margin-top: 0.75rem;
+}
+
+.theme-button {
+    padding: 0.75rem 1rem;
+    border: 2px solid var(--border-color);
+    background-color: var(--bg-light);
+    color: var(--text-color);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 0.875rem;
+    font-weight: 500;
+    text-align: center;
+}
+
+.theme-button:hover {
+    border-color: var(--primary-color);
+    background-color: var(--primary-color);
+    color: #fff;
+    transform: translateY(-2px);
+    box-shadow: var(--shadow);
+}
+
+.theme-button.active {
+    border-color: var(--primary-color);
+    background-color: var(--primary-color);
+    color: #fff;
+    font-weight: 700;
+    box-shadow: var(--shadow);
+}
+
+/* Change indicators */
+.change-indicators {
+    margin-top: 0.75rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid var(--border-color);
+    font-size: 0.75rem;
+    color: var(--text-light);
+}
+
+.change-indicators strong {
+    color: var(--text-color);
+}
+
+.change-list {
+    margin-top: 0.5rem;
+    padding-left: 1.25rem;
+}
+
+.change-list li {
+    margin: 0.25rem 0;
+    font-size: 0.7rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .stylesheet-switcher {
+        bottom: 10px;
+        right: 10px;
+        max-width: 280px;
+    }
+    
+    .theme-options {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Accessibility improvements */
+.stylesheet-switcher:focus-within {
+    outline: 3px solid var(--primary-color);
+    outline-offset: 2px;
+}
+
+.theme-button:focus {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 2px;
+}
+

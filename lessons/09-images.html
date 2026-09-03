@@ -1,0 +1,867 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lesson 09: Working with Images</title>
+    <link rel="stylesheet" href="../css/base.css">
+    <link rel="stylesheet" href="../css/navigation.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <link rel="stylesheet" href="../css/lessons.css">
+    <link rel="stylesheet" href="../css/playground.css">
+    <link rel="stylesheet" href="../css/search.css">
+    <!-- Prism.js for syntax highlighting -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+    <script src="../script.js"></script>
+    <script src="../js/copy-code.js"></script>
+    <script src="../js/progress-tracker.js"></script>
+    <script src="../js/code-playground.js"></script>
+    <script src="../js/search.js"></script>
+</head>
+<body>
+    <header>
+        <nav class="navbar minimal">
+            <div class="container">
+                <button class="menu-toggle" aria-label="Open navigation menu" aria-expanded="false">
+                    ☰ Menu
+                </button>
+                <div class="site-header-content">
+                    <a href="../index.html" class="logo">Web Authoring and Databases</a>
+                    <p class="site-subtitle">
+                        A series of tutorials (and experiments) from
+                        <a href="https://jsaaron.com" target="_blank" rel="noopener noreferrer">Joshua Aaron</a> |
+                        <a href="https://github.com/jsaaron" target="_blank" rel="noopener noreferrer">GitHub</a>
+                    </p>
+                </div>
+
+                <div class="header-right">
+                    <a href="../about.html">About</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="menu-overlay"></div>
+
+    <ul class="nav-links">
+        <li><a href="../index.html#home">Home</a></li>
+                    <li><a href="../index.html#start">Start Here: Your Own Site</a></li>
+                            <li class="nav-section-header">Lessons</li>
+        <li><a href="01-html-basics.html">01. HTML Basics</a></li>
+        <li><a href="02-html-semantics.html">02. Semantic HTML</a></li>
+        <li><a href="03-css-basics.html">03. CSS Basics</a></li>
+        <li><a href="04-css-layout.html">04. CSS Layout</a></li>
+        <li><a href="05-responsive-design.html">05. Responsive Design</a></li>
+        <li><a href="06-github-setup.html">06. GitHub Setup</a></li>
+        <li><a href="07-github-workflow.html">07. GitHub Workflow</a></li>
+        <li><a href="08-github-pages.html">08. GitHub Pages</a></li>
+        <li><a href="09-images.html">09. Working with Images</a></li>
+        <li><a href="10-links.html">10. Working with Links</a></li>
+        <li><a href="11-flexbox-grid-advanced.html">11. Advanced Flexbox & Grid</a></li>
+        <li><a href="12-component-design.html">12. Component Design</a></li>
+        <li><a href="13-css-animations.html">13. CSS Animations</a></li>
+        <li class="nav-section-header">Databases</li>
+                    <li><a href="../databases/playground/index.html">SQL Playground</a></li>
+                    <li><a href="../databases/playground/teacher.html">Playground: Teacher Version</a></li>
+                    <li><a href="../databases/quiz.html">SQL Quiz</a></li>
+                    <li><a href="../databases/sqlite_tutorial.ipynb">SQLite Notebook</a></li>
+                    <li class="nav-section-header">Resources</li>
+        <li><a href="../index.html#examples">Examples</a></li>
+        <li><a href="../index.html#templates">Templates</a></li>
+        <li><a href="../index.html#github">GitHub Guides</a></li>
+        <li><a href="../design-resources.html">Design Resources</a></li>
+        <li><a href="../troubleshooting.html">Troubleshooting</a></li>
+        <li><a href="../reference.html">Quick Reference</a></li>
+        <li><a href="../project-ideas.html">Project Ideas</a></li>
+        <li><a href="../about.html">About</a></li>
+    </ul>
+
+    <div class="lesson-container">
+        <div class="lesson-nav-links">
+            <a href="../index.html">Back to Home</a> |
+            <a href="08-github-pages.html">Previous Lesson</a>
+        </div>
+
+        <h1>Lesson 09: Working with Images</h1>
+
+        <!-- Table of Contents -->
+        <nav class="table-of-contents">
+            <h2>Table of Contents</h2>
+            <ul>
+                <li><a href="#learning-outcomes">Learning Outcomes</a></li>
+                <li><a href="#why-images-matter">Why Images Matter on the Web</a></li>
+                <li><a href="#img-tag">The Image Tag and Required Attributes</a></li>
+                <li><a href="#file-paths">Understanding File Paths</a></li>
+                <li><a href="#alt-text">Writing Effective Alt Text</a></li>
+                <li><a href="#image-formats">Common Image Formats</a></li>
+                <li><a href="#sizing-images">Sizing Images with HTML and CSS</a></li>
+                <li><a href="#positioning">Positioning and Aligning Images</a></li>
+                <li><a href="#responsive-images">Making Images Responsive</a></li>
+                <li><a href="#worked-example">Worked Example: Creating an Image Gallery</a></li>
+                <li><a href="#practice">Practice Opportunity</a></li>
+                <li><a href="#summary">Summary</a></li>
+            </ul>
+        </nav>
+
+        <div class="learning-outcomes" id="learning-outcomes">
+            <h2>Learning Outcomes</h2>
+            <p>By the end of this lesson, you will understand how to add images to web pages using the <code>&lt;img&gt;</code> tag. You will be able to write accessible image markup with proper alt text, understand different image file formats and when to use them, and control image size and positioning using both HTML attributes and CSS. You will also learn how to make images responsive so they work well on all screen sizes.</p>
+
+            <h3>Prerequisites</h3>
+            <p>You should be comfortable with basic HTML document structure from Lesson 01, and have some familiarity with CSS basics from Lesson 03. Understanding file paths and folder structures will also be helpful.</p>
+        </div>
+
+        <div class="concept-section" id="why-images-matter">
+            <h2>Why Images Matter on the Web</h2>
+
+            <p>Images are a <strong>fundamental part</strong> of the web experience. They help communicate ideas, break up text, create visual interest, and make content more engaging and memorable. Whether you're building a portfolio to showcase your work, creating a blog with photos, or developing a business website with product images, understanding how to work with images effectively is essential.</p>
+
+            <h3>Images Serve Multiple Purposes</h3>
+            <p>On the web, images fulfill several important roles:</p>
+
+            <ul>
+                <li><strong>Communication:</strong> Images can convey information more quickly than text, such as diagrams, charts, or infographics</li>
+                <li><strong>Branding:</strong> Logos and brand imagery establish visual identity</li>
+                <li><strong>Engagement:</strong> Photos and illustrations make content more appealing and help retain visitor attention</li>
+                <li><strong>Illustration:</strong> Screenshots and examples help explain concepts in tutorials and documentation</li>
+            </ul>
+
+            <h3>The Challenge of Web Images</h3>
+            <p>Unlike printed images, web images must work across <strong>different devices, screen sizes, and connection speeds</strong>. An image that looks perfect on your desktop might be too large for a mobile phone, or might take too long to download on a slow connection. Learning to work with images on the web means understanding not just how to display them, but how to make them <em>accessible</em>, <em>performant</em>, and <em>responsive</em>.</p>
+
+            <p>This lesson will teach you the foundational skills you need to add images to your web pages thoughtfully and effectively.</p>
+        </div>
+
+        <div class="concept-section" id="img-tag">
+            <h2>The Image Tag and Required Attributes</h2>
+
+            <p>Images are added to HTML documents using the <code>&lt;img&gt;</code> tag. Unlike most HTML elements you've learned so far, the image tag is <strong>self-closing</strong>, meaning it doesn't have a closing tag. This makes sense because images don't contain other HTML content - they simply display a picture.</p>
+
+            <h3>The Basic Syntax</h3>
+            <p>The simplest form of an image tag looks like this:</p>
+
+            <div class="code-example">
+                <pre><code class="language-html">&lt;img src="photo.jpg" alt="A description of the photo"&gt;</code></pre>
+            </div>
+
+            <h3>Required Attributes</h3>
+            <p>Every image tag needs <strong>two essential attributes</strong> to function properly:</p>
+
+            <h4>The <code>src</code> Attribute</h4>
+            <p>The <code>src</code> attribute (short for "source") tells the browser <strong>where to find the image file</strong>. This can be:</p>
+
+            <ul>
+                <li>A <strong>relative path</strong> to an image file on your website (e.g., <code>"images/photo.jpg"</code>)</li>
+                <li>An <strong>absolute path</strong> on your website (e.g., <code>"/images/photo.jpg"</code>)</li>
+                <li>A <strong>full URL</strong> to an image hosted elsewhere (e.g., <code>"https://example.com/photo.jpg"</code>)</li>
+            </ul>
+
+            <p>Without a <code>src</code> attribute, the browser doesn't know what image to display, and you'll typically see a broken image icon.</p>
+
+            <h4>The <code>alt</code> Attribute</h4>
+            <p>The <code>alt</code> attribute (short for "alternative text") provides a <strong>text description</strong> of the image. This text serves multiple crucial purposes:</p>
+
+            <ul>
+                <li><strong>Accessibility:</strong> Screen readers read the alt text aloud to users who can't see the image</li>
+                <li><strong>Fallback:</strong> If the image fails to load, the alt text is displayed instead</li>
+                <li><strong>SEO:</strong> Search engines use alt text to understand what images show</li>
+                <li><strong>Context:</strong> Alt text provides meaning when images are disabled or unavailable</li>
+            </ul>
+
+            <p><strong>Important:</strong> While some browsers may technically allow you to omit the <code>alt</code> attribute, doing so creates <em>accessibility barriers</em> and is considered <strong>bad practice</strong>. Every image should have an alt attribute, even if it's empty (which we'll discuss later).</p>
+
+            <h3>Optional but Useful Attributes</h3>
+            <p>Beyond <code>src</code> and <code>alt</code>, images can have additional attributes:</p>
+
+            <ul>
+                <li><code>width</code> and <code>height</code> - Specify the display dimensions in pixels</li>
+                <li><code>title</code> - Provides additional information (appears as a tooltip on hover)</li>
+                <li><code>loading</code> - Controls when the image loads (<code>"lazy"</code> defers loading until needed)</li>
+            </ul>
+
+            <div class="code-example">
+                <pre><code class="language-html">&lt;img src="landscape.jpg"
+     alt="Mountain landscape at sunset"
+     width="800"
+     height="600"
+     loading="lazy"&gt;</code></pre>
+            </div>
+        </div>
+
+        <div class="concept-section" id="file-paths">
+            <h2>Understanding File Paths</h2>
+
+            <p>One of the most common issues when working with images is getting the <strong>file path</strong> correct. The file path tells the browser where to find your image file, and understanding how paths work is essential for displaying images successfully.</p>
+
+            <h3>Relative Paths</h3>
+            <p>A <strong>relative path</strong> describes the location of a file <em>relative to</em> the current HTML file. This is the most common way to reference images on your own website.</p>
+
+            <p><strong>Common relative path patterns:</strong></p>
+
+            <ul>
+                <li><code>src="photo.jpg"</code> - Image is in the <strong>same folder</strong> as the HTML file</li>
+                <li><code>src="images/photo.jpg"</code> - Image is in an <strong>images subfolder</strong></li>
+                <li><code>src="../photo.jpg"</code> - Image is in the <strong>parent folder</strong> (up one level)</li>
+                <li><code>src="../../images/photo.jpg"</code> - Go up two levels, then into images folder</li>
+            </ul>
+
+            <h3>Understanding the Folder Structure</h3>
+            <p>Imagine you have this folder structure:</p>
+
+            <div class="code-example">
+                <pre><code class="language-plaintext">my-website/
+├── index.html
+├── pages/
+│   └── about.html
+└── images/
+    └── logo.png</code></pre>
+            </div>
+
+            <p>To display <code>logo.png</code> in <code>index.html</code>, you would use:</p>
+
+            <div class="code-example">
+                <pre><code class="language-html">&lt;img src="images/logo.png" alt="Company logo"&gt;</code></pre>
+            </div>
+
+            <p>But to display the same image in <code>about.html</code>, you need to go <strong>up one folder level</strong> first:</p>
+
+            <div class="code-example">
+                <pre><code class="language-html">&lt;img src="../images/logo.png" alt="Company logo"&gt;</code></pre>
+            </div>
+
+            <p>The <code>../</code> means "go up one folder level." From <code>pages/about.html</code>, you go up to <code>my-website/</code>, then down into <code>images/</code>.</p>
+
+            <h3>Absolute Paths</h3>
+            <p>An <strong>absolute path</strong> starts from the root of your website, beginning with a forward slash <code>/</code>:</p>
+
+            <div class="code-example">
+                <pre><code class="language-html">&lt;img src="/images/logo.png" alt="Company logo"&gt;</code></pre>
+            </div>
+
+            <p>This path works the same way <strong>from any page on your site</strong>, because it always starts from the root. However, absolute paths <em>won't work</em> when viewing files locally on your computer - they only work on a web server.</p>
+
+            <h3>External URLs</h3>
+            <p>You can also link to images hosted on other websites using a <strong>full URL</strong>:</p>
+
+            <div class="code-example">
+                <pre><code class="language-html">&lt;img src="https://example.com/images/photo.jpg" alt="Example photo"&gt;</code></pre>
+            </div>
+
+            <p><strong>Note:</strong> While this works technically, it's generally better to host important images on your own server so you control their availability and performance.</p>
+
+            <h3>Troubleshooting Path Issues</h3>
+            <p>If your image doesn't appear, the most likely cause is an <strong>incorrect path</strong>. Check:</p>
+
+            <ul>
+                <li>Is the filename spelled correctly (including capitalization)?</li>
+                <li>Is the file extension correct (.jpg, .png, .gif)?</li>
+                <li>Are you using the right number of <code>../</code> to go up folders?</li>
+                <li>Does the folder structure match your path?</li>
+            </ul>
+        </div>
+
+        <div class="concept-section" id="alt-text">
+            <h2>Writing Effective Alt Text</h2>
+
+            <p>The <code>alt</code> attribute is one of the most important aspects of accessible web design, yet it's often overlooked or poorly implemented. Good alt text makes your website <strong>usable for everyone</strong>, regardless of how they access your content.</p>
+
+            <h3>What Makes Good Alt Text?</h3>
+            <p>Effective alt text should be <strong>concise but descriptive</strong>, conveying the essential information or purpose of the image. Think about what information the image communicates, not just what it looks like.</p>
+
+            <h4>For Informative Images</h4>
+            <p>When an image conveys information, describe that information:</p>
+
+            <div class="code-example">
+                <pre><code class="language-html">&lt;!-- Not ideal --&gt;
+&lt;img src="chart.png" alt="A chart"&gt;
+
+&lt;!-- Better --&gt;
+&lt;img src="chart.png" alt="Bar chart showing sales increased 40% in Q3"&gt;</code></pre>
+            </div>
+
+            <h4>For Decorative Images</h4>
+            <p>If an image is purely decorative and doesn't add information, use an <strong>empty alt attribute</strong>:</p>
+
+            <div class="code-example">
+                <pre><code class="language-html">&lt;img src="decorative-border.png" alt=""&gt;</code></pre>
+            </div>
+
+            <p>Note that this is <code>alt=""</code> (empty quotes), <em>not</em> omitting the alt attribute entirely. The empty alt tells screen readers to skip the image, which is appropriate for decoration.</p>
+
+            <h4>For Functional Images</h4>
+            <p>If an image is part of a link or button, describe the <strong>function or destination</strong>, not the image:</p>
+
+            <div class="code-example">
+                <pre><code class="language-html">&lt;!-- Not ideal --&gt;
+&lt;img src="home-icon.png" alt="House icon"&gt;
+
+&lt;!-- Better --&gt;
+&lt;img src="home-icon.png" alt="Return to home page"&gt;</code></pre>
+            </div>
+
+            <h3>Alt Text Best Practices</h3>
+            <p>Follow these guidelines when writing alt text:</p>
+
+            <ul>
+                <li><strong>Be concise:</strong> Aim for 125 characters or less when possible</li>
+                <li><strong>Don't say "image of" or "picture of":</strong> Screen readers already announce it's an image</li>
+                <li><strong>Be specific:</strong> "Golden retriever puppy playing in grass" is better than "dog"</li>
+                <li><strong>Include text in images:</strong> If an image contains important text, include that text in the alt attribute</li>
+                <li><strong>Context matters:</strong> Consider where the image appears and what information it provides in that context</li>
+            </ul>
+
+            <h3>When Alt Text Can Be Complex</h3>
+            <p>For complex images like detailed charts or infographics, you might need to provide additional description beyond the alt text. You can:</p>
+
+            <ul>
+                <li>Use a <code>&lt;figure&gt;</code> element with <code>&lt;figcaption&gt;</code> to provide a longer caption</li>
+                <li>Describe the key points in surrounding text</li>
+                <li>Provide a link to a longer description</li>
+            </ul>
+
+            <div class="code-example">
+                <pre><code class="language-html">&lt;figure&gt;
+    &lt;img src="complex-diagram.png"
+         alt="Flowchart of website deployment process"&gt;
+    &lt;figcaption&gt;
+        This diagram shows the five stages of deployment:
+        development, testing, staging, review, and production.
+    &lt;/figcaption&gt;
+&lt;/figure&gt;</code></pre>
+            </div>
+        </div>
+
+        <div class="concept-section" id="image-formats">
+            <h2>Common Image Formats</h2>
+
+            <p>Different image formats are optimized for different purposes. Choosing the right format helps ensure your images look good while loading quickly.</p>
+
+            <h3>JPEG (.jpg or .jpeg)</h3>
+            <p><strong>Best for:</strong> Photographs and images with many colors</p>
+
+            <ul>
+                <li><strong>Pros:</strong> Small file sizes, good for photos, widely supported</li>
+                <li><strong>Cons:</strong> Lossy compression (quality decreases), no transparency support</li>
+            </ul>
+
+            <p>Use JPEG for photos, complex images, and anywhere file size is important. JPEG compression can be adjusted to balance quality versus file size.</p>
+
+            <h3>PNG (.png)</h3>
+            <p><strong>Best for:</strong> Graphics, logos, images needing transparency</p>
+
+            <ul>
+                <li><strong>Pros:</strong> Lossless compression (no quality loss), supports transparency, sharp edges</li>
+                <li><strong>Cons:</strong> Larger file sizes than JPEG for photos</li>
+            </ul>
+
+            <p>Use PNG for logos, icons, screenshots, and any image where you need transparent backgrounds or very sharp edges.</p>
+
+            <h3>GIF (.gif)</h3>
+            <p><strong>Best for:</strong> Simple animations, very simple graphics</p>
+
+            <ul>
+                <li><strong>Pros:</strong> Supports animation, small file size for simple graphics</li>
+                <li><strong>Cons:</strong> Limited to 256 colors, not ideal for photos</li>
+            </ul>
+
+            <p>GIFs are most commonly used for simple animations. For static images, PNG is usually a better choice.</p>
+
+            <h3>SVG (.svg)</h3>
+            <p><strong>Best for:</strong> Icons, logos, illustrations</p>
+
+            <ul>
+                <li><strong>Pros:</strong> Scales perfectly to any size, very small file size, can be edited with code</li>
+                <li><strong>Cons:</strong> Not suitable for photographs, requires different handling than raster images</li>
+            </ul>
+
+            <p>SVG files are <strong>vector graphics</strong> rather than pixel-based images. They remain crisp at any size, making them perfect for logos and icons that need to work on both small phone screens and large desktop displays.</p>
+
+            <h3>WebP (.webp)</h3>
+            <p><strong>Best for:</strong> Modern websites prioritizing performance</p>
+
+            <ul>
+                <li><strong>Pros:</strong> Smaller file sizes than JPEG/PNG, supports transparency and animation</li>
+                <li><strong>Cons:</strong> Not supported by older browsers</li>
+            </ul>
+
+            <p>WebP is a newer format that often provides better compression than JPEG or PNG. It's increasingly popular for modern web development.</p>
+
+            <h3>Choosing the Right Format</h3>
+            <p>A simple decision guide:</p>
+
+            <ul>
+                <li><strong>Photograph?</strong> → JPEG (or WebP if you support older browsers with fallbacks)</li>
+                <li><strong>Logo or icon?</strong> → SVG if possible, otherwise PNG</li>
+                <li><strong>Need transparency?</strong> → PNG or SVG</li>
+                <li><strong>Animation?</strong> → GIF for simple animations, video formats for complex ones</li>
+                <li><strong>Screenshot or diagram?</strong> → PNG</li>
+            </ul>
+        </div>
+
+        <div class="concept-section" id="sizing-images">
+            <h2>Sizing Images with HTML and CSS</h2>
+
+            <p>You can control image size using either HTML attributes or CSS properties. Understanding when to use each approach helps you create flexible, maintainable websites.</p>
+
+            <h3>Using HTML Attributes</h3>
+            <p>You can specify image dimensions directly in the HTML using <code>width</code> and <code>height</code> attributes:</p>
+
+            <div class="code-example">
+                <pre><code class="language-html">&lt;img src="photo.jpg"
+     alt="Beach sunset"
+     width="600"
+     height="400"&gt;</code></pre>
+            </div>
+
+            <p>These values are in <strong>pixels</strong> and tell the browser the exact dimensions to display the image.</p>
+
+            <h4>Benefits of HTML Width and Height</h4>
+            <p>Specifying dimensions in HTML helps with <strong>page performance</strong>:</p>
+
+            <ul>
+                <li>The browser can <strong>reserve space</strong> for the image before it loads</li>
+                <li>This prevents <strong>layout shift</strong> - when content jumps around as images load</li>
+                <li>The page feels more stable and loads more smoothly</li>
+            </ul>
+
+            <h4>Aspect Ratio Consideration</h4>
+            <p><strong>Important:</strong> If you only specify width <em>or</em> height (not both), browsers will automatically calculate the other dimension to maintain the image's <strong>aspect ratio</strong>:</p>
+
+            <div class="code-example">
+                <pre><code class="language-html">&lt;!-- Image will scale height automatically --&gt;
+&lt;img src="photo.jpg" alt="Beach sunset" width="600"&gt;</code></pre>
+            </div>
+
+            <p>However, if you specify both width and height with values that don't match the image's natural aspect ratio, the image will be <strong>distorted</strong>. Generally, it's safer to specify only one dimension or use CSS for more control.</p>
+
+            <h3>Using CSS for More Control</h3>
+            <p>CSS provides much more flexibility for controlling image size:</p>
+
+            <div class="code-example">
+                <pre><code class="language-css">img {
+    width: 100%;
+    height: auto;
+}</code></pre>
+            </div>
+
+            <p>This CSS makes the image <strong>fill its container's width</strong> while automatically adjusting height to maintain aspect ratio.</p>
+
+            <h3>Common CSS Sizing Patterns</h3>
+
+            <h4>Fixed Size</h4>
+            <div class="code-example">
+                <pre><code class="language-css">img {
+    width: 300px;
+    height: 200px;
+}</code></pre>
+            </div>
+
+            <h4>Responsive to Container</h4>
+            <div class="code-example">
+                <pre><code class="language-css">img {
+    width: 100%;
+    height: auto;
+}</code></pre>
+            </div>
+
+            <h4>Maximum Width (Never Larger Than Original)</h4>
+            <div class="code-example">
+                <pre><code class="language-css">img {
+    max-width: 100%;
+    height: auto;
+}</code></pre>
+            </div>
+
+            <p>This is a <strong>very common pattern</strong> for responsive images. The image will shrink to fit smaller containers, but won't stretch larger than its original size (which would make it blurry).</p>
+
+            <h4>Specific Dimensions with Object-Fit</h4>
+            <div class="code-example">
+                <pre><code class="language-css">img {
+    width: 300px;
+    height: 300px;
+    object-fit: cover; /* or contain */
+}</code></pre>
+            </div>
+
+            <p>The <code>object-fit</code> property controls how an image fills its container when you specify both dimensions:</p>
+
+            <ul>
+                <li><code>cover</code> - Image covers the entire container, may be cropped</li>
+                <li><code>contain</code> - Entire image is visible, may have empty space in container</li>
+                <li><code>fill</code> - Image stretches to fill container (may distort)</li>
+            </ul>
+        </div>
+
+        <div class="concept-section" id="positioning">
+            <h2>Positioning and Aligning Images</h2>
+
+            <p>By default, images are <strong>inline elements</strong>, which means they flow with text and other inline content. However, you often want more control over where images appear and how they interact with surrounding content.</p>
+
+            <h3>Default Inline Behavior</h3>
+            <p>Without any styling, an image sits on the same line as text:</p>
+
+            <div class="code-example">
+                <pre><code class="language-html">&lt;p&gt;This is some text &lt;img src="icon.png" alt="icon"&gt; with an image inside.&lt;/p&gt;</code></pre>
+            </div>
+
+            <p>This works well for small icons within text, but larger images usually need different positioning.</p>
+
+            <h3>Making Images Block Elements</h3>
+            <p>To give an image its own line and enable centering, make it a <strong>block element</strong>:</p>
+
+            <div class="code-example">
+                <pre><code class="language-css">img {
+    display: block;
+}</code></pre>
+            </div>
+
+            <p>Now the image appears on its own line, separate from surrounding text.</p>
+
+            <h3>Centering Images</h3>
+            <p>Once an image is a block element, you can center it using <strong>auto margins</strong>:</p>
+
+            <div class="code-example">
+                <pre><code class="language-css">img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}</code></pre>
+            </div>
+
+            <p>Or using the shorthand:</p>
+
+            <div class="code-example">
+                <pre><code class="language-css">img {
+    display: block;
+    margin: 0 auto; /* 0 top/bottom, auto left/right */
+}</code></pre>
+            </div>
+
+            <h3>Text Wrapping with Float</h3>
+            <p>To make text wrap around an image (like in a magazine), use the <code>float</code> property:</p>
+
+            <div class="code-example">
+                <pre><code class="language-css">img {
+    float: left;
+    margin-right: 1rem;
+    margin-bottom: 1rem;
+}</code></pre>
+            </div>
+
+            <p>This positions the image on the left side with text flowing around it. The margins create space between the image and the text. Use <code>float: right</code> to position the image on the right side instead.</p>
+
+            <p><strong>Note:</strong> Floated elements can cause layout issues if not cleared properly. You may need to apply <code>clear: both</code> to elements that should appear below the floated image.</p>
+
+            <h3>Using Flexbox for Layout</h3>
+            <p>Modern CSS layout with <strong>Flexbox</strong> provides more control and fewer quirks than floats:</p>
+
+            <div class="code-example">
+                <pre><code class="language-html">&lt;div class="content-with-image"&gt;
+    &lt;img src="photo.jpg" alt="Example photo"&gt;
+    &lt;div class="text"&gt;
+        &lt;p&gt;Text content goes here...&lt;/p&gt;
+    &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+            </div>
+
+            <div class="code-example">
+                <pre><code class="language-css">.content-with-image {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+}
+
+.content-with-image img {
+    width: 200px;
+    height: auto;
+}</code></pre>
+            </div>
+
+            <p>This creates a flexible layout where the image and text sit side by side, with a gap between them.</p>
+
+            <h3>Aligning Inline Images</h3>
+            <p>For inline images (like icons), the <code>vertical-align</code> property controls alignment with the surrounding text:</p>
+
+            <div class="code-example">
+                <pre><code class="language-css">img.icon {
+    vertical-align: middle; /* or top, bottom, text-top, etc. */
+}</code></pre>
+            </div>
+        </div>
+
+        <div class="concept-section" id="responsive-images">
+            <h2>Making Images Responsive</h2>
+
+            <p>Responsive images adapt to different screen sizes and devices, ensuring they look good and load efficiently everywhere. This is crucial in modern web development, where users access websites on phones, tablets, laptops, and large desktop screens.</p>
+
+            <h3>The Fundamental Responsive Image Rule</h3>
+            <p>The most basic approach to responsive images uses CSS:</p>
+
+            <div class="code-example">
+                <pre><code class="language-css">img {
+    max-width: 100%;
+    height: auto;
+}</code></pre>
+            </div>
+
+            <p>This ensures images <strong>never overflow their container</strong>. The image will shrink to fit on small screens but won't stretch larger than its original size (which would make it blurry). The <code>height: auto</code> maintains the aspect ratio.</p>
+
+            <h3>Responsive Images in Practice</h3>
+            <p>For a more complete responsive image solution:</p>
+
+            <div class="code-example">
+                <pre><code class="language-css">img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}</code></pre>
+            </div>
+
+            <p>The <code>display: block</code> prevents small gaps that can appear below inline images.</p>
+
+            <h3>Container-Based Sizing</h3>
+            <p>Often you want images to fill a specific percentage of their container:</p>
+
+            <div class="code-example">
+                <pre><code class="language-css">.image-container {
+    width: 100%;
+    max-width: 800px; /* Don't get too large */
+    margin: 0 auto; /* Center the container */
+}
+
+.image-container img {
+    width: 100%;
+    height: auto;
+}</code></pre>
+            </div>
+
+            <p>This pattern creates a container that centers on the page and never exceeds 800px wide, with the image filling that container.</p>
+
+            <h3>Different Images for Different Screens</h3>
+            <p>Sometimes you want to serve <strong>different images</strong> to different devices - perhaps a smaller, cropped version for mobile phones. HTML provides the <code>&lt;picture&gt;</code> element for this:</p>
+
+            <div class="code-example">
+                <pre><code class="language-html">&lt;picture&gt;
+    &lt;source media="(max-width: 600px)" srcset="small-image.jpg"&gt;
+    &lt;source media="(max-width: 1200px)" srcset="medium-image.jpg"&gt;
+    &lt;img src="large-image.jpg" alt="Description of image"&gt;
+&lt;/picture&gt;</code></pre>
+            </div>
+
+            <p>The browser will choose the appropriate image based on screen size. The final <code>&lt;img&gt;</code> tag serves as the fallback for larger screens and older browsers.</p>
+
+            <h3>Performance Consideration</h3>
+            <p>Responsive images aren't just about appearance - they're also about <strong>performance</strong>. A mobile phone doesn't need a 4000-pixel-wide image. Using appropriately sized images for each device saves bandwidth and improves loading speed.</p>
+        </div>
+
+        <div class="worked-example" id="worked-example">
+            <h2>Worked Example: Creating an Image Gallery</h2>
+
+            <p>This example demonstrates how to create a simple responsive image gallery that showcases multiple images in a grid layout. We'll combine several concepts from this lesson: proper image markup, alt text, responsive sizing, and CSS layout.</p>
+
+            <h3>Step 1: Set Up the HTML Structure</h3>
+            <p>First, create the HTML markup for the gallery. We'll use a <code>&lt;div&gt;</code> container for the gallery and individual containers for each image:</p>
+
+            <div class="code-example">
+                <pre><code class="language-html">&lt;div class="gallery"&gt;
+    &lt;figure class="gallery-item"&gt;
+        &lt;img src="images/photo1.jpg"
+             alt="Mountain landscape with snow-capped peaks"&gt;
+        &lt;figcaption&gt;Rocky Mountains&lt;/figcaption&gt;
+    &lt;/figure&gt;
+
+    &lt;figure class="gallery-item"&gt;
+        &lt;img src="images/photo2.jpg"
+             alt="Ocean waves at sunset with orange sky"&gt;
+        &lt;figcaption&gt;Pacific Coast Sunset&lt;/figcaption&gt;
+    &lt;/figure&gt;
+
+    &lt;figure class="gallery-item"&gt;
+        &lt;img src="images/photo3.jpg"
+             alt="Dense forest with sunlight filtering through trees"&gt;
+        &lt;figcaption&gt;Forest Canopy&lt;/figcaption&gt;
+    &lt;/figure&gt;
+
+    &lt;figure class="gallery-item"&gt;
+        &lt;img src="images/photo4.jpg"
+             alt="Desert landscape with cacti and red rock formations"&gt;
+        &lt;figcaption&gt;Desert Vista&lt;/figcaption&gt;
+    &lt;/figure&gt;
+&lt;/div&gt;</code></pre>
+            </div>
+
+            <p><strong>Note:</strong> We're using the semantic <code>&lt;figure&gt;</code> element to wrap each image and its caption. This provides meaningful structure and groups related content together.</p>
+
+            <h3>Step 2: Create the Grid Layout</h3>
+            <p>Now add CSS to create a responsive grid that adjusts to different screen sizes:</p>
+
+            <div class="code-example">
+                <pre><code class="language-css">.gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}</code></pre>
+            </div>
+
+            <p><strong>What this does:</strong></p>
+            <ul>
+                <li><code>display: grid</code> - Creates a grid layout</li>
+                <li><code>grid-template-columns</code> - Automatically fits as many columns as possible, each at least 250px wide</li>
+                <li><code>gap</code> - Adds space between grid items</li>
+                <li><code>max-width</code> and <code>margin: 0 auto</code> - Centers the gallery and prevents it from getting too wide</li>
+            </ul>
+
+            <h3>Step 3: Style the Gallery Items</h3>
+            <p>Add styling to the individual gallery items:</p>
+
+            <div class="code-example">
+                <pre><code class="language-css">.gallery-item {
+    margin: 0;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.gallery-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.gallery-item img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    display: block;
+}
+
+.gallery-item figcaption {
+    padding: 1rem;
+    text-align: center;
+    font-weight: 600;
+    color: #333;
+}</code></pre>
+            </div>
+
+            <p><strong>Key features:</strong></p>
+            <ul>
+                <li>All images have the same height (250px) for a uniform grid</li>
+                <li><code>object-fit: cover</code> ensures images fill their space without distortion</li>
+                <li>Hover effect provides visual feedback</li>
+                <li>Images are responsive and fill their containers</li>
+            </ul>
+
+            <h3>Step 4: Add Responsive Behavior</h3>
+            <p>On very small screens, adjust the layout for better mobile viewing:</p>
+
+            <div class="code-example">
+                <pre><code class="language-css">@media (max-width: 600px) {
+    .gallery {
+        grid-template-columns: 1fr;
+        padding: 1rem;
+    }
+
+    .gallery-item img {
+        height: 200px;
+    }
+}</code></pre>
+            </div>
+
+            <p>This changes the gallery to a single column on small screens and reduces image height slightly.</p>
+
+            <h3>What This Example Demonstrates</h3>
+            <p>This gallery combines several important concepts:</p>
+
+            <ul>
+                <li><strong>Semantic HTML:</strong> Using <code>&lt;figure&gt;</code> and <code>&lt;figcaption&gt;</code> for meaningful structure</li>
+                <li><strong>Accessibility:</strong> Descriptive alt text for each image</li>
+                <li><strong>Responsive design:</strong> Grid layout adapts to screen size</li>
+                <li><strong>Consistent sizing:</strong> <code>object-fit: cover</code> maintains uniform dimensions</li>
+                <li><strong>Visual polish:</strong> Shadows, border radius, and hover effects</li>
+            </ul>
+
+            <p>You can expand this gallery by adding more images, creating lightbox functionality with JavaScript, or implementing different grid patterns.</p>
+        </div>
+
+        <div class="exercise" id="practice">
+            <h2>Practice Opportunity</h2>
+
+            <p>Create a simple photo blog post page that includes:</p>
+
+            <ul>
+                <li>A <strong>header image</strong> that spans the full width of the content area (use <code>max-width: 100%</code>)</li>
+                <li>An <strong>author profile section</strong> with a small circular profile photo floated to the left of the text</li>
+                <li>At least <strong>three images within the blog post</strong>, properly sized and positioned</li>
+                <li>All images must have <strong>descriptive alt text</strong></li>
+                <li>Use a <code>&lt;figure&gt;</code> element with <code>&lt;figcaption&gt;</code> for at least one image</li>
+            </ul>
+
+            <h3>Bonus Challenges</h3>
+            <ul>
+                <li>Make all images <strong>responsive</strong> so they work well on mobile devices</li>
+                <li>Create a <strong>two-column layout</strong> for one section using Flexbox, with an image on one side and text on the other</li>
+                <li>Add <strong>hover effects</strong> to make images slightly enlarge when the user hovers over them</li>
+                <li>Organize your images in a dedicated <code>images/</code> folder and practice using correct relative paths</li>
+            </ul>
+
+            <h3>Testing Your Work</h3>
+            <p>After creating your page:</p>
+
+            <ul>
+                <li>Resize your browser window to test responsive behavior</li>
+                <li>Check that all images load correctly (verify file paths)</li>
+                <li>Review your alt text - does it describe the image's content and purpose?</li>
+                <li>Test with images disabled to see if your alt text provides adequate description</li>
+            </ul>
+        </div>
+
+        <div class="concept-section" id="summary">
+            <h2>Summary of Key Concepts</h2>
+
+            <p>Images are an essential part of web development, helping to communicate ideas, create visual interest, and enhance user experience. The <code>&lt;img&gt;</code> tag requires two critical attributes: <code>src</code> to specify the image location, and <code>alt</code> to provide accessible alternative text.</p>
+
+            <h3>What You've Learned</h3>
+            <p>Understanding file paths is crucial for displaying images correctly - whether using relative paths within your site, absolute paths from the root, or external URLs. Writing effective alt text makes your images accessible to users with screen readers and provides fallback information when images don't load.</p>
+
+            <p>Different image formats serve different purposes: JPEG for photographs, PNG for graphics with transparency, SVG for scalable icons and logos, and GIF for simple animations. Choosing the right format balances visual quality with file size and performance.</p>
+
+            <p>Images can be sized using HTML attributes or CSS properties, with CSS providing more flexibility and control. Making images responsive with <code>max-width: 100%</code> and <code>height: auto</code> ensures they work across all devices. Positioning techniques like <code>float</code>, Flexbox, and CSS Grid allow you to create sophisticated image layouts.</p>
+
+            <h3>Remember These Key Points</h3>
+            <ul>
+                <li><strong>Always include alt text</strong> - it's essential for accessibility</li>
+                <li><strong>Choose the right format</strong> - JPEG for photos, PNG for graphics, SVG for scalable icons</li>
+                <li><strong>Make images responsive</strong> - use <code>max-width: 100%</code> at minimum</li>
+                <li><strong>Optimize file paths</strong> - ensure images can be found relative to your HTML files</li>
+                <li><strong>Consider performance</strong> - appropriately sized images load faster</li>
+            </ul>
+
+            <h3>Next Steps</h3>
+            <p>With a solid understanding of how to work with images, you're ready to learn about links in Lesson 10. Links and images often work together - for example, making images clickable or creating navigation with icon buttons. The next lesson will show you how to create effective navigation and connect your pages together.</p>
+        </div>
+
+        <div class="concept-section">
+            <h2>Bibliography</h2>
+            <p>Mozilla Developer Network. "The Image Embed element." MDN Web Docs. <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/img">https://developer.mozilla.org/en-US/docs/Web/HTML/Element/img</a></p>
+
+            <p>W3C Web Accessibility Initiative. "Images Tutorial." Web Accessibility Tutorials. <a href="https://www.w3.org/WAI/tutorials/images/">https://www.w3.org/WAI/tutorials/images/</a></p>
+
+            <p>Mozilla Developer Network. "Responsive images." MDN Web Docs. <a href="https://developer.mozilla.org/en-US/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images">https://developer.mozilla.org/en-US/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images</a></p>
+
+            <p>WebAIM. "Alternative Text." WebAIM. <a href="https://webaim.org/techniques/alttext/">https://webaim.org/techniques/alttext/</a></p>
+        </div>
+
+        <div class="lesson-nav-links" style="margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--border-color);">
+            <a href="../index.html">Back to Home</a> |
+            <a href="08-github-pages.html">Previous Lesson</a> |
+            <a href="10-links.html">Next Lesson: Working with Links</a>
+        </div>
+    </div>
+</body>
+</html>

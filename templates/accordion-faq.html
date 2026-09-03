@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accordion FAQ - Pure CSS Template</title>
+    <style>
+        /* ===================================
+           HOW TO EDIT THIS TEMPLATE
+           ===================================
+
+           This is a COMPLETE, WORKING template that demonstrates pure CSS accordion/FAQ.
+
+           TO VIEW THE SOURCE CODE:
+           - Right-click anywhere on this page
+           - Select "View Page Source" or "Inspect Element"
+           - Or use Ctrl+U (Windows/Linux) or Cmd+Option+U (Mac)
+
+           WHAT YOU CAN CUSTOMIZE:
+
+           1. FAQ CONTENT (Lines ~340-420):
+              - Change questions and answers
+              - Add or remove accordion items
+              - Modify text content
+              - Add images or code examples in answers
+
+           2. COLORS (Lines ~75-90):
+              - Change CSS custom properties
+              - Modify header colors
+              - Adjust border colors
+              - Change icon colors
+
+           3. ANIMATION SPEED (Lines ~200-210):
+              - Modify transition duration
+              - Change timing functions
+              - Adjust icon rotation speed
+
+           4. LAYOUT (Lines ~120-180):
+              - Adjust max-width
+              - Modify padding and spacing
+              - Change border radius
+              - Adjust shadows
+
+           5. ICONS (Line ~145):
+              - Change chevron icon (▼ ► ▶ ▾ ▸ etc.)
+              - Use different Unicode symbols
+              - Add custom SVG icons
+
+           KEY CONCEPTS DEMONSTRATED:
+           - Checkbox hack for state management
+           - :checked pseudo-class
+           - CSS sibling selectors (~)
+           - max-height technique for smooth expansion
+           - Transform for icon rotation
+           - Transitions for smooth animations
+           - No JavaScript required!
+
+           CHALLENGE IDEAS:
+           - Add "expand all" / "collapse all" functionality
+           - Create nested accordions
+           - Add search/filter functionality
+           - Implement single-open accordion (radio buttons)
+           - Add icons or images to questions
+           - Create different color schemes per section
+        */
+
+        /* Reset and base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            /* Color scheme */
+            --color-bg: #f8fafc;
+            --color-text: #1e293b;
+            --color-text-light: #64748b;
+            --color-primary: #3b82f6;
+            --color-primary-dark: #2563eb;
+            --color-border: #e2e8f0;
+            --color-header-bg: #ffffff;
+            --color-content-bg: #f1f5f9;
+            --color-shadow: rgba(0, 0, 0, 0.1);
+
+            /* Spacing */
+            --spacing-sm: 0.75rem;
+            --spacing-md: 1rem;
+            --spacing-lg: 1.5rem;
+
+            /* Border radius */
+            --radius-md: 0.5rem;
+            --radius-lg: 0.75rem;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: var(--color-text);
+            min-height: 100vh;
+            padding: 2rem 1rem;
+            line-height: 1.6;
+        }
+
+        /* Container */
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Header */
+        header {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: white;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        /* FAQ Section */
+        .faq-section {
+            background: white;
+            border-radius: var(--radius-lg);
+            padding: 2rem;
+            box-shadow: 0 10px 30px var(--color-shadow);
+            margin-bottom: 2rem;
+        }
+
+        .faq-section h2 {
+            font-size: 1.75rem;
+            margin-bottom: 1.5rem;
+            color: var(--color-primary);
+        }
+
+        /* Accordion Item */
+        .accordion-item {
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-md);
+            margin-bottom: 1rem;
+            overflow: hidden;
+            transition: box-shadow 0.3s ease;
+        }
+
+        .accordion-item:hover {
+            box-shadow: 0 2px 8px rgba(59, 130, 246, 0.15);
+        }
+
+        /* Hide the checkbox */
+        .accordion-toggle {
+            display: none;
+        }
+
+        /* Accordion Header (Label) */
+        .accordion-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: var(--spacing-lg);
+            background: var(--color-header-bg);
+            cursor: pointer;
+            user-select: none;
+            transition: background-color 0.3s ease;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .accordion-header:hover {
+            background: var(--color-bg);
+        }
+
+        /* Icon */
+        .accordion-icon {
+            flex-shrink: 0;
+            margin-left: 1rem;
+            color: var(--color-primary);
+            font-size: 1.2rem;
+            transition: transform 0.3s ease;
+            display: inline-block;
+        }
+
+        /* Accordion Content */
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease;
+            background: var(--color-content-bg);
+        }
+
+        .accordion-content-inner {
+            padding: var(--spacing-lg);
+            color: var(--color-text-light);
+        }
+
+        /* When checkbox is checked */
+        .accordion-toggle:checked ~ .accordion-header {
+            background: var(--color-bg);
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        .accordion-toggle:checked ~ .accordion-header .accordion-icon {
+            transform: rotate(180deg);
+        }
+
+        .accordion-toggle:checked ~ .accordion-content {
+            max-height: 1000px; /* Large enough for any content */
+        }
+
+        /* Content styling */
+        .accordion-content-inner p {
+            margin-bottom: 1rem;
+        }
+
+        .accordion-content-inner p:last-child {
+            margin-bottom: 0;
+        }
+
+        .accordion-content-inner ul {
+            margin-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .accordion-content-inner li {
+            margin-bottom: 0.5rem;
+        }
+
+        .accordion-content-inner code {
+            background: rgba(59, 130, 246, 0.1);
+            padding: 0.2rem 0.4rem;
+            border-radius: 0.25rem;
+            font-family: 'Courier New', monospace;
+            color: var(--color-primary-dark);
+            font-size: 0.9em;
+        }
+
+        /* Info box */
+        .info-box {
+            background: rgba(59, 130, 246, 0.1);
+            border-left: 4px solid var(--color-primary);
+            padding: 1rem;
+            border-radius: 0.25rem;
+            margin: 1.5rem 0;
+        }
+
+        .info-box h3 {
+            color: var(--color-primary);
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .info-box p {
+            color: var(--color-text);
+            margin: 0;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            color: white;
+            padding: 2rem 1rem;
+            opacity: 0.9;
+        }
+
+        footer p {
+            margin-bottom: 0.5rem;
+        }
+
+        footer code {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 0.2rem 0.5rem;
+            border-radius: 0.25rem;
+            font-family: 'Courier New', monospace;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            .faq-section {
+                padding: 1.5rem;
+            }
+
+            .faq-section h2 {
+                font-size: 1.5rem;
+            }
+
+            .accordion-header {
+                font-size: 1rem;
+                padding: var(--spacing-md);
+            }
+
+            .accordion-content-inner {
+                padding: var(--spacing-md);
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 1rem 0.5rem;
+            }
+
+            h1 {
+                font-size: 1.75rem;
+            }
+
+            .subtitle {
+                font-size: 1rem;
+            }
+
+            .faq-section {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Frequently Asked Questions</h1>
+            <p class="subtitle">Pure CSS Accordion - No JavaScript Required!</p>
+        </header>
+
+        <div class="faq-section">
+            <h2>Getting Started</h2>
+
+            <div class="accordion-item">
+                <input type="checkbox" id="faq1" class="accordion-toggle">
+                <label for="faq1" class="accordion-header">
+                    What is the checkbox hack?
+                    <span class="accordion-icon">▼</span>
+                </label>
+                <div class="accordion-content">
+                    <div class="accordion-content-inner">
+                        <p>
+                            The "checkbox hack" is a clever CSS technique that uses the <code>&lt;input type="checkbox"&gt;</code>
+                            element combined with the <code>:checked</code> pseudo-class to create interactive components
+                            without JavaScript.
+                        </p>
+                        <p>
+                            When a checkbox is checked, you can use the sibling selector (<code>~</code>) to target
+                            and style other elements. This allows you to show/hide content, trigger animations, and
+                            create interactive UI components with pure CSS!
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <input type="checkbox" id="faq2" class="accordion-toggle">
+                <label for="faq2" class="accordion-header">
+                    How does the accordion animation work?
+                    <span class="accordion-icon">▼</span>
+                </label>
+                <div class="accordion-content">
+                    <div class="accordion-content-inner">
+                        <p>
+                            The smooth expand/collapse animation uses the <code>max-height</code> property with
+                            CSS transitions. Here's how it works:
+                        </p>
+                        <ul>
+                            <li>By default, content has <code>max-height: 0</code> and <code>overflow: hidden</code></li>
+                            <li>When the checkbox is checked, <code>max-height</code> changes to a large value (e.g., 1000px)</li>
+                            <li>CSS transitions smoothly animate between these values</li>
+                            <li>The icon rotation uses <code>transform: rotate(180deg)</code></li>
+                        </ul>
+                        <p>
+                            This technique is more reliable than animating <code>height: auto</code>, which doesn't
+                            work with CSS transitions.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <input type="checkbox" id="faq3" class="accordion-toggle">
+                <label for="faq3" class="accordion-header">
+                    Can multiple accordions be open at once?
+                    <span class="accordion-icon">▼</span>
+                </label>
+                <div class="accordion-content">
+                    <div class="accordion-content-inner">
+                        <p>
+                            Yes! This accordion uses checkboxes, which allow multiple items to be open simultaneously.
+                            Each checkbox maintains its own independent state.
+                        </p>
+                        <p>
+                            If you want only one accordion open at a time (like a traditional accordion), you can use
+                            <code>&lt;input type="radio"&gt;</code> instead of checkboxes. Radio buttons with the same
+                            <code>name</code> attribute automatically deselect others when one is selected.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="faq-section">
+            <h2>Customization</h2>
+
+            <div class="accordion-item">
+                <input type="checkbox" id="faq4" class="accordion-toggle">
+                <label for="faq4" class="accordion-header">
+                    How can I change the colors?
+                    <span class="accordion-icon">▼</span>
+                </label>
+                <div class="accordion-content">
+                    <div class="accordion-content-inner">
+                        <p>
+                            This template uses CSS custom properties (variables) defined in the <code>:root</code>
+                            selector. You can easily customize colors by changing these values:
+                        </p>
+                        <ul>
+                            <li><code>--color-primary</code> - Main accent color (currently blue)</li>
+                            <li><code>--color-bg</code> - Background color</li>
+                            <li><code>--color-border</code> - Border color</li>
+                            <li><code>--color-header-bg</code> - Accordion header background</li>
+                            <li><code>--color-content-bg</code> - Content area background</li>
+                        </ul>
+                        <p>
+                            Find these variables near the top of the <code>&lt;style&gt;</code> section (around line 75-90).
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <input type="checkbox" id="faq5" class="accordion-toggle">
+                <label for="faq5" class="accordion-header">
+                    How do I add more questions?
+                    <span class="accordion-icon">▼</span>
+                </label>
+                <div class="accordion-content">
+                    <div class="accordion-content-inner">
+                        <p>
+                            Adding new accordion items is simple! Just copy the entire <code>.accordion-item</code>
+                            block and modify:
+                        </p>
+                        <ol>
+                            <li>Change the <code>id</code> attribute (e.g., "faq6", "faq7", etc.)</li>
+                            <li>Update the <code>for</code> attribute in the label to match the new id</li>
+                            <li>Replace the question text in the label</li>
+                            <li>Replace the answer content in the <code>.accordion-content-inner</code> div</li>
+                        </ol>
+                        <p>
+                            Make sure each accordion item has a unique ID - this is crucial for the checkbox hack to work!
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <input type="checkbox" id="faq6" class="accordion-toggle">
+                <label for="faq6" class="accordion-header">
+                    Can I change the animation speed?
+                    <span class="accordion-icon">▼</span>
+                </label>
+                <div class="accordion-content">
+                    <div class="accordion-content-inner">
+                        <p>
+                            Absolutely! Look for the <code>transition</code> properties in the CSS:
+                        </p>
+                        <ul>
+                            <li><code>.accordion-content</code> - Controls expand/collapse speed (line ~200)</li>
+                            <li><code>.accordion-icon</code> - Controls icon rotation speed (line ~195)</li>
+                            <li><code>.accordion-header</code> - Controls background color change (line ~180)</li>
+                        </ul>
+                        <p>
+                            Change the duration values (e.g., <code>0.4s</code> to <code>0.6s</code> for slower,
+                            or <code>0.2s</code> for faster). You can also change <code>ease</code> to other
+                            timing functions like <code>ease-in</code>, <code>ease-out</code>, or <code>cubic-bezier()</code>.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="info-box">
+            <h3>💡 Pro Tip</h3>
+            <p>
+                This accordion is fully accessible via keyboard! Press <strong>Tab</strong> to navigate between items
+                and <strong>Space</strong> or <strong>Enter</strong> to expand/collapse. Screen readers will
+                announce the state of each accordion item.
+            </p>
+        </div>
+
+        <footer>
+            <p>
+                View the source code to see how this works! Right-click and select "View Page Source"
+                or press <code>Ctrl+U</code> (Windows/Linux) or <code>Cmd+Option+U</code> (Mac).
+            </p>
+            <p>
+                This template demonstrates concepts from <strong>Lesson 13: CSS Animations & Transitions</strong>
+            </p>
+        </footer>
+    </div>
+</body>
+</html>

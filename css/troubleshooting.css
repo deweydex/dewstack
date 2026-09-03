@@ -1,0 +1,276 @@
+/* 
+    Troubleshooting Page Styles
+    
+    This file contains styles specific to the troubleshooting page.
+    The page provides a clear, organized layout for common problems
+    and solutions that beginners might encounter.
+*/
+
+.troubleshooting-container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+}
+
+.troubleshooting-header {
+    margin-bottom: 3rem;
+    text-align: center;
+}
+
+.troubleshooting-header h1 {
+    color: var(--primary-color, #2563eb);
+    margin-bottom: 1rem;
+    font-size: 2.5rem;
+}
+
+.intro-text {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: var(--text-color, #334155);
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+/* 
+    Quick Problem Finder Section
+    
+    Provides easy navigation to specific problems using
+    a grid layout that's responsive and accessible.
+*/
+.quick-links {
+    background-color: #f0f9ff;
+    padding: 2rem;
+    border-radius: 8px;
+    margin-bottom: 3rem;
+    border-left: 4px solid var(--primary-color, #2563eb);
+}
+
+.quick-links h2 {
+    margin-bottom: 1.5rem;
+    color: var(--primary-color, #2563eb);
+}
+
+.problem-links {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+}
+
+.problem-links a {
+    display: block;
+    padding: 0.75rem 1rem;
+    background-color: white;
+    color: var(--primary-color, #2563eb);
+    text-decoration: none;
+    border-radius: 4px;
+    border: 1px solid #e2e8f0;
+    transition: all 0.2s ease;
+    font-weight: 500;
+}
+
+.problem-links a:hover {
+    background-color: var(--primary-color, #2563eb);
+    color: white;
+    border-color: var(--primary-color, #2563eb);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.problem-links a:focus {
+    outline: 2px solid var(--primary-color, #2563eb);
+    outline-offset: 2px;
+}
+
+/* 
+    Problem Section Styles
+    
+    Each problem section has clear visual separation and
+    uses consistent spacing for readability.
+*/
+.problem-section {
+    margin-bottom: 4rem;
+    padding-bottom: 3rem;
+    border-bottom: 2px solid #e2e8f0;
+}
+
+.problem-section:last-of-type {
+    border-bottom: none;
+}
+
+.problem-section h2 {
+    color: var(--primary-color, #2563eb);
+    margin-bottom: 1rem;
+    font-size: 2rem;
+    scroll-margin-top: 80px; /* Accounts for fixed header when jumping to section */
+}
+
+.problem-section > p:first-of-type {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: var(--text-color, #334155);
+    margin-bottom: 2rem;
+}
+
+.problem-section h3 {
+    color: #1e293b;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+}
+
+.problem-section p {
+    line-height: 1.8;
+    margin-bottom: 1rem;
+    color: var(--text-color, #334155);
+}
+
+.problem-section code {
+    background-color: #f1f5f9;
+    padding: 0.2rem 0.4rem;
+    border-radius: 3px;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 0.9em;
+    color: #dc2626;
+}
+
+.problem-intro {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: var(--text-color, #334155);
+    margin-bottom: 2rem;
+    font-weight: 500;
+}
+
+/* 
+    Tip Boxes
+    
+    Highlighted boxes that draw attention to important
+    quick tips, shortcuts, or key information.
+*/
+.tip-box {
+    background-color: #f0f9ff;
+    border-left: 4px solid var(--primary-color, #2563eb);
+    padding: 1.25rem 1.5rem;
+    margin: 1.5rem 0;
+    border-radius: 4px;
+}
+
+.tip-box strong {
+    display: block;
+    color: var(--primary-color, #2563eb);
+    margin-bottom: 0.75rem;
+    font-size: 1.05rem;
+}
+
+.tip-box ul {
+    margin: 0.75rem 0;
+    padding-left: 1.5rem;
+}
+
+.tip-box li {
+    margin-bottom: 0.5rem;
+    line-height: 1.6;
+}
+
+.tip-box p {
+    margin-top: 0.75rem;
+    margin-bottom: 0;
+}
+
+/* Keyboard shortcut styling */
+.tip-box kbd {
+    background-color: #1e293b;
+    color: #e2e8f0;
+    padding: 0.25rem 0.5rem;
+    border-radius: 3px;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 0.9em;
+    font-weight: 600;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* 
+    Encouragement Section
+    
+    Provides positive reinforcement and reminds students
+    that encountering problems is normal and part of learning.
+*/
+.encouragement-section {
+    background-color: #f0fdf4;
+    padding: 2.5rem;
+    border-radius: 8px;
+    margin: 3rem 0;
+    border-left: 4px solid #16a34a;
+}
+
+.encouragement-section h2 {
+    color: #16a34a;
+    margin-bottom: 1.5rem;
+}
+
+.encouragement-section p {
+    line-height: 1.8;
+    margin-bottom: 1rem;
+    color: var(--text-color, #334155);
+}
+
+/* 
+    Footer Navigation
+    
+    Provides easy navigation back to the homepage
+    and additional helpful guidance.
+*/
+.troubleshooting-footer {
+    margin-top: 4rem;
+    padding-top: 2rem;
+    border-top: 2px solid #e2e8f0;
+    text-align: center;
+}
+
+.troubleshooting-footer p {
+    margin-bottom: 0.5rem;
+    color: var(--text-color, #334155);
+}
+
+.troubleshooting-footer a {
+    color: var(--primary-color, #2563eb);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.troubleshooting-footer a:hover {
+    text-decoration: underline;
+}
+
+/* 
+    Responsive Design
+    
+    Ensures the troubleshooting page works well
+    on mobile devices and smaller screens.
+*/
+@media (max-width: 768px) {
+    .troubleshooting-container {
+        padding: 1rem 0.5rem;
+    }
+
+    .troubleshooting-header h1 {
+        font-size: 2rem;
+    }
+
+    .problem-links {
+        grid-template-columns: 1fr;
+    }
+
+    .problem-section h2 {
+        font-size: 1.75rem;
+    }
+
+    .problem-section h3 {
+        font-size: 1.25rem;
+    }
+
+    .encouragement-section {
+        padding: 1.5rem;
+    }
+}
+

@@ -1,0 +1,1175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lesson 10: Working with Links</title>
+    <link rel="stylesheet" href="../css/base.css">
+    <link rel="stylesheet" href="../css/navigation.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <link rel="stylesheet" href="../css/lessons.css">
+    <link rel="stylesheet" href="../css/playground.css">
+    <link rel="stylesheet" href="../css/search.css">
+    <!-- Prism.js for syntax highlighting -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+    <script src="../script.js"></script>
+    <script src="../js/copy-code.js"></script>
+    <script src="../js/progress-tracker.js"></script>
+    <script src="../js/code-playground.js"></script>
+    <script src="../js/search.js"></script>
+</head>
+<body>
+    <header>
+        <nav class="navbar minimal">
+            <div class="container">
+                <button class="menu-toggle" aria-label="Open navigation menu" aria-expanded="false">
+                    ☰ Menu
+                </button>
+                <div class="site-header-content">
+                    <a href="../index.html" class="logo">Web Authoring and Databases</a>
+                    <p class="site-subtitle">
+                        A series of tutorials (and experiments) from
+                        <a href="https://jsaaron.com" target="_blank" rel="noopener noreferrer">Joshua Aaron</a> |
+                        <a href="https://github.com/jsaaron" target="_blank" rel="noopener noreferrer">GitHub</a>
+                    </p>
+                </div>
+
+                <div class="header-right">
+                    <a href="../about.html">About</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="menu-overlay"></div>
+
+    <ul class="nav-links">
+        <li><a href="../index.html#home">Home</a></li>
+                    <li><a href="../index.html#start">Start Here: Your Own Site</a></li>
+                            <li class="nav-section-header">Lessons</li>
+        <li><a href="01-html-basics.html">01. HTML Basics</a></li>
+        <li><a href="02-html-semantics.html">02. Semantic HTML</a></li>
+        <li><a href="03-css-basics.html">03. CSS Basics</a></li>
+        <li><a href="04-css-layout.html">04. CSS Layout</a></li>
+        <li><a href="05-responsive-design.html">05. Responsive Design</a></li>
+        <li><a href="06-github-setup.html">06. GitHub Setup</a></li>
+        <li><a href="07-github-workflow.html">07. GitHub Workflow</a></li>
+        <li><a href="08-github-pages.html">08. GitHub Pages</a></li>
+        <li><a href="09-images.html">09. Working with Images</a></li>
+        <li><a href="10-links.html">10. Working with Links</a></li>
+        <li><a href="11-flexbox-grid-advanced.html">11. Advanced Flexbox & Grid</a></li>
+        <li><a href="12-component-design.html">12. Component Design</a></li>
+        <li><a href="13-css-animations.html">13. CSS Animations</a></li>
+        <li class="nav-section-header">Databases</li>
+                    <li><a href="../databases/playground/index.html">SQL Playground</a></li>
+                    <li><a href="../databases/playground/teacher.html">Playground: Teacher Version</a></li>
+                    <li><a href="../databases/quiz.html">SQL Quiz</a></li>
+                    <li><a href="../databases/sqlite_tutorial.ipynb">SQLite Notebook</a></li>
+                    <li class="nav-section-header">Resources</li>
+        <li><a href="../index.html#examples">Examples</a></li>
+        <li><a href="../index.html#templates">Templates</a></li>
+        <li><a href="../index.html#github">GitHub Guides</a></li>
+        <li><a href="../design-resources.html">Design Resources</a></li>
+        <li><a href="../troubleshooting.html">Troubleshooting</a></li>
+        <li><a href="../reference.html">Quick Reference</a></li>
+        <li><a href="../project-ideas.html">Project Ideas</a></li>
+        <li><a href="../about.html">About</a></li>
+    </ul>
+
+    <div class="lesson-container">
+        <div class="lesson-nav-links">
+            <a href="../index.html">Back to Home</a> |
+            <a href="09-images.html">Previous Lesson</a>
+        </div>
+
+        <h1>Lesson 10: Working with Links</h1>
+
+        <!-- Table of Contents -->
+        <nav class="table-of-contents">
+            <h2>Table of Contents</h2>
+            <ul>
+                <li><a href="#learning-outcomes">Learning Outcomes</a></li>
+                <li><a href="#why-links-matter">Why Links Matter on the Web</a></li>
+                <li><a href="#anchor-tag">The Anchor Tag and Basic Syntax</a></li>
+                <li><a href="#external-links">Creating External Links</a></li>
+                <li><a href="#internal-links">Creating Internal Links</a></li>
+                <li><a href="#anchor-links">Anchor Links Within a Page</a></li>
+                <li><a href="#link-text">Writing Effective Link Text</a></li>
+                <li><a href="#image-links">Images as Links</a></li>
+                <li><a href="#styling-links">Styling Links with CSS</a></li>
+                <li><a href="#link-states">Understanding Link States</a></li>
+                <li><a href="#navigation">Creating Navigation Menus</a></li>
+                <li><a href="#worked-example">Worked Example: Building a Complete Navigation System</a></li>
+                <li><a href="#practice">Practice Opportunity</a></li>
+                <li><a href="#summary">Summary</a></li>
+            </ul>
+        </nav>
+
+        <div class="learning-outcomes" id="learning-outcomes">
+            <h2>Learning Outcomes</h2>
+            <p>By the end of this lesson, you will understand how to create different types of links using the anchor tag. You will be able to link to external websites, other pages within your own site, and specific sections within a page. You will learn how to write accessible link text, combine images with links, and style links with CSS to create effective navigation. You will also understand link states and how to provide visual feedback to users.</p>
+
+            <h3>Prerequisites</h3>
+            <p>You should be comfortable with basic HTML structure from Lesson 01 and have some familiarity with CSS from Lesson 03. Understanding file paths from Lesson 09 (Working with Images) will also be helpful, as the same concepts apply to linking between pages.</p>
+        </div>
+
+        <div class="concept-section" id="why-links-matter">
+            <h2>Why Links Matter on the Web</h2>
+
+            <p>Links are what make the web <strong>"the web"</strong> - they connect pages together, creating the vast network of interconnected information that defines the internet. The word "hypertext" in HTML stands for text that contains links to other text, and this hyperlinking capability is the fundamental innovation that makes the web work.</p>
+
+            <h3>Links Enable Navigation</h3>
+            <p>Without links, each web page would exist in isolation. Links allow users to:</p>
+
+            <ul>
+                <li><strong>Navigate between pages</strong> on your website</li>
+                <li><strong>Jump to specific sections</strong> within a long page</li>
+                <li><strong>Access external resources</strong> and reference materials</li>
+                <li><strong>Discover related content</strong> and explore topics in depth</li>
+            </ul>
+
+            <h3>Links Affect How Users Experience Your Site</h3>
+            <p>The way you create and organize links has a <strong>significant impact</strong> on user experience:</p>
+
+            <ul>
+                <li><strong>Descriptive link text</strong> helps users understand where a link leads before clicking</li>
+                <li><strong>Clear navigation</strong> helps users find what they're looking for quickly</li>
+                <li><strong>Visual feedback</strong> through link styling confirms when links are clickable</li>
+                <li><strong>Logical organization</strong> of links creates intuitive site structure</li>
+            </ul>
+
+            <p>This lesson will teach you how to create effective links that enhance user experience and make your website easy to navigate.</p>
+        </div>
+
+        <div class="concept-section" id="anchor-tag">
+            <h2>The Anchor Tag and Basic Syntax</h2>
+
+            <p>Links are created using the <code>&lt;a&gt;</code> tag, called the <strong>anchor tag</strong>. The anchor tag requires an <code>href</code> attribute (short for "hypertext reference") that specifies the destination of the link.</p>
+
+            <h3>Basic Link Structure</h3>
+            <p>A simple link looks like this:</p>
+
+            <div class="code-example">
+                <pre><code class="language-html">&lt;a href="https://www.example.com"&gt;Visit Example Website&lt;/a&gt;</code></pre>
+            </div>
+
+            <p>This link has three parts:</p>
+
+            <ul>
+                <li>The <strong>opening tag</strong> with the <code>href</code> attribute: <code>&lt;a href="https://www.example.com"&gt;</code></li>
+                <li>The <strong>link text</strong> that users see and click: <code>Visit Example Website</code></li>
+                <li>The <strong>closing tag</strong>: <code>&lt;/a&gt;</code></li>
+            </ul>
+
+            <h3>The href Attribute</h3>
+            <p>The <code>href</code> attribute is <strong>required</strong> for links to function. It can contain:</p>
+
+            <ul>
+                <li><strong>Full URLs</strong> to external websites: <code>href="https://www.example.com"</code></li>
+                <li><strong>Relative paths</strong> to pages on your site: <code>href="about.html"</code></li>
+                <li><strong>Anchor links</strong> to sections on the same page: <code>href="#contact"</code></li>
+                <li><strong>Email addresses</strong>: <code>href="mailto:email@example.com"</code></li>
+                <li><strong>Phone numbers</strong>: <code>href="tel:+1234567890"</code></li>
+            </ul>
+
+            <h3>What Happens When You Click a Link</h3>
+            <p>When a user clicks a link, the browser <strong>navigates to the URL</strong> specified in the <code>href</code> attribute. This might:</p>
+
+            <ul>
+                <li>Load a new page in the current browser tab</li>
+                <li>Open a new tab (if the link is configured to do so)</li>
+                <li>Scroll to a different section of the current page</li>
+                <li>Open the user's email client or phone dialer</li>
+            </ul>
+
+            <p>Understanding how the <code>href</code> attribute works is fundamental to creating effective navigation throughout your website.</p>
+        </div>
+
+        <div class="concept-section" id="external-links">
+            <h2>Creating External Links</h2>
+
+            <p>External links point to pages on <strong>other websites</strong>. These links require a complete URL including the protocol (usually <code>https://</code>).</p>
+
+            <h3>Basic External Link</h3>
+            <div class="code-example">
+                <pre><code class="language-html">&lt;a href="https://www.mozilla.org"&gt;Mozilla Developer Network&lt;/a&gt;</code></pre>
+            </div>
+
+            <h3>Opening Links in a New Tab</h3>
+            <p>Often you want external links to open in a <strong>new tab</strong> so users don't leave your website. Use the <code>target</code> attribute:</p>
+
+            <div class="code-example">
+                <pre><code class="language-html">&lt;a href="https://www.mozilla.org" target="_blank"&gt;
+    Mozilla Developer Network
+&lt;/a&gt;</code></pre>
+            </div>
+
+            <p>The <code>target="_blank"</code> attribute tells the browser to open the link in a new tab or window.</p>
+
+            <h3>Security Consideration: rel Attribute</h3>
+            <p>When using <code>target="_blank"</code>, you should also include <code>rel="noopener noreferrer"</code> for security reasons:</p>
+
+            <div class="code-example">
+                <pre><code class="language-html">&lt;a href="https://www.mozilla.org"
+   target="_blank"
+   rel="noopener noreferrer"&gt;
+    Mozilla Developer Network
+&lt;/a&gt;</code></pre>
+            </div>
+
+            <p><strong>Why this matters:</strong></p>
+
+            <ul>
+                <li><code>noopener</code> prevents the new page from accessing the <code>window.opener</code> property, which could be a security risk</li>
+                <li><code>noreferrer</code> prevents the browser from sending the referring page's URL to the new page</li>
+            </ul>
+
+            <p>This combination protects your users and is considered a <strong>best practice</strong> for all external links that open in new tabs.</p>
+
+            <h3>When to Use External Links</h3>
+            <p>External links are appropriate for:</p>
+
+            <ul>
+                <li><strong>Citations and sources</strong> - linking to original research or references</li>
+                <li><strong>Resources</strong> - linking to tools, documentation, or helpful websites</li>
+                <li><strong>Social media</strong> - linking to your profiles on other platforms</li>
+                <li><strong>Partners or affiliates</strong> - linking to related organizations</li>
+            </ul>
+        </div>
+
+        <div class="concept-section" id="internal-links">
+            <h2>Creating Internal Links</h2>
+
+            <p>Internal links connect pages <strong>within your own website</strong>. These links use relative paths rather than full URLs, making your site portable and easier to maintain.</p>
+
+            <h3>Linking to Pages in the Same Directory</h3>
+            <p>If the page you're linking to is in the same folder as your current page, just use the filename:</p>
+
+            <div class="code-example">
+                <pre><code class="language-html">&lt;a href="about.html"&gt;About Us&lt;/a&gt;</code></pre>
+            </div>
+
+            <h3>Linking to Pages in Subdirectories</h3>
+            <p>If the page is in a subfolder, include the folder path:</p>
+
+            <div class="code-example">
+                <pre><code class="language-html">&lt;a href="pages/contact.html"&gt;Contact&lt;/a&gt;</code></pre>
+            </div>
+
+            <h3>Linking to Parent Directories</h3>
+            <p>To link to a page in a parent folder, use <code>../</code> to go up one level:</p>
+
+            <div class="code-example">
+                <pre><code class="language-html">&lt;a href="../index.html"&gt;Back to Home&lt;/a&gt;</code></pre>
+            </div>
+
+            <h3>Understanding Relative Paths for Links</h3>
+            <p>Relative paths work the same way for links as they do for images (covered in Lesson 09). Consider this folder structure:</p>
+
+            <div class="code-example">
+                <pre><code class="language-plaintext">my-website/
+├── index.html
+├── about.html
+├── pages/
+│   ├── services.html
+│   └── portfolio.html
+└── blog/
+    └── first-post.html</code></pre>
+            </div>
+
+            <p><strong>From <code>index.html</code>:</strong></p>
+            <div class="code-example">
+                <pre><code class="language-html">&lt;a href="about.html"&gt;About&lt;/a&gt;
+&lt;a href="pages/services.html"&gt;Services&lt;/a&gt;
+&lt;a href="blog/first-post.html"&gt;Blog&lt;/a&gt;</code></pre>
+            </div>
+
+            <p><strong>From <code>pages/services.html</code>:</strong></p>
+            <div class="code-example">
+                <pre><code class="language-html">&lt;a href="../index.html"&gt;Home&lt;/a&gt;
+&lt;a href="../about.html"&gt;About&lt;/a&gt;
+&lt;a href="portfolio.html"&gt;Portfolio&lt;/a&gt;</code></pre>
+            </div>
+
+            <h3>Benefits of Relative Links</h3>
+            <p>Using relative paths for internal links has several advantages:</p>
+
+            <ul>
+                <li><strong>Portability:</strong> Your site works locally and on any domain without changing links</li>
+                <li><strong>Faster:</strong> No need for DNS lookup since the browser knows it's the same site</li>
+                <li><strong>Easier maintenance:</strong> Moving your site to a new domain doesn't break internal links</li>
+            </ul>
+        </div>
+
+        <div class="concept-section" id="anchor-links">
+            <h2>Anchor Links Within a Page</h2>
+
+            <p>Anchor links (also called "fragment identifiers" or "hash links") allow you to <strong>link to specific sections</strong> within the same page. This is particularly useful for long pages, creating table of contents navigation, or "back to top" links.</p>
+
+            <h3>Creating an Anchor Point</h3>
+            <p>First, add an <code>id</code> attribute to the element you want to link to:</p>
+
+            <div class="code-example">
+                <pre><code class="language-html">&lt;h2 id="introduction"&gt;Introduction&lt;/h2&gt;</code></pre>
+            </div>
+
+            <p>The <code>id</code> must be <strong>unique</strong> on the page - no two elements can have the same id.</p>
+
+            <h3>Linking to the Anchor Point</h3>
+            <p>Create a link using the id prefixed with a hash symbol (<code>#</code>):</p>
+
+            <div class="code-example">
+                <pre><code class="language-html">&lt;a href="#introduction"&gt;Jump to Introduction&lt;/a&gt;</code></pre>
+            </div>
+
+            <p>When users click this link, the browser will <strong>scroll to the element</strong> with <code>id="introduction"</code>.</p>
+
+            <h3>Creating a Table of Contents</h3>
+            <p>Anchor links are perfect for creating navigable table of contents:</p>
+
+            <div class="code-example">
+                <pre><code class="language-html">&lt;nav&gt;
+    &lt;h2&gt;Table of Contents&lt;/h2&gt;
+    &lt;ul&gt;
+        &lt;li&gt;&lt;a href="#introduction"&gt;Introduction&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href="#methods"&gt;Methods&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href="#results"&gt;Results&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href="#conclusion"&gt;Conclusion&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+&lt;/nav&gt;
+
+&lt;!-- Later in the page --&gt;
+&lt;section id="introduction"&gt;
+    &lt;h2&gt;Introduction&lt;/h2&gt;
+    &lt;p&gt;Content here...&lt;/p&gt;
+&lt;/section&gt;
+
+&lt;section id="methods"&gt;
+    &lt;h2&gt;Methods&lt;/h2&gt;
+    &lt;p&gt;Content here...&lt;/p&gt;
+&lt;/section&gt;</code></pre>
+            </div>
+
+            <h3>Back to Top Links</h3>
+            <p>You can create a "back to top" link that scrolls to the beginning of the page:</p>
+
+            <div class="code-example">
+                <pre><code class="language-html">&lt;!-- At the top of your page --&gt;
+&lt;div id="top"&gt;&lt;/div&gt;
+
+&lt;!-- Anywhere else on the page --&gt;
+&lt;a href="#top"&gt;Back to Top&lt;/a&gt;</code></pre>
+            </div>
+
+            <p>Or use an empty hash to scroll to the page top:</p>
+
+            <div class="code-example">
+                <pre><code class="language-html">&lt;a href="#"&gt;Back to Top&lt;/a&gt;</code></pre>
+            </div>
+
+            <h3>Combining with Page Links</h3>
+            <p>You can also link to a specific section on a <strong>different page</strong>:</p>
+
+            <div class="code-example">
+                <pre><code class="language-html">&lt;a href="about.html#team"&gt;Meet Our Team&lt;/a&gt;</code></pre>
+            </div>
+
+            <p>This navigates to <code>about.html</code> and then scrolls to the element with <code>id="team"</code>.</p>
+        </div>
+
+        <div class="concept-section" id="link-text">
+            <h2>Writing Effective Link Text</h2>
+
+            <p>The text you use for links (called "link text" or "anchor text") matters significantly for both <strong>usability and accessibility</strong>. Good link text helps users understand where a link leads before they click it.</p>
+
+            <h3>Make Link Text Descriptive</h3>
+            <p>Link text should <strong>describe the destination</strong> or action, not just say "click here" or "read more."</p>
+
+            <div class="code-example">
+                <pre><code class="language-html">&lt;!-- Not ideal --&gt;
+&lt;p&gt;To learn more about web accessibility, &lt;a href="guide.html"&gt;click here&lt;/a&gt;.&lt;/p&gt;
+
+&lt;!-- Better --&gt;
+&lt;p&gt;Read our &lt;a href="guide.html"&gt;web accessibility guide&lt;/a&gt; to learn more.&lt;/p&gt;</code></pre>
+            </div>
+
+            <h3>Why "Click Here" Is Problematic</h3>
+            <p>Generic link text like "click here" creates several issues:</p>
+
+            <ul>
+                <li><strong>Screen reader users</strong> often navigate by jumping from link to link, and hearing "click here" repeatedly provides no context</li>
+                <li><strong>Visual users</strong> scanning a page can't quickly identify where different links lead</li>
+                <li><strong>Search engines</strong> use link text to understand page relationships and content</li>
+            </ul>
+
+            <h3>Link Text Best Practices</h3>
+
+            <h4>Be Specific</h4>
+            <p>Describe what users will find when they click:</p>
+
+            <div class="code-example">
+                <pre><code class="language-html">&lt;!-- Not specific --&gt;
+&lt;a href="downloads.html"&gt;Download&lt;/a&gt;
+
+&lt;!-- Better --&gt;
+&lt;a href="downloads.html"&gt;Download the 2024 Annual Report (PDF, 2.5MB)&lt;/a&gt;</code></pre>
+            </div>
+
+            <h4>Keep It Concise</h4>
+            <p>While descriptive, link text should still be <strong>reasonably brief</strong>:</p>
+
+            <div class="code-example">
+                <pre><code class="language-html">&lt;!-- Too verbose --&gt;
+&lt;a href="tutorial.html"&gt;Click this link to visit our comprehensive beginner's tutorial about HTML basics&lt;/a&gt;
+
+&lt;!-- Better --&gt;
+&lt;a href="tutorial.html"&gt;HTML Basics Tutorial&lt;/a&gt;</code></pre>
+            </div>
+
+            <h4>Make Links Distinguishable</h4>
+            <p>If you have multiple links in close proximity, make sure each has <strong>unique, clear text</strong>:</p>
+
+            <div class="code-example">
+                <pre><code class="language-html">&lt;!-- Not ideal - multiple identical links --&gt;
+&lt;ul&gt;
+    &lt;li&gt;HTML Tutorial &lt;a href="html.html"&gt;Learn More&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;CSS Tutorial &lt;a href="css.html"&gt;Learn More&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;!-- Better --&gt;
+&lt;ul&gt;
+    &lt;li&gt;&lt;a href="html.html"&gt;HTML Tutorial&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href="css.html"&gt;CSS Tutorial&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</code></pre>
+            </div>
+
+            <h3>Special Link Types</h3>
+
+            <h4>Email Links</h4>
+            <div class="code-example">
+                <pre><code class="language-html">&lt;a href="mailto:contact@example.com"&gt;Email us&lt;/a&gt;</code></pre>
+            </div>
+
+            <p>You can also pre-fill subject and body:</p>
+
+            <div class="code-example">
+                <pre><code class="language-html">&lt;a href="mailto:contact@example.com?subject=Question%20about%20services"&gt;
+    Ask about our services
+&lt;/a&gt;</code></pre>
+            </div>
+
+            <h4>Phone Links</h4>
+            <div class="code-example">
+                <pre><code class="language-html">&lt;a href="tel:+1234567890"&gt;Call us: (123) 456-7890&lt;/a&gt;</code></pre>
+            </div>
+
+            <p>On mobile devices, this opens the phone dialer with the number ready to call.</p>
+        </div>
+
+        <div class="concept-section" id="image-links">
+            <h2>Images as Links</h2>
+
+            <p>Images can be made clickable by wrapping them in an anchor tag. This is commonly used for logo links, image galleries, and navigation buttons.</p>
+
+            <h3>Basic Image Link</h3>
+            <p>To make an image clickable, wrap the <code>&lt;img&gt;</code> tag with an <code>&lt;a&gt;</code> tag:</p>
+
+            <div class="code-example">
+                <pre><code class="language-html">&lt;a href="index.html"&gt;
+    &lt;img src="logo.png" alt="Company logo - return to homepage"&gt;
+&lt;/a&gt;</code></pre>
+            </div>
+
+            <p><strong>Important:</strong> When an image is a link, the alt text should describe the <em>link's destination or purpose</em>, not just the image content.</p>
+
+            <h3>Alt Text for Linked Images</h3>
+            <p>Compare these examples:</p>
+
+            <div class="code-example">
+                <pre><code class="language-html">&lt;!-- Not ideal - describes image, not function --&gt;
+&lt;a href="index.html"&gt;
+    &lt;img src="home-icon.png" alt="Picture of a house"&gt;
+&lt;/a&gt;
+
+&lt;!-- Better - describes what clicking does --&gt;
+&lt;a href="index.html"&gt;
+    &lt;img src="home-icon.png" alt="Return to homepage"&gt;
+&lt;/a&gt;</code></pre>
+            </div>
+
+            <h3>Removing the Default Border</h3>
+            <p>Some older browsers add a border around linked images. Use CSS to remove it:</p>
+
+            <div class="code-example">
+                <pre><code class="language-css">a img {
+    border: none;
+}</code></pre>
+            </div>
+
+            <h3>Image Link with Caption</h3>
+            <p>For image links with captions, you can wrap the entire <code>&lt;figure&gt;</code> element:</p>
+
+            <div class="code-example">
+                <pre><code class="language-html">&lt;a href="portfolio/project1.html"&gt;
+    &lt;figure&gt;
+        &lt;img src="project1-thumb.jpg" alt="View Project 1 details"&gt;
+        &lt;figcaption&gt;Website Redesign Project&lt;/figcaption&gt;
+    &lt;/figure&gt;
+&lt;/a&gt;</code></pre>
+            </div>
+
+            <h3>Thumbnail Links to Larger Images</h3>
+            <p>A common pattern is linking a small thumbnail to a full-size version:</p>
+
+            <div class="code-example">
+                <pre><code class="language-html">&lt;a href="images/photo-large.jpg"&gt;
+    &lt;img src="images/photo-thumb.jpg" alt="View larger version"&gt;
+&lt;/a&gt;</code></pre>
+            </div>
+
+            <h3>Combining Text and Images in Links</h3>
+            <p>You can include both text and images within a single link:</p>
+
+            <div class="code-example">
+                <pre><code class="language-html">&lt;a href="index.html" class="logo-link"&gt;
+    &lt;img src="logo.png" alt=""&gt;
+    &lt;span&gt;Company Name&lt;/span&gt;
+&lt;/a&gt;</code></pre>
+            </div>
+
+            <p>Note that when you have both an image and text in a link, you can use an empty alt attribute (<code>alt=""</code>) for the image since the text provides the description.</p>
+        </div>
+
+        <div class="concept-section" id="styling-links">
+            <h2>Styling Links with CSS</h2>
+
+            <p>By default, browsers style links with <strong>blue text and an underline</strong>, and visited links appear purple. While functional, these default styles often don't match your design. CSS allows you to style links to fit your website's aesthetic while maintaining usability.</p>
+
+            <h3>Basic Link Styling</h3>
+            <p>You can change link colors, remove underlines, and add other styles:</p>
+
+            <div class="code-example">
+                <pre><code class="language-css">a {
+    color: #2563eb; /* Blue color */
+    text-decoration: none; /* Remove underline */
+}
+
+a:hover {
+    text-decoration: underline; /* Add underline on hover */
+    color: #1e40af; /* Darker blue on hover */
+}</code></pre>
+            </div>
+
+            <h3>Important Accessibility Consideration</h3>
+            <p>If you remove underlines from links, you <strong>must</strong> ensure links are still distinguishable from regular text. This is especially important for users with color blindness. Options include:</p>
+
+            <ul>
+                <li>Adding underlines on <strong>hover</strong> and <strong>focus</strong></li>
+                <li>Using a <strong>sufficiently different color</strong> from body text</li>
+                <li>Adding a <strong>border or background</strong> to links</li>
+                <li>Using <strong>font weight</strong> to distinguish links</li>
+            </ul>
+
+            <p><strong>Best practice:</strong> Keep underlines, or add them on hover/focus states.</p>
+
+            <h3>Styling Different Link Types</h3>
+            <p>You might want different styles for navigation links versus in-content links:</p>
+
+            <div class="code-example">
+                <pre><code class="language-css">/* General content links */
+article a {
+    color: #2563eb;
+    text-decoration: underline;
+}
+
+/* Navigation links */
+nav a {
+    color: #1f2937;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+nav a:hover {
+    color: #2563eb;
+}</code></pre>
+            </div>
+
+            <h3>Creating Button-Style Links</h3>
+            <p>For call-to-action links, you might style them as buttons:</p>
+
+            <div class="code-example">
+                <pre><code class="language-css">.button-link {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    background-color: #2563eb;
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+    font-weight: 600;
+    transition: background-color 0.3s ease;
+}
+
+.button-link:hover {
+    background-color: #1e40af;
+}</code></pre>
+            </div>
+
+            <div class="code-example">
+                <pre><code class="language-html">&lt;a href="signup.html" class="button-link"&gt;Sign Up Now&lt;/a&gt;</code></pre>
+            </div>
+        </div>
+
+        <div class="concept-section" id="link-states">
+            <h2>Understanding Link States</h2>
+
+            <p>Links have different <strong>states</strong> depending on user interaction and history. CSS provides special selectors called <strong>pseudo-classes</strong> to style these different states, providing important visual feedback to users.</p>
+
+            <h3>The Four Main Link States</h3>
+
+            <h4>:link - Unvisited Links</h4>
+            <p>The <code>:link</code> pseudo-class targets links that haven't been visited yet:</p>
+
+            <div class="code-example">
+                <pre><code class="language-css">a:link {
+    color: #2563eb;
+}</code></pre>
+            </div>
+
+            <h4>:visited - Visited Links</h4>
+            <p>The <code>:visited</code> pseudo-class targets links the user has already clicked:</p>
+
+            <div class="code-example">
+                <pre><code class="language-css">a:visited {
+    color: #7c3aed; /* Purple to indicate visited */
+}</code></pre>
+            </div>
+
+            <p><strong>Note:</strong> For privacy reasons, browsers limit which CSS properties can be applied to <code>:visited</code> links (mainly color-related properties).</p>
+
+            <h4>:hover - Mouse Over</h4>
+            <p>The <code>:hover</code> pseudo-class activates when users move their mouse over the link:</p>
+
+            <div class="code-example">
+                <pre><code class="language-css">a:hover {
+    color: #1e40af;
+    text-decoration: underline;
+}</code></pre>
+            </div>
+
+            <h4>:active - Being Clicked</h4>
+            <p>The <code>:active</code> pseudo-class applies while the user is actively clicking the link:</p>
+
+            <div class="code-example">
+                <pre><code class="language-css">a:active {
+    color: #1e3a8a;
+}</code></pre>
+            </div>
+
+            <h3>The Correct Order: LVHA</h3>
+            <p>When styling link states, order matters. Use the mnemonic <strong>"LoVe HAte"</strong> (LVHA):</p>
+
+            <div class="code-example">
+                <pre><code class="language-css">a:link { color: #2563eb; }
+a:visited { color: #7c3aed; }
+a:hover { color: #1e40af; }
+a:active { color: #1e3a8a; }</code></pre>
+            </div>
+
+            <p>This order ensures that more specific states override less specific ones correctly.</p>
+
+            <h3>Focus State for Keyboard Navigation</h3>
+            <p>The <code>:focus</code> state is crucial for keyboard users who navigate using the Tab key:</p>
+
+            <div class="code-example">
+                <pre><code class="language-css">a:focus {
+    outline: 2px solid #2563eb;
+    outline-offset: 2px;
+}</code></pre>
+            </div>
+
+            <p><strong>Important:</strong> Never use <code>outline: none</code> on links without providing an alternative focus indicator. Visible focus states are essential for accessibility.</p>
+
+            <h3>Combining Hover and Focus</h3>
+            <p>Often you want the same styling for both hover and focus:</p>
+
+            <div class="code-example">
+                <pre><code class="language-css">a:hover,
+a:focus {
+    color: #1e40af;
+    text-decoration: underline;
+}</code></pre>
+            </div>
+
+            <h3>Complete Link Styling Example</h3>
+            <div class="code-example">
+                <pre><code class="language-css">/* Default link styles */
+a {
+    color: #2563eb;
+    text-decoration: underline;
+    transition: color 0.2s ease;
+}
+
+/* Visited links */
+a:visited {
+    color: #7c3aed;
+}
+
+/* Hover and focus states */
+a:hover,
+a:focus {
+    color: #1e40af;
+}
+
+/* Active (being clicked) */
+a:active {
+    color: #1e3a8a;
+}
+
+/* Focus visible for keyboard users */
+a:focus {
+    outline: 2px solid #2563eb;
+    outline-offset: 2px;
+}</code></pre>
+            </div>
+        </div>
+
+        <div class="concept-section" id="navigation">
+            <h2>Creating Navigation Menus</h2>
+
+            <p>Navigation menus are one of the most important uses of links on a website. A well-structured navigation helps users find content and understand your site's organization.</p>
+
+            <h3>Semantic Navigation Markup</h3>
+            <p>Use the <code>&lt;nav&gt;</code> element to wrap navigation links. This provides semantic meaning and helps screen readers identify navigation areas:</p>
+
+            <div class="code-example">
+                <pre><code class="language-html">&lt;nav&gt;
+    &lt;ul&gt;
+        &lt;li&gt;&lt;a href="index.html"&gt;Home&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href="about.html"&gt;About&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href="services.html"&gt;Services&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href="contact.html"&gt;Contact&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+&lt;/nav&gt;</code></pre>
+            </div>
+
+            <h3>Styling a Horizontal Navigation Bar</h3>
+            <p>Transform a list into a horizontal navigation bar with CSS:</p>
+
+            <div class="code-example">
+                <pre><code class="language-css">nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: 2rem;
+}
+
+nav a {
+    color: #1f2937;
+    text-decoration: none;
+    font-weight: 600;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+nav a:hover,
+nav a:focus {
+    background-color: #f3f4f6;
+    color: #2563eb;
+}</code></pre>
+            </div>
+
+            <h3>Indicating the Current Page</h3>
+            <p>Help users understand which page they're on by styling the current page's link differently:</p>
+
+            <div class="code-example">
+                <pre><code class="language-html">&lt;nav&gt;
+    &lt;ul&gt;
+        &lt;li&gt;&lt;a href="index.html"&gt;Home&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href="about.html" class="current"&gt;About&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href="services.html"&gt;Services&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href="contact.html"&gt;Contact&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+&lt;/nav&gt;</code></pre>
+            </div>
+
+            <div class="code-example">
+                <pre><code class="language-css">nav a.current {
+    background-color: #2563eb;
+    color: white;
+}</code></pre>
+            </div>
+
+            <h3>Responsive Mobile Navigation</h3>
+            <p>On small screens, stack navigation links vertically:</p>
+
+            <div class="code-example">
+                <pre><code class="language-css">@media (max-width: 768px) {
+    nav ul {
+        flex-direction: column;
+        gap: 0;
+    }
+
+    nav a {
+        display: block;
+        padding: 1rem;
+        border-bottom: 1px solid #e5e7eb;
+    }
+}</code></pre>
+            </div>
+
+            <h3>Breadcrumb Navigation</h3>
+            <p>Breadcrumbs show users their location in the site hierarchy:</p>
+
+            <div class="code-example">
+                <pre><code class="language-html">&lt;nav aria-label="Breadcrumb"&gt;
+    &lt;ol&gt;
+        &lt;li&gt;&lt;a href="index.html"&gt;Home&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href="products.html"&gt;Products&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href="laptops.html"&gt;Laptops&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;Model XYZ&lt;/li&gt;
+    &lt;/ol&gt;
+&lt;/nav&gt;</code></pre>
+            </div>
+
+            <div class="code-example">
+                <pre><code class="language-css">nav[aria-label="Breadcrumb"] ol {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    gap: 0.5rem;
+}
+
+nav[aria-label="Breadcrumb"] li:not(:last-child)::after {
+    content: "›";
+    margin-left: 0.5rem;
+    color: #6b7280;
+}</code></pre>
+            </div>
+        </div>
+
+        <div class="worked-example" id="worked-example">
+            <h2>Worked Example: Building a Complete Navigation System</h2>
+
+            <p>This example demonstrates how to create a complete, accessible navigation system that includes a header navigation bar, breadcrumbs, and in-page table of contents. We'll combine semantic HTML with CSS styling to create a professional navigation experience.</p>
+
+            <h3>Step 1: Create the HTML Structure</h3>
+            <p>Start by building a complete page structure with multiple navigation elements:</p>
+
+            <div class="code-example">
+                <pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;title&gt;Services - My Website&lt;/title&gt;
+    &lt;link rel="stylesheet" href="styles.css"&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;!-- Main navigation --&gt;
+    &lt;header&gt;
+        &lt;nav class="main-nav" aria-label="Main navigation"&gt;
+            &lt;a href="index.html" class="logo"&gt;
+                &lt;img src="logo.png" alt="Company Name Homepage"&gt;
+            &lt;/a&gt;
+            &lt;ul&gt;
+                &lt;li&gt;&lt;a href="index.html"&gt;Home&lt;/a&gt;&lt;/li&gt;
+                &lt;li&gt;&lt;a href="about.html"&gt;About&lt;/a&gt;&lt;/li&gt;
+                &lt;li&gt;&lt;a href="services.html" class="current"&gt;Services&lt;/a&gt;&lt;/li&gt;
+                &lt;li&gt;&lt;a href="portfolio.html"&gt;Portfolio&lt;/a&gt;&lt;/li&gt;
+                &lt;li&gt;&lt;a href="contact.html"&gt;Contact&lt;/a&gt;&lt;/li&gt;
+            &lt;/ul&gt;
+        &lt;/nav&gt;
+    &lt;/header&gt;
+
+    &lt;!-- Breadcrumb navigation --&gt;
+    &lt;nav class="breadcrumb" aria-label="Breadcrumb"&gt;
+        &lt;ol&gt;
+            &lt;li&gt;&lt;a href="index.html"&gt;Home&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;Services&lt;/li&gt;
+        &lt;/ol&gt;
+    &lt;/nav&gt;
+
+    &lt;main&gt;
+        &lt;h1&gt;Our Services&lt;/h1&gt;
+
+        &lt;!-- Table of contents --&gt;
+        &lt;nav class="toc" aria-label="Table of contents"&gt;
+            &lt;h2&gt;On This Page&lt;/h2&gt;
+            &lt;ul&gt;
+                &lt;li&gt;&lt;a href="#web-design"&gt;Web Design&lt;/a&gt;&lt;/li&gt;
+                &lt;li&gt;&lt;a href="#development"&gt;Development&lt;/a&gt;&lt;/li&gt;
+                &lt;li&gt;&lt;a href="#seo"&gt;SEO Services&lt;/a&gt;&lt;/li&gt;
+                &lt;li&gt;&lt;a href="#maintenance"&gt;Maintenance&lt;/a&gt;&lt;/li&gt;
+            &lt;/ul&gt;
+        &lt;/nav&gt;
+
+        &lt;section id="web-design"&gt;
+            &lt;h2&gt;Web Design&lt;/h2&gt;
+            &lt;p&gt;Content about web design services...&lt;/p&gt;
+        &lt;/section&gt;
+
+        &lt;section id="development"&gt;
+            &lt;h2&gt;Development&lt;/h2&gt;
+            &lt;p&gt;Content about development services...&lt;/p&gt;
+        &lt;/section&gt;
+
+        &lt;section id="seo"&gt;
+            &lt;h2&gt;SEO Services&lt;/h2&gt;
+            &lt;p&gt;Content about SEO services...&lt;/p&gt;
+        &lt;/section&gt;
+
+        &lt;section id="maintenance"&gt;
+            &lt;h2&gt;Maintenance&lt;/h2&gt;
+            &lt;p&gt;Content about maintenance services...&lt;/p&gt;
+        &lt;/section&gt;
+    &lt;/main&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+            </div>
+
+            <h3>Step 2: Style the Main Navigation</h3>
+            <p>Create a professional horizontal navigation bar:</p>
+
+            <div class="code-example">
+                <pre><code class="language-css">.main-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    background-color: #ffffff;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.main-nav .logo img {
+    height: 40px;
+    display: block;
+}
+
+.main-nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: 2rem;
+}
+
+.main-nav a {
+    color: #1f2937;
+    text-decoration: none;
+    font-weight: 600;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+}
+
+.main-nav a:hover,
+.main-nav a:focus {
+    background-color: #f3f4f6;
+    color: #2563eb;
+}
+
+.main-nav a.current {
+    background-color: #2563eb;
+    color: white;
+}</code></pre>
+            </div>
+
+            <h3>Step 3: Style the Breadcrumb Navigation</h3>
+            <div class="code-example">
+                <pre><code class="language-css">.breadcrumb {
+    padding: 1rem 2rem;
+    background-color: #f9fafb;
+}
+
+.breadcrumb ol {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: 0.5rem;
+    font-size: 0.875rem;
+}
+
+.breadcrumb li {
+    color: #6b7280;
+}
+
+.breadcrumb a {
+    color: #2563eb;
+    text-decoration: none;
+}
+
+.breadcrumb a:hover {
+    text-decoration: underline;
+}
+
+.breadcrumb li:not(:last-child)::after {
+    content: "›";
+    margin-left: 0.5rem;
+    color: #9ca3af;
+}</code></pre>
+            </div>
+
+            <h3>Step 4: Style the Table of Contents</h3>
+            <div class="code-example">
+                <pre><code class="language-css">.toc {
+    background-color: #f3f4f6;
+    border-left: 4px solid #2563eb;
+    padding: 1.5rem;
+    margin: 2rem 0;
+}
+
+.toc h2 {
+    margin-top: 0;
+    font-size: 1.125rem;
+    color: #1f2937;
+}
+
+.toc ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.toc li {
+    margin: 0.5rem 0;
+}
+
+.toc a {
+    color: #2563eb;
+    text-decoration: none;
+    display: block;
+    padding: 0.25rem 0;
+}
+
+.toc a:hover,
+.toc a:focus {
+    text-decoration: underline;
+    padding-left: 0.5rem;
+    transition: padding-left 0.2s ease;
+}</code></pre>
+            </div>
+
+            <h3>Step 5: Add Responsive Behavior</h3>
+            <p>Make the navigation mobile-friendly:</p>
+
+            <div class="code-example">
+                <pre><code class="language-css">@media (max-width: 768px) {
+    .main-nav {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .main-nav ul {
+        flex-direction: column;
+        width: 100%;
+        gap: 0;
+        margin-top: 1rem;
+    }
+
+    .main-nav a {
+        display: block;
+        width: 100%;
+        padding: 0.75rem 1rem;
+        border-bottom: 1px solid #e5e7eb;
+    }
+}</code></pre>
+            </div>
+
+            <h3>What This Example Demonstrates</h3>
+            <p>This navigation system showcases several important concepts:</p>
+
+            <ul>
+                <li><strong>Semantic HTML:</strong> Using <code>&lt;nav&gt;</code> elements with descriptive <code>aria-label</code> attributes</li>
+                <li><strong>Multiple navigation types:</strong> Main navigation, breadcrumbs, and table of contents each serve different purposes</li>
+                <li><strong>Accessibility:</strong> Clear labels, keyboard navigation support, and focus states</li>
+                <li><strong>Visual feedback:</strong> Current page indication and hover effects</li>
+                <li><strong>Responsive design:</strong> Navigation adapts to different screen sizes</li>
+            </ul>
+
+            <p>This pattern can be adapted for most websites, providing users with multiple ways to navigate your content.</p>
+        </div>
+
+        <div class="exercise" id="practice">
+            <h2>Practice Opportunity</h2>
+
+            <p>Create a multi-page website (at least 3 pages) with a complete navigation system that includes:</p>
+
+            <ul>
+                <li>A <strong>header navigation bar</strong> that appears on all pages with links to each page</li>
+                <li>Visual indication of the <strong>current page</strong> in the navigation</li>
+                <li>At least one page with a <strong>table of contents</strong> that links to sections within that page</li>
+                <li>At least three <strong>external links</strong> that open in new tabs with proper security attributes</li>
+                <li>One page featuring <strong>image links</strong> (like a portfolio or gallery)</li>
+                <li>An <strong>email link</strong> and/or <strong>phone link</strong> in a contact section</li>
+                <li>Proper link styling with all states (link, visited, hover, focus, active)</li>
+            </ul>
+
+            <h3>Bonus Challenges</h3>
+            <ul>
+                <li>Add <strong>breadcrumb navigation</strong> to show the user's location in your site hierarchy</li>
+                <li>Create a <strong>"back to top"</strong> link that appears on long pages</li>
+                <li>Make your navigation <strong>responsive</strong> so it works well on mobile devices</li>
+                <li>Add <strong>smooth scrolling</strong> for anchor links using CSS (<code>scroll-behavior: smooth;</code>)</li>
+                <li>Ensure all links have <strong>descriptive link text</strong> (no "click here")</li>
+            </ul>
+
+            <h3>Testing Your Work</h3>
+            <p>After creating your navigation:</p>
+
+            <ul>
+                <li>Test all links to ensure they work correctly</li>
+                <li>Navigate using only the keyboard (Tab key) to verify focus states are visible</li>
+                <li>Check that external links open in new tabs</li>
+                <li>Verify that current page indication updates on each page</li>
+                <li>Test on mobile or resize your browser to check responsive behavior</li>
+            </ul>
+        </div>
+
+        <div class="concept-section" id="summary">
+            <h2>Summary of Key Concepts</h2>
+
+            <p>Links are the fundamental technology that connects the web together, allowing users to navigate between pages and discover content. The anchor tag (<code>&lt;a&gt;</code>) with the <code>href</code> attribute creates links to external websites, internal pages, or specific sections within a page.</p>
+
+            <h3>What You've Learned</h3>
+            <p>Effective link text is descriptive and tells users where the link leads. Avoid generic phrases like "click here" in favor of specific descriptions. When images are used as links, the alt text should describe the link's destination or purpose rather than the image itself.</p>
+
+            <p>Links have multiple states (link, visited, hover, active, focus) that can be styled with CSS pseudo-classes. Always provide visible focus indicators for keyboard users and maintain sufficient color contrast to ensure links are distinguishable from regular text. The proper order for styling link states is LVHA: Link, Visited, Hover, Active.</p>
+
+            <p>Navigation menus are best marked up using the semantic <code>&lt;nav&gt;</code> element containing lists of links. Different navigation types serve different purposes: main navigation helps users move between pages, breadcrumbs show location in site hierarchy, and tables of contents help users navigate within long pages.</p>
+
+            <h3>Remember These Key Points</h3>
+            <ul>
+                <li><strong>Use descriptive link text</strong> - tell users where they're going</li>
+                <li><strong>External links with target="_blank"</strong> should include rel="noopener noreferrer"</li>
+                <li><strong>Provide visual feedback</strong> for all link states, especially focus</li>
+                <li><strong>Use semantic <code>&lt;nav&gt;</code> elements</strong> for navigation areas</li>
+                <li><strong>Test keyboard navigation</strong> to ensure accessibility</li>
+                <li><strong>Make current page clear</strong> in navigation menus</li>
+            </ul>
+
+            <h3>Bringing It All Together</h3>
+            <p>With knowledge of both images (Lesson 09) and links, you can now create rich, interactive web pages with clickable images, image galleries, and complete navigation systems. These two lessons provide the foundation for building websites that are both visually appealing and easy to navigate.</p>
+        </div>
+
+        <div class="concept-section">
+            <h2>Bibliography</h2>
+            <p>Mozilla Developer Network. "The Anchor element." MDN Web Docs. <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a">https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a</a></p>
+
+            <p>WebAIM. "Links and Hypertext." WebAIM. <a href="https://webaim.org/techniques/hypertext/">https://webaim.org/techniques/hypertext/</a></p>
+
+            <p>W3C Web Accessibility Initiative. "Link Purpose (In Context)." Understanding WCAG 2.1. <a href="https://www.w3.org/WAI/WCAG21/Understanding/link-purpose-in-context.html">https://www.w3.org/WAI/WCAG21/Understanding/link-purpose-in-context.html</a></p>
+
+            <p>Mozilla Developer Network. "CSS :link pseudo-class." MDN Web Docs. <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/:link">https://developer.mozilla.org/en-US/docs/Web/CSS/:link</a></p>
+        </div>
+
+        <div class="lesson-nav-links" style="margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--border-color);">
+            <a href="../index.html">Back to Home</a> |
+            <a href="09-images.html">Previous Lesson: Working with Images</a>
+        </div>
+    </div>
+</body>
+</html>

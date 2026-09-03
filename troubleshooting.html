@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Troubleshooting - Common Problems and Solutions</title>
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/navigation.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/troubleshooting.css">
+    <!-- Prism.js for syntax highlighting -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+    <script src="script.js"></script>
+    <script src="js/copy-code.js"></script>
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <header>
+        <nav class="navbar minimal">
+            <div class="container">
+                <button class="menu-toggle" aria-label="Open navigation menu" aria-expanded="false">
+                    ☰ Menu
+                </button>
+                <div class="site-header-content">
+                    <a href="index.html" class="logo">Web Authoring and Databases</a>
+                    <p class="site-subtitle">
+                        A series of tutorials (and experiments) from
+                        <a href="https://jsaaron.com" target="_blank" rel="noopener noreferrer">Joshua Aaron</a> |
+                        <a href="https://github.com/jsaaron" target="_blank" rel="noopener noreferrer">GitHub</a>
+                    </p>
+                </div>
+
+                <div class="header-right">
+                    <a href="about.html">About</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="menu-overlay"></div>
+
+    <ul class="nav-links">
+        <li><a href="index.html#home">Home</a></li>
+                    <li><a href="index.html#start">Start Here: Your Own Site</a></li>
+                            <li class="nav-section-header">Lessons</li>
+        <li><a href="lessons/01-html-basics.html">01. HTML Basics</a></li>
+        <li><a href="lessons/02-html-semantics.html">02. Semantic HTML</a></li>
+        <li><a href="lessons/03-css-basics.html">03. CSS Basics</a></li>
+        <li><a href="lessons/04-css-layout.html">04. CSS Layout</a></li>
+        <li><a href="lessons/05-responsive-design.html">05. Responsive Design</a></li>
+        <li><a href="lessons/06-github-setup.html">06. GitHub Setup</a></li>
+        <li><a href="lessons/07-github-workflow.html">07. GitHub Workflow</a></li>
+        <li><a href="lessons/08-github-pages.html">08. GitHub Pages</a></li>
+        <li><a href="lessons/09-images.html">09. Working with Images</a></li>
+        <li><a href="lessons/10-links.html">10. Working with Links</a></li>
+        <li class="nav-section-header">Databases</li>
+                    <li><a href="databases/playground/index.html">SQL Playground</a></li>
+                    <li><a href="databases/playground/teacher.html">Playground: Teacher Version</a></li>
+                    <li><a href="databases/quiz.html">SQL Quiz</a></li>
+                    <li><a href="databases/sqlite_tutorial.ipynb">SQLite Notebook</a></li>
+                    <li class="nav-section-header">Resources</li>
+        <li><a href="index.html#examples">Examples</a></li>
+        <li><a href="index.html#templates">Templates</a></li>
+        <li><a href="index.html#github">GitHub Guides</a></li>
+        <li><a href="design-resources.html">Design Resources</a></li>
+        <li><a href="troubleshooting.html">Troubleshooting</a></li>
+        <li><a href="reference.html">Quick Reference</a></li>
+        <li><a href="project-ideas.html">Project Ideas</a></li>
+        <li><a href="about.html">About</a></li>
+    </ul>
+
+    <div class="troubleshooting-container">
+        <div class="troubleshooting-header">
+            <h1>Troubleshooting: Common Problems and Solutions</h1>
+            <p class="intro-text">Encountering issues while learning web development is completely normal and happens to everyone, including experienced developers. This guide helps you solve common problems you might face when building your first websites. Each problem includes step-by-step solutions and explanations of why the problem occurs, so you can learn to diagnose similar issues in the future.</p>
+        </div>
+
+        <div class="quick-links">
+            <h2>Quick Problem Finder</h2>
+            <div class="problem-links">
+                <a href="#css-not-working">My CSS isn't working</a>
+                <a href="#blank-page">My page is blank</a>
+                <a href="#images-not-loading">Images won't load</a>
+                <a href="#styles-not-applying">Styles not applying</a>
+                <a href="#changes-not-showing">Changes not showing</a>
+                <a href="#file-wont-open">File won't open in browser</a>
+                <a href="#syntax-errors">Code has syntax errors</a>
+                <a href="#github-problems">GitHub issues</a>
+            </div>
+        </div>
+
+        <div class="problem-section" id="css-not-working">
+            <h2>Problem: My CSS Isn't Working</h2>
+            <p class="problem-intro">You've written CSS rules, saved your file, and refreshed your browser, but nothing changes. This is one of the most common issues beginners encounter. Understanding how CSS connects to HTML helps you solve this problem systematically.</p>
+
+            <h3>Check Your File Path</h3>
+            <p>The most common cause of CSS not working is an <strong>incorrect file path</strong> in your HTML. When you link a CSS file using the <code>&lt;link&gt;</code> tag, the browser needs to find the exact location of that CSS file relative to your HTML file.</p>
+
+            <p><strong>If your HTML and CSS files are in the same folder:</strong></p>
+
+            <div class="code-example">
+                <pre><code class="language-html">&lt;link rel="stylesheet" href="styles.css"&gt;</code></pre>
+            </div>
+
+            <p>If your CSS file is in a subfolder called "css", and your HTML file is one level up, you need to include the folder name:</p>
+
+            <div class="code-example">
+                <pre><code class="language-html">&lt;link rel="stylesheet" href="css/styles.css"&gt;</code></pre>
+            </div>
+
+            <div class="tip-box">
+                <strong>Quick Check:</strong>
+                <ul>
+                    <li>Open your HTML file's location in your computer's file explorer or finder</li>
+                    <li>Verify that the CSS file exists exactly where you've told the browser to look for it</li>
+                    <li>File paths are case-sensitive on some systems - <code>"Styles.css"</code> is different from <code>"styles.css"</code></li>
+                </ul>
+            </div>
+
+            <h3>Verify the Link Tag Location</h3>
+            <p>The <code>&lt;link&gt;</code> tag must be inside the <code>&lt;head&gt;</code> section of your HTML document. If you've placed it in the body or outside the head section, the browser might not load it correctly.</p>
+
+            <div class="code-example">
+                <pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;title&gt;My Page&lt;/title&gt;
+    &lt;link rel="stylesheet" href="styles.css"&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;!-- Your content here --&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+            </div>
+
+            <h3>Save and Refresh</h3>
+            <p>After making any changes to your CSS file, you must <strong>save the file</strong> and then <strong>refresh your browser</strong>. Browsers cache files to load pages faster, so they don't automatically detect changes.</p>
+            
+            <div class="tip-box">
+                <strong>Hard Refresh Shortcuts:</strong>
+                <ul>
+                    <li><strong>Windows:</strong> Press <kbd>Ctrl + F5</kbd></li>
+                    <li><strong>Mac:</strong> Press <kbd>Cmd + Shift + R</kbd></li>
+                </ul>
+                <p>This forces a hard refresh that clears the cache and reloads your CSS file.</p>
+            </div>
+
+            <h3>Check for Syntax Errors</h3>
+            <p>Even a <strong>small syntax error</strong> in your CSS can prevent the entire stylesheet from loading. Common mistakes include:</p>
+            
+            <ul>
+                <li>Missing semicolons at the end of properties</li>
+                <li>Unclosed curly braces</li>
+                <li>Typos in property names</li>
+            </ul>
+            
+            <p><strong>Always check:</strong> Every property ends with a semicolon, and every opening curly brace <code>{</code> has a matching closing brace <code>}</code>.</p>
+
+            <div class="code-example">
+                <pre><code class="language-css">/* Correct */
+p {
+    color: blue;
+    font-size: 16px;
+}
+
+/* Incorrect - missing semicolon */
+p {
+    color: blue
+    font-size: 16px;
+}</code></pre>
+            </div>
+
+            <h3>Use Browser Developer Tools</h3>
+            <p>Modern browsers include developer tools that can help you diagnose CSS issues. Right-click on an element and select "Inspect" or "Inspect Element". In the developer tools panel, you can see which CSS rules are being applied and which are being overridden. This helps you understand why your styles might not be working as expected.</p>
+        </div>
+
+        <div class="problem-section" id="blank-page">
+            <h2>Problem: My Page is Blank or Shows Nothing</h2>
+            <p class="problem-intro">You open your HTML file in a browser and see a completely blank page. This can be frustrating, but it usually indicates a specific issue with your HTML structure that's preventing the browser from displaying content.</p>
+
+            <h3>Check Your HTML Structure</h3>
+            <p>The most common cause of a blank page is <strong>missing or incorrectly placed tags</strong>. Every HTML document needs a proper structure:</p>
+            
+            <ul>
+                <li>Document type declaration (<code>&lt;!DOCTYPE html&gt;</code>)</li>
+                <li>HTML tag (<code>&lt;html&gt;</code>)</li>
+                <li>Head section (<code>&lt;head&gt;</code>)</li>
+                <li>Body section (<code>&lt;body&gt;</code>)</li>
+            </ul>
+            
+            <p>If any of these are missing or incorrectly nested, the browser might not display your content.</p>
+
+            <p><strong>Ensure your HTML follows this basic structure:</strong></p>
+
+            <div class="code-example">
+                <pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;title&gt;My Page&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;h1&gt;Hello World&lt;/h1&gt;
+    &lt;p&gt;This is my content.&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+            </div>
+
+            <h3>Verify All Tags Are Closed</h3>
+            <p><strong>Unclosed tags</strong> can cause the browser to misinterpret your HTML structure. Every opening tag needs a corresponding closing tag. For example, if you open a <code>&lt;p&gt;</code> tag, you must close it with <code>&lt;/p&gt;</code>.</p>
+
+            <div class="tip-box">
+                <strong>What to Check:</strong>
+                <ul>
+                    <li>Go through your HTML file carefully</li>
+                    <li>Verify every opening tag has a matching closing tag</li>
+                    <li>Pay special attention to tags that wrap large sections of content</li>
+                    <li>Missing closing tags can hide everything that follows</li>
+                </ul>
+            </div>
+
+            <h3>Check for Content in the Body</h3>
+            <p>Sometimes the structure is correct, but there's no visible content in the body section. Make sure you have actual content between your opening and closing <code>&lt;body&gt;</code> tags. Text, headings, paragraphs, and other elements must be inside the body to be visible on the page.</p>
+
+            <h3>Verify You're Opening the Correct File</h3>
+            <p>It might seem obvious, but double-check that you're opening the HTML file you just edited. If you have multiple HTML files open or saved, make sure you're viewing the one you've been working on. Check the file name in your browser's address bar to confirm you're viewing the right file.</p>
+
+            <h3>Check Browser Console for Errors</h3>
+            <p>Modern browsers show error messages in the console that can help identify problems.</p>
+            
+            <div class="tip-box">
+                <strong>How to Access Developer Tools:</strong>
+                <ul>
+                    <li>Press <kbd>F12</kbd> on your keyboard, or</li>
+                    <li>Right-click on the page and select <strong>"Inspect"</strong> or <strong>"Inspect Element"</strong></li>
+                    <li>Look at the <strong>Console</strong> tab</li>
+                </ul>
+                <p>Any errors related to your HTML will be displayed there, which can point you toward the specific issue causing your blank page.</p>
+            </div>
+        </div>
+
+        <div class="problem-section" id="images-not-loading">
+            <h2>Problem: Images Won't Load</h2>
+            <p class="problem-intro">You've added an image tag to your HTML, but the image doesn't appear on your page. This problem is almost always related to the <strong>file path</strong> pointing to the image, similar to how CSS file paths work.</p>
+
+            <h3>Check the Image File Path</h3>
+            <p>The <code>src</code> attribute in your <code>&lt;img&gt;</code> tag must point to the exact location of your image file relative to your HTML file. If your HTML file and image are in the same folder, your image tag should look like this:</p>
+
+            <div class="code-example">
+                <pre><code class="language-html">&lt;img src="my-image.jpg" alt="Description of image"&gt;</code></pre>
+            </div>
+
+            <p>If your image is in a subfolder called "images", include the folder name:</p>
+
+            <div class="code-example">
+                <pre><code class="language-html">&lt;img src="images/my-image.jpg" alt="Description of image"&gt;</code></pre>
+            </div>
+
+            <h3>Verify the Image File Exists</h3>
+            <p>Open your file explorer (Windows) or finder (Mac) and verify that the image file actually exists at the location specified in your <code>src</code> attribute.</p>
+            
+            <div class="tip-box">
+                <strong>File Name Checklist:</strong>
+                <ul>
+                    <li>Check the file name carefully - file names are <strong>case-sensitive</strong> on many systems</li>
+                    <li><code>"MyImage.jpg"</code> is different from <code>"myimage.jpg"</code></li>
+                    <li>Verify the file extension matches exactly (<code>.jpg</code>, <code>.png</code>, <code>.gif</code>, etc.)</li>
+                    <li>Ensure there are no extra spaces or special characters</li>
+                </ul>
+            </div>
+
+            <h3>Check File Extensions</h3>
+            <p>The file extension in your <code>src</code> attribute must <strong>match the actual file extension</strong>. If your file is named <code>"photo.png"</code> but your HTML references <code>"photo.jpg"</code>, the image won't load.</p>
+            
+            <div class="tip-box">
+                <strong>Supported Image Formats:</strong>
+                <p>Stick to common formats that all browsers support:</p>
+                <ul>
+                    <li><code>.jpg</code> or <code>.jpeg</code> - Best for photographs</li>
+                    <li><code>.png</code> - Best for graphics with transparency</li>
+                    <li><code>.gif</code> - Best for simple animations</li>
+                </ul>
+            </div>
+
+            <h3>Use the Alt Attribute</h3>
+            <p>While the <code>alt</code> attribute doesn't fix loading issues, it's <strong>important for accessibility</strong> and helps identify problems.</p>
+            
+            <div class="tip-box">
+                <strong>Why Alt Text Helps:</strong>
+                <ul>
+                    <li>If your image doesn't load, browsers display the alt text</li>
+                    <li>This helps you confirm the browser found your image tag but couldn't find the image file</li>
+                    <li>Screen readers use alt text to describe images to users with visual impairments</li>
+                </ul>
+            </div>
+
+            <div class="code-example">
+                <pre><code class="language-html">&lt;img src="missing-image.jpg" alt="This text shows if image doesn't load"&gt;</code></pre>
+            </div>
+
+            <h3>Use Absolute Paths for Testing</h3>
+            <p>When troubleshooting, you can temporarily use the <strong>full file path</strong> to test if the problem is with the path or the file itself.</p>
+            
+            <div class="tip-box">
+                <strong>Absolute Path Examples:</strong>
+                <ul>
+                    <li><strong>Windows:</strong> <code>file:///C:/Users/YourName/Documents/my-website/images/photo.jpg</code></li>
+                    <li><strong>Mac:</strong> <code>file:///Users/YourName/Documents/my-website/images/photo.jpg</code></li>
+                </ul>
+                <p>If this works, the issue is with your <strong>relative path</strong>, not the image file.</p>
+            </div>
+        </div>
+
+        <div class="problem-section" id="styles-not-applying">
+            <h2>Problem: Some Styles Apply, But Others Don't</h2>
+            <p class="problem-intro">You've written CSS rules, and some styles work while others don't appear. This usually indicates an issue with <strong>CSS specificity</strong>, <strong>selector targeting</strong>, or <strong>property values</strong>.</p>
+
+            <h3>Check Your Selectors</h3>
+            <p><strong>CSS selectors must match</strong> the HTML elements you're trying to style. If you write a rule for <code>h1</code> but your HTML uses <code>h2</code>, that rule won't apply.</p>
+            
+            <p>Verify that your selectors match the actual HTML element names, class names, or IDs in your HTML file.</p>
+
+            <p><strong>Example: Using class selectors</strong> (starting with a dot), make sure your HTML elements have the matching class attribute:</p>
+
+            <div class="code-example">
+                <pre><code class="language-html">&lt;!-- HTML --&gt;
+&lt;p class="highlight"&gt;This paragraph will be styled.&lt;/p&gt;</code></pre>
+            </div>
+
+            <div class="code-example">
+                <pre><code class="language-css">/* CSS */
+.highlight {
+    color: red;
+}</code></pre>
+            </div>
+
+            <h3>Understand CSS Specificity</h3>
+            <p>When multiple CSS rules target the same element, the browser uses <strong>specificity</strong> to determine which rule wins. More specific selectors override less specific ones.</p>
+            
+            <p><strong>Example:</strong> A class selector is more specific than an element selector, so a rule using <code>.my-class</code> will override a rule using just <code>p</code> if both apply to the same paragraph.</p>
+
+            <div class="tip-box">
+                <strong>If styles aren't applying:</strong>
+                <ul>
+                    <li>Check if you have multiple rules targeting the same element</li>
+                    <li>The more specific rule will take precedence</li>
+                    <li>This might explain why some of your styles don't appear</li>
+                </ul>
+            </div>
+
+            <h3>Check Property Values</h3>
+            <p>Some CSS properties require <strong>specific value formats</strong>. If you use the wrong format, the browser will ignore that property.</p>
+            
+            <div class="tip-box">
+                <strong>Value Format Requirements:</strong>
+                <ul>
+                    <li><strong>Colors:</strong> Can be written as color names (<code>blue</code>), hex codes (<code>#0000ff</code>), or RGB values (<code>rgb(0, 0, 255)</code>)</li>
+                    <li><strong>Sizes:</strong> Must include units like <code>px</code> or <code>em</code> - if you forget the unit, the browser will ignore that property</li>
+                </ul>
+            </div>
+
+            <div class="code-example">
+                <pre><code class="language-css">/* Correct */
+p {
+    font-size: 16px;
+    color: #333333;
+}
+
+/* Incorrect - missing unit */
+p {
+    font-size: 16;  /* This won't work */
+    color: #333333;
+}</code></pre>
+            </div>
+
+            <h3>Verify Property Names</h3>
+            <p>CSS property names must be <strong>spelled correctly</strong> and use <strong>hyphens</strong>, not underscores or camelCase.</p>
+            
+            <div class="tip-box">
+                <strong>Correct vs. Incorrect:</strong>
+                <ul>
+                    <li><strong>✓ Correct:</strong> <code>background-color</code></li>
+                    <li><strong>✗ Incorrect:</strong> <code>backgroundColor</code> (camelCase - used in JavaScript, not CSS)</li>
+                    <li><strong>✗ Incorrect:</strong> <code>background_color</code> (underscores don't work in CSS)</li>
+                </ul>
+            </div>
+
+            <h3>Use Browser Developer Tools</h3>
+            <p>Right-click on an element and select "Inspect" to open developer tools. You can see which CSS rules are being applied to that element and which are being overridden. The tools show you the computed styles (what's actually being applied) and help you understand why certain styles might not be working.</p>
+        </div>
+
+        <div class="problem-section" id="changes-not-showing">
+            <h2>Problem: My Changes Don't Show Up When I Refresh</h2>
+            <p class="problem-intro">You've edited your HTML or CSS file, saved it, and refreshed your browser, but you still see the old version. This is usually related to <strong>browser caching</strong> or not saving your file correctly.</p>
+
+            <h3>Make Sure You Saved Your File</h3>
+            <p>This might seem obvious, but it's the <strong>most common cause</strong>. Text editors often show an asterisk (*) or indicator when you have unsaved changes.</p>
+            
+            <div class="tip-box">
+                <strong>Before refreshing your browser:</strong>
+                <ul>
+                    <li>Verify that your file is actually saved</li>
+                    <li>Look for unsaved change indicators (asterisk, dot, etc.) in your editor</li>
+                    <li>Press <kbd>Ctrl+S</kbd> (Windows) or <kbd>Cmd+S</kbd> (Mac) to save</li>
+                </ul>
+            </div>
+
+            <h3>Hard Refresh Your Browser</h3>
+            <p>Browsers <strong>cache files</strong> to load pages faster, which means they sometimes show old versions of files even after you've saved changes. A normal refresh might load the cached version.</p>
+            
+            <div class="tip-box">
+                <strong>Hard Refresh Shortcuts:</strong>
+                <ul>
+                    <li><strong>Windows:</strong> Press <kbd>Ctrl + F5</kbd></li>
+                    <li><strong>Mac:</strong> Press <kbd>Cmd + Shift + R</kbd></li>
+                </ul>
+                <p>This forces the browser to reload all files from your computer, not from its cache.</p>
+            </div>
+
+            <h3>Close and Reopen the File</h3>
+            <p>If hard refreshing doesn't work, close the browser tab completely and reopen your HTML file. This ensures you're starting fresh without any cached data interfering with your changes.</p>
+
+            <h3>Verify You're Editing the Right File</h3>
+            <p>If you have multiple versions of a file or files with similar names, make sure you're editing the file that's actually being displayed in your browser. Check the file path in your browser's address bar and compare it to the file you're editing in your text editor to ensure they match.</p>
+
+            <h3>Check File Permissions</h3>
+            <p>On some systems, if a file doesn't have write permissions, your editor might appear to save the file but the changes aren't actually written to disk. Check that your file isn't read-only and that you have permission to modify it.</p>
+        </div>
+
+        <div class="problem-section" id="file-wont-open">
+            <h2>Problem: My File Won't Open in the Browser</h2>
+            <p class="problem-intro">You've created an HTML file, but when you try to open it, it either opens in a text editor instead of a browser, or nothing happens when you double-click it. This is usually a <strong>file association</strong> or <strong>file extension</strong> issue.</p>
+
+            <h3>Check the File Extension</h3>
+            <p>HTML files must have the <code>.html</code> extension for browsers to recognize them. If your file is named "mypage.txt" or "mypage.doc", the browser won't know it's an HTML file. Rename your file to have a <code>.html</code> extension. On Windows, you might need to enable "Show file extensions" in File Explorer settings to see and change extensions.</p>
+
+            <h3>Change Default Application</h3>
+            <p>If your HTML files are opening in a text editor instead of a browser, your computer has associated the <code>.html</code> extension with the wrong program.</p>
+            
+            <div class="tip-box">
+                <strong>How to Fix:</strong>
+                <ul>
+                    <li>Right-click on your HTML file</li>
+                    <li>Select <strong>"Open with"</strong> or <strong>"Open With"</strong></li>
+                    <li>Choose your web browser</li>
+                    <li>Check the option to <strong>"Always use this app"</strong> so HTML files always open in your browser</li>
+                </ul>
+            </div>
+
+            <h3>Use the Browser's Open File Option</h3>
+            <p>You can always open an HTML file directly from within your browser, regardless of file associations.</p>
+            
+            <div class="tip-box">
+                <strong>How to Open from Browser:</strong>
+                <ul>
+                    <li>Go to <strong>File → Open File</strong> in your browser menu, or</li>
+                    <li>Press <kbd>Ctrl+O</kbd> (Windows) or <kbd>Cmd+O</kbd> (Mac)</li>
+                    <li>Navigate to your HTML file and select it</li>
+                </ul>
+                <p>This method works regardless of your file associations.</p>
+            </div>
+
+            <h3>Verify File Contents</h3>
+            <p>Even with the correct extension, a file won't display properly in a browser if it doesn't contain valid HTML. Open your file in a text editor and verify it starts with <code>&lt;!DOCTYPE html&gt;</code> and contains proper HTML structure. Files that are completely empty or contain only plain text without HTML tags won't display as web pages.</p>
+        </div>
+
+        <div class="problem-section" id="syntax-errors">
+            <h2>Problem: My Code Has Syntax Errors</h2>
+            <p class="problem-intro">You're seeing error messages, or your page isn't displaying correctly, and you suspect there might be mistakes in your code syntax. Common syntax errors include <strong>unclosed tags</strong>, <strong>missing semicolons</strong>, or <strong>incorrect attribute formatting</strong>.</p>
+
+            <h3>Check for Unclosed Tags</h3>
+            <p>Every opening HTML tag needs a corresponding closing tag. For example, if you open a <code>&lt;div&gt;</code>, you must close it with <code>&lt;/div&gt;</code>. Missing closing tags can cause browsers to misinterpret your HTML structure.</p>
+
+            <div class="tip-box">
+                <strong>Tag Closing Rules:</strong>
+                <ul>
+                    <li>Go through your HTML file and verify every opening tag has a matching closing tag</li>
+                    <li><strong>Self-closing tags</strong> like <code>&lt;img&gt;</code> or <code>&lt;br&gt;</code> don't need closing tags</li>
+                    <li>Most other tags do need closing tags</li>
+                    <li>Pay special attention to <strong>nested tags</strong> - the last tag opened should be the first tag closed</li>
+                </ul>
+            </div>
+
+            <h3>Check for Unclosed Curly Braces in CSS</h3>
+            <p>In CSS, every opening curly brace <code>{</code> must have a matching closing brace <code>}</code>. If you're missing a closing brace, all CSS rules after that point might not work.</p>
+            
+            <div class="tip-box">
+                <strong>Quick Check:</strong>
+                <ul>
+                    <li>Count your opening and closing braces to ensure they match</li>
+                    <li>Use your code editor's brace matching feature (often highlights matching braces)</li>
+                    <li>Check that every CSS rule has both opening and closing braces</li>
+                </ul>
+            </div>
+
+            <div class="code-example">
+                <pre><code class="language-css">/* Correct */
+p {
+    color: blue;
+}
+
+/* Incorrect - missing closing brace */
+p {
+    color: blue;
+/* This breaks everything after */</code></pre>
+            </div>
+
+            <h3>Check for Missing Semicolons</h3>
+            <p>In CSS, each property-value pair must end with a semicolon. Missing semicolons can cause the browser to ignore subsequent properties in that rule.</p>
+
+            <div class="code-example">
+                <pre><code class="language-css">/* Correct */
+p {
+    color: blue;
+    font-size: 16px;
+}
+
+/* Incorrect - missing semicolon */
+p {
+    color: blue
+    font-size: 16px;  /* This line might not work */
+}</code></pre>
+            </div>
+
+            <h3>Verify Attribute Quotes</h3>
+            <p>In HTML, attribute values should be <strong>enclosed in quotes</strong>. While some browsers are forgiving about this, using quotes consistently helps prevent errors.</p>
+            
+            <div class="tip-box">
+                <strong>Best Practice:</strong>
+                <p>Always use quotes around attribute values, even when the value is just a number or single word. This ensures your HTML works consistently across all browsers.</p>
+            </div>
+
+            <div class="code-example">
+                <pre><code class="language-html">&lt;!-- Correct --&gt;
+&lt;a href="https://example.com"&gt;Link&lt;/a&gt;
+
+&lt;!-- Also works but less reliable --&gt;
+&lt;a href=https://example.com&gt;Link&lt;/a&gt;</code></pre>
+            </div>
+
+            <h3>Use a Code Editor with Syntax Highlighting</h3>
+            <p>Code editors like Visual Studio Code, Sublime Text, or Atom provide syntax highlighting that color-codes your HTML and CSS. This visual feedback helps you spot syntax errors more easily. When you see unexpected colors or when code isn't highlighted properly, it often indicates a syntax error nearby.</p>
+        </div>
+
+        <div class="problem-section" id="github-problems">
+            <h2>Problem: GitHub Issues</h2>
+            <p class="problem-intro">You're working through the GitHub lessons and encountering problems with repositories, commits, or GitHub Pages. These issues often relate to <strong>authentication</strong>, <strong>file synchronization</strong>, or <strong>GitHub Pages deployment</strong>.</p>
+
+            <h3>Can't Push to GitHub</h3>
+            <p>If you're unable to push changes to GitHub, check that you're <strong>authenticated correctly</strong>. GitHub requires authentication for pushing changes.</p>
+            
+            <div class="tip-box">
+                <strong>Authentication Options:</strong>
+                <ul>
+                    <li>Use a <strong>personal access token</strong> for HTTPS authentication</li>
+                    <li>Use an <strong>SSH key</strong> for SSH authentication</li>
+                    <li>Review the GitHub setup lesson to ensure your authentication is configured properly</li>
+                </ul>
+            </div>
+
+            <h3>GitHub Pages Not Updating</h3>
+            <p>If your GitHub Pages site isn't showing your latest changes, remember that it can take <strong>a few minutes</strong> for updates to appear after pushing changes.</p>
+            
+            <div class="tip-box">
+                <strong>Troubleshooting Steps:</strong>
+                <ul>
+                    <li>Wait 1-2 minutes after pushing changes to your repository</li>
+                    <li>Do a hard refresh: <kbd>Ctrl+F5</kbd> (Windows) or <kbd>Cmd+Shift+R</kbd> (Mac)</li>
+                    <li>Verify that you've <strong>committed</strong> and <strong>pushed</strong> your changes, not just saved them locally</li>
+                    <li>Check that your changes were pushed to the correct branch (usually <code>main</code> or <code>master</code>)</li>
+                </ul>
+            </div>
+
+            <h3>Files Not Appearing on GitHub</h3>
+            <p>If files you added locally don't appear on GitHub, you need to <strong>commit and push them</strong>. Saving files on your computer doesn't automatically upload them to GitHub.</p>
+            
+            <div class="tip-box">
+                <strong>Three-Step Process:</strong>
+                <ol>
+                    <li><code>git add</code> - Stage files (tell Git which files to include)</li>
+                    <li><code>git commit</code> - Save them (create a snapshot of your changes)</li>
+                    <li><code>git push</code> - Upload them (send changes to GitHub)</li>
+                </ol>
+                <p>All three steps are necessary - skipping any step means your files won't appear on GitHub.</p>
+            </div>
+
+            <h3>Getting Help with GitHub</h3>
+            <p>If you encounter GitHub-specific issues not covered here, the GitHub documentation is comprehensive and beginner-friendly. The GitHub guides in this tutorial also provide step-by-step instructions for common workflows. Don't hesitate to revisit those guides when you encounter issues.</p>
+        </div>
+
+        <div class="encouragement-section">
+            <h2>Remember: Problems Are Part of Learning</h2>
+            <p>Encountering problems and errors is an essential part of learning web development. Every developer, from beginners to professionals, spends significant time troubleshooting issues. What separates experienced developers from beginners isn't that they never encounter problems, but that they've developed systematic approaches to finding and fixing issues.</p>
+
+            <p>When you solve a problem, you're not just fixing code - you're learning how browsers work, how file systems operate, and how different technologies interact. Each problem you solve builds your debugging skills and makes you a better developer.</p>
+
+            <p>If you've tried these solutions and still can't resolve your issue, don't get discouraged. Take a break, return to the relevant lesson to review the concepts, or try a fresh approach. Often, stepping away from a problem and coming back to it later helps you see the solution more clearly.</p>
+
+            <p>Remember that every problem has a solution, and every error message is the computer's way of trying to help you understand what went wrong. With practice, you'll become faster at diagnosing and fixing issues, and you'll recognize patterns in the problems you encounter.</p>
+        </div>
+
+        <div class="troubleshooting-footer">
+            <p><a href="index.html">← Back to Home</a></p>
+            <p>Still having trouble? Review the relevant lesson material, check your code against the examples provided, and remember to save your files and refresh your browser after making changes.</p>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 HTML & CSS Tutorial. Start building today!</p>
+        </div>
+    </footer>
+</body>
+</html>
+

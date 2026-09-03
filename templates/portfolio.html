@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<!-- 
+    ====================================================================
+    HOW TO USE THIS TEMPLATE
+    ====================================================================
+    
+    VIEWING THE CODE:
+    To see this HTML code, you have several options:
+    
+    1. Right-click on this page in your browser and select "View Page Source"
+       (or "View Source" in some browsers)
+    
+    2. Press Ctrl+U (Windows/Linux) or Cmd+Option+U (Mac) to view source
+    
+    3. Open this file directly in a text editor like Notepad, TextEdit, 
+       or VS Code to see and edit the code
+    
+    EDITING THE CODE:
+    
+    1. Save this file to your computer (Right-click -> Save As)
+    
+    2. Open the saved file in a text editor
+    
+    3. Look for placeholder text in curly braces {like this} or brackets [like this]
+       and replace it with your own content
+    
+    4. After making changes, save the file and refresh your browser to see updates
+    
+    PLACEHOLDER NOTATION:
+    Throughout this template, you'll see placeholders like:
+    - {your content here} - Replace with your actual content
+    - [edit this] - Indicates something you should customize
+    - {your title} - Replace with your page title
+    
+    These placeholders show you exactly what to change!
+    
+    ====================================================================
+    
+    Portfolio Template
+    
+    This template provides a structure for showcasing your work and projects.
+    It includes:
+    - Hero section for introduction
+    - Projects showcase area
+    - About section
+    - Contact information
+    - Responsive grid layout for projects
+    
+    Customize colors, content, and layout to reflect your personal style.
+-->
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio Template</title>
+    <style>
+        /* 
+            ========================================
+            CSS RESET AND BASE STYLES
+            ========================================
+        */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            /* border-box includes padding/borders in width calculations */
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            /* Modern sans-serif font stack - looks professional */
+            line-height: 1.6;
+            /* Comfortable line spacing for readability */
+            color: #333;
+            /* Dark gray text for good contrast */
+        }
+        
+        /* 
+            ========================================
+            HERO SECTION - FIRST IMPRESSION
+            ========================================
+            
+            The hero is the large banner at the top of your portfolio.
+            This is the first thing visitors see - make it count!
+        */
+        .hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            /* 
+                GRADIENT BACKGROUND:
+                Creates a smooth color transition from purple-blue to purple.
+                135deg = diagonal angle (top-left to bottom-right)
+                You can experiment with:
+                - Different angles: 90deg (vertical), 45deg (diagonal)
+                - Different colors: red to orange, blue to cyan, etc.
+                - Solid colors: background: #667eea; (remove gradient)
+            */
+            
+            color: white;
+            /* White text contrasts well with dark gradient */
+            
+            padding: 4rem 2rem;
+            /* Large padding creates breathing room */
+            
+            text-align: center;
+            /* Centers the hero content */
+        }
+        
+        .hero h1 {
+            font-size: 3rem;
+            /* Large, bold headline - grabs attention */
+            margin-bottom: 1rem;
+        }
+        
+        .hero p {
+            font-size: 1.25rem;
+            /* Slightly larger than body text for emphasis */
+            max-width: 600px;
+            /* Prevents text from being too wide */
+            margin: 0 auto;
+            /* Centers the paragraph */
+        }
+        
+        /* 
+            ========================================
+            NAVIGATION - STICKY HEADER
+            ========================================
+            
+            Sticky navigation stays visible as users scroll,
+            making it easy to navigate your portfolio.
+        */
+        nav {
+            background-color: rgba(0, 0, 0, 0.1);
+            /* Semi-transparent dark overlay */
+            
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            /* Sticks to top when scrolling */
+            
+            backdrop-filter: blur(10px);
+            /* Creates a frosted glass effect */
+        }
+        
+        nav ul {
+            list-style: none;
+            /* Removes bullet points */
+            
+            display: flex;
+            /* Horizontal navigation items */
+            
+            justify-content: center;
+            /* Centers navigation */
+            
+            gap: 2rem;
+            /* Space between nav items */
+        }
+        
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            /* Larger clickable area */
+        }
+        
+        nav a:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            /* Highlights on hover */
+            border-radius: 4px;
+            /* Rounded corners */
+        }
+        
+        /* 
+            ========================================
+            CONTAINER - CONTENT WRAPPER
+            ========================================
+            
+            Container limits content width and centers it.
+            This creates a clean, focused layout.
+        */
+        .container {
+            max-width: 1200px;
+            /* Maximum width for readability */
+            
+            margin: 0 auto;
+            /* Centers the container */
+            
+            padding: 2rem;
+            /* Internal spacing */
+        }
+        
+        /* 
+            ========================================
+            SECTION HEADINGS
+            ========================================
+        */
+        section h2 {
+            font-size: 2rem;
+            /* Large, prominent section titles */
+            
+            margin-bottom: 2rem;
+            /* Space below heading */
+            
+            text-align: center;
+            /* Centers section titles */
+            
+            color: #667eea;
+            /* Matches hero gradient color */
+        }
+        
+        /* 
+            ========================================
+            ABOUT SECTION
+            ========================================
+            
+            Tell visitors about yourself, your skills, your story.
+            This section helps build connection with visitors.
+        */
+        .about {
+            padding: 4rem 2rem;
+            /* Large vertical padding */
+            
+            background-color: #f9fafb;
+            /* Light gray background for contrast */
+        }
+        
+        .about-content {
+            max-width: 800px;
+            /* Optimal reading width */
+            
+            margin: 0 auto;
+            /* Centers content */
+        }
+        
+        /* 
+            ========================================
+            PROJECTS GRID - SHOWCASING YOUR WORK
+            ========================================
+            
+            This is where you display your projects.
+            The grid layout automatically adjusts to screen size.
+        */
+        .projects {
+            padding: 4rem 2rem;
+            /* Spacing around projects section */
+        }
+        
+        .projects-grid {
+            display: grid;
+            /* CSS Grid for flexible layouts */
+            
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            /* 
+                RESPONSIVE GRID:
+                - auto-fit: Creates as many columns as fit
+                - minmax(300px, 1fr): Each column is at least 300px, 
+                  shares remaining space equally
+                - Automatically stacks on smaller screens!
+            */
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .project-card {
+            background-color: white;
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 12px rgba(0, 0, 0, 0.15);
+        }
+        
+        .project-card h3 {
+            color: #667eea;
+            margin-bottom: 1rem;
+        }
+        
+        /* Contact Section */
+        .contact {
+            background-color: #1f2937;
+            color: white;
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+        
+        .contact a {
+            color: #667eea;
+            text-decoration: none;
+        }
+        
+        .contact a:hover {
+            text-decoration: underline;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: #111827;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+            
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <!-- This section creates a visually striking introduction area -->
+    <div class="hero">
+        <h1>Your Name</h1>
+        <p>Web Developer | Designer | Creator</p>
+        
+        <!-- Navigation inside hero for cohesive design -->
+        <nav>
+            <ul>
+                <li><a href="#about">About</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </div>
+    
+    <!-- About Section -->
+    <!-- Use this section to introduce yourself and your skills -->
+    <section id="about" class="about">
+        <div class="container">
+            <h2>About Me</h2>
+            <div class="about-content">
+                <p>This is where you introduce yourself. Talk about your background, skills, interests, and what drives you as a web developer. Keep it authentic and engaging.</p>
+                <p>You can list your skills, education, or professional experience here. This helps visitors understand your expertise and what you can offer.</p>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Projects Section -->
+    <!-- Showcase your work in a grid layout -->
+    <section id="projects" class="projects">
+        <div class="container">
+            <h2>My Projects</h2>
+            <div class="projects-grid">
+                <!-- Project Card 1 -->
+                <div class="project-card">
+                    <h3>Project Title One</h3>
+                    <p>Describe your first project here. Explain what you built, what technologies you used, and what you learned. You can add links to live demos or GitHub repositories.</p>
+                </div>
+                
+                <!-- Project Card 2 -->
+                <div class="project-card">
+                    <h3>Project Title Two</h3>
+                    <p>Describe your second project. Each project card demonstrates your skills and experience. Include challenges you overcame or interesting features you implemented.</p>
+                </div>
+                
+                <!-- Project Card 3 -->
+                <div class="project-card">
+                    <h3>Project Title Three</h3>
+                    <p>Add more project cards as needed. The grid automatically adjusts to accommodate different numbers of projects. Focus on quality over quantity.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Contact Section -->
+    <!-- Provide ways for visitors to reach you -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <h2>Get In Touch</h2>
+            <p>Interested in collaborating or have questions? Feel free to reach out.</p>
+            <p>Email: <a href="mailto:your.email@example.com">your.email@example.com</a></p>
+            <p>
+                <a href="https://github.com/yourusername">GitHub</a> | 
+                <a href="https://linkedin.com/in/yourprofile">LinkedIn</a>
+            </p>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 Your Name. Built with HTML and CSS.</p>
+    </footer>
+</body>
+</html>
+
