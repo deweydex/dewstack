@@ -428,3 +428,53 @@ made here when the SQL section moves.
   percentages. On a phone the task panel is one word wide.
 
 Almost all of these are drift defects, which is the case for section 5.
+
+---
+
+## 10. The page structure, proposed 2026-09-03, late
+
+Josh's steer, in his words: web authoring and databases exist as separate
+tutorials, with combined projects and tutorials as a third option; two
+"getting started" links, then tutorial links for each subject, then
+combined full-stack tutorials. That replaces the strictly sequential three
+stages in sections 1 and 4 with two parallel tracks and a third that joins
+them. A student can start on either track, and the college's timetable
+(web authoring in the autumn, databases from January) is one order among
+several rather than the only one.
+
+The front page and README would then have five parts, in this order:
+
+1. **Getting started**, two doors side by side. *Start with a website*:
+   fork `web`, the exercises, a published portfolio. *Start with data*: the
+   SQL playground, a first query in a minute. Each door says what the
+   student will have at the end of it, and neither assumes the other.
+2. **Web authoring tutorials**: the lessons, the GitHub guides, the
+   templates and examples, the reference and troubleshooting, in the order
+   a student who has done the starter needs them (project-facing lessons
+   11 to 13 first).
+3. **Database tutorials**: the playground, the quiz, the notebook, then
+   the five tutorials in section 7 as they are written (a table is a list
+   of rows; asking questions of a table; two tables; designing before
+   typing; a real dataset).
+4. **Full stack: putting the two together**. Combined tutorials and
+   projects: a page that shows rows from a database, a form that adds a
+   row, a chart drawn from a query. This is the former stage 3, now a
+   track of its own rather than a finish line. Nothing exists here yet.
+5. **Projects and the exam**: what the college sets, and which track each
+   project draws on.
+
+The course bar on every copied page then carries: front page, Start with
+a website, Start with data, Web tutorials, Database tutorials.
+
+What the next session should do with this, in order: (a) settle the
+structure with Josh and rewrite the README and `index.html` to it; (b) go
+through every page on each of the three source sites and say, page by
+page, what is good, what should change, and whether it belongs in track 2,
+3 or 4, extending the ledger in section 7 with a row per page; (c) write
+down the style considerations for the rewrites: one shell and one set of
+reading settings across all tracks, the plain-language bar, the
+accessibility bar in section 3, the SQL engine decision, and how the
+`web` starter's deliberately student-changeable design sits beside the
+fixed design of the tutorials; (d) begin the full-stack track with one
+small worked example, because it is the part with nothing behind it.
+
