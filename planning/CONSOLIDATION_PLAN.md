@@ -280,7 +280,7 @@ The source file is not touched.
 
 | Item | From | To | Status |
 |---|---|---|---|
-| README course map | this plan, section 4 | `README.md` | not started |
+| README course map | this plan, section 4 | `README.md` | drafted 2026-09-03, awaiting Josh's read; the `HTML-CSS-SQL-JS` Pages link is unverified |
 | `web` audit | `deweydex/web` | ledger | not started |
 | `web` plain-language pass | `deweydex/web` | in place | not started |
 | Build step and hello page | `dewlab` | `build.py`, `assets/`, `tutorials/` | not started |
