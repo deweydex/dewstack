@@ -305,7 +305,7 @@ The source file is not touched.
 |---|---|---|---|
 | README course map | this plan, section 4 | `README.md` | drafted 2026-09-03, awaiting Josh's read; the `HTML-CSS-SQL-JS` Pages link is unverified |
 | `web` audit | `deweydex/web` | section 5, step 1 | done 2026-09-03 |
-| `web` plain-language pass | `deweydex/web` | in place | not started |
+| `web` plain-language pass, colour fixes, skip link and nav label | `deweydex/web` | in place | done 2026-09-03, open as [deweydex/web#1](https://github.com/deweydex/web/pull/1), awaiting Josh's read |
 | Build step and hello page | `dewlab` | `build.py`, `assets/`, `tutorials/` | not started |
 | SQL tutorial | `HTML-CSS-SQL-JS/index.html` | `tutorials/databases/` | not started |
 | SQL practice page | `HTML-CSS-SQL-JS/index.html` | `tutorials/databases/` | not started |
