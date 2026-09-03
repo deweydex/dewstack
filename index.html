@@ -5,10 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Web Authoring and Databases</title>
     <!--
-        This is the front page of the course site. It is one page, on purpose:
-        a plan for the course, in the order that works, with every link a
-        student needs. The tutorials, the database pages and the starter site
-        each live in their own folder or repository and are linked from here.
+        This is the published front page of the course site: the same course
+        map as README.md, in the same order, as one web page. The README is
+        the version GitHub shows; this is the version GitHub Pages shows. If
+        one changes, the other changes to match.
+
         The stylesheet is the one the SQL playground uses, so the two pages
         look alike. assets/settings.css, loaded after it, re-points the
         colours, typeface, text size and line width at the reader's own
@@ -23,12 +24,13 @@
 <body>
     <header>
         <h1>Web Authoring and Databases</h1>
-        <p class="subtitle">A plan for the course, with every link you need, on one page</p>
-        <nav>
-            <a href="#step-1">1. Your own site</a>
-            <a href="#step-2">2. Tutorials</a>
-            <a href="#step-3">3. Databases</a>
-            <a href="#step-4">4. Projects</a>
+        <p class="subtitle">The course in three stages, with every link you need, on one page</p>
+        <nav aria-label="Stages">
+            <a href="#stage-1">Stage 1: a website</a>
+            <a href="#stage-2">Stage 2: data</a>
+            <a href="#stage-3">Stage 3: together</a>
+            <a href="#tutorials">Tutorials</a>
+            <a href="#projects">Projects</a>
         </nav>
     </header>
 
@@ -74,33 +76,59 @@
 
     <main>
         <section id="how" class="tutorial-section">
-            <h2>How this course works</h2>
+            <h2>How the course is arranged</h2>
             <div class="lesson">
-                <p>This course has two halves. In the first half, we build a website in HTML and CSS and publish it on GitHub Pages. In the second half, we work with databases: tables, SQL queries, and a little Python.</p>
-                <p>The four steps below are in the order that works. Step 1 is where most of the learning happens. Steps 2 and 3 hold the things you will need along the way. Step 4 is what the course asks you to submit.</p>
+                <p>This course is for adults who are learning to make web pages and to work with data. Many are doing this for the first time. Nothing has to be installed. You need a free GitHub account, a web browser, and a text editor.</p>
+                <p>The course has three stages. Each stage builds on the one before it. We suggest working through them in order. If some of this is already familiar, you can start where the material is new to you.</p>
             </div>
         </section>
 
-        <section id="step-1" class="tutorial-section">
-            <h2>Step 1: Build your own site</h2>
+        <section id="stage-1" class="tutorial-section">
+            <h2>Stage 1: Build and publish a website</h2>
             <div class="lesson">
-                <p>You start with three files. You end with a portfolio site that is published on the web, at an address you can share, built by you.</p>
-                <p>The three files are a home page, an about page, and a stylesheet. The code is full of comments that say what each part does. The README of the repository is a list of 25 short exercises. Each exercise asks you to change one thing, save, and look at the result.</p>
-                <p>First, you fork the repository and turn on GitHub Pages. Your site is published from the second exercise, so every change you make is visible at a real address. Then you work through your home page: the heading, your introduction, a skills section, an image, links, and navigation. Then you explore the stylesheet: colours, the box model, borders, and text. Then you work on layout, a sticky header, and a footer. Last, you add hover effects, focus states, and a design that works on a phone.</p>
+                <p>You start with nothing and finish with a personal website at its own address on the internet. Along the way we learn how HTML gives a page its structure and how CSS gives it its look.</p>
+                <p>The work happens in your own copy of the <strong>web</strong> repository. First you make a copy of it, which GitHub calls a fork. Then you change its files, one exercise at a time. Then GitHub publishes your changes at your own address.</p>
+                <p>The instructions are in that repository's README. There are twenty-five short exercises. Each one asks you to change something and look at what happens. The exercises take you through your home page, then the stylesheet, then layout, and last the touches that make a site work on a phone.</p>
                 <div class="example-box">
-                    <h4>Go to the starter repository</h4>
+                    <h4>Start here</h4>
                     <p><a href="https://github.com/deweydex/web">github.com/deweydex/web</a></p>
                     <p>Read the README there first. It explains how to fork the repository, and it is where the exercises are.</p>
                 </div>
             </div>
         </section>
 
-        <section id="step-2" class="tutorial-section">
-            <h2>Step 2: Tutorials, guides, and templates</h2>
+        <section id="stage-2" class="tutorial-section">
+            <h2>Stage 2: Work with data</h2>
             <div class="lesson">
-                <p>The exercises in Step 1 show you what happens. The tutorials explain why. Use them when an exercise leaves you with a question, or when you want more practice.</p>
-                <p>There are thirteen lessons. Lessons 1 to 10 cover the same ground as the exercises, in more depth. Lessons 11 to 13 cover Flexbox, Grid, components, and animation. You will need those three for the web authoring project.</p>
-                <p>The same site has seven step-by-step GitHub guides, four small example pages, eleven starter templates, a troubleshooting page, and a quick reference.</p>
+                <p>A website often needs to remember things: the products in a shop, the members of a club, the marks in a class. A database is a program that stores this kind of information in tables. We learn to make tables, to put data in them, and to ask them questions. The questions are written in a language called SQL. Most databases understand SQL, so what you learn here is useful far beyond this course.</p>
+                <p>The database runs inside your browser. Nothing is installed, and nothing you type is sent anywhere.</p>
+                <p>Start with the playground. It has short refreshers on HTML and CSS, then SQL: SELECT, WHERE, ORDER BY, INSERT, UPDATE, DELETE, and COUNT. Then try the quiz. The notebook covers the same ideas in Python, and adds joining two tables.</p>
+                <div class="example-box">
+                    <h4>Open the database pages</h4>
+                    <ul>
+                        <li><a href="databases/playground/index.html">The SQL playground</a>: type a query, run it, and see the result</li>
+                        <li><a href="tutorials/tentacular-plushies-quiz-final.html">The SQL quiz</a>: five tasks on a small shop database</li>
+                        <li><a href="https://colab.research.google.com/github/deweydex/dewstack/blob/main/databases/sqlite_tutorial.ipynb">The SQLite notebook</a>, opened in Google Colab, or <a href="databases/sqlite_tutorial.ipynb">the notebook file</a> to download</li>
+                        <li><a href="databases/playground/teacher.html">The playground, teacher version</a>, with solutions and notes</li>
+                    </ul>
+                </div>
+                <p>In the playground, the database starts again each time the page is reloaded. If you write a query you want to keep, copy it into a file of your own.</p>
+            </div>
+        </section>
+
+        <section id="stage-3" class="tutorial-section">
+            <h2>Stage 3: Put the two together</h2>
+            <div class="lesson">
+                <p>In the last stage we show data from a database on a web page. This stage is still being written. Its shape will be settled once stages 1 and 2 are in place.</p>
+            </div>
+        </section>
+
+        <section id="tutorials" class="tutorial-section">
+            <h2>Tutorials, guides, and templates</h2>
+            <div class="lesson">
+                <p>The exercises in Stage 1 show you what happens. The tutorials explain why. Use them when an exercise leaves you with a question, or when you want more practice.</p>
+                <p>There are thirteen lessons. Lessons 1 to 10 cover the same ground as the exercises, in more depth. Lessons 11 to 13 cover Flexbox, Grid, components, and animation. You will need those three for the web authoring project. The same site has seven step-by-step GitHub guides, four small example pages, eleven starter templates, a troubleshooting page, and a quick reference.</p>
+                <p>These pages were made for an earlier version of the course, and they are here as they were. Some of them do not fit a phone screen well yet. We are rewriting them one at a time.</p>
                 <div class="example-box">
                     <h4>Open the tutorials</h4>
                     <ul>
@@ -115,34 +143,17 @@
             </div>
         </section>
 
-        <section id="step-3" class="tutorial-section">
-            <h2>Step 3: Databases</h2>
-            <div class="lesson">
-                <p>A database keeps information in tables. SQL is the language you use to ask a table a question. Everything in this step runs inside your browser. Nothing is installed, and nothing you type is sent anywhere.</p>
-                <p>Start with the playground. It has short refreshers on HTML and CSS, then SQL: SELECT, WHERE, ORDER BY, INSERT, UPDATE, DELETE, and COUNT. Then try the quiz. The notebook covers the same ideas in Python, and adds joining two tables.</p>
-                <div class="example-box">
-                    <h4>Open the database pages</h4>
-                    <ul>
-                        <li><a href="databases/playground/index.html">The SQL playground</a>: type a query, run it, and see the result</li>
-                        <li><a href="tutorials/tentacular-plushies-quiz-final.html">The SQL quiz</a>: practice questions on a small shop database</li>
-                        <li><a href="https://colab.research.google.com/github/deweydex/dewstack/blob/main/databases/sqlite_tutorial.ipynb">The SQLite notebook</a>, opened in Google Colab, or <a href="databases/sqlite_tutorial.ipynb">the notebook file</a> to download</li>
-                        <li><a href="databases/playground/teacher.html">The playground, teacher version</a>, with solutions and notes</li>
-                    </ul>
-                </div>
-            </div>
-        </section>
-
-        <section id="step-4" class="tutorial-section">
-            <h2>Step 4: Projects and the exam</h2>
+        <section id="projects" class="tutorial-section">
+            <h2>Projects and the exam</h2>
             <div class="lesson">
                 <p>The college sets the assessments: a web authoring project, a database project, and a practical exam. The briefs and the dates are on your course page and on Moodle. We go through each brief in class before it is due.</p>
-                <p>The web authoring project builds on your site from Step 1. Lessons 11 to 13 and the templates in Step 2 are written for it. The database project builds on Step 3.</p>
+                <p>The web authoring project builds on your site from Stage 1. Lessons 11 to 13 and the templates are written for it. The database project builds on Stage 2.</p>
             </div>
         </section>
     </main>
 
     <footer>
-        <p>Web Authoring and Databases, from <a href="https://jsaaron.com">Joshua Aaron</a>. The code for this site is at <a href="https://github.com/deweydex/dewstack">github.com/deweydex/dewstack</a>.</p>
+        <p>Web Authoring and Databases, from <a href="https://jsaaron.com">Joshua Aaron</a>. The code for this site is at <a href="https://github.com/deweydex/dewstack">github.com/deweydex/dewstack</a>. Released under the MIT licence.</p>
     </footer>
 </body>
 </html>

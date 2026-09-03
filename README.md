@@ -1,83 +1,121 @@
-# dewstack: Web Authoring and Databases
+# Web authoring and databases
 
-This is the course site for two QQI Level 5 modules taught together: Web Authoring (5N1910) and Database Methods (5N0783). The front page is a plan for the course with every link a student needs. The tutorials and the database pages sit behind those links.
+This is the home page for the web authoring and database course. It says
+what the course covers, in what order, and where each part lives.
 
-The site is plain HTML, CSS and JavaScript. There is no build step and no server. Open `index.html` in a browser and it works.
+The course is for adults who are learning to make web pages and to work
+with data. Many are doing this for the first time. Nothing has to be
+installed. You need a free GitHub account, a web browser and a text editor.
 
-The front page has reading settings, under a button below the header: theme, typeface (including Atkinson Hyperlegible and OpenDyslexic), text size, line width, and high contrast. Choices are saved on the reader's device.
+This page is also published as a website, at
+https://deweydex.github.io/dewstack/. The website has the same stages and
+the same links. It also has a reading settings button: theme, typeface,
+text size, line width and high contrast, saved on your device.
 
-## Where everything is
+## How the course is arranged
 
-| What | On the web | The code |
+The course has three stages. Each stage builds on the one before it. We
+suggest working through them in order. If some of this is already familiar,
+you can start where the material is new to you.
+
+### Stage 1: build and publish a website
+
+You start with nothing and finish with a personal website at its own
+address on the internet. Along the way we learn how HTML gives a page its
+structure and how CSS gives it its look.
+
+The work happens in your own copy of the **web** repository. First you make
+a copy of it, which GitHub calls a fork. Then you change its files, one
+exercise at a time. Then GitHub publishes your changes at your own address.
+
+Start here: https://github.com/deweydex/web
+
+The instructions are in that repository's README. There are twenty-five
+short exercises. Each one asks you to change something and look at what
+happens.
+
+### Stage 2: work with data
+
+A website often needs to remember things: the products in a shop, the
+members of a club, the marks in a class. A database is a program that
+stores this kind of information in tables. We learn to make tables, to put
+data in them, and to ask them questions. The questions are written in a
+language called SQL. Most databases understand SQL, so what you learn here
+is useful far beyond this course.
+
+The database runs inside your browser. Nothing is installed, and nothing
+you type is sent anywhere.
+
+The database work starts with the SQL playground, which lives in this
+repository: https://deweydex.github.io/dewstack/databases/playground/.
+It has short refreshers on HTML and CSS, then SQL. Then try the quiz:
+https://deweydex.github.io/dewstack/tutorials/tentacular-plushies-quiz-final.html.
+The notebook covers the same ideas in Python and adds joining two tables.
+It opens in Google Colab:
+https://colab.research.google.com/github/deweydex/dewstack/blob/main/databases/sqlite_tutorial.ipynb
+
+### Stage 3: put the two together
+
+In the last stage we show data from a database on a web page. This stage is
+still being written. Its shape will be settled once stages 1 and 2 are in
+place.
+
+## Tutorials, guides and templates
+
+The exercises in stage 1 show you what happens. The tutorials explain why.
+Use them when an exercise leaves you with a question, or when you want more
+practice. There are thirteen lessons, seven GitHub guides, eleven starter
+templates, four example pages, a troubleshooting page and a quick
+reference. Lessons 11 to 13 cover Flexbox, Grid, components and animation,
+which the web authoring project needs.
+
+These pages were made for an earlier version of the course, and they are
+here as they were. Some of them do not fit a phone screen well yet. We are
+rewriting them one at a time.
+
+Open them here: https://deweydex.github.io/dewstack/tutorials/
+
+## Where your work is saved
+
+In stage 1, your work lives in your own GitHub repository. You can return
+to it from any computer by signing in to GitHub.
+
+In the playground, the database starts again each time the page is
+reloaded. If you write a query you want to keep, copy it into a file of
+your own.
+
+## All the links
+
+| What it is | Repository | Published site |
 |---|---|---|
-| This site, the front page | [deweydex.github.io/dewstack](https://deweydex.github.io/dewstack/) | [github.com/deweydex/dewstack](https://github.com/deweydex/dewstack) |
-| The starter site students fork, with its 25 exercises | [deweydex.github.io/web](https://deweydex.github.io/web/) | [github.com/deweydex/web](https://github.com/deweydex/web) |
-| The tutorials: thirteen lessons, GitHub guides, templates, examples, troubleshooting, quick reference | [dewstack/tutorials](https://deweydex.github.io/dewstack/tutorials/) | `tutorials/` in this repository |
-| The SQL playground | [dewstack/databases/playground](https://deweydex.github.io/dewstack/databases/playground/) | `databases/playground/` |
-| The SQL playground, teacher version, with solutions and notes | [teacher.html](https://deweydex.github.io/dewstack/databases/playground/teacher.html) | `databases/playground/teacher.html` |
-| The SQL quiz | [tentacular-plushies-quiz-final.html](https://deweydex.github.io/dewstack/tutorials/tentacular-plushies-quiz-final.html) | `tutorials/tentacular-plushies-quiz-final.html` |
-| The SQLite notebook | [Open in Google Colab](https://colab.research.google.com/github/deweydex/dewstack/blob/main/databases/sqlite_tutorial.ipynb) | `databases/sqlite_tutorial.ipynb` |
-| The plan for this repository | | [PLAN.md](PLAN.md) |
-
-## For students: how to begin
-
-The front page puts the course in four steps, and the order matters.
-
-First, go to the starter repository and read its README. It tells you how to fork the repository and turn on GitHub Pages, and it holds the exercises. You start with three files and finish with a portfolio site published at an address you can share. That is Step 1, and most of the learning happens there.
-
-Then use the tutorials when an exercise leaves you with a question. The lessons explain why things work. The GitHub guides are step-by-step instructions for making an account, saving your work, and publishing a site. That is Step 2.
-
-Then, when the course turns to databases, open the SQL playground. Type a query, run it, and see the result. Everything runs inside your browser. Nothing is installed, and nothing you type is sent anywhere. That is Step 3.
-
-Step 4 is the projects and the exam. The college sets those, and the briefs are on your course page and on Moodle.
+| **This course**: the front page, the tutorials and the database pages | [deweydex/dewstack](https://github.com/deweydex/dewstack) | [Front page](https://deweydex.github.io/dewstack/) · [Tutorials](https://deweydex.github.io/dewstack/tutorials/) · [SQL playground](https://deweydex.github.io/dewstack/databases/playground/) · [SQL quiz](https://deweydex.github.io/dewstack/tutorials/tentacular-plushies-quiz-final.html) |
+| **web**: stage 1, the site you fork and make your own | [deweydex/web](https://github.com/deweydex/web) | Your own fork has its own address once you turn on GitHub Pages. Exercise 2 shows how. |
+| **SQLite notebook**: stage 2 in Python, with dinosaurs for data | `databases/sqlite_tutorial.ipynb` in this repository | [Open in Google Colab](https://colab.research.google.com/github/deweydex/dewstack/blob/main/databases/sqlite_tutorial.ipynb) |
+| **HTML, CSS and SQL**: where the playground came from | [deweydex/HTML-CSS-SQL-JS](https://github.com/deweydex/HTML-CSS-SQL-JS) | [Open the page](https://deweydex.github.io/HTML-CSS-SQL-JS/) |
+| **Learn HTML, CSS, GitHub and more**: where the tutorials came from | [deweydex/WADB_Tutorials](https://github.com/deweydex/WADB_Tutorials) | [Open the site](https://deweydex.github.io/WADB_Tutorials/) |
+| **dewlab**: a sister project for learning Python in the browser | [deweydex/dewlab](https://github.com/deweydex/dewlab) | See its README |
 
 ## For teachers
 
-Each step on the front page names what a student can do at the end of it. After Step 1 they have built and published a three-page site and changed every part of it themselves. After Step 2 they can explain the choices they made and use Flexbox and Grid for the project. After Step 3 they can write SELECT, WHERE, ORDER BY, INSERT, UPDATE, DELETE and COUNT queries against a small database and read the results. The notebook adds a join across two tables.
+The planning notes are in [`planning/`](planning/).
+[`planning/CONSOLIDATION_PLAN.md`](planning/CONSOLIDATION_PLAN.md) says how
+the materials are being brought together here, in what order, and what has
+moved so far.
 
-The playground has a teacher version at `databases/playground/teacher.html`. It is the same page with worked solutions under each exercise and teaching notes at the top. The playground's sample database has two tables, students and courses. The playground does not teach JOIN itself, but the second table is there when the course reaches it.
+How the pages connect: `index.html` is this README as a web page. Every
+tutorial page, the quiz and the playground carry a thin course bar at the
+top that links back to it. The bar is the one thing added to the copied
+pages. `tools/add_course_bar.py` inserts it, and can insert it again after
+a copy is refreshed from its source. Templates and examples do not get the
+bar, because students copy those files.
 
-The tutorials under `tutorials/` are a complete site of their own, with a front page, a menu, a search box and a progress tracker. They are copied as they were from their previous home so that nothing a student bookmarked has changed. Which of them the front page points at, and in what order, is a decision recorded in [PLAN.md](PLAN.md).
+The playground has a teacher version with solutions and notes:
+https://deweydex.github.io/dewstack/databases/playground/teacher.html
 
-## Running the site yourself
+To publish your own copy of this site, fork the repository, then in the
+fork's Settings choose Pages, and under Source choose "Deploy from a
+branch" with the branch `main` and the folder `/ (root)`. There is no
+build step.
 
-To read it, open `index.html` in a browser. Every link is relative, so the tutorials and the playground work from a folder on your computer.
-
-To publish your own copy, first fork this repository. Then open the fork's Settings, choose Pages, and under Source choose "Deploy from a branch", with the branch `main` and the folder `/ (root)`. Save, wait a minute, and your copy is at `https://your-username.github.io/dewstack/`.
-
-Two things to know. File names matter: the front page must be called `index.html`, in lower case, at the top of the repository. And the SQL playground loads its database engine from the internet the first time it opens. On a computer with no connection, the playground shows an error until it is online.
-
-## When something does not work
-
-If the playground says the database failed to load, the page could not reach the internet to fetch the engine. Check the connection and reload. If the problem stays, open the browser's developer tools and read the message in the Console tab.
-
-If GitHub shows "page not found" after you turn on Pages, wait a minute and try again. If it still fails, check that `index.html` is at the top of the repository, not inside a folder.
-
-If a page shows with no styling, the link to the stylesheet is wrong. Check that the file name in the `href` matches the real file exactly, including capital letters.
-
-If a query does not run, read the error under the editor. The usual causes are a missing semicolon, or a table or column name that does not exist. Check the spelling against the table's own names.
-
-## What is in the repository
-
-| Path | What it is |
-|---|---|
-| `index.html`, `styles.css` | The front page and its stylesheet. |
-| `assets/` | The front page's reading settings (theme, typeface, text size, line width, high contrast): `settings.css`, `settings.js`, and the two self-hosted typefaces in `fonts/` with `fonts.css`. |
-| `tutorials/` | The tutorial site: `lessons/` (thirteen lessons), `github-guides/` (seven guides, in HTML and Markdown), `examples/`, `templates/`, the troubleshooting, reference, design-resources and project-ideas pages, the SQL quiz, and the site's own `css/`, `js/` and front page. |
-| `databases/playground/` | The interactive HTML, CSS and SQL tutorial. Queries run in the browser through SQL.js. `teacher.html` is the version with solutions. |
-| `databases/sqlite_tutorial.ipynb` | SQLite in a Jupyter notebook, with dinosaurs for data. |
-| `PLAN.md` | What this repository is for, what is in place, and the steps that follow. |
-
-## Where the pieces came from
-
-Everything here was copied from the repository it used to live in. Nothing was moved and nothing was edited on the way.
-
-- `tutorials/` is `deweydex/WADB_Tutorials`, minus four working-notes files that were never part of the site.
-- `databases/playground/` is `deweydex/HTML-CSS-SQL-JS`. The front page's stylesheet is a copy of the playground's.
-- The reading settings follow dewlab's, and the two accessible typefaces are copied from dewlab's `assets/vendor/` (see `assets/fonts/README.md`).
-- `databases/sqlite_tutorial.ipynb` is from the course site's assets.
-- The starter site is `deweydex/web`, which stays in its own repository so that a student's fork holds their site and nothing else.
-
-## Licence
-
-See [LICENSE](LICENSE).
+Everything here is released under the MIT licence. Copy it, change it and
+share it.
