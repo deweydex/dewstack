@@ -1,0 +1,1289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lesson 12: Component-Based Design & Maintainable CSS</title>
+    <link rel="stylesheet" href="../css/base.css">
+    <link rel="stylesheet" href="../css/navigation.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <link rel="stylesheet" href="../css/lessons.css">
+    <!--
+        Links to external CSS files organized by purpose.
+        base.css: foundational styles and CSS variables
+        navigation.css: header and navigation (minimal on lesson pages)
+        components.css: shared components like learning-outcomes and code-example
+        lessons.css: lesson page-specific styles
+    -->
+    <!-- Prism.js for syntax highlighting -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+    <script src="../script.js"></script>
+    <script src="../js/copy-code.js"></script>
+    <script src="../js/progress-tracker.js"></script>
+    <style>
+        /* Demo styles for this lesson's examples */
+        .demo-button {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .demo-button--primary {
+            background: #2563eb;
+            color: white;
+        }
+        .demo-button--primary:hover {
+            background: #1d4ed8;
+        }
+        .demo-card {
+            background: white;
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navbar minimal">
+            <div class="container">
+                <button class="menu-toggle" aria-label="Open navigation menu" aria-expanded="false">
+                    ☰ Menu
+                </button>
+                <div class="site-header-content">
+                    <a href="../index.html" class="logo">Learn HTML, CSS, GitHub, and More!</a>
+                    <p class="site-subtitle">
+                        A series of tutorials (and experiments) from
+                        <a href="https://jsaaron.com" target="_blank" rel="noopener noreferrer">Joshua Aaron</a> |
+                        <a href="https://github.com/jsaaron" target="_blank" rel="noopener noreferrer">GitHub</a>
+                    </p>
+                </div>
+
+                <div class="header-right">
+                    <a href="../about.html">About</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="menu-overlay"></div>
+
+    <ul class="nav-links">
+        <li><a href="../index.html#home">Home</a></li>
+        <li class="nav-section-header">Lessons</li>
+        <li><a href="01-html-basics.html">01. HTML Basics</a></li>
+        <li><a href="02-html-semantics.html">02. Semantic HTML</a></li>
+        <li><a href="03-css-basics.html">03. CSS Basics</a></li>
+        <li><a href="04-css-layout.html">04. CSS Layout</a></li>
+        <li><a href="05-responsive-design.html">05. Responsive Design</a></li>
+        <li><a href="06-github-setup.html">06. GitHub Setup</a></li>
+        <li><a href="07-github-workflow.html">07. GitHub Workflow</a></li>
+        <li><a href="08-github-pages.html">08. GitHub Pages</a></li>
+        <li><a href="09-images.html">09. Working with Images</a></li>
+        <li><a href="10-links.html">10. Working with Links</a></li>
+        <li><a href="11-flexbox-grid-advanced.html">11. Advanced Flexbox & Grid</a></li>
+        <li><a href="12-component-design.html">12. Component Design</a></li>
+        <li class="nav-section-header">Resources</li>
+        <li><a href="../index.html#examples">Examples</a></li>
+        <li><a href="../index.html#templates">Templates</a></li>
+        <li><a href="../index.html#github">GitHub Guides</a></li>
+        <li><a href="../design-resources.html">Design Resources</a></li>
+        <li><a href="../troubleshooting.html">Troubleshooting</a></li>
+        <li><a href="../reference.html">Quick Reference</a></li>
+        <li><a href="../project-ideas.html">Project Ideas</a></li>
+        <li><a href="../about.html">About</a></li>
+    </ul>
+
+    <div class="lesson-container">
+        <div class="lesson-nav-links">
+            <a href="../index.html">Back to Home</a> |
+            <a href="11-flexbox-grid-advanced.html">Previous Lesson</a> |
+            <a href="13-css-animations.html">Next Lesson: CSS Animations & Transitions</a>
+        </div>
+
+        <h1>Lesson 12: Component-Based Design & Maintainable CSS</h1>
+
+        <!-- Table of Contents -->
+        <nav class="table-of-contents">
+            <h2>Table of Contents</h2>
+            <ul>
+                <li><a href="#learning-outcomes">Learning Outcomes</a></li>
+                <li><a href="#why-components">Why Component-Based Design Matters</a></li>
+                <li><a href="#component-thinking">Component Thinking and Single Responsibility</a></li>
+                <li><a href="#bem-methodology">BEM Methodology: Block Element Modifier</a></li>
+                <li><a href="#css-variables">CSS Custom Properties (Variables)</a></li>
+                <li><a href="#design-tokens">Design Tokens and Design Systems</a></li>
+                <li><a href="#button-components">Building a Button Component Library</a></li>
+                <li><a href="#card-components">Creating Card Components</a></li>
+                <li><a href="#form-components">Form Component Patterns</a></li>
+                <li><a href="#css-architecture">CSS Architecture and File Organization</a></li>
+                <li><a href="#theming">Theme Systems and Dark Mode</a></li>
+                <li><a href="#worked-example">Worked Example: Complete Design System</a></li>
+                <li><a href="#practice">Practice Opportunity</a></li>
+                <li><a href="#summary">Summary of Key Concepts</a></li>
+                <li><a href="#next-steps">Next Steps</a></li>
+                <li><a href="#bibliography">Bibliography</a></li>
+            </ul>
+        </nav>
+
+        <div class="learning-outcomes" id="learning-outcomes">
+            <h2>Learning Outcomes</h2>
+            <p>After this lesson, you will understand how to organize CSS for large, maintainable projects using component-based design principles. You will master BEM naming conventions for creating self-documenting CSS, use CSS custom properties to build flexible design systems with design tokens, and create reusable component libraries for buttons, cards, and forms. You will learn CSS architecture patterns for scaling projects, implement theme systems including dark mode, and understand how component thinking prepares you for modern frameworks like React and Vue.</p>
+
+            <h3>Prerequisites</h3>
+            <p>You should be comfortable with all basic CSS concepts from Lessons 03-05, including selectors, specificity, the box model, and layout techniques. Understanding advanced layout from Lesson 11 will help you see how components fit into larger page structures.</p>
+        </div>
+
+        <div class="concept-section" id="why-components">
+            <h2>Why Component-Based Design Matters</h2>
+
+            <p>As projects grow from simple pages to complex applications, <strong>CSS becomes increasingly difficult to maintain</strong> without organization. Styles conflict, specificity wars emerge, and making changes becomes risky because you can't predict what else might break. Component-based design solves these problems by treating UI elements as <strong>independent, reusable building blocks</strong>.</p>
+
+            <p><strong>Component thinking</strong> means designing each UI element—buttons, cards, navigation bars, forms—as a self-contained unit with its own styles that don't leak to or from other elements. This mirrors how modern JavaScript frameworks work and prepares you for professional development.</p>
+
+            <p><strong>Benefits of component-based CSS:</strong></p>
+            <ul>
+                <li><strong>Predictability:</strong> Changes to one component don't unexpectedly affect others</li>
+                <li><strong>Reusability:</strong> Write button styles once, use them everywhere consistently</li>
+                <li><strong>Maintainability:</strong> Find and fix issues in a specific component without touching unrelated code</li>
+                <li><strong>Scalability:</strong> Add new components without increasing complexity exponentially</li>
+                <li><strong>Team collaboration:</strong> Multiple developers can work on different components simultaneously</li>
+                <li><strong>Framework preparation:</strong> Component thinking translates directly to React, Vue, and Angular</li>
+            </ul>
+        </div>
+
+        <div class="concept-section" id="component-thinking">
+            <h2>Component Thinking and Single Responsibility</h2>
+
+            <p>The <strong>single responsibility principle</strong> states that each component should do one thing and do it well. A button component handles button styling and behavior. A card component creates a container for grouped content. A navigation component manages site navigation. Each focuses on its specific purpose.</p>
+
+            <h3>Identifying Components</h3>
+
+            <p>Look at any web page and you'll see repeating patterns that are candidates for components:</p>
+
+            <ul>
+                <li><strong>Buttons:</strong> Primary actions, secondary actions, destructive actions (all are button variants)</li>
+                <li><strong>Cards:</strong> Content containers that group related information (blog posts, products, profiles)</li>
+                <li><strong>Forms:</strong> Input fields, labels, validation messages, submit buttons working together</li>
+                <li><strong>Navigation:</strong> Header menus, breadcrumbs, pagination, tabs</li>
+                <li><strong>Alerts:</strong> Success messages, error messages, warnings, information boxes</li>
+                <li><strong>Modals:</strong> Dialog boxes, confirmations, lightboxes</li>
+            </ul>
+
+            <p>Each of these patterns appears multiple times across a site. Creating components means <strong>writing the CSS once</strong> and applying it consistently everywhere that pattern appears.</p>
+
+            <h3>Component Independence</h3>
+
+            <p>A well-designed component works correctly <strong>regardless of where it appears</strong> on the page. It doesn't depend on parent containers having specific classes or rely on global styles beyond a base theme. This independence means you can drop a button component into any page and it looks and works as expected.</p>
+        </div>
+
+        <div class="concept-section" id="bem-methodology">
+            <h2>BEM Methodology: Block Element Modifier</h2>
+
+            <p><strong>BEM (Block Element Modifier)</strong> is a naming convention that makes CSS self-documenting and prevents style conflicts. It uses specific naming patterns to show the relationship between HTML elements and their styles at a glance.</p>
+
+            <h3>BEM Structure</h3>
+
+            <p>BEM names consist of three parts connected with specific delimiters:</p>
+
+            <ul>
+                <li><strong>Block:</strong> The standalone component (e.g., <code>card</code>, <code>button</code>, <code>nav</code>)</li>
+                <li><strong>Element:</strong> A part of the block, connected with <code>__</code> (e.g., <code>card__title</code>, <code>button__icon</code>)</li>
+                <li><strong>Modifier:</strong> A variant or state, connected with <code>--</code> (e.g., <code>button--primary</code>, <code>card--featured</code>)</li>
+            </ul>
+
+            <h3>BEM in Practice</h3>
+
+            <div class="code-example">
+                <p><strong>Example: Card component with BEM</strong></p>
+                <pre><code class="language-html">&lt;!-- The Block --&gt;
+&lt;div class="card"&gt;
+    &lt;!-- Elements of the card block --&gt;
+    &lt;img src="photo.jpg" alt="Photo" class="card__image"&gt;
+    &lt;div class="card__content"&gt;
+        &lt;h3 class="card__title"&gt;Article Title&lt;/h3&gt;
+        &lt;p class="card__description"&gt;Article summary goes here&lt;/p&gt;
+        &lt;button class="card__button"&gt;Read More&lt;/button&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;!-- Same block with a modifier --&gt;
+&lt;div class="card card--featured"&gt;
+    &lt;!-- Featured card looks different but uses same structure --&gt;
+    &lt;img src="photo.jpg" alt="Photo" class="card__image"&gt;
+    &lt;div class="card__content"&gt;
+        &lt;h3 class="card__title"&gt;Featured Article&lt;/h3&gt;
+        &lt;p class="card__description"&gt;This card is highlighted&lt;/p&gt;
+        &lt;button class="card__button card__button--large"&gt;Read More&lt;/button&gt;
+    &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+            </div>
+
+            <div class="code-example">
+                <p><strong>CSS for the BEM card component:</strong></p>
+                <pre><code class="language-css">/* Block: The card component */
+.card {
+    background: white;
+    border-radius: 0.5rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    overflow: hidden;
+}
+
+/* Element: Parts of the card */
+.card__image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.card__content {
+    padding: 1.5rem;
+}
+
+.card__title {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+    color: #1f2937;
+}
+
+.card__description {
+    color: #6b7280;
+    margin-bottom: 1rem;
+}
+
+.card__button {
+    padding: 0.5rem 1rem;
+    background: #2563eb;
+    color: white;
+    border: none;
+    border-radius: 0.25rem;
+    cursor: pointer;
+}
+
+/* Modifier: Featured variant */
+.card--featured {
+    border: 2px solid #2563eb;
+    box-shadow: 0 8px 16px rgba(37, 99, 235, 0.2);
+}
+
+.card--featured .card__title {
+    color: #2563eb;
+}
+
+/* Modifier on element: Large button variant */
+.card__button--large {
+    padding: 0.75rem 1.5rem;
+    font-size: 1.125rem;
+}</code></pre>
+            </div>
+
+            <h3>BEM Benefits</h3>
+
+            <ul>
+                <li><strong>Prevents conflicts:</strong> Specific class names avoid accidental style collisions</li>
+                <li><strong>Self-documenting:</strong> Names tell you exactly what each class does and where it belongs</li>
+                <li><strong>Low specificity:</strong> Single-class selectors keep specificity manageable</li>
+                <li><strong>Searchable:</strong> Easy to find all uses of a component in your codebase</li>
+                <li><strong>Modular:</strong> Can move components between projects easily</li>
+            </ul>
+
+            <h3>BEM Rules and Best Practices</h3>
+
+            <p><strong>Keep element names flat:</strong> Never nest element names like <code>card__content__title</code>. Use <code>card__title</code> even if it's inside <code>card__content</code>. This keeps names concise and avoids deep nesting complexity.</p>
+
+            <p><strong>Modifiers extend, not replace:</strong> Always include the base class with a modifier: <code>class="button button--large"</code>, not just <code>class="button--large"</code>. The modifier adds to the base styles.</p>
+
+            <p><strong>Avoid tag selectors in components:</strong> Use <code>.card__title</code> instead of <code>.card h3</code>. This makes components more flexible and prevents specificity issues.</p>
+        </div>
+
+        <div class="concept-section" id="css-variables">
+            <h2>CSS Custom Properties (Variables)</h2>
+
+            <p><strong>CSS custom properties</strong> (also called CSS variables) let you store values and reuse them throughout your stylesheet. They enable theming, reduce repetition, and make global changes effortless. Unlike Sass variables which are compiled away, CSS variables are live in the browser and can be changed with JavaScript.</p>
+
+            <h3>Declaring and Using Variables</h3>
+
+            <div class="code-example">
+                <p><strong>Example: Basic CSS variables</strong></p>
+                <pre><code class="language-css">:root {
+    /* Declare variables on :root to make them global */
+    --primary-color: #2563eb;
+    --secondary-color: #10b981;
+    --text-color: #1f2937;
+    --text-light: #6b7280;
+    --spacing-sm: 0.5rem;
+    --spacing-md: 1rem;
+    --spacing-lg: 1.5rem;
+    --border-radius: 0.5rem;
+}
+
+/* Use variables with var() function */
+.button {
+    background: var(--primary-color);
+    color: white;
+    padding: var(--spacing-md) var(--spacing-lg);
+    border-radius: var(--border-radius);
+}
+
+.card {
+    border-radius: var(--border-radius);
+    padding: var(--spacing-lg);
+}
+
+.heading {
+    color: var(--text-color);
+    margin-bottom: var(--spacing-md);
+}</code></pre>
+            </div>
+
+            <h3>Fallback Values</h3>
+
+            <p>The <code>var()</code> function accepts a <strong>fallback value</strong> as a second argument, used if the variable isn't defined:</p>
+
+            <div class="code-example">
+                <pre><code class="language-css">.element {
+    /* If --primary-color isn't defined, use #2563eb */
+    background: var(--primary-color, #2563eb);
+
+    /* Fallback can also be another variable */
+    color: var(--text-color, var(--fallback-color, black));
+}</code></pre>
+            </div>
+
+            <h3>Scoped Variables</h3>
+
+            <p>Variables can be <strong>scoped to specific elements</strong> and their descendants, allowing component-specific overrides:</p>
+
+            <div class="code-example">
+                <pre><code class="language-css">:root {
+    --button-bg: #2563eb;
+}
+
+.button {
+    background: var(--button-bg);
+}
+
+/* Alert buttons get a different color */
+.alert--error {
+    --button-bg: #dc2626;  /* Red for error alerts */
+}
+
+.alert--success {
+    --button-bg: #10b981;  /* Green for success alerts */
+}
+/* Any button inside .alert--error automatically uses red */</code></pre>
+            </div>
+
+            <h3>Calculated Values</h3>
+
+            <p>CSS variables work with <code>calc()</code> for dynamic calculations:</p>
+
+            <div class="code-example">
+                <pre><code class="language-css">:root {
+    --spacing-unit: 0.5rem;
+}
+
+.small-margin {
+    margin: var(--spacing-unit);  /* 0.5rem */
+}
+
+.medium-margin {
+    margin: calc(var(--spacing-unit) * 2);  /* 1rem */
+}
+
+.large-margin {
+    margin: calc(var(--spacing-unit) * 4);  /* 2rem */
+}</code></pre>
+            </div>
+        </div>
+
+        <div class="concept-section" id="design-tokens">
+            <h2>Design Tokens and Design Systems</h2>
+
+            <p><strong>Design tokens</strong> are the variables that define your design system—colors, typography, spacing, shadows, borders, and other visual properties. Organizing these as CSS variables creates a <strong>single source of truth</strong> for your design decisions.</p>
+
+            <h3>Building a Token System</h3>
+
+            <div class="code-example">
+                <p><strong>Example: Complete design token system</strong></p>
+                <pre><code class="language-css">:root {
+    /* ========================================
+       COLOR TOKENS
+       ======================================== */
+
+    /* Primary palette */
+    --color-primary-50: #eff6ff;
+    --color-primary-100: #dbeafe;
+    --color-primary-200: #bfdbfe;
+    --color-primary-300: #93c5fd;
+    --color-primary-400: #60a5fa;
+    --color-primary-500: #3b82f6;  /* Main primary */
+    --color-primary-600: #2563eb;
+    --color-primary-700: #1d4ed8;
+    --color-primary-800: #1e40af;
+    --color-primary-900: #1e3a8a;
+
+    /* Semantic colors (built from palette) */
+    --color-primary: var(--color-primary-600);
+    --color-primary-hover: var(--color-primary-700);
+    --color-primary-light: var(--color-primary-100);
+
+    /* Neutral palette */
+    --color-gray-50: #f9fafb;
+    --color-gray-100: #f3f4f6;
+    --color-gray-200: #e5e7eb;
+    --color-gray-300: #d1d5db;
+    --color-gray-500: #6b7280;
+    --color-gray-700: #374151;
+    --color-gray-900: #111827;
+
+    /* Semantic neutrals */
+    --color-text: var(--color-gray-900);
+    --color-text-light: var(--color-gray-500);
+    --color-background: white;
+    --color-background-alt: var(--color-gray-50);
+    --color-border: var(--color-gray-200);
+
+    /* Status colors */
+    --color-success: #10b981;
+    --color-warning: #f59e0b;
+    --color-error: #ef4444;
+    --color-info: #3b82f6;
+
+    /* ========================================
+       TYPOGRAPHY TOKENS
+       ======================================== */
+
+    /* Font families */
+    --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    --font-mono: 'Courier New', Courier, monospace;
+
+    /* Font sizes (modular scale) */
+    --font-size-xs: 0.75rem;    /* 12px */
+    --font-size-sm: 0.875rem;   /* 14px */
+    --font-size-base: 1rem;     /* 16px */
+    --font-size-lg: 1.125rem;   /* 18px */
+    --font-size-xl: 1.25rem;    /* 20px */
+    --font-size-2xl: 1.5rem;    /* 24px */
+    --font-size-3xl: 1.875rem;  /* 30px */
+    --font-size-4xl: 2.25rem;   /* 36px */
+
+    /* Font weights */
+    --font-weight-normal: 400;
+    --font-weight-medium: 500;
+    --font-weight-semibold: 600;
+    --font-weight-bold: 700;
+
+    /* Line heights */
+    --line-height-tight: 1.25;
+    --line-height-normal: 1.5;
+    --line-height-relaxed: 1.75;
+
+    /* ========================================
+       SPACING TOKENS
+       ======================================== */
+
+    --spacing-xs: 0.25rem;   /* 4px */
+    --spacing-sm: 0.5rem;    /* 8px */
+    --spacing-md: 1rem;      /* 16px */
+    --spacing-lg: 1.5rem;    /* 24px */
+    --spacing-xl: 2rem;      /* 32px */
+    --spacing-2xl: 3rem;     /* 48px */
+    --spacing-3xl: 4rem;     /* 64px */
+
+    /* ========================================
+       BORDER & RADIUS TOKENS
+       ======================================== */
+
+    --border-width: 1px;
+    --border-width-thick: 2px;
+
+    --radius-sm: 0.25rem;
+    --radius-md: 0.5rem;
+    --radius-lg: 1rem;
+    --radius-full: 9999px;
+
+    /* ========================================
+       SHADOW TOKENS
+       ======================================== */
+
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+
+    /* ========================================
+       TRANSITION TOKENS
+       ======================================== */
+
+    --transition-fast: 150ms;
+    --transition-base: 300ms;
+    --transition-slow: 500ms;
+
+    --easing-standard: cubic-bezier(0.4, 0.0, 0.2, 1);
+    --easing-in: cubic-bezier(0.4, 0.0, 1, 1);
+    --easing-out: cubic-bezier(0.0, 0.0, 0.2, 1);
+}</code></pre>
+            </div>
+
+            <h3>Using Design Tokens in Components</h3>
+
+            <div class="code-example">
+                <pre><code class="language-css">/* Components built from tokens are consistent and themeable */
+.button {
+    font-family: var(--font-sans);
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-semibold);
+    padding: var(--spacing-sm) var(--spacing-lg);
+    border-radius: var(--radius-md);
+    border: var(--border-width) solid transparent;
+    background: var(--color-primary);
+    color: white;
+    box-shadow: var(--shadow-sm);
+    transition: all var(--transition-base) var(--easing-standard);
+}
+
+.button:hover {
+    background: var(--color-primary-hover);
+    box-shadow: var(--shadow-md);
+}
+
+.card {
+    background: var(--color-background);
+    border: var(--border-width) solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-lg);
+    box-shadow: var(--shadow-md);
+}
+
+.heading {
+    font-size: var(--font-size-2xl);
+    font-weight: var(--font-weight-bold);
+    line-height: var(--line-height-tight);
+    color: var(--color-text);
+    margin-bottom: var(--spacing-md);
+}</code></pre>
+            </div>
+
+            <p><strong>Benefits of design tokens:</strong></p>
+            <ul>
+                <li><strong>Consistency:</strong> All components use the same values automatically</li>
+                <li><strong>Easy updates:</strong> Change one token value, update entire site instantly</li>
+                <li><strong>Theming:</strong> Override tokens for dark mode or different themes</li>
+                <li><strong>Communication:</strong> Tokens document your design decisions</li>
+                <li><strong>Scalability:</strong> New components automatically stay on-brand</li>
+            </ul>
+        </div>
+
+        <div class="concept-section" id="button-components">
+            <h2>Building a Button Component Library</h2>
+
+            <p>Buttons are perfect for demonstrating component design because they appear everywhere and need consistent behavior while supporting many variants. A button component library handles all button styling needs across a project.</p>
+
+            <h3>Base Button Styles</h3>
+
+            <div class="code-example">
+                <p><strong>Example: Base button component with variants</strong></p>
+                <pre><code class="language-css">/* Base button - shared by all variants */
+.button {
+    /* Reset browser button styles */
+    display: inline-block;
+    font-family: inherit;
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-semibold);
+    line-height: 1;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    border: var(--border-width) solid transparent;
+    border-radius: var(--radius-md);
+    padding: var(--spacing-sm) var(--spacing-lg);
+    transition: all var(--transition-base) var(--easing-standard);
+    /* Prevents button from being highlighted when clicked */
+    -webkit-tap-highlight-color: transparent;
+}
+
+.button:focus {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+}
+
+.button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Primary variant - main call-to-action */
+.button--primary {
+    background: var(--color-primary);
+    color: white;
+}
+
+.button--primary:hover:not(:disabled) {
+    background: var(--color-primary-hover);
+    box-shadow: var(--shadow-md);
+}
+
+/* Secondary variant - less prominent */
+.button--secondary {
+    background: var(--color-gray-100);
+    color: var(--color-text);
+}
+
+.button--secondary:hover:not(:disabled) {
+    background: var(--color-gray-200);
+}
+
+/* Outline variant - borders only */
+.button--outline {
+    background: transparent;
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+}
+
+.button--outline:hover:not(:disabled) {
+    background: var(--color-primary-light);
+}
+
+/* Destructive variant - dangerous actions */
+.button--danger {
+    background: var(--color-error);
+    color: white;
+}
+
+.button--danger:hover:not(:disabled) {
+    background: #dc2626;  /* Darker red */
+}
+
+/* Size modifiers */
+.button--small {
+    font-size: var(--font-size-sm);
+    padding: var(--spacing-xs) var(--spacing-md);
+}
+
+.button--large {
+    font-size: var(--font-size-lg);
+    padding: var(--spacing-md) var(--spacing-xl);
+}
+
+/* Full-width modifier */
+.button--block {
+    display: block;
+    width: 100%;
+}</code></pre>
+            </div>
+
+            <h3>Button HTML Usage</h3>
+
+            <div class="code-example">
+                <pre><code class="language-html">&lt;!-- Primary button --&gt;
+&lt;button class="button button--primary"&gt;Save Changes&lt;/button&gt;
+
+&lt;!-- Large secondary button --&gt;
+&lt;button class="button button--secondary button--large"&gt;Cancel&lt;/button&gt;
+
+&lt;!-- Small danger button --&gt;
+&lt;button class="button button--danger button--small"&gt;Delete&lt;/button&gt;
+
+&lt;!-- Outline button --&gt;
+&lt;button class="button button--outline"&gt;Learn More&lt;/button&gt;
+
+&lt;!-- Full-width primary button --&gt;
+&lt;button class="button button--primary button--block"&gt;
+    Sign Up Now
+&lt;/button&gt;
+
+&lt;!-- Disabled button --&gt;
+&lt;button class="button button--primary" disabled&gt;
+    Processing...
+&lt;/button&gt;
+
+&lt;!-- Link styled as button --&gt;
+&lt;a href="/signup" class="button button--primary"&gt;Get Started&lt;/a&gt;</code></pre>
+            </div>
+        </div>
+
+        <div class="concept-section" id="card-components">
+            <h2>Creating Card Components</h2>
+
+            <p>Cards group related content into self-contained units. A card component system handles common patterns while allowing flexibility for different content types.</p>
+
+            <div class="code-example">
+                <p><strong>Example: Flexible card component</strong></p>
+                <pre><code class="language-css">/* Base card styles */
+.card {
+    background: var(--color-background);
+    border: var(--border-width) solid var(--color-border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    overflow: hidden;
+    transition: box-shadow var(--transition-base) var(--easing-standard);
+}
+
+.card:hover {
+    box-shadow: var(--shadow-lg);
+}
+
+/* Card elements */
+.card__image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    display: block;
+}
+
+.card__header {
+    padding: var(--spacing-lg);
+    border-bottom: var(--border-width) solid var(--color-border);
+}
+
+.card__body {
+    padding: var(--spacing-lg);
+}
+
+.card__footer {
+    padding: var(--spacing-lg);
+    border-top: var(--border-width) solid var(--color-border);
+    background: var(--color-background-alt);
+}
+
+.card__title {
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text);
+    margin: 0 0 var(--spacing-sm) 0;
+}
+
+.card__subtitle {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-light);
+    margin: 0;
+}
+
+.card__description {
+    color: var(--color-text);
+    line-height: var(--line-height-relaxed);
+    margin: 0;
+}
+
+/* Card modifiers */
+.card--horizontal {
+    display: flex;
+}
+
+.card--horizontal .card__image {
+    width: 40%;
+    height: auto;
+}
+
+.card--horizontal .card__body {
+    width: 60%;
+}
+
+.card--clickable {
+    cursor: pointer;
+    transition: all var(--transition-base) var(--easing-standard);
+}
+
+.card--clickable:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-xl);
+}
+
+.card--featured {
+    border-color: var(--color-primary);
+    border-width: var(--border-width-thick);
+}</code></pre>
+            </div>
+        </div>
+
+        <div class="concept-section" id="form-components">
+            <h2>Form Component Patterns</h2>
+
+            <p>Forms require consistent styling for inputs, labels, validation states, and layout. A form component system ensures all forms look and behave uniformly.</p>
+
+            <div class="code-example">
+                <p><strong>Example: Form component system</strong></p>
+                <pre><code class="language-css">/* Form field container */
+.form-field {
+    margin-bottom: var(--spacing-lg);
+}
+
+/* Labels */
+.form-label {
+    display: block;
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-text);
+    margin-bottom: var(--spacing-xs);
+}
+
+.form-label--required::after {
+    content: " *";
+    color: var(--color-error);
+}
+
+/* Inputs */
+.form-input {
+    display: block;
+    width: 100%;
+    font-family: inherit;
+    font-size: var(--font-size-base);
+    padding: var(--spacing-sm) var(--spacing-md);
+    border: var(--border-width) solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-background);
+    color: var(--color-text);
+    transition: all var(--transition-base) var(--easing-standard);
+}
+
+.form-input:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px var(--color-primary-light);
+}
+
+.form-input::placeholder {
+    color: var(--color-text-light);
+}
+
+/* Validation states */
+.form-input--error {
+    border-color: var(--color-error);
+}
+
+.form-input--error:focus {
+    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+}
+
+.form-input--success {
+    border-color: var(--color-success);
+}
+
+/* Help text */
+.form-help {
+    display: block;
+    font-size: var(--font-size-sm);
+    color: var(--color-text-light);
+    margin-top: var(--spacing-xs);
+}
+
+.form-help--error {
+    color: var(--color-error);
+}
+
+/* Textarea */
+.form-textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+
+/* Select dropdown */
+.form-select {
+    background-image: url("data:image/svg+xml,..."); /* Custom dropdown arrow */
+    background-repeat: no-repeat;
+    background-position: right var(--spacing-sm) center;
+    padding-right: calc(var(--spacing-lg) + 1rem);
+    appearance: none;
+}
+
+/* Checkbox and radio */
+.form-checkbox,
+.form-radio {
+    display: inline-flex;
+    align-items: center;
+}
+
+.form-checkbox input,
+.form-radio input {
+    margin-right: var(--spacing-sm);
+}</code></pre>
+            </div>
+        </div>
+
+        <div class="concept-section" id="css-architecture">
+            <h2>CSS Architecture and File Organization</h2>
+
+            <p>As projects grow, <strong>organizing CSS files</strong> becomes critical for maintainability. Several architecture patterns provide structure for scaling CSS.</p>
+
+            <h3>Component-Based File Structure</h3>
+
+            <p>Organize CSS files by component, with each file focused on one component:</p>
+
+            <div class="code-example">
+                <pre><code class="language-text">styles/
+├── base/
+│   ├── reset.css          /* CSS reset/normalize */
+│   ├── typography.css     /* Base typography styles */
+│   └── global.css         /* Global base styles */
+├── tokens/
+│   ├── colors.css         /* Color design tokens */
+│   ├── spacing.css        /* Spacing design tokens */
+│   ├── typography.css     /* Typography tokens */
+│   └── shadows.css        /* Shadow tokens */
+├── components/
+│   ├── button.css         /* Button component */
+│   ├── card.css           /* Card component */
+│   ├── form.css           /* Form components */
+│   ├── modal.css          /* Modal component */
+│   └── navigation.css     /* Navigation component */
+├── layouts/
+│   ├── header.css         /* Site header layout */
+│   ├── footer.css         /* Site footer layout */
+│   └── grid.css           /* Page grid layouts */
+├── utilities/
+│   ├── spacing.css        /* Margin/padding utilities */
+│   ├── text.css           /* Text utilities */
+│   └── display.css        /* Display utilities */
+└── themes/
+    ├── light.css          /* Light theme overrides */
+    └── dark.css           /* Dark theme overrides */</code></pre>
+            </div>
+
+            <h3>CSS Import Order</h3>
+
+            <p>Import files in <strong>specificity order</strong>, from least to most specific:</p>
+
+            <div class="code-example">
+                <pre><code class="language-css">/* main.css - master import file */
+
+/* 1. Design tokens */
+@import 'tokens/colors.css';
+@import 'tokens/spacing.css';
+@import 'tokens/typography.css';
+
+/* 2. Base/reset styles */
+@import 'base/reset.css';
+@import 'base/typography.css';
+@import 'base/global.css';
+
+/* 3. Layout systems */
+@import 'layouts/header.css';
+@import 'layouts/footer.css';
+@import 'layouts/grid.css';
+
+/* 4. Components */
+@import 'components/button.css';
+@import 'components/card.css';
+@import 'components/form.css';
+@import 'components/modal.css';
+@import 'components/navigation.css';
+
+/* 5. Utilities (highest specificity) */
+@import 'utilities/spacing.css';
+@import 'utilities/text.css';
+@import 'utilities/display.css';
+
+/* 6. Theme overrides */
+@import 'themes/dark.css' (prefers-color-scheme: dark);</code></pre>
+            </div>
+        </div>
+
+        <div class="concept-section" id="theming">
+            <h2>Theme Systems and Dark Mode</h2>
+
+            <p>CSS custom properties make <strong>theme switching</strong> straightforward. Define color tokens that change based on theme, and all components update automatically.</p>
+
+            <h3>Implementing Dark Mode</h3>
+
+            <div class="code-example">
+                <p><strong>Example: Theme system with light and dark modes</strong></p>
+                <pre><code class="language-css">/* Default light theme */
+:root {
+    --color-background: white;
+    --color-background-alt: #f9fafb;
+    --color-text: #111827;
+    --color-text-light: #6b7280;
+    --color-border: #e5e7eb;
+    --shadow-color: rgba(0, 0, 0, 0.1);
+}
+
+/* Dark theme overrides */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --color-background: #1f2937;
+        --color-background-alt: #111827;
+        --color-text: #f9fafb;
+        --color-text-light: #9ca3af;
+        --color-border: #374151;
+        --shadow-color: rgba(0, 0, 0, 0.5);
+    }
+}
+
+/* Manual theme switching with data attribute */
+[data-theme="dark"] {
+    --color-background: #1f2937;
+    --color-background-alt: #111827;
+    --color-text: #f9fafb;
+    --color-text-light: #9ca3af;
+    --color-border: #374151;
+    --shadow-color: rgba(0, 0, 0, 0.5);
+}
+
+/* Components automatically use themed colors */
+body {
+    background: var(--color-background);
+    color: var(--color-text);
+}
+
+.card {
+    background: var(--color-background);
+    border-color: var(--color-border);
+    box-shadow: 0 2px 4px var(--shadow-color);
+}
+
+.heading {
+    color: var(--color-text);
+}</code></pre>
+            </div>
+
+            <h3>JavaScript Theme Switcher</h3>
+
+            <div class="code-example">
+                <pre><code class="language-javascript">// Simple theme switcher with localStorage
+function toggleTheme() {
+    const html = document.documentElement;
+    const currentTheme = html.getAttribute('data-theme');
+    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+
+    html.setAttribute('data-theme', newTheme);
+    localStorage.setItem('theme', newTheme);
+}
+
+// Load saved theme on page load
+window.addEventListener('DOMContentLoaded', () => {
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme) {
+        document.documentElement.setAttribute('data-theme', savedTheme);
+    }
+});</code></pre>
+            </div>
+        </div>
+
+        <div class="concept-section" id="worked-example">
+            <h2>Worked Example: Complete Design System</h2>
+
+            <p>This example brings together all concepts into a mini design system with tokens, components, and theming.</p>
+
+            <h3>Design Tokens</h3>
+
+            <div class="code-example">
+                <pre><code class="language-css">/* tokens.css */
+:root {
+    /* Colors */
+    --color-primary: #2563eb;
+    --color-success: #10b981;
+    --color-warning: #f59e0b;
+    --color-error: #ef4444;
+
+    /* Light theme defaults */
+    --color-bg: white;
+    --color-text: #111827;
+    --color-border: #e5e7eb;
+
+    /* Spacing scale */
+    --space-1: 0.25rem;
+    --space-2: 0.5rem;
+    --space-3: 1rem;
+    --space-4: 1.5rem;
+    --space-5: 2rem;
+
+    /* Typography */
+    --font-size-sm: 0.875rem;
+    --font-size-base: 1rem;
+    --font-size-lg: 1.125rem;
+    --font-weight-normal: 400;
+    --font-weight-bold: 700;
+
+    /* Borders and radius */
+    --radius: 0.5rem;
+    --border-width: 1px;
+}
+
+/* Dark theme */
+[data-theme="dark"] {
+    --color-bg: #1f2937;
+    --color-text: #f9fafb;
+    --color-border: #374151;
+}</code></pre>
+            </div>
+
+            <h3>Button Component</h3>
+
+            <div class="code-example">
+                <pre><code class="language-css">/* components/button.css */
+.btn {
+    display: inline-block;
+    padding: var(--space-2) var(--space-4);
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-bold);
+    border-radius: var(--radius);
+    border: var(--border-width) solid transparent;
+    cursor: pointer;
+    transition: all 300ms ease;
+}
+
+.btn--primary {
+    background: var(--color-primary);
+    color: white;
+}
+
+.btn--primary:hover {
+    background: #1d4ed8;
+}
+
+.btn--success {
+    background: var(--color-success);
+    color: white;
+}</code></pre>
+            </div>
+
+            <h3>Card Component</h3>
+
+            <div class="code-example">
+                <pre><code class="language-css">/* components/card.css */
+.card {
+    background: var(--color-bg);
+    border: var(--border-width) solid var(--color-border);
+    border-radius: var(--radius);
+    padding: var(--space-4);
+}
+
+.card__title {
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text);
+    margin-bottom: var(--space-2);
+}
+
+.card__body {
+    color: var(--color-text);
+}</code></pre>
+            </div>
+
+            <p>This system automatically adapts to dark mode, maintains consistency through tokens, and makes it trivial to add new components that fit the design.</p>
+        </div>
+
+        <div class="practice" id="practice">
+            <h2>Practice Opportunity</h2>
+
+            <p>Build a complete component library to solidify your understanding.</p>
+
+            <h3>Challenge: Create Your Own Design System</h3>
+
+            <p>Build a mini design system with these requirements:</p>
+
+            <ol>
+                <li><strong>Design tokens file</strong> with:
+                    <ul>
+                        <li>Color palette (primary, secondary, neutrals, status colors)</li>
+                        <li>Spacing scale (at least 6 values)</li>
+                        <li>Typography scale (font sizes, weights, line heights)</li>
+                        <li>Border radius and shadow values</li>
+                    </ul>
+                </li>
+                <li><strong>At least 3 components</strong> using BEM:
+                    <ul>
+                        <li>Button component with 3 variants</li>
+                        <li>Card component with header/body/footer</li>
+                        <li>Alert component for success/warning/error messages</li>
+                    </ul>
+                </li>
+                <li><strong>Dark mode support</strong> that changes at least 5 token values</li>
+                <li><strong>Organized file structure</strong> separating tokens, components, and utilities</li>
+            </ol>
+
+            <h3>Bonus Challenges</h3>
+            <ul>
+                <li><strong>Build a theme switcher</strong> with a button that toggles between light and dark mode, saving preference to localStorage</li>
+                <li><strong>Create utility classes</strong> for common spacing patterns (margin, padding)</li>
+                <li><strong>Add a form component</strong> with input, textarea, and select using consistent styling</li>
+                <li><strong>Document your components</strong> with HTML examples showing all variants</li>
+            </ul>
+        </div>
+
+        <div class="summary" id="summary">
+            <h2>Summary of Key Concepts</h2>
+
+            <p>This lesson covered the foundations of scalable, maintainable CSS:</p>
+
+            <h3>Component-Based Design</h3>
+            <ul>
+                <li><strong>Component thinking</strong> treats UI elements as independent, reusable building blocks</li>
+                <li><strong>Single responsibility</strong> means each component handles one thing well</li>
+                <li><strong>Independence</strong> allows components to work anywhere without relying on context</li>
+            </ul>
+
+            <h3>BEM Methodology</h3>
+            <ul>
+                <li><strong>Block</strong> represents the component (card, button, nav)</li>
+                <li><strong>Element</strong> represents parts of the block (card__title, button__icon)</li>
+                <li><strong>Modifier</strong> represents variants or states (button--primary, card--featured)</li>
+                <li><strong>BEM prevents conflicts</strong> and makes code self-documenting</li>
+            </ul>
+
+            <h3>CSS Custom Properties</h3>
+            <ul>
+                <li><strong>Variables</strong> store reusable values throughout stylesheets</li>
+                <li><strong>Scoping</strong> allows component-specific overrides</li>
+                <li><strong>calc()</strong> enables dynamic calculations with variables</li>
+                <li><strong>Runtime changes</strong> make theming and dynamic styling possible</li>
+            </ul>
+
+            <h3>Design Systems</h3>
+            <ul>
+                <li><strong>Design tokens</strong> create a single source of truth for design decisions</li>
+                <li><strong>Token categories</strong> include colors, typography, spacing, shadows, transitions</li>
+                <li><strong>Semantic tokens</strong> give meaning to raw values (--color-primary vs #2563eb)</li>
+            </ul>
+
+            <h3>CSS Architecture</h3>
+            <ul>
+                <li><strong>File organization</strong> by component makes code maintainable</li>
+                <li><strong>Import order</strong> flows from generic to specific</li>
+                <li><strong>Theme systems</strong> leverage CSS variables for easy customization</li>
+            </ul>
+        </div>
+
+        <div class="next-steps" id="next-steps">
+            <h2>Next Steps</h2>
+
+            <p>With component design mastery, you're ready for the final advanced technique: <strong>Lesson 13: CSS Animations & Transitions</strong>. This lesson teaches how to add motion and interactivity to your components using CSS animations, transitions, transforms, and pure CSS interactive patterns like accordions and modals—all without JavaScript.</p>
+
+            <p>Before moving on, practice building component libraries for real projects. Try creating a design system for a personal project, or rebuild components from sites you admire using BEM and CSS variables. The skills you've learned prepare you for professional development and modern frameworks.</p>
+        </div>
+
+        <div class="bibliography" id="bibliography">
+            <h2>Bibliography</h2>
+
+            <p>Yandex. "BEM: Block Element Modifier." BEM Methodology. <a href="https://en.bem.info/methodology/" target="_blank">https://en.bem.info/methodology/</a></p>
+
+            <p>MDN Web Docs. "Using CSS custom properties (variables)." Mozilla Developer Network. <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties" target="_blank">https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties</a></p>
+
+            <p>Frost, Brad. "Atomic Design." Brad Frost Web. <a href="https://bradfrost.com/blog/post/atomic-web-design/" target="_blank">https://bradfrost.com/blog/post/atomic-web-design/</a></p>
+
+            <p>Coyier, Chris. "The Different Logical Ways to Group CSS Code." CSS-Tricks. <a href="https://css-tricks.com/different-logical-ways-group-css-properties/" target="_blank">https://css-tricks.com/different-logical-ways-group-css-properties/</a></p>
+
+            <p>GitHub. "Primer Design System." GitHub Design Systems. <a href="https://primer.style/" target="_blank">https://primer.style/</a></p>
+
+            <p>Fanguy, Will. "Design Tokens for Dummies." UX Collective. 2019.</p>
+        </div>
+
+        <div class="lesson-nav-links" style="margin-top: 3rem; padding-top: 2rem; border-top: 2px solid var(--border-color);">
+            <a href="../index.html">Back to Home</a> |
+            <a href="11-flexbox-grid-advanced.html">Previous Lesson</a> |
+            <a href="13-css-animations.html">Next Lesson: CSS Animations & Transitions</a>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Learn HTML, CSS, GitHub, and More! | Created by <a href="https://jsaaron.com" target="_blank" rel="noopener noreferrer">Joshua Aaron</a></p>
+        </div>
+    </footer>
+</body>
+</html>

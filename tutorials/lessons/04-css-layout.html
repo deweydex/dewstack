@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lesson 04: CSS Layout</title>
+    <link rel="stylesheet" href="../css/base.css">
+    <link rel="stylesheet" href="../css/navigation.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <link rel="stylesheet" href="../css/lessons.css">
+    <!-- 
+        Links to external CSS files organized by purpose.
+        base.css: foundational styles and CSS variables
+        navigation.css: header and navigation (minimal on lesson pages)
+        components.css: shared components like learning-outcomes and code-example
+        lessons.css: lesson page-specific styles
+    -->
+    <!-- Prism.js for syntax highlighting -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+    <script src="../script.js"></script>
+    <script src="../js/copy-code.js"></script>
+    <script src="../js/progress-tracker.js"></script>
+</head>
+<body>
+    <!-- 
+        Navigation Header
+        
+        The navigation header includes a hamburger menu button on the left,
+        followed by the site title and subtitle. Clicking the hamburger menu
+        opens a side overlay navigation panel that slides in from the left.
+        This keeps the page focused on content while providing easy access
+        to all navigation when needed.
+    -->
+    <header>
+        <nav class="navbar minimal">
+            <div class="container">
+                <button class="menu-toggle" aria-label="Open navigation menu" aria-expanded="false">
+                    ☰ Menu
+                </button>
+                <div class="site-header-content">
+                    <a href="../index.html" class="logo">Learn HTML, CSS, GitHub, and More!</a>
+                    <p class="site-subtitle">
+                        A series of tutorials (and experiments) from 
+                        <a href="https://jsaaron.com" target="_blank" rel="noopener noreferrer">Joshua Aaron</a> | 
+                        <a href="https://github.com/jsaaron" target="_blank" rel="noopener noreferrer">GitHub</a>
+                    </p>
+                </div>
+                
+                <!-- Header right side - About link -->
+                <div class="header-right">
+                    <a href="../about.html">About</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="menu-overlay"></div>
+
+    <ul class="nav-links">
+        <li><a href="../index.html#home">Home</a></li>
+        <li class="nav-section-header">Lessons</li>
+        <li><a href="01-html-basics.html">01. HTML Basics</a></li>
+        <li><a href="02-html-semantics.html">02. Semantic HTML</a></li>
+        <li><a href="03-css-basics.html">03. CSS Basics</a></li>
+        <li><a href="04-css-layout.html">04. CSS Layout</a></li>
+        <li><a href="05-responsive-design.html">05. Responsive Design</a></li>
+        <li><a href="06-github-setup.html">06. GitHub Setup</a></li>
+        <li><a href="07-github-workflow.html">07. GitHub Workflow</a></li>
+        <li><a href="08-github-pages.html">08. GitHub Pages</a></li>
+        <li><a href="09-images.html">09. Working with Images</a></li>
+        <li><a href="10-links.html">10. Working with Links</a></li>
+        <li><a href="11-flexbox-grid-advanced.html">11. Advanced Flexbox & Grid</a></li>
+        <li><a href="12-component-design.html">12. Component Design</a></li>
+        <li><a href="13-css-animations.html">13. CSS Animations</a></li>
+        <li class="nav-section-header">Resources</li>
+        <li><a href="../index.html#examples">Examples</a></li>
+        <li><a href="../index.html#templates">Templates</a></li>
+        <li><a href="../index.html#github">GitHub Guides</a></li>
+        <li><a href="../design-resources.html">Design Resources</a></li>
+        <li><a href="../troubleshooting.html">Troubleshooting</a></li>
+        <li><a href="../reference.html">Quick Reference</a></li>
+        <li><a href="../project-ideas.html">Project Ideas</a></li>
+        <li><a href="../about.html">About</a></li>
+    </ul>
+
+    <div class="lesson-container">
+        <div class="lesson-nav-links">
+            <a href="../index.html">Back to Home</a> | 
+            <a href="03-css-basics.html">Previous Lesson</a>
+        </div>
+
+        <h1>Lesson 04: CSS Layout</h1>
+
+        <!-- Table of Contents -->
+        <nav class="table-of-contents">
+            <h2>Table of Contents</h2>
+            <ul>
+                <li><a href="#learning-outcomes">Learning Outcomes</a></li>
+                <li><a href="#box-model">The CSS Box Model</a></li>
+                <li><a href="#display-properties">Understanding Display Properties</a></li>
+                <li><a href="#flexbox">Creating Layouts with Flexbox</a></li>
+                <li><a href="#worked-example">Worked Example: Creating a Navigation Bar with Flexbox</a></li>
+                <li><a href="#positioning">Positioning Elements</a></li>
+                <li><a href="#grid-vs-flexbox">CSS Grid vs Flexbox: When to Use Each</a></li>
+                <li><a href="#practice">Practice Opportunity</a></li>
+                <li><a href="#summary">Summary of Key Concepts</a></li>
+                <li><a href="#next-steps">Next Steps</a></li>
+                <li><a href="#bibliography">Bibliography</a></li>
+            </ul>
+        </nav>
+
+        <div class="learning-outcomes" id="learning-outcomes">
+            <h2>Learning Outcomes</h2>
+            <p>After this lesson, you will understand how CSS controls the positioning and layout of elements on a web page. You will be able to use the box model to control spacing and sizing, understand display properties and how they affect layout, and create multi-column layouts using flexbox. You will also understand when to use different layout techniques and how these methods work together to create page structures.</p>
+            
+            <h3>Prerequisites</h3>
+            <p>You should be comfortable with basic CSS properties like color, font-size, margin, and padding from Lesson 03. Understanding how CSS selectors work and how to link external stylesheets is also necessary.</p>
+        </div>
+
+        <div class="concept-section" id="box-model">
+            <h2>The CSS Box Model</h2>
+            
+            <p>Every HTML element on a web page is represented as a <strong>rectangular box</strong>. Understanding this <strong>box model</strong> is fundamental to controlling layout because it explains how spacing, borders, and sizing work together.</p>
+            
+            <p>The box model consists of <strong>four layers</strong>, each building outward from the center:</p>
+            
+            <ol>
+                <li><strong>Content</strong> - The innermost layer</li>
+                <li><strong>Padding</strong> - Space inside the element</li>
+                <li><strong>Border</strong> - Visible edge around padding</li>
+                <li><strong>Margin</strong> - Space outside the element</li>
+            </ol>
+
+            <h3>Understanding Each Layer</h3>
+            <p><strong>At the center</strong> is the <strong>content area</strong>, which contains the actual text, images, or other content of the element. The <code>width</code> and <code>height</code> properties you set in CSS apply to this content area by default.</p>
+            
+            <p><strong>Surrounding the content</strong> is <strong>padding</strong>, which creates space inside the element between the content and the border. Padding:</p>
+            
+            <ul>
+                <li>Uses the <strong>element's background color</strong></li>
+                <li><strong>Increases the total space</strong> the element occupies</li>
+                <li>Creates <strong>breathing room</strong> around content</li>
+            </ul>
+            
+            <p><strong>Next comes the border</strong>, which is a visible line around the element if you choose to add one. Borders are optional but useful for:</p>
+            
+            <ul>
+                <li>Visual separation between elements</li>
+                <li>Decorative effects</li>
+                <li>Defining boundaries</li>
+            </ul>
+            
+            <p><strong>Finally, margin</strong> creates space outside the element, separating it from other elements. Margin is:</p>
+            
+            <ul>
+                <li><strong>Transparent</strong> (doesn't use the element's background)</li>
+                <li>Used to <strong>push elements away</strong> from each other</li>
+                <li>Essential for <strong>proper spacing</strong> in layouts</li>
+            </ul>
+
+            <div class="worked-example">
+                <h3>Visual Box Model Breakdown</h3>
+                <p>Here's how to visualize the box model layers from inside to outside:</p>
+                <div style="background-color: #f9fafb; padding: 1.5rem; border-radius: 8px; margin: 1rem 0; border: 2px solid #2563eb;">
+                    <div style="background-color: #e0f2fe; padding: 1rem; border: 1px dashed #2563eb; margin: 0.5rem 0;">
+                        <p style="margin: 0; text-align: center; font-weight: bold;">Content Area</p>
+                        <p style="margin: 0.5rem 0 0 0; text-align: center; font-size: 0.9rem;">This is the innermost layer containing your text, images, etc.</p>
+                    </div>
+                    <p style="margin: 0.5rem 0 0 0; font-size: 0.9rem; text-align: center; color: #6b7280;"><strong>Padding</strong> (blue area) - space inside the element</p>
+                    <p style="margin: 0.5rem 0 0 0; font-size: 0.9rem; text-align: center; color: #6b7280;"><strong>Border</strong> (blue line) - visible edge around padding</p>
+                    <p style="margin: 0.5rem 0 0 0; font-size: 0.9rem; text-align: center; color: #6b7280;"><strong>Margin</strong> (transparent space outside) - separates this element from others</p>
+                </div>
+                <p style="font-size: 0.9rem; margin-top: 1rem;">Think of it like a picture frame: the content is the picture, padding is the matting, the border is the frame edge, and margin is the wall space around the frame.</p>
+            </div>
+
+            <h3>Total Element Size Calculation</h3>
+            <p>When you set an element's <code>width</code> to <code>300px</code>, by default that means the <strong>content area</strong> is 300 pixels wide. But the <strong>total space</strong> the element actually takes up on the page includes:</p>
+            
+            <ul>
+                <li>Content width (<code>300px</code>)</li>
+                <li><strong>Plus</strong> padding on both sides (e.g., <code>20px</code> left + <code>20px</code> right = <code>40px</code>)</li>
+                <li><strong>Plus</strong> border width on both sides (e.g., <code>2px</code> left + <code>2px</code> right = <code>4px</code>)</li>
+                <li><strong>Plus</strong> margin on both sides (e.g., <code>10px</code> left + <code>10px</code> right = <code>20px</code>)</li>
+            </ul>
+            
+            <p><strong>Example calculation:</strong></p>
+            <ul>
+                <li>Content: <code>300px</code></li>
+                <li>Padding: <code>40px</code> (20px × 2 sides)</li>
+                <li>Border: <code>4px</code> (2px × 2 sides)</li>
+                <li>Margin: <code>20px</code> (10px × 2 sides)</li>
+                <li><strong>Total width: 364px</strong></li>
+            </ul>
+            
+            <p>This can lead to elements being <strong>larger than expected</strong> if you don't account for padding and borders. That's why <code>box-sizing: border-box</code> is so useful!</p>
+
+            <div class="worked-example">
+                <h3>Box-Sizing: content-box vs border-box</h3>
+                <p>CSS provides the <code>box-sizing</code> property to control how width and height are calculated. Understanding the difference is crucial:</p>
+                
+                <p><strong>content-box (default):</strong> Width and height apply only to the content area. Padding and border add to the total size.</p>
+                <div class="code-example">
+                    <code>.example-content-box {
+    width: 300px;
+    padding: 20px;
+    border: 2px solid black;
+    box-sizing: content-box;  /* This is the default */
+}
+
+/* Total width = 300px (content) + 40px (padding) + 4px (border) = 344px */</code>
+                </div>
+
+                <p><strong>border-box (recommended):</strong> Width and height include padding and border. The content area automatically adjusts.</p>
+                <div class="code-example">
+                    <code>.example-border-box {
+    width: 300px;
+    padding: 20px;
+    border: 2px solid black;
+    box-sizing: border-box;  /* Recommended for easier calculations */
+}
+
+/* Total width = 300px (includes padding and border)
+   Content area = 300px - 40px (padding) - 4px (border) = 256px */</code>
+                </div>
+
+                <p><strong>Best Practice:</strong> Many developers set <code>box-sizing: border-box;</code> on all elements using the universal selector (<code>* { box-sizing: border-box; }</code>). This makes width calculations much more predictable and is what this tutorial uses.</p>
+            </div>
+
+            <div class="worked-example" style="background-color: #fef2f2; border-left-color: #dc2626;">
+                <h3>Common Box Model Pitfalls</h3>
+                <p><strong>Margin Collapse:</strong> Vertical margins between adjacent elements collapse into a single margin equal to the larger of the two margins. This only happens with vertical (top/bottom) margins, not horizontal margins.</p>
+                <div class="code-example">
+                    <code>/* If element A has margin-bottom: 30px */
+/* and element B has margin-top: 20px */
+/* The space between them is 30px (not 50px!) */
+
+.element-a {
+    margin-bottom: 30px;
+}
+
+.element-b {
+    margin-top: 20px;  /* Only the larger margin (30px) applies */
+}</code>
+                </div>
+                <p><strong>Solution:</strong> If you need exact spacing, use padding instead of margin, or use flexbox/grid which don't have margin collapse.</p>
+                
+                <p><strong>Forgetting Box-Sizing:</strong> When using <code>content-box</code>, elements become larger than expected. Always account for padding and borders, or use <code>border-box</code>.</p>
+                
+                <p><strong>Inline Element Margins:</strong> Vertical margins (top/bottom) on inline elements don't work as expected. Use inline-block or padding if you need vertical spacing.</p>
+            </div>
+
+            <p>Understanding the box model matters because spacing issues are one of the most common problems beginners encounter. When elements don't appear where you expect or aren't the size you intended, it's usually related to how margin, padding, and borders interact with the element's dimensions. Learning to visualize elements as boxes with these layers helps you predict and control spacing effectively.</p>
+        </div>
+
+        <div class="concept-section" id="display-properties">
+            <h2>Understanding Display Properties</h2>
+            
+            <p>The <code>display</code> property is one of the <strong>most important CSS properties</strong> for controlling layout because it determines how an element behaves in relation to other elements. Different display values <em>fundamentally change</em> how elements flow and interact on the page.</p>
+
+            <h3>Block-Level Elements</h3>
+            <p><strong>Block-level elements</strong> have <code>display: block;</code> by default for elements like <code>div</code>, <code>p</code>, and <code>h1</code>.</p>
+            
+            <p><strong>Characteristics of block elements:</strong></p>
+            
+            <ul>
+                <li>Take up the <strong>full width</strong> of their container</li>
+                <li><strong>Stack vertically</strong> (each starts on a new line)</li>
+                <li>You can set <strong>explicit width and height</strong></li>
+                <li>They <strong>respect margin and padding</strong> on all sides</li>
+            </ul>
+            
+            <p><strong>Use block elements for:</strong></p>
+            <ul>
+                <li>Major page sections</li>
+                <li>Components that should take up full width</li>
+                <li>Stacking content vertically</li>
+            </ul>
+            
+            <div class="code-example">
+                <code>div {
+    display: block;  /* Default for div elements */
+    width: 100%;     /* Takes full width */
+    margin: 1rem 0;  /* Vertical spacing works */
+}</code>
+            </div>
+
+            <h3>Inline Elements</h3>
+            <p><strong>Inline elements</strong> have <code>display: inline;</code> by default for elements like <code>span</code>, <code>a</code>, and <code>strong</code>.</p>
+            
+            <p><strong>Characteristics of inline elements:</strong></p>
+            
+            <ul>
+                <li>Only take up as much <strong>width as their content requires</strong></li>
+                <li><strong>Sit next to each other horizontally</strong></li>
+                <li><strong>Ignore width and height properties</strong></li>
+                <li><strong>Vertical margins and padding don't affect</strong> their positioning relative to other elements</li>
+            </ul>
+            
+            <p><strong>Use inline elements for:</strong></p>
+            <ul>
+                <li>Styling text within a line</li>
+                <li>Elements that flow with text content</li>
+                <li>Highlighting parts of text (like <code>&lt;strong&gt;</code> or <code>&lt;em&gt;</code>)</li>
+            </ul>
+            
+            <div class="code-example">
+                <code>span {
+    display: inline;  /* Default for span elements */
+    /* width and height don't work! */
+    /* vertical margins don't create space */
+}</code>
+            </div>
+
+            <h3>Inline-Block Elements</h3>
+            <p><strong>Inline-block elements</strong> combine characteristics of both block and inline elements.</p>
+            
+            <p><strong>Characteristics of inline-block elements:</strong></p>
+            
+            <ul>
+                <li><strong>Sit next to each other horizontally</strong> (like inline)</li>
+                <li>You can set <strong>width, height, and vertical spacing</strong> (like block)</li>
+                <li>Perfect for <strong>horizontal rows</strong> of elements with controlled sizes</li>
+            </ul>
+            
+            <p><strong>Use inline-block for:</strong></p>
+            <ul>
+                <li>Navigation items</li>
+                <li>Card layouts in rows</li>
+                <li>Buttons or icons side by side</li>
+            </ul>
+            
+            <div class="code-example">
+                <code>.nav-item {
+    display: inline-block;  /* Horizontal but with size control */
+    width: 150px;
+    height: 50px;
+    margin: 1rem;  /* Vertical margins work! */
+}</code>
+            </div>
+
+            <h3>Choosing the Right Display Value</h3>
+            <p>Understanding display properties helps you choose the right approach for your layout needs. Most layout work involves:</p>
+            
+            <ul>
+                <li><strong>Converting elements</strong> to block or inline-block as needed</li>
+                <li>Using <strong>more advanced layout methods</strong> like flexbox or grid</li>
+                <li>Understanding that <strong>flexbox and grid</strong> change how elements flow regardless of their default display value</li>
+            </ul>
+        </div>
+
+        <div class="concept-section" id="flexbox">
+            <h2>Creating Layouts with Flexbox</h2>
+            <p>Flexbox, short for Flexible Box Layout, is a CSS layout method designed to help you create flexible, responsive layouts with less code than older methods. Flexbox excels at distributing space and aligning items within containers, making it ideal for navigation bars, card layouts, and centering content.</p>
+
+            <p>To use flexbox, you set <code>display: flex;</code> on a container element. This container becomes a flex container, and its direct children become flex items. The flex container automatically arranges its children, and you control the arrangement using flex properties. By default, flex items arrange horizontally in a row, but you can change this to arrange vertically or reverse the order.</p>
+
+            <p>The <code>flex-direction</code> property controls which direction flex items are arranged. The default value is <code>row</code>, which arranges items horizontally from left to right. Setting it to <code>column</code> arranges items vertically from top to bottom. You can also reverse either direction using <code>row-reverse</code> or <code>column-reverse</code>.</p>
+
+            <p>The <code>justify-content</code> property controls how flex items are distributed along the main axis (the direction they're arranged). Setting <code>justify-content: center;</code> centers items, <code>space-between</code> places equal space between items with no space at the edges, <code>space-around</code> places equal space around each item, and <code>space-evenly</code> distributes space evenly including at the edges. This property is powerful for creating balanced layouts without manually calculating margins.</p>
+
+            <p>The <code>align-items</code> property controls how items align along the cross axis (perpendicular to the main direction). Setting <code>align-items: center;</code> centers items vertically when flex-direction is row, or horizontally when it's column. Other values include <code>flex-start</code> to align to the beginning, <code>flex-end</code> to align to the end, and <code>stretch</code> to fill the container.</p>
+
+            <p>Flex items can also have a <code>flex</code> property that controls how they grow or shrink to fill available space. Setting <code>flex: 1;</code> on an item makes it grow to fill available space. If multiple items have flex: 1, they share the space equally. You can also use specific values like <code>flex: 2;</code> to make an item take twice as much space as items with flex: 1. This creates responsive layouts where elements adjust automatically to container size.</p>
+
+            <p>Flexbox solves many common layout problems with simple properties. Centering content both horizontally and vertically, which previously required complex techniques, becomes straightforward with flexbox. Creating equal-height columns, flexible navigation bars, and responsive card grids all become much simpler when you understand flexbox fundamentals.</p>
+
+            <div class="worked-example">
+                <h3>Understanding Flex Container vs Flex Items</h3>
+                <p>It's crucial to understand which properties apply to the container and which apply to items:</p>
+                
+                <div style="background-color: #f9fafb; padding: 1.5rem; border-radius: 8px; margin: 1rem 0;">
+                    <p style="font-weight: bold; margin-bottom: 0.5rem;">Flex Container (parent element with display: flex):</p>
+                    <ul style="margin-left: 1.5rem; margin-bottom: 1rem;">
+                        <li><code>flex-direction</code> - controls row vs column direction</li>
+                        <li><code>justify-content</code> - controls spacing along main axis</li>
+                        <li><code>align-items</code> - controls alignment along cross axis</li>
+                        <li><code>gap</code> - space between items</li>
+                        <li><code>flex-wrap</code> - whether items wrap to new line</li>
+                    </ul>
+                    
+                    <p style="font-weight: bold; margin-bottom: 0.5rem;">Flex Items (direct children of flex container):</p>
+                    <ul style="margin-left: 1.5rem;">
+                        <li><code>flex</code> - how item grows/shrinks (e.g., flex: 1)</li>
+                        <li><code>align-self</code> - overrides container's align-items for this item</li>
+                        <li><code>order</code> - changes visual order without changing HTML</li>
+                    </ul>
+                </div>
+
+                <p><strong>Key Point:</strong> When you set <code>display: flex</code> on a container, only its direct children become flex items. Nested children are NOT flex items unless you also set display: flex on their parent.</p>
+            </div>
+
+            <div class="worked-example">
+                <h3>Flexbox Direction: Row vs Column Comparison</h3>
+                <p>Understanding <code>flex-direction</code> is essential. Here's how it changes the layout:</p>
+                
+                <p><strong>Row (default) - Horizontal Layout:</strong></p>
+                <div class="code-example">
+                    <code>.container {
+    display: flex;
+    flex-direction: row;  /* Items arranged left to right */
+    justify-content: space-between;
+}
+/* Main axis = horizontal, Cross axis = vertical */
+/* justify-content controls horizontal spacing */
+/* align-items controls vertical alignment */</code>
+                </div>
+                <p style="font-size: 0.9rem; margin: 0.5rem 0;">Use for: navigation bars, horizontal card layouts, side-by-side content</p>
+
+                <p style="margin-top: 1.5rem;"><strong>Column - Vertical Layout:</strong></p>
+                <div class="code-example">
+                    <code>.container {
+    display: flex;
+    flex-direction: column;  /* Items arranged top to bottom */
+    align-items: center;
+}
+/* Main axis = vertical, Cross axis = horizontal */
+/* justify-content controls vertical spacing */
+/* align-items controls horizontal alignment */</code>
+                </div>
+                <p style="font-size: 0.9rem; margin: 0.5rem 0;">Use for: stacked content, vertical navigation, mobile layouts</p>
+            </div>
+
+            <div class="worked-example" style="background-color: #fef2f2; border-left-color: #dc2626;">
+                <h3>Common Flexbox Mistakes and Solutions</h3>
+                
+                <p><strong>Mistake 1: Forgetting display: flex</strong></p>
+                <p>If flexbox properties aren't working, you probably forgot to set <code>display: flex</code> on the container.</p>
+                <div class="code-example">
+                    <code>/* WRONG - flexbox properties won't work without display: flex */
+.container {
+    justify-content: center;  /* Does nothing! */
+}
+
+/* CORRECT - always start with display: flex */
+.container {
+    display: flex;  /* Required first step */
+    justify-content: center;  /* Now this works */
+}</code>
+                </div>
+
+                <p><strong>Mistake 2: Confusing justify-content and align-items</strong></p>
+                <p>Remember: <code>justify-content</code> works along the main axis (the flex-direction), while <code>align-items</code> works along the cross axis.</p>
+                <ul style="margin-left: 1.5rem; margin-top: 0.5rem;">
+                    <li>If <code>flex-direction: row</code> (default): justify-content = horizontal, align-items = vertical</li>
+                    <li>If <code>flex-direction: column</code>: justify-content = vertical, align-items = horizontal</li>
+                </ul>
+
+                <p style="margin-top: 1rem;"><strong>Mistake 3: Items not growing/shrinking</strong></p>
+                <p>If items don't fill space or don't shrink, set the <code>flex</code> property on items:</p>
+                <div class="code-example">
+                    <code>/* Items will grow to fill available space equally */
+.item {
+    flex: 1;
+}
+
+/* Or control individually */
+.item-large {
+    flex: 2;  /* Takes twice the space of items with flex: 1 */
+}
+
+.item-small {
+    flex: 0.5;  /* Takes half the space */
+}</code>
+                </div>
+
+                <p style="margin-top: 1rem;"><strong>Mistake 4: Using flexbox for everything</strong></p>
+                <p>Flexbox is great, but it's not always the right tool. Use flexbox for one-dimensional layouts (row OR column). For two-dimensional layouts (rows AND columns), consider CSS Grid instead.</p>
+            </div>
+        </div>
+
+        <div class="worked-example" id="worked-example">
+            <h2>Worked Example: Creating a Navigation Bar with Flexbox</h2>
+            <p>Building a navigation bar demonstrates how flexbox creates flexible, aligned layouts with minimal code. We'll create a horizontal navigation bar with evenly spaced links that automatically adjust to different screen sizes.</p>
+
+            <p>Start with HTML structure. Create a nav element containing an unordered list with several list items, each containing a link. The semantic HTML provides the content structure, and we'll use CSS to arrange it visually using flexbox.</p>
+
+            <p>In your CSS file, target the nav element and set <code>display: flex;</code>. This makes the nav a flex container. Next, set <code>justify-content: space-between;</code> to distribute the navigation items evenly across the width of the container. This automatically handles spacing without needing to calculate individual margins.</p>
+
+            <p>You'll likely want to remove the default list styling. Target the ul element inside nav and set <code>list-style: none;</code> to remove bullets, and <code>padding: 0;</code> and <code>margin: 0;</code> to remove default spacing. Then set the ul to <code>display: flex;</code> as well, which arranges the list items horizontally.</p>
+
+            <p>Style the links within the navigation. You might want to remove underlines, set colors, add padding for clickable areas, and perhaps change the appearance on hover. The flexbox layout ensures all navigation items align nicely regardless of their text length.</p>
+
+            <div class="code-example">
+                <code>nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    background-color: #333;
+}
+
+nav ul {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    gap: 2rem;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+}
+
+nav a:hover {
+    background-color: #555;
+    border-radius: 4px;
+}</code>
+            </div>
+
+            <p>The flexbox properties handle the horizontal arrangement and spacing automatically. If you add or remove navigation items, they'll redistribute evenly. The gap property (if your browser supports it) or manual margins on list items provide consistent spacing between items. This approach is much simpler than older layout methods that required floating elements and clearing floats.</p>
+        </div>
+
+        <div class="concept-section" id="positioning">
+            <h2>Positioning Elements</h2>
+            <p>The position property provides another method for controlling where elements appear on the page. While flexbox handles flow and distribution of elements, positioning handles precise placement or taking elements out of normal document flow.</p>
+
+            <p>Static positioning is the default, where elements flow normally in the document order. Elements with <code>position: static;</code> aren't affected by top, right, bottom, or left properties.</p>
+
+            <p>Relative positioning keeps the element in normal flow but allows you to offset it using top, right, bottom, or left properties. The element still occupies its original space in the layout, but appears moved. This is useful for fine-tuning element positions without affecting other elements.</p>
+
+            <p>Absolute positioning removes the element from normal document flow entirely. The element is positioned relative to its nearest positioned ancestor (an ancestor with position other than static), or relative to the document if no positioned ancestor exists. Other elements behave as if the absolutely positioned element doesn't exist. This is useful for overlays, dropdown menus, or precisely positioned elements.</p>
+
+            <p>Fixed positioning is similar to absolute but positions relative to the viewport instead of a parent element. Fixed elements stay in the same position even when the page scrolls, making them ideal for navigation bars that should always be visible or sticky headers.</p>
+
+            <p>Positioning is powerful but should be used thoughtfully. Removing elements from normal flow with absolute or fixed positioning can make layouts fragile and harder to maintain. Flexbox often provides better solutions for most layout needs, with positioning reserved for specific cases like overlays or sticky elements.</p>
+        </div>
+
+        <div class="concept-section" id="grid-vs-flexbox">
+            <h2>CSS Grid vs Flexbox: When to Use Each</h2>
+            <p>Both CSS Grid and Flexbox are powerful layout tools, but they excel at different tasks. Understanding when to use each helps you choose the right tool for your layout needs.</p>
+
+            <div class="worked-example">
+                <h3>Flexbox: One-Dimensional Layouts</h3>
+                <p>Flexbox is ideal when you need to arrange items in a <strong>single direction</strong> - either horizontally (row) or vertically (column).</p>
+                
+                <p><strong>Best for:</strong></p>
+                <ul style="margin-left: 1.5rem;">
+                    <li>Navigation bars (horizontal or vertical)</li>
+                    <li>Centering content (both horizontally and vertically)</li>
+                    <li>Distributing space between items</li>
+                    <li>Creating equal-height columns</li>
+                    <li>Aligning items within a container</li>
+                </ul>
+
+                <div class="code-example">
+                    <code>/* Flexbox example: horizontal navigation */
+nav {
+    display: flex;
+    justify-content: space-between;  /* Space items evenly */
+    align-items: center;            /* Center vertically */
+}</code>
+                </div>
+            </div>
+
+            <div class="worked-example">
+                <h3>CSS Grid: Two-Dimensional Layouts</h3>
+                <p>CSS Grid is ideal when you need to arrange items in <strong>both rows and columns</strong> simultaneously. Grid creates a two-dimensional layout system.</p>
+                
+                <p><strong>Best for:</strong></p>
+                <ul style="margin-left: 1.5rem;">
+                    <li>Page layouts with multiple sections (header, sidebar, main, footer)</li>
+                    <li>Card grids that need to align in rows and columns</li>
+                    <li>Complex layouts requiring precise control over both dimensions</li>
+                    <li>Overlapping elements</li>
+                </ul>
+
+                <div class="code-example">
+                    <code>/* Grid example: page layout */
+.page {
+    display: grid;
+    grid-template-columns: 200px 1fr;  /* Sidebar | Main */
+    grid-template-rows: auto 1fr auto; /* Header | Content | Footer */
+    grid-template-areas:
+        "header header"
+        "sidebar main"
+        "footer footer";
+}</code>
+                </div>
+            </div>
+
+            <div class="worked-example">
+                <h3>Combining Grid and Flexbox</h3>
+                <p>You can and should use both! Grid for the overall page structure, flexbox for components within grid areas.</p>
+                
+                <div class="code-example">
+                    <code>/* Grid creates the page structure */
+.container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;  /* Three columns */
+    gap: 2rem;
+}
+
+/* Flexbox arranges content within each grid cell */
+.card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;  /* Space content vertically */
+}</code>
+                </div>
+            </div>
+
+            <div class="worked-example">
+                <h3>Visual Grid Example: Understanding Grid Lines and Tracks</h3>
+                <p>CSS Grid creates a network of horizontal and vertical lines called <strong>grid lines</strong>. The spaces between lines are called <strong>tracks</strong> (rows or columns).</p>
+                
+                <div style="background-color: #f9fafb; padding: 1.5rem; border-radius: 8px; margin: 1rem 0; border: 2px solid #2563eb;">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin: 1rem 0;">
+                        <div style="background-color: #e0f2fe; padding: 1rem; text-align: center; border: 1px dashed #2563eb;">Item 1</div>
+                        <div style="background-color: #e0f2fe; padding: 1rem; text-align: center; border: 1px dashed #2563eb;">Item 2</div>
+                        <div style="background-color: #e0f2fe; padding: 1rem; text-align: center; border: 1px dashed #2563eb;">Item 3</div>
+                        <div style="background-color: #e0f2fe; padding: 1rem; text-align: center; border: 1px dashed #2563eb;">Item 4</div>
+                        <div style="background-color: #e0f2fe; padding: 1rem; text-align: center; border: 1px dashed #2563eb;">Item 5</div>
+                        <div style="background-color: #e0f2fe; padding: 1rem; text-align: center; border: 1px dashed #2563eb;">Item 6</div>
+                    </div>
+                    <p style="font-size: 0.9rem; margin: 0.5rem 0 0 0;">This grid has 3 columns (created by 4 vertical grid lines) and 2 rows (created by 3 horizontal grid lines). Each dashed border represents a grid line.</p>
+                </div>
+
+                <div class="code-example">
+                    <code>/* This creates the grid above */
+.grid-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;  /* 3 equal columns */
+    gap: 10px;  /* Space between tracks */
+}
+
+/* Grid lines are numbered starting from 1 */
+/* You can place items using line numbers */
+.item {
+    grid-column: 1 / 3;  /* Span from line 1 to line 3 (2 columns) */
+    grid-row: 1 / 2;     /* Span from line 1 to line 2 (1 row) */
+}</code>
+                </div>
+            </div>
+
+            <div class="worked-example">
+                <h3>Responsive Grid Patterns</h3>
+                <p>The <code>repeat(auto-fit, minmax())</code> pattern creates responsive grids that automatically adjust:</p>
+                
+                <div class="code-example">
+                    <code>/* Responsive grid: items minimum 250px, maximum flexible */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+}
+
+/* How it works:
+   - repeat() creates multiple columns
+   - auto-fit fills available space
+   - minmax(250px, 1fr) means:
+     * Minimum: 250px per column
+     * Maximum: 1fr (equal share of remaining space)
+   - When screen is too narrow, items wrap to new row
+   - This creates a responsive grid without media queries! */</code>
+                </div>
+
+                <p style="margin-top: 1rem;"><strong>When to use auto-fit vs auto-fill:</strong></p>
+                <ul style="margin-left: 1.5rem;">
+                    <li><code>auto-fit</code>: Collapses empty tracks, centers items when there's extra space</li>
+                    <li><code>auto-fill</code>: Keeps empty tracks, maintains fixed number of columns</li>
+                    <li>Most of the time, <code>auto-fit</code> is what you want</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="exercise" id="practice">
+            <h2>Practice Opportunity</h2>
+            <p>Create a simple page layout with a header, main content area, and footer. Use flexbox to create a navigation bar in the header with links that are evenly distributed. In the main content area, create a card layout with three cards arranged horizontally using flexbox. Make the cards equal height and ensure they wrap to a new row if the screen becomes too narrow. Style the footer to be centered at the bottom of the page.</p>
+
+            <p>Experiment with different flexbox properties. Try changing justify-content values to see how items redistribute. Adjust flex properties on individual cards to make some larger than others. Practice combining flexbox with other CSS properties like padding, margin, and borders to create visually appealing layouts.</p>
+        </div>
+
+        <div class="concept-section" id="summary">
+            <h2>Summary of Key Concepts</h2>
+            <p>CSS layout involves understanding the box model, which explains how content, padding, border, and margin work together to determine an element's size and spacing. The display property controls how elements flow and interact, with block, inline, and inline-block being fundamental display types. Flexbox provides a powerful method for creating flexible, responsive layouts by distributing space and aligning items within containers.</p>
+
+            <p>Positioning offers precise control over element placement, but flexbox often provides better solutions for most layout needs. Understanding these layout methods gives you the tools to create complex page structures, from simple navigation bars to multi-column layouts that adapt to different screen sizes. The key is choosing the right method for each situation and understanding how different techniques work together.</p>
+        </div>
+
+        <div class="concept-section" id="next-steps">
+            <h2>Next Steps</h2>
+            <p>Now that you understand CSS layout fundamentals, Lesson 05 covers responsive design. You'll learn how to make your layouts adapt to different screen sizes using media queries, ensuring your websites work well on phones, tablets, and desktop computers.</p>
+        </div>
+
+        <div class="concept-section" id="bibliography">
+            <h2>Bibliography</h2>
+            <p>Mozilla Developer Network. "CSS Layout." MDN Web Docs. <a href="https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS_layout">https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS_layout</a></p>
+            
+            <p>Mozilla Developer Network. "Flexbox." MDN Web Docs. <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Flexible_Box_Layout">https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Flexible_Box_Layout</a></p>
+
+            <p>CSS-Tricks. "A Complete Guide to Flexbox." CSS-Tricks. <a href="https://css-tricks.com/snippets/css/a-guide-to-flexbox/">https://css-tricks.com/snippets/css/a-guide-to-flexbox/</a></p>
+
+            <p>W3Schools. "CSS Layout." W3Schools. <a href="https://www.w3schools.com/css/css_positioning.asp">https://www.w3schools.com/css/css_positioning.asp</a></p>
+        </div>
+
+        <div class="lesson-nav-links" style="margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--border-color);">
+            <a href="../index.html">Back to Home</a> | 
+            <a href="03-css-basics.html">Previous Lesson</a> | 
+            <a href="05-responsive-design.html">Next Lesson: Responsive Design</a>
+        </div>
+    </div>
+</body>
+</html>
+

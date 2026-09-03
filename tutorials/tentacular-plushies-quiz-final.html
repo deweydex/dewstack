@@ -1,0 +1,1385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SQL Database Quiz - Tentacular Plushies</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.8.0/sql-wasm.js"></script>
+    <!-- CodeMirror for SQL syntax highlighting -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/codemirror.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/theme/monokai.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/mode/sql/sql.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #1a237e 0%, #4a148c 50%, #880e4f 100%);
+            min-height: 100vh;
+            overflow: hidden;
+        }
+        
+        .app-container {
+            display: flex;
+            height: 100vh;
+            width: 100%;
+        }
+        
+        /* Left Panel - Tasks (25%) */
+        .tasks-panel {
+            width: 25%;
+            background: #faf8f3;
+            overflow-y: auto;
+            border-right: 3px solid #4a148c;
+            padding: 20px;
+        }
+        
+        /* Middle Panel - Editor (50%) */
+        .editor-panel {
+            width: 50%;
+            background: #fff;
+            overflow-y: auto;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            max-height: 100vh; /* Ensure it doesn't exceed viewport height */
+        }
+        
+        /* Right Panel - Reference (25%) */
+        .reference-panel {
+            width: 25%;
+            background: #fff;
+            border-left: 3px solid #4a148c;
+            overflow-y: auto;
+            padding: 20px;
+        }
+        
+        h1 {
+            color: #4a148c;
+            margin-bottom: 15px;
+            font-size: 1.8em;
+            border-bottom: 3px solid #880e4f;
+            padding-bottom: 10px;
+        }
+        
+        h2 {
+            color: #6a1b9a;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            font-size: 1.4em;
+        }
+        
+        h3 {
+            color: #7b1fa2;
+            margin-top: 15px;
+            margin-bottom: 8px;
+            font-size: 1.2em;
+        }
+        
+        h4 {
+            color: #8e24aa;
+            margin-top: 12px;
+            margin-bottom: 6px;
+            font-size: 1.05em;
+        }
+        
+        .subtitle {
+            color: #7f8c8d;
+            font-style: italic;
+            margin-bottom: 12px;
+        }
+        
+        .info-box {
+            background: linear-gradient(135deg, #e1bee7 0%, #f3e5f5 100%);
+            padding: 12px;
+            border-radius: 5px;
+            border-left: 5px solid #4a148c;
+            margin-bottom: 15px;
+            font-size: 0.9em;
+        }
+        
+        .student-info {
+            background-color: #e8f5e9;
+            padding: 12px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            border: 2px solid #4caf50;
+        }
+        
+        .student-info h3 {
+            color: #2e7d32;
+            margin: 0 0 8px 0;
+            font-size: 1.1em;
+        }
+        
+        .student-info label {
+            display: block;
+            margin-bottom: 4px;
+            font-weight: bold;
+            color: #2e7d32;
+            font-size: 0.9em;
+        }
+        
+        .student-info input {
+            width: 100%;
+            padding: 6px;
+            border: 1px solid #81c784;
+            border-radius: 3px;
+            margin-bottom: 8px;
+            font-size: 13px;
+        }
+        
+        .task {
+            background: linear-gradient(135deg, #ffccbc 0%, #ffab91 100%);
+            border-left: 5px solid #ff6f00;
+            padding: 12px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+        }
+        
+        .task h3 {
+            color: #e65100;
+            margin: 0 0 8px 0;
+            font-size: 1.1em;
+        }
+        
+        .task p {
+            margin-bottom: 8px;
+            font-size: 0.9em;
+        }
+        
+        .task-requirements {
+            background-color: #e3f2fd;
+            border-left: 3px solid #2196F3;
+            padding: 8px;
+            margin-top: 8px;
+            border-radius: 3px;
+            font-size: 0.85em;
+        }
+        
+        .task-requirements strong {
+            color: #1976D2;
+            display: block;
+            margin-bottom: 4px;
+        }
+        
+        .task-requirements ul,
+        .task-requirements ol {
+            margin-left: 18px;
+            margin-top: 4px;
+        }
+        
+        .task-requirements li {
+            margin-bottom: 4px;
+        }
+        
+        .task-requirements code {
+            background-color: #1a237e;
+            color: #c5cae9;
+            padding: 1px 4px;
+            border-radius: 2px;
+            font-size: 0.9em;
+        }
+        
+        .hint-box {
+            background-color: #e0f2f1;
+            border-left: 3px solid #00897b;
+            padding: 8px;
+            margin-top: 8px;
+            border-radius: 3px;
+        }
+        
+        .hint-box summary {
+            cursor: pointer;
+            font-weight: bold;
+            color: #00695c;
+            padding: 4px;
+            font-size: 0.85em;
+        }
+        
+        .hint-box p {
+            font-size: 0.85em;
+            margin-top: 6px;
+        }
+        
+        /* Reference details (collapsible sections) */
+        .ref-details {
+            background-color: #f5f5f5;
+            border-left: 3px solid #7b1fa2;
+            padding: 8px;
+            margin: 10px 0;
+            border-radius: 3px;
+        }
+        
+        .ref-details summary {
+            cursor: pointer;
+            font-weight: bold;
+            color: #6a1b9a;
+            padding: 6px;
+            font-size: 0.95em;
+        }
+        
+        .ref-details summary:hover {
+            color: #4a148c;
+            background-color: #e1bee7;
+            border-radius: 3px;
+        }
+        
+        .ref-details[open] summary {
+            margin-bottom: 10px;
+            border-bottom: 2px solid #9c27b0;
+            padding-bottom: 8px;
+        }
+        
+        .ref-details p,
+        .ref-details ul,
+        .ref-details ol {
+            margin-top: 8px;
+            font-size: 0.9em;
+        }
+        
+        .ref-details ul,
+        .ref-details ol {
+            margin-left: 20px;
+        }
+        
+        .ref-details li {
+            margin-bottom: 5px;
+        }
+        
+        .ref-details .example-box,
+        .ref-details .tip-box,
+        .ref-details .warning-box,
+        .ref-details table {
+            margin: 10px 0;
+        }
+        
+        .editor-container {
+            flex: 1 1 auto; /* Allow flexible sizing */
+            display: flex;
+            flex-direction: column;
+            min-height: 400px; /* Minimum height to ensure editor is usable */
+            max-height: 600px; /* Maximum height to ensure buttons visible */
+        }
+        
+        #sqlEditor {
+            flex-grow: 1;
+            border: 2px solid #9c27b0;
+            border-radius: 5px;
+            min-height: 0; /* Critical for proper sizing */
+            overflow: hidden;
+        }
+        
+        /* CodeMirror customization */
+        .CodeMirror {
+            height: 100%;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            border-radius: 5px;
+        }
+        
+        .CodeMirror-scroll {
+            max-height: 100%;
+            overflow-y: auto;
+        }
+        
+        .button-group {
+            display: flex;
+            gap: 8px;
+            margin-top: 10px;
+            flex-wrap: wrap;
+        }
+        
+        button {
+            padding: 8px 16px;
+            font-size: 13px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-weight: bold;
+        }
+        
+        button:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 3px 6px rgba(0,0,0,0.2);
+        }
+        
+        .run-btn { background-color: #7b1fa2; color: white; }
+        .run-btn:hover { background-color: #6a1b9a; }
+        .check-btn { background-color: #ff6f00; color: white; }
+        .check-btn:hover { background-color: #e65100; }
+        .clear-btn { background-color: #616161; color: white; }
+        .clear-btn:hover { background-color: #424242; }
+        .reset-btn { background-color: #c62828; color: white; }
+        .reset-btn:hover { background-color: #b71c1c; }
+        .download-btn { background-color: #00897b; color: white; }
+        .download-btn:hover { background-color: #00695c; }
+        
+        .results {
+            background-color: #f8f9fa;
+            border: 2px solid #dee2e6;
+            border-radius: 5px;
+            padding: 12px;
+            margin-top: 12px;
+            max-height: 350px;
+            overflow-y: auto;
+            font-size: 0.9em;
+        }
+        
+        .results.success {
+            background-color: #e8f5e9;
+            border-color: #4caf50;
+        }
+        
+        .results.error {
+            background-color: #ffebee;
+            border-color: #f44336;
+        }
+        
+        .results table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 8px 0;
+            background-color: white;
+            font-size: 0.85em;
+        }
+        
+        .results th {
+            background-color: #6a1b9a;
+            color: white;
+            padding: 8px;
+            text-align: left;
+        }
+        
+        .results td {
+            border: 1px solid #ddd;
+            padding: 6px;
+        }
+        
+        .results tr:nth-child(even) {
+            background-color: #f5f5f5;
+        }
+        
+        .results tr:hover {
+            background-color: #e1bee7;
+        }
+        
+        .error {
+            color: #c62828;
+            font-weight: bold;
+        }
+        
+        .task-check-results {
+            padding: 12px;
+        }
+        
+        .task-status {
+            padding: 8px;
+            margin: 6px 0;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9em;
+        }
+        
+        .task-status.complete {
+            background-color: #c8e6c9;
+            border-left: 4px solid #4caf50;
+        }
+        
+        .task-status.incomplete {
+            background-color: #ffcdd2;
+            border-left: 4px solid #f44336;
+        }
+        
+        .task-status-icon {
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+        
+        .task-status.complete .task-status-icon {
+            color: #2e7d32;
+        }
+        
+        .task-status.incomplete .task-status-icon {
+            color: #c62828;
+        }
+        
+        .congrats {
+            background: linear-gradient(135deg, #ffd54f 0%, #ffca28 100%);
+            padding: 15px;
+            border-radius: 6px;
+            text-align: center;
+            margin-top: 12px;
+            border: 3px solid #ff6f00;
+        }
+        
+        .congrats h3 {
+            color: #e65100;
+            font-size: 1.5em;
+            margin-bottom: 8px;
+        }
+        
+        /* Reference Section */
+        .reference-section {
+            background-color: #f3e5f5;
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            border: 2px solid #9c27b0;
+        }
+        
+        .reference-section code {
+            background-color: #4a148c;
+            color: #e1bee7;
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85em;
+        }
+        
+        .reference-section pre {
+            background-color: #311b92;
+            color: #b39ddb;
+            padding: 10px;
+            border-radius: 4px;
+            overflow-x: auto;
+            margin: 8px 0;
+            border: 1px solid #512da8;
+            font-size: 0.8em;
+        }
+        
+        .reference-section ul,
+        .reference-section ol {
+            margin-left: 20px;
+            margin-top: 6px;
+        }
+        
+        .reference-section li {
+            margin-bottom: 6px;
+        }
+        
+        .datatype-table,
+        .constraint-table,
+        .operator-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 10px 0;
+            font-size: 0.85em;
+        }
+        
+        .datatype-table th,
+        .constraint-table th,
+        .operator-table th {
+            background-color: #4a148c;
+            color: #e1bee7;
+            padding: 8px;
+            text-align: left;
+        }
+        
+        .datatype-table td,
+        .constraint-table td,
+        .operator-table td {
+            border: 1px solid #ddd;
+            padding: 6px;
+            vertical-align: top;
+        }
+        
+        .datatype-table tr:nth-child(even),
+        .constraint-table tr:nth-child(even),
+        .operator-table tr:nth-child(even) {
+            background-color: #fafafa;
+        }
+        
+        .example-box {
+            background-color: #e8eaf6;
+            border-left: 4px solid #3f51b5;
+            padding: 10px;
+            margin: 10px 0;
+        }
+        
+        .example-box h4 {
+            color: #3f51b5;
+            margin-top: 0;
+        }
+        
+        .tip-box {
+            background-color: #fff3e0;
+            border-left: 4px solid #ff6f00;
+            padding: 10px;
+            margin: 10px 0;
+        }
+        
+        .tip-box h4 {
+            color: #e65100;
+            margin-top: 0;
+        }
+        
+        .warning-box {
+            background-color: #ffebee;
+            border-left: 4px solid #c62828;
+            padding: 10px;
+            margin: 10px 0;
+        }
+        
+        .warning-box h4 {
+            color: #c62828;
+            margin-top: 0;
+        }
+        
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: #9c27b0;
+            border-radius: 4px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: #7b1fa2;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container" id="appContainer">
+        <!-- LEFT PANEL: TASKS -->
+        <div class="tasks-panel">
+            <h1>Tentacular Plushies</h1>
+            <p class="subtitle">SQL Database Quiz</p>
+            
+            <div class="info-box">
+                <p>You are the new database administrator for Tentacular Plushies, a specialized online store selling cephalopod stuffed animals. Complete all five tasks to build and query the company's database.</p>
+            </div>
+            
+            <div class="task">
+                <h3>Task 1: Create Products Table</h3>
+                <p>Create a table called <code>products</code> with these columns:</p>
+                <div class="task-requirements">
+                    <strong>Required Columns:</strong>
+                    <ul>
+                        <li><code>id</code> - INTEGER PRIMARY KEY AUTOINCREMENT</li>
+                        <li><code>product_name</code> - TEXT NOT NULL</li>
+                        <li><code>category</code> - TEXT NOT NULL</li>
+                        <li><code>price</code> - REAL NOT NULL</li>
+                        <li><code>stock_quantity</code> - INTEGER NOT NULL</li>
+                        <li><code>description</code> - TEXT</li>
+                    </ul>
+                </div>
+                <details class="hint-box">
+                    <summary>Show Hint</summary>
+                    <p>Start with CREATE TABLE products ( then list each column with its data type and constraints.</p>
+                </details>
+            </div>
+            
+            <div class="task">
+                <h3>Task 2: Create Transactions Table</h3>
+                <p>Create a table called <code>transactions</code> that references products:</p>
+                <div class="task-requirements">
+                    <strong>Required Columns:</strong>
+                    <ul>
+                        <li><code>id</code> - INTEGER PRIMARY KEY AUTOINCREMENT</li>
+                        <li><code>product_id</code> - INTEGER NOT NULL</li>
+                        <li><code>customer_name</code> - TEXT NOT NULL</li>
+                        <li><code>quantity</code> - INTEGER NOT NULL</li>
+                    </ul>
+                    <strong>Add a FOREIGN KEY constraint linking product_id to products(id)!</strong>
+                </div>
+                <details class="hint-box">
+                    <summary>Show Hint</summary>
+                    <p>After columns, add: FOREIGN KEY (product_id) REFERENCES products(id)</p>
+                </details>
+            </div>
+            
+            <div class="task">
+                <h3>Task 3: Add Products</h3>
+                <p>Insert at least FOUR products into your products table.</p>
+                <div class="task-requirements">
+                    <strong>Requirements:</strong>
+                    <ul>
+                        <li>At least 3 different categories</li>
+                        <li>Prices between 10 and 60 euros</li>
+                        <li>Stock quantities between 5 and 50</li>
+                        <li>Fun descriptions</li>
+                    </ul>
+                </div>
+                <details class="hint-box">
+                    <summary>Show Hint</summary>
+                    <p>Categories: 'Octopus', 'Squid', 'Cuttlefish', 'Nautilus'. Use INSERT INTO multiple times.</p>
+                </details>
+            </div>
+            
+            <div class="task">
+                <h3>Task 4: Add Transactions</h3>
+                <p>Insert at least THREE transaction records.</p>
+                <div class="task-requirements">
+                    <strong>Requirements:</strong>
+                    <ul>
+                        <li>Valid product_id from your products table</li>
+                        <li>Realistic customer names</li>
+                        <li>Quantities between 1-5</li>
+                    </ul>
+                </div>
+                <details class="hint-box">
+                    <summary>Show Hint</summary>
+                    <p>Run SELECT * FROM products first to see your product IDs. Then: INSERT INTO transactions (product_id, customer_name, quantity) VALUES (1, 'John Smith', 2);</p>
+                </details>
+            </div>
+            
+            <div class="task">
+                <h3>Task 5: Query the Data</h3>
+                <p>Write these three SELECT queries:</p>
+                <div class="task-requirements">
+                    <strong>Required Queries:</strong>
+                    <ol>
+                        <li>Products with price > 30, ordered by price DESC</li>
+                        <li>Products with stock_quantity < 15</li>
+                        <li>All transactions showing customer_name and quantity</li>
+                    </ol>
+                </div>
+                <details class="hint-box">
+                    <summary>Show Hint</summary>
+                    <p>Query 1: SELECT * FROM products WHERE price > 30 ORDER BY price DESC;</p>
+                </details>
+            </div>
+        </div>
+        
+        <!-- MIDDLE PANEL: EDITOR -->
+        <div class="editor-panel">
+            <div class="student-info">
+                <h3>Student Information</h3>
+                <label for="studentName">Your Name:</label>
+                <input type="text" id="studentName" placeholder="Enter your full name">
+                
+                <label for="studentId">Student ID:</label>
+                <input type="text" id="studentId" placeholder="Enter your student ID">
+            </div>
+            
+            <h2>SQL Code Editor</h2>
+            
+            <div class="editor-container">
+                <div id="sqlEditor">-- Tentacular Plushies Database
+-- Write your SQL statements below
+
+</div>
+                
+                <div class="button-group">
+                    <button class="run-btn" onclick="runCode()">Run Code</button>
+                    <button class="check-btn" onclick="checkTasks()">Check My Work</button>
+                    <button class="clear-btn" onclick="clearEditor()">Clear Editor</button>
+                    <button class="reset-btn" onclick="resetDatabase()">Reset Database</button>
+                    <button class="download-btn" onclick="downloadCode()">Download SQL File</button>
+                </div>
+            </div>
+            
+            <div id="results" class="results">
+                <p>Results will appear here after you run your code...</p>
+            </div>
+            
+            <div class="info-box" style="margin-top: 15px;">
+                <h3>Submission Instructions</h3>
+                <p>When complete, fill in your name and student ID above, then click "Download SQL File" to save your work. Submit the downloaded file to your instructor.</p>
+            </div>
+        </div>
+        
+        <!-- RIGHT PANEL: REFERENCE -->
+        <div class="reference-panel" id="referencePanel">
+            <h1>SQL Reference</h1>
+            
+            <div class="reference-section">
+                <h2>Database Basics</h2>
+                
+                <p><strong>Table:</strong> Data organized in rows and columns.</p>
+                <p><strong>Column:</strong> Defines an attribute (has name and data type).</p>
+                <p><strong>Row:</strong> One complete data entry.</p>
+                <p><strong>Primary Key:</strong> Unique identifier for each row.</p>
+                <p><strong>Foreign Key:</strong> References another table's primary key.</p>
+            </div>
+            
+            <div class="reference-section">
+                <h2>Data Types</h2>
+                <table class="datatype-table">
+                    <tr>
+                        <th>Data Type</th>
+                        <th>Description</th>
+                        <th>Example</th>
+                    </tr>
+                    <tr>
+                        <td><code>INTEGER</code></td>
+                        <td>Whole numbers</td>
+                        <td>42, -17, 1000</td>
+                    </tr>
+                    <tr>
+                        <td><code>REAL</code></td>
+                        <td>Decimal numbers</td>
+                        <td>29.99, 3.14159</td>
+                    </tr>
+                    <tr>
+                        <td><code>TEXT</code></td>
+                        <td>Text strings</td>
+                        <td>'Giant Squid', 'Dublin'</td>
+                    </tr>
+                    <tr>
+                        <td><code>DATE</code></td>
+                        <td>Date values</td>
+                        <td>'2024-12-17'</td>
+                    </tr>
+                </table>
+            </div>
+            
+            <div class="reference-section">
+                <h2>Constraints</h2>
+                <table class="constraint-table">
+                    <tr>
+                        <th>Constraint</th>
+                        <th>Purpose</th>
+                    </tr>
+                    <tr>
+                        <td><code>PRIMARY KEY</code></td>
+                        <td>Uniquely identifies each row</td>
+                    </tr>
+                    <tr>
+                        <td><code>AUTOINCREMENT</code></td>
+                        <td>Auto-generates sequential numbers</td>
+                    </tr>
+                    <tr>
+                        <td><code>NOT NULL</code></td>
+                        <td>Column must have a value</td>
+                    </tr>
+                    <tr>
+                        <td><code>UNIQUE</code></td>
+                        <td>All values must be different</td>
+                    </tr>
+                    <tr>
+                        <td><code>DEFAULT</code></td>
+                        <td>Sets default value</td>
+                    </tr>
+                    <tr>
+                        <td><code>CHECK</code></td>
+                        <td>Ensures condition is met</td>
+                    </tr>
+                </table>
+            </div>
+            
+            <div class="reference-section">
+                <h2>CREATE TABLE</h2>
+                <p>Defines the structure of a new table.</p>
+                <div class="example-box">
+                    <h4>Syntax:</h4>
+                    <pre>CREATE TABLE table_name (
+    column1 DATA_TYPE CONSTRAINTS,
+    column2 DATA_TYPE CONSTRAINTS
+);</pre>
+                </div>
+                
+                <div class="example-box">
+                    <h4>Example:</h4>
+                    <pre>CREATE TABLE products (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    product_name TEXT NOT NULL,
+    price REAL NOT NULL CHECK (price > 0),
+    stock_quantity INTEGER DEFAULT 0
+);</pre>
+                </div>
+            </div>
+            
+            <div class="reference-section">
+                <h2>INSERT INTO</h2>
+                <p>Adds new rows to a table.</p>
+                <div class="example-box">
+                    <h4>Syntax:</h4>
+                    <pre>INSERT INTO table_name (column1, column2)
+VALUES (value1, value2);</pre>
+                </div>
+                
+                <div class="example-box">
+                    <h4>Example:</h4>
+                    <pre>INSERT INTO products (product_name, price, stock_quantity)
+VALUES ('Giant Octopus', 45.99, 15);
+
+-- Multiple rows at once:
+INSERT INTO products (product_name, price, stock_quantity)
+VALUES 
+    ('Mini Squid', 12.99, 50),
+    ('Cuddly Cuttlefish', 28.50, 20);</pre>
+                </div>
+                
+                <div class="tip-box">
+                    <h4>Important</h4>
+                    <p>Text values must be in single quotes. Numbers don't use quotes.</p>
+                </div>
+            </div>
+            
+            <div class="reference-section">
+                <h2>SELECT</h2>
+                <p>Retrieves data from tables.</p>
+                <div class="example-box">
+                    <h4>Basic Syntax:</h4>
+                    <pre>SELECT column1, column2 FROM table_name;
+
+-- Select all columns:
+SELECT * FROM table_name;</pre>
+                </div>
+            </div>
+            
+            <div class="reference-section">
+                <h2>WHERE Clause</h2>
+                <p>Filters results based on conditions.</p>
+                <table class="operator-table">
+                    <tr>
+                        <th>Operator</th>
+                        <th>Meaning</th>
+                        <th>Example</th>
+                    </tr>
+                    <tr>
+                        <td>=</td>
+                        <td>Equal to</td>
+                        <td>WHERE price = 29.99</td>
+                    </tr>
+                    <tr>
+                        <td>!=</td>
+                        <td>Not equal</td>
+                        <td>WHERE category != 'Squid'</td>
+                    </tr>
+                    <tr>
+                        <td>&gt;</td>
+                        <td>Greater than</td>
+                        <td>WHERE price &gt; 30</td>
+                    </tr>
+                    <tr>
+                        <td>&lt;</td>
+                        <td>Less than</td>
+                        <td>WHERE stock_quantity &lt; 10</td>
+                    </tr>
+                    <tr>
+                        <td>&gt;=</td>
+                        <td>Greater or equal</td>
+                        <td>WHERE price &gt;= 25</td>
+                    </tr>
+                    <tr>
+                        <td>&lt;=</td>
+                        <td>Less or equal</td>
+                        <td>WHERE stock &lt;= 20</td>
+                    </tr>
+                    <tr>
+                        <td>AND</td>
+                        <td>Both conditions</td>
+                        <td>WHERE price &gt; 20 AND stock &gt; 0</td>
+                    </tr>
+                    <tr>
+                        <td>OR</td>
+                        <td>Either condition</td>
+                        <td>WHERE category = 'Squid' OR category = 'Octopus'</td>
+                    </tr>
+                    <tr>
+                        <td>LIKE</td>
+                        <td>Pattern match</td>
+                        <td>WHERE product_name LIKE '%Octopus%'</td>
+                    </tr>
+                </table>
+                
+                <div class="example-box">
+                    <h4>Examples:</h4>
+                    <pre>-- Products cheaper than 20 euros
+SELECT * FROM products WHERE price < 20;
+
+-- Low stock items
+SELECT * FROM products WHERE stock_quantity < 10;
+
+-- Expensive items with good stock
+SELECT * FROM products 
+WHERE price > 30 AND stock_quantity > 15;
+
+-- Find "Octopus" in name
+SELECT * FROM products 
+WHERE product_name LIKE '%Octopus%';</pre>
+                </div>
+            </div>
+            
+            <div class="reference-section">
+                <h2>ORDER BY</h2>
+                <p>Sorts query results.</p>
+                <div class="example-box">
+                    <h4>Syntax:</h4>
+                    <pre>SELECT * FROM table_name
+ORDER BY column ASC;  -- Ascending (default)
+
+SELECT * FROM table_name
+ORDER BY column DESC;  -- Descending</pre>
+                </div>
+                
+                <div class="example-box">
+                    <h4>Examples:</h4>
+                    <pre>-- Cheapest first
+SELECT * FROM products ORDER BY price ASC;
+
+-- Most expensive first
+SELECT * FROM products ORDER BY price DESC;
+
+-- Alphabetical
+SELECT * FROM products ORDER BY product_name;</pre>
+                </div>
+            </div>
+            
+            <div class="reference-section">
+                <h2>UPDATE</h2>
+                <p>Modifies existing data.</p>
+                <div class="example-box">
+                    <h4>Syntax:</h4>
+                    <pre>UPDATE table_name
+SET column1 = value1, column2 = value2
+WHERE condition;</pre>
+                </div>
+                
+                <div class="warning-box">
+                    <h4>WARNING</h4>
+                    <p>Always use WHERE with UPDATE or you'll update EVERY row!</p>
+                </div>
+                
+                <div class="example-box">
+                    <h4>Examples:</h4>
+                    <pre>-- Update specific product
+UPDATE products
+SET stock_quantity = 25
+WHERE product_name = 'Giant Octopus';
+
+-- Apply discount
+UPDATE products
+SET price = price * 0.9
+WHERE price > 40;</pre>
+                </div>
+            </div>
+            
+            <div class="reference-section">
+                <h2>DELETE</h2>
+                <p>Removes rows from a table.</p>
+                <div class="example-box">
+                    <h4>Syntax:</h4>
+                    <pre>DELETE FROM table_name
+WHERE condition;</pre>
+                </div>
+                
+                <div class="warning-box">
+                    <h4>WARNING</h4>
+                    <p>DELETE is permanent! Always use WHERE or you'll delete EVERYTHING!</p>
+                </div>
+                
+                <div class="example-box">
+                    <h4>Examples:</h4>
+                    <pre>-- Delete specific product
+DELETE FROM products WHERE id = 3;
+
+-- Delete out-of-stock items
+DELETE FROM products WHERE stock_quantity = 0;</pre>
+                </div>
+            </div>
+            
+            <div class="reference-section">
+                <h2>Aggregate Functions</h2>
+                <p>Perform calculations on multiple rows.</p>
+                <table class="operator-table">
+                    <tr>
+                        <th>Function</th>
+                        <th>Purpose</th>
+                    </tr>
+                    <tr>
+                        <td><code>COUNT(*)</code></td>
+                        <td>Count rows</td>
+                    </tr>
+                    <tr>
+                        <td><code>SUM(column)</code></td>
+                        <td>Add up values</td>
+                    </tr>
+                    <tr>
+                        <td><code>AVG(column)</code></td>
+                        <td>Calculate average</td>
+                    </tr>
+                    <tr>
+                        <td><code>MAX(column)</code></td>
+                        <td>Find maximum</td>
+                    </tr>
+                    <tr>
+                        <td><code>MIN(column)</code></td>
+                        <td>Find minimum</td>
+                    </tr>
+                </table>
+                
+                <div class="example-box">
+                    <h4>Examples:</h4>
+                    <pre>-- How many products?
+SELECT COUNT(*) FROM products;
+
+-- Average price?
+SELECT AVG(price) FROM products;
+
+-- Most expensive?
+SELECT MAX(price) FROM products;
+
+-- Total inventory value
+SELECT SUM(price * stock_quantity) FROM products;</pre>
+                </div>
+            </div>
+            
+            <div class="reference-section">
+                <h2>Foreign Keys</h2>
+                <p>Foreign keys create relationships between tables.</p>
+                <div class="example-box">
+                    <h4>Example:</h4>
+                    <pre>CREATE TABLE transactions (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    product_id INTEGER NOT NULL,
+    customer_name TEXT NOT NULL,
+    quantity INTEGER NOT NULL,
+    FOREIGN KEY (product_id) REFERENCES products(id)
+);</pre>
+                </div>
+                
+                <p>The <code>product_id</code> in transactions must match an <code>id</code> in products. This creates a relationship where each transaction is linked to a specific product.</p>
+                
+                <div class="example-box">
+                    <h4>Inserting with Foreign Keys:</h4>
+                    <pre>-- First, check what products exist:
+SELECT id, product_name FROM products;
+
+-- Then insert a transaction using a valid product_id:
+INSERT INTO transactions (product_id, customer_name, quantity)
+VALUES (1, 'Sarah Murphy', 2);
+
+-- This will fail if product_id 1 doesn't exist in products!</pre>
+                </div>
+            </div>
+            
+            <div class="reference-section">
+                <h2>Common Mistakes</h2>
+                <ol>
+                    <li><strong>Forgetting WHERE in UPDATE/DELETE</strong> - Always double-check!</li>
+                    <li><strong>Using double quotes instead of single</strong> - SQL text uses single quotes: 'text'</li>
+                    <li><strong>Forgetting semicolons</strong> - Each statement should end with ;</li>
+                    <li><strong>Case sensitivity</strong> - 'Octopus' and 'octopus' are different</li>
+                    <li><strong>Wrong data types</strong> - Match your data to column types</li>
+                    <li><strong>Invalid foreign keys</strong> - Make sure referenced records exist</li>
+                </ol>
+            </div>
+            
+            <div class="reference-section">
+                <h2>Tips for Success</h2>
+                <ul>
+                    <li>Test each statement with "Run Code" before checking all tasks</li>
+                    <li>Use meaningful names for tables and columns</li>
+                    <li>Comment your code with <code>-- This is a comment</code></li>
+                    <li>Format SQL with proper indentation for readability</li>
+                    <li>After creating tables, run SELECT * to verify structure</li>
+                    <li>Write SQL in a text editor first if you prefer</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        let db;
+        let sqlHistory = [];
+        let editor;
+        
+        async function initDB() {
+            const SQL = await initSqlJs({
+                locateFile: file => `https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.8.0/${file}`
+            });
+            db = new SQL.Database();
+            console.log('Database initialized');
+        }
+        
+        // Initialize CodeMirror
+        function initEditor() {
+            editor = CodeMirror(document.getElementById('sqlEditor'), {
+                value: '-- Tentacular Plushies Database\n-- Write your SQL statements below\n\n',
+                mode: 'text/x-sql',
+                theme: 'monokai',
+                lineNumbers: true,
+                indentUnit: 4,
+                lineWrapping: true,
+                autofocus: true
+            });
+        }
+        
+        function runCode() {
+            const sqlCode = editor.getValue().trim();
+            const resultsDiv = document.getElementById('results');
+            
+            if (!sqlCode) {
+                resultsDiv.className = 'results error';
+                resultsDiv.innerHTML = '<strong>Error:</strong> Please enter some SQL code first.';
+                return;
+            }
+            
+            try {
+                const statements = sqlCode
+                    .split(';')
+                    .map(s => s.trim())
+                    .filter(s => s.length > 0 && !s.startsWith('--'));
+                
+                let output = '';
+                
+                statements.forEach((statement, index) => {
+                    if (statement.match(/^(CREATE|INSERT|UPDATE|DELETE)/i)) {
+                        if (!sqlHistory.includes(statement)) {
+                            sqlHistory.push(statement);
+                        }
+                    }
+                    
+                    try {
+                        const results = db.exec(statement + ';');
+                        
+                        if (results.length > 0) {
+                            results.forEach(result => {
+                                output += `<h4>Statement ${index + 1} Results:</h4>`;
+                                output += '<table><tr>';
+                                
+                                result.columns.forEach(col => {
+                                    output += `<th>${col}</th>`;
+                                });
+                                output += '</tr>';
+                                
+                                result.values.forEach(row => {
+                                    output += '<tr>';
+                                    row.forEach(cell => {
+                                        output += `<td>${cell !== null ? cell : 'NULL'}</td>`;
+                                    });
+                                    output += '</tr>';
+                                });
+                                
+                                output += '</table>';
+                            });
+                        } else {
+                            output += `<p><strong>Statement ${index + 1}:</strong> Executed successfully.</p>`;
+                        }
+                    } catch (err) {
+                        output += `<p class="error"><strong>Error in statement ${index + 1}:</strong> ${err.message}</p>`;
+                    }
+                });
+                
+                resultsDiv.className = 'results success';
+                resultsDiv.innerHTML = output || '<p>Commands executed. No data returned.</p>';
+                
+            } catch (err) {
+                resultsDiv.className = 'results error';
+                resultsDiv.innerHTML = `<strong>Error:</strong> ${err.message}`;
+            }
+        }
+        
+        function checkTasks() {
+            const resultsDiv = document.getElementById('results');
+            let output = '<div class="task-check-results"><h3>Task Completion Check</h3>';
+            let allComplete = true;
+            let taskResults = [];
+            
+            try {
+                // Task 1: Products table
+                let task1Complete = false;
+                let task1Details = '';
+                try {
+                    const schema = db.exec("PRAGMA table_info(products)");
+                    if (schema.length > 0) {
+                        const columns = schema[0].values.map(row => row[1].toLowerCase());
+                        const hasAll = ['id', 'product_name', 'category', 'price', 'stock_quantity', 'description']
+                            .every(col => columns.includes(col));
+                        task1Complete = hasAll;
+                        if (!hasAll) {
+                            const missing = ['id', 'product_name', 'category', 'price', 'stock_quantity', 'description']
+                                .filter(col => !columns.includes(col));
+                            task1Details = ` Missing: ${missing.join(', ')}`;
+                        }
+                    } else {
+                        task1Details = ' Table does not exist';
+                    }
+                } catch (e) {
+                    task1Details = ' Error: ' + e.message;
+                }
+                taskResults.push({num: 1, name: 'Create Products Table', done: task1Complete, details: task1Details});
+                
+                // Task 2: Transactions table with foreign key
+                let task2Complete = false;
+                let task2Details = '';
+                try {
+                    const schema = db.exec("PRAGMA table_info(transactions)");
+                    const fkeys = db.exec("PRAGMA foreign_key_list(transactions)");
+                    if (schema.length > 0) {
+                        const columns = schema[0].values.map(row => row[1].toLowerCase());
+                        const hasAll = ['id', 'product_id', 'customer_name', 'quantity']
+                            .every(col => columns.includes(col));
+                        const hasFKey = fkeys.length > 0 && fkeys[0].values.length > 0;
+                        task2Complete = hasAll && hasFKey;
+                        if (!hasAll || !hasFKey) {
+                            const issues = [];
+                            if (!hasAll) {
+                                const missing = ['id', 'product_id', 'customer_name', 'quantity']
+                                    .filter(col => !columns.includes(col));
+                                issues.push(`missing columns: ${missing.join(', ')}`);
+                            }
+                            if (!hasFKey) issues.push('no foreign key');
+                            task2Details = ` Issues: ${issues.join(', ')}`;
+                        }
+                    } else {
+                        task2Details = ' Table does not exist';
+                    }
+                } catch (e) {
+                    task2Details = ' Error: ' + e.message;
+                }
+                taskResults.push({num: 2, name: 'Create Transactions Table', done: task2Complete, details: task2Details});
+                
+                // Task 3: Products data
+                let task3Complete = false;
+                let task3Details = '';
+                try {
+                    const count = db.exec("SELECT COUNT(*) FROM products");
+                    const catCount = db.exec("SELECT COUNT(DISTINCT category) FROM products");
+                    const numProducts = count[0].values[0][0];
+                    const numCats = catCount[0].values[0][0];
+                    task3Complete = numProducts >= 4 && numCats >= 3;
+                    task3Details = task3Complete ? ` Found ${numProducts} products in ${numCats} categories` :
+                        ` Found ${numProducts} products in ${numCats} categories (need 4+ products, 3+ categories)`;
+                } catch (e) {
+                    task3Details = ' No products found';
+                }
+                taskResults.push({num: 3, name: 'Add Products', done: task3Complete, details: task3Details});
+                
+                // Task 4: Transactions data
+                let task4Complete = false;
+                let task4Details = '';
+                try {
+                    const count = db.exec("SELECT COUNT(*) FROM transactions");
+                    const numTrans = count[0].values[0][0];
+                    const invalid = db.exec(`SELECT COUNT(*) FROM transactions t 
+                        LEFT JOIN products p ON t.product_id = p.id WHERE p.id IS NULL`);
+                    const hasInvalid = invalid[0].values[0][0] > 0;
+                    task4Complete = numTrans >= 3 && !hasInvalid;
+                    task4Details = task4Complete ? ` Found ${numTrans} valid transactions` :
+                        numTrans < 3 ? ` Only ${numTrans} transactions (need 3)` : ' Invalid product_id references';
+                } catch (e) {
+                    task4Details = ' No transactions found';
+                }
+                taskResults.push({num: 4, name: 'Add Transactions', done: task4Complete, details: task4Details});
+                
+                // Task 5: Queries
+                let task5Complete = false;
+                let task5Details = '';
+                try {
+                    let queryErrors = [];
+                    try {
+                        const q1 = db.exec("SELECT * FROM products WHERE price > 30 ORDER BY price DESC");
+                        if (!q1.length || !q1[0].values.length) queryErrors.push('Query 1 no results');
+                    } catch (e) { queryErrors.push('Query 1 failed'); }
+                    
+                    try {
+                        const q2 = db.exec("SELECT product_name, stock_quantity FROM products WHERE stock_quantity < 15");
+                        if (!q2.length || !q2[0].values.length) queryErrors.push('Query 2 no results');
+                    } catch (e) { queryErrors.push('Query 2 failed'); }
+                    
+                    try {
+                        const q3 = db.exec("SELECT customer_name, quantity FROM transactions");
+                        if (!q3.length || !q3[0].values.length) queryErrors.push('Query 3 no results');
+                    } catch (e) { queryErrors.push('Query 3 failed'); }
+                    
+                    task5Complete = queryErrors.length === 0;
+                    task5Details = task5Complete ? ' All queries work!' : ` ${queryErrors.join('; ')}`;
+                } catch (e) {
+                    task5Details = ' Error testing queries';
+                }
+                taskResults.push({num: 5, name: 'Query the Data', done: task5Complete, details: task5Details});
+                
+                // Display results
+                taskResults.forEach(task => {
+                    output += `<div class="task-status ${task.done ? 'complete' : 'incomplete'}">
+                        <span class="task-status-icon">${task.done ? '✓' : '✗'}</span>
+                        <span><strong>Task ${task.num}: ${task.name}</strong> - ${task.done ? 'Complete' : 'Incomplete'}${task.details}</span>
+                    </div>`;
+                    if (!task.done) allComplete = false;
+                });
+                
+                output += '<hr style="margin: 15px 0;">';
+                
+                if (allComplete) {
+                    output += `<div class="congrats">
+                        <h3>CONGRATULATIONS!</h3>
+                        <p>You are now a Certified Cephalopod Database Master!</p>
+                        <p style="margin-top: 10px;">All five tasks completed. Don't forget to download your SQL file!</p>
+                    </div>`;
+                } else {
+                    const incomplete = taskResults.filter(t => !t.done).map(t => t.num).join(', ');
+                    output += `<p style="color: #c62828; font-weight: bold;">
+                        Some tasks incomplete. Review Tasks ${incomplete} and try again.
+                    </p>`;
+                }
+                
+                output += '</div>';
+                resultsDiv.className = 'results';
+                resultsDiv.innerHTML = output;
+                
+            } catch (err) {
+                resultsDiv.className = 'results error';
+                resultsDiv.innerHTML = `<strong>Error:</strong> ${err.message}`;
+            }
+        }
+        
+        function clearEditor() {
+            if (confirm('Clear the editor? This cannot be undone.')) {
+                editor.setValue('-- Tentacular Plushies Database\n-- Write your SQL statements below\n\n');
+            }
+        }
+        
+        async function resetDatabase() {
+            if (confirm('Reset the database? All data will be lost.')) {
+                await initDB();
+                sqlHistory = [];
+                document.getElementById('results').className = 'results';
+                document.getElementById('results').innerHTML = '<p><strong>Database reset.</strong> Start fresh with your SQL code.</p>';
+            }
+        }
+        
+        function downloadCode() {
+            const studentName = document.getElementById('studentName').value.trim();
+            const studentId = document.getElementById('studentId').value.trim();
+            
+            if (!studentName || !studentId) {
+                alert('Please enter your name and student ID before downloading.');
+                return;
+            }
+            
+            const allSQL = editor.getValue();
+            const content = `-- SQL Database Quiz - Tentacular Plushies Edition
+-- Student Name: ${studentName}
+-- Student ID: ${studentId}
+-- Date: ${new Date().toLocaleDateString()}
+
+${allSQL}`;
+            
+            const blob = new Blob([content], { type: 'text/plain' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `${studentId}_SQL_Tentacular_Plushies.sql`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(url);
+        }
+        
+        window.addEventListener('DOMContentLoaded', function() {
+            initDB();
+            initEditor();
+        });
+    </script>
+</body>
+</html>
