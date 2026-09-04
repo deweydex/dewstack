@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SQL Database Quiz - Student Edition</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.8.0/sql-wasm.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            color: #1e3a8a;
+            margin-bottom: 10px;
+            border-bottom: 3px solid #3b82f6;
+            padding-bottom: 10px;
+        }
+        
+        .subtitle {
+            color: #64748b;
+            font-style: italic;
+            margin-bottom: 20px;
+        }
+        
+        h2 {
+            color: #1e40af;
+            margin-top: 30px;
+            margin-bottom: 15px;
+        }
+        
+        h3 {
+            color: #475569;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+        
+        .study-sheet {
+            background-color: #eff6ff;
+            padding: 20px;
+            border-radius: 5px;
+            margin-bottom: 30px;
+            border: 2px solid #3b82f6;
+        }
+        
+        .study-sheet code {
+            background-color: #1e3a8a;
+            color: #bfdbfe;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .study-sheet pre {
+            background-color: #1e3a8a;
+            color: #bfdbfe;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            margin: 10px 0;
+        }
+        
+        .study-sheet ul {
+            margin-left: 20px;
+            margin-top: 10px;
+        }
+        
+        .study-sheet li {
+            margin-bottom: 8px;
+        }
+        
+        .datatype-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        
+        .datatype-table th {
+            background-color: #1e3a8a;
+            color: #bfdbfe;
+            padding: 10px;
+            text-align: left;
+        }
+        
+        .datatype-table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+        
+        .datatype-table tr:nth-child(even) {
+            background-color: #f8fafc;
+        }
+        
+        .quiz-section {
+            margin-top: 30px;
+        }
+        
+        .task {
+            background-color: #fef3c7;
+            border-left: 4px solid #f59e0b;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .task h3 {
+            color: #92400e;
+            margin-top: 0;
+        }
+        
+        .task-requirements {
+            background-color: #dbeafe;
+            border-left: 3px solid #2563eb;
+            padding: 10px;
+            margin-top: 10px;
+        }
+        
+        .task-requirements strong {
+            color: #1e40af;
+        }
+        
+        .editor-container {
+            margin-bottom: 20px;
+        }
+        
+        textarea {
+            width: 100%;
+            min-height: 450px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            padding: 10px;
+            border: 2px solid #cbd5e1;
+            border-radius: 5px;
+            resize: vertical;
+            background-color: #f8fafc;
+        }
+        
+        textarea:focus {
+            outline: none;
+            border-color: #3b82f6;
+        }
+        
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+            flex-wrap: wrap;
+        }
+        
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .run-btn {
+            background-color: #10b981;
+            color: white;
+        }
+        
+        .run-btn:hover {
+            background-color: #059669;
+        }
+        
+        .check-btn {
+            background-color: #3b82f6;
+            color: white;
+        }
+        
+        .check-btn:hover {
+            background-color: #2563eb;
+        }
+        
+        .clear-btn {
+            background-color: #64748b;
+            color: white;
+        }
+        
+        .clear-btn:hover {
+            background-color: #475569;
+        }
+        
+        .results {
+            background-color: #f8f9fa;
+            border: 2px solid #dee2e6;
+            border-radius: 5px;
+            padding: 15px;
+            margin-top: 15px;
+            min-height: 50px;
+        }
+        
+        .results.success {
+            background-color: #d1fae5;
+            border-color: #a7f3d0;
+            color: #065f46;
+        }
+        
+        .results.error {
+            background-color: #fee2e2;
+            border-color: #fecaca;
+            color: #991b1b;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        
+        th {
+            background-color: #1e3a8a;
+            color: #bfdbfe;
+        }
+        
+        tr:nth-child(even) {
+            background-color: #f8fafc;
+        }
+        
+        .task-check-results {
+            background-color: #eff6ff;
+            border: 2px solid #3b82f6;
+            border-radius: 5px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+        
+        .task-check-results h3 {
+            color: #1e40af;
+            margin-top: 0;
+        }
+        
+        .task-status {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        
+        .task-status.complete {
+            background-color: #d1fae5;
+            color: #065f46;
+        }
+        
+        .task-status.incomplete {
+            background-color: #fee2e2;
+            color: #991b1b;
+        }
+        
+        .task-status-icon {
+            font-size: 20px;
+            font-weight: bold;
+        }
+        
+        .download-section {
+            background-color: #d1fae5;
+            border: 2px solid: #10b981;
+            border-radius: 5px;
+            padding: 20px;
+            margin-top: 30px;
+        }
+        
+        .download-section h2 {
+            color: #065f46;
+            margin-top: 0;
+        }
+        
+        .student-info {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .student-info input {
+            padding: 10px;
+            border: 2px solid #cbd5e1;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        
+        .student-info input:focus {
+            outline: none;
+            border-color: #10b981;
+        }
+        
+        .download-btn {
+            background-color: #10b981;
+            color: white;
+            width: 100%;
+        }
+        
+        .download-btn:hover {
+            background-color: #059669;
+        }
+        
+        .download-btn:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>SQL Database Quiz - Student Edition</h1>
+        <p class="subtitle">Master your database skills! Complete all tasks to demonstrate your SQL proficiency.</p>
+        
+        <div class="study-sheet">
+            <h2>Study Sheet - Quick Reference</h2>
+            
+            <h3>1. SQL Data Types</h3>
+            <p>When creating tables, you need to specify what type of data each column will hold:</p>
+            <table class="datatype-table">
+                <tr>
+                    <th>Data Type</th>
+                    <th>Description</th>
+                    <th>Example Values</th>
+                </tr>
+                <tr>
+                    <td><code>TEXT</code></td>
+                    <td>Stores text/string data of any length</td>
+                    <td>'Maya Chen', 'Computing', 'Dublin'</td>
+                </tr>
+                <tr>
+                    <td><code>INTEGER</code></td>
+                    <td>Stores whole numbers (positive or negative)</td>
+                    <td>20, 5, -3, 0, 100</td>
+                </tr>
+                <tr>
+                    <td><code>REAL</code></td>
+                    <td>Stores decimal numbers (floating point)</td>
+                    <td>3.5, 12.75, -2.3, 0.99</td>
+                </tr>
+                <tr>
+                    <td><code>BLOB</code></td>
+                    <td>Stores binary data (images, files)</td>
+                    <td>Binary data (rarely used in basic SQL)</td>
+                </tr>
+                <tr>
+                    <td><code>NULL</code></td>
+                    <td>Represents missing or unknown data</td>
+                    <td>NULL (no value)</td>
+                </tr>
+            </table>
+            <p><strong>Note:</strong> SQLite is flexible with data types. If you use <code>VARCHAR(50)</code> or <code>CHAR(10)</code>, they will be treated as TEXT.</p>
+            
+            <h3>2. Creating Tables</h3>
+            <p>Use the <code>CREATE TABLE</code> statement to define a new table:</p>
+            <pre>CREATE TABLE table_name (
+    column1 datatype,
+    column2 datatype,
+    column3 datatype
+);</pre>
+            
+            <h3>3. Adding Data (Inserting Records)</h3>
+            <p>Use <code>INSERT INTO</code> to add data:</p>
+            <pre>INSERT INTO table_name (column1, column2, column3)
+VALUES ('value1', 'value2', value3);</pre>
+            <p>For multiple rows at once:</p>
+            <pre>INSERT INTO table_name (column1, column2)
+VALUES 
+    ('value1', 'value2'),
+    ('value3', 'value4'),
+    ('value5', 'value6');</pre>
+            
+            <h3>4. Filtering Data (Querying)</h3>
+            <p>Use <code>SELECT</code> with <code>WHERE</code> to filter:</p>
+            <pre>SELECT * FROM table_name WHERE condition;</pre>
+            <p>Examples of conditions:</p>
+            <ul>
+                <li><code>column_name = 'value'</code> - exact match</li>
+                <li><code>column_name > 100</code> - greater than</li>
+                <li><code>column_name >= 20</code> - greater than or equal to</li>
+                <li><code>column_name < 50</code> - less than</li>
+                <li><code>column_name LIKE '%text%'</code> - contains text</li>
+            </ul>
+            
+            <h3>5. Deleting Data</h3>
+            <p>Use <code>DELETE FROM</code> with a <code>WHERE</code> clause:</p>
+            <pre>DELETE FROM table_name WHERE condition;</pre>
+            <p><strong>Warning:</strong> Without a WHERE clause, ALL rows will be deleted.</p>
+        </div>
+        
+        <div class="quiz-section">
+            <h2>Quiz Tasks</h2>
+            <p>Complete the following tasks in order. Type your SQL commands in the editor below and click "Run SQL" to execute them.</p>
+            
+            <div class="task">
+                <h3>Task 1: Create Two Tables</h3>
+                <p>Create two tables in your database with the following structure:</p>
+                <ul>
+                    <li><strong>students</strong> table with columns:
+                        <ul>
+                            <li>name (TEXT)</li>
+                            <li>age (INTEGER)</li>
+                            <li>programme (TEXT)</li>
+                        </ul>
+                    </li>
+                    <li><strong>modules</strong> table with columns:
+                        <ul>
+                            <li>module_name (TEXT)</li>
+                            <li>hours_per_week (INTEGER)</li>
+                            <li>lecturer (TEXT)</li>
+                        </ul>
+                    </li>
+                </ul>
+                <div class="task-requirements">
+                    <strong>Requirements:</strong> Both tables must exist with the exact column names and data types specified above. Note: "programme" is spelled the Irish/British way.
+                </div>
+            </div>
+            
+            <div class="task">
+                <h3>Task 2: Add Data to Both Tables</h3>
+                <p>Insert exactly 3 records into each table:</p>
+                <div class="task-requirements">
+                    <strong>students table - Add these 3 students:</strong>
+                    <ul>
+                        <li>Maya Chen, age 19, programme Computing</li>
+                        <li>Fatima Al-Rahman, age 22, programme Business</li>
+                        <li>Kofi Mensah, age 20, programme Design</li>
+                    </ul>
+                    <strong>modules table - Add these 3 modules:</strong>
+                    <ul>
+                        <li>Programming Fundamentals, 5 hours per week, lecturer Dr. Walsh</li>
+                        <li>Database Methods, 4 hours per week, lecturer Ms. Patel</li>
+                        <li>Web Development, 6 hours per week, lecturer Mr. O'Sullivan</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="task">
+                <h3>Task 3: Filter Data - First Query</h3>
+                <p>Write a SELECT query to find all students whose age is greater than or equal to 20.</p>
+                <div class="task-requirements">
+                    <strong>Requirements:</strong> Use a WHERE clause with the >= operator. This should return Fatima Al-Rahman and Kofi Mensah.
+                </div>
+            </div>
+            
+            <div class="task">
+                <h3>Task 4: Filter Data - Second Query</h3>
+                <p>Write a SELECT query to find all modules with 5 or more hours per week.</p>
+                <div class="task-requirements">
+                    <strong>Requirements:</strong> Use a WHERE clause with the >= operator. This should return Programming Fundamentals and Web Development.
+                </div>
+            </div>
+            
+            <div class="task">
+                <h3>Task 5: Delete an Entry</h3>
+                <p>Delete the student named "Maya Chen" from the students table.</p>
+                <div class="task-requirements">
+                    <strong>Requirements:</strong> Use DELETE FROM with a WHERE clause that targets name = 'Maya Chen'. After deletion, only 2 students should remain.
+                </div>
+            </div>
+            
+            <div class="editor-container">
+                <h3>SQL Editor</h3>
+                <textarea id="sqlEditor" placeholder="Type your SQL commands here... You can run multiple commands at once by separating them with semicolons.
+
+Example:
+CREATE TABLE students (
+    name TEXT,
+    age INTEGER,
+    programme TEXT
+);"></textarea>
+                <div class="button-group">
+                    <button class="run-btn" onclick="runSQL()">Run SQL</button>
+                    <button class="check-btn" onclick="checkTasks()">Check My Work</button>
+                    <button class="clear-btn" onclick="clearEditor()">Clear Editor</button>
+                    <button class="clear-btn" onclick="resetDatabase()">Reset Database</button>
+                </div>
+            </div>
+            
+            <div id="results" class="results">
+                Results will appear here after you run your SQL commands.
+            </div>
+        </div>
+        
+        <div class="download-section">
+            <h2>Download Your Work</h2>
+            <p>Once you have completed all tasks, enter your information below and download your SQL code.</p>
+            <div class="student-info">
+                <input type="text" id="studentName" placeholder="Your Name">
+                <input type="text" id="studentId" placeholder="Student ID Number">
+            </div>
+            <button class="download-btn" onclick="downloadCode()">Download My SQL Code</button>
+        </div>
+    </div>
+    
+    <script>
+        let db = null;
+        let sqlHistory = [];
+        
+        // Initialize SQL.js
+        async function initDB() {
+            const SQL = await initSqlJs({
+                locateFile: file => `https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.8.0/${file}`
+            });
+            db = new SQL.Database();
+            console.log("Database initialized");
+        }
+        
+        // Run SQL commands
+        function runSQL() {
+            const sqlCode = document.getElementById('sqlEditor').value.trim();
+            const resultsDiv = document.getElementById('results');
+            
+            if (!sqlCode) {
+                resultsDiv.className = 'results error';
+                resultsDiv.innerHTML = 'Please enter some SQL code to execute.';
+                return;
+            }
+            
+            // Add to history
+            sqlHistory.push(sqlCode);
+            
+            try {
+                // Split by semicolon and execute each statement
+                const statements = sqlCode.split(';').filter(s => s.trim());
+                let output = '';
+                
+                statements.forEach((statement, index) => {
+                    if (!statement.trim()) return;
+                    
+                    try {
+                        const results = db.exec(statement);
+                        
+                        if (results.length > 0) {
+                            // Query returned data
+                            results.forEach(result => {
+                                output += `<h4>Query ${index + 1} Results:</h4>`;
+                                output += '<table>';
+                                
+                                // Header row
+                                output += '<tr>';
+                                result.columns.forEach(col => {
+                                    output += `<th>${col}</th>`;
+                                });
+                                output += '</tr>';
+                                
+                                // Data rows
+                                result.values.forEach(row => {
+                                    output += '<tr>';
+                                    row.forEach(cell => {
+                                        output += `<td>${cell !== null ? cell : 'NULL'}</td>`;
+                                    });
+                                    output += '</tr>';
+                                });
+                                
+                                output += '</table>';
+                            });
+                        } else {
+                            // Command executed successfully but returned no data
+                            output += `<p><strong>Statement ${index + 1}:</strong> Executed successfully.</p>`;
+                        }
+                    } catch (err) {
+                        output += `<p class="error"><strong>Error in statement ${index + 1}:</strong> ${err.message}</p>`;
+                    }
+                });
+                
+                resultsDiv.className = 'results success';
+                resultsDiv.innerHTML = output || '<p>Commands executed. No data returned.</p>';
+                
+            } catch (err) {
+                resultsDiv.className = 'results error';
+                resultsDiv.innerHTML = `<strong>Error:</strong> ${err.message}`;
+            }
+        }
+        
+        // Check if all tasks are complete
+        function checkTasks() {
+            const resultsDiv = document.getElementById('results');
+            let output = '<div class="task-check-results"><h3>Task Completion Check</h3>';
+            let allComplete = true;
+            
+            try {
+                // Task 1: Check if both tables exist with correct columns
+                let task1Complete = false;
+                try {
+                    const studentsSchema = db.exec("PRAGMA table_info(students)");
+                    const modulesSchema = db.exec("PRAGMA table_info(modules)");
+                    
+                    if (studentsSchema.length > 0 && modulesSchema.length > 0) {
+                        const studentsColumns = studentsSchema[0].values.map(row => row[1].toLowerCase());
+                        const modulesColumns = modulesSchema[0].values.map(row => row[1].toLowerCase());
+                        
+                        const hasStudentsColumns = studentsColumns.includes('name') && 
+                                                  studentsColumns.includes('age') && 
+                                                  studentsColumns.includes('programme');
+                        const hasModulesColumns = modulesColumns.includes('module_name') && 
+                                                 modulesColumns.includes('hours_per_week') && 
+                                                 modulesColumns.includes('lecturer');
+                        
+                        task1Complete = hasStudentsColumns && hasModulesColumns;
+                    }
+                } catch (e) {}
+                
+                output += `<div class="task-status ${task1Complete ? 'complete' : 'incomplete'}">
+                    <span class="task-status-icon">${task1Complete ? '✓' : '✗'}</span>
+                    <span>Task 1: Create Two Tables - ${task1Complete ? 'Complete' : 'Incomplete'}</span>
+                </div>`;
+                if (!task1Complete) allComplete = false;
+                
+                // Task 2: Check if data has been inserted
+                let task2Complete = false;
+                try {
+                    const studentsCount = db.exec("SELECT COUNT(*) as count FROM students");
+                    const modulesCount = db.exec("SELECT COUNT(*) as count FROM modules");
+                    
+                    const studentsHas3 = studentsCount.length > 0 && studentsCount[0].values[0][0] === 3;
+                    const modulesHas3 = modulesCount.length > 0 && modulesCount[0].values[0][0] >= 3;
+                    
+                    // Check for specific data
+                    const students = db.exec("SELECT * FROM students");
+                    const modules = db.exec("SELECT * FROM modules");
+                    
+                    let hasMaya = false, hasFatima = false, hasKofi = false;
+                    let hasProgramming = false, hasDatabase = false, hasWeb = false;
+                    
+                    if (students.length > 0) {
+                        students[0].values.forEach(row => {
+                            if (row[0] && row[0].includes('Chen')) hasMaya = true;
+                            if (row[0] && row[0].includes('Al-Rahman')) hasFatima = true;
+                            if (row[0] && row[0].includes('Mensah')) hasKofi = true;
+                        });
+                    }
+                    
+                    if (modules.length > 0) {
+                        modules[0].values.forEach(row => {
+                            if (row[0] && row[0].includes('Programming')) hasProgramming = true;
+                            if (row[0] && row[0].includes('Database')) hasDatabase = true;
+                            if (row[0] && row[0].includes('Web')) hasWeb = true;
+                        });
+                    }
+                    
+                    task2Complete = studentsHas3 && modulesHas3 && hasMaya && hasFatima && hasKofi;
+                } catch (e) {}
+                
+                output += `<div class="task-status ${task2Complete ? 'complete' : 'incomplete'}">
+                    <span class="task-status-icon">${task2Complete ? '✓' : '✗'}</span>
+                    <span>Task 2: Add Data to Both Tables - ${task2Complete ? 'Complete' : 'Incomplete'}</span>
+                </div>`;
+                if (!task2Complete) allComplete = false;
+                
+                // Task 3: This is a query task, we check if the query would work
+                let task3Complete = false;
+                try {
+                    const result = db.exec("SELECT * FROM students WHERE age >= 20");
+                    task3Complete = result.length > 0 && result[0].values.length >= 2;
+                } catch (e) {}
+                
+                output += `<div class="task-status ${task3Complete ? 'complete' : 'incomplete'}">
+                    <span class="task-status-icon">${task3Complete ? '✓' : '✗'}</span>
+                    <span>Task 3: Filter Students by Age - ${task3Complete ? 'Complete (data allows this query)' : 'Incomplete or data missing'}</span>
+                </div>`;
+                if (!task3Complete) allComplete = false;
+                
+                // Task 4: Check if modules query would work
+                let task4Complete = false;
+                try {
+                    const result = db.exec("SELECT * FROM modules WHERE hours_per_week >= 5");
+                    task4Complete = result.length > 0 && result[0].values.length >= 2;
+                } catch (e) {}
+                
+                output += `<div class="task-status ${task4Complete ? 'complete' : 'incomplete'}">
+                    <span class="task-status-icon">${task4Complete ? '✓' : '✗'}</span>
+                    <span>Task 4: Filter Modules by Hours - ${task4Complete ? 'Complete (data allows this query)' : 'Incomplete or data missing'}</span>
+                </div>`;
+                if (!task4Complete) allComplete = false;
+                
+                // Task 5: Check if Maya Chen has been deleted
+                let task5Complete = false;
+                try {
+                    const result = db.exec("SELECT * FROM students WHERE name LIKE '%Chen%'");
+                    task5Complete = result.length === 0 || result[0].values.length === 0;
+                    
+                    const totalStudents = db.exec("SELECT COUNT(*) as count FROM students");
+                    const hasTwoRemaining = totalStudents.length > 0 && totalStudents[0].values[0][0] === 2;
+                    
+                    task5Complete = task5Complete && hasTwoRemaining;
+                } catch (e) {}
+                
+                output += `<div class="task-status ${task5Complete ? 'complete' : 'incomplete'}">
+                    <span class="task-status-icon">${task5Complete ? '✓' : '✗'}</span>
+                    <span>Task 5: Delete Maya Chen - ${task5Complete ? 'Complete' : 'Incomplete'}</span>
+                </div>`;
+                if (!task5Complete) allComplete = false;
+                
+                output += '<hr style="margin: 20px 0;">';
+                if (allComplete) {
+                    output += '<p style="color: #065f46; font-weight: bold; font-size: 18px;">Congratulations! All tasks complete! You have demonstrated mastery of fundamental SQL operations!</p>';
+                } else {
+                    output += '<p style="color: #991b1b; font-weight: bold;">Some tasks are incomplete. Review the requirements and try again.</p>';
+                }
+                
+                output += '</div>';
+                resultsDiv.className = 'results';
+                resultsDiv.innerHTML = output;
+                
+            } catch (err) {
+                resultsDiv.className = 'results error';
+                resultsDiv.innerHTML = `<strong>Error checking tasks:</strong> ${err.message}`;
+            }
+        }
+        
+        // Clear editor
+        function clearEditor() {
+            document.getElementById('sqlEditor').value = '';
+        }
+        
+        // Reset database
+        async function resetDatabase() {
+            if (confirm('Are you sure you want to reset the database? All your data will be lost.')) {
+                await initDB();
+                sqlHistory = [];
+                document.getElementById('results').className = 'results';
+                document.getElementById('results').innerHTML = 'Database has been reset. You can start fresh.';
+            }
+        }
+        
+        // Download code
+        function downloadCode() {
+            const studentName = document.getElementById('studentName').value.trim();
+            const studentId = document.getElementById('studentId').value.trim();
+            
+            if (!studentName || !studentId) {
+                alert('Please enter your name and student ID before downloading.');
+                return;
+            }
+            
+            const allSQL = sqlHistory.join(';\n\n') + ';';
+            
+            const content = `-- SQL Database Quiz - Student Edition
+-- Student Name: ${studentName}
+-- Student ID: ${studentId}
+-- Date: ${new Date().toLocaleDateString()}
+
+${allSQL}`;
+            
+            const blob = new Blob([content], { type: 'text/plain' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `${studentId}_SQL_Student_Quiz.sql`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(url);
+        }
+        
+        // Initialize on page load
+        window.addEventListener('DOMContentLoaded', initDB);
+    </script>
+</body>
+</html>

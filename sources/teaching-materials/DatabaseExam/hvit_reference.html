@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DB 5N0783 — Reference</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;500&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg:      #1e1e2e;
+  --surface: #27273a;
+  --surface2:#313244;
+  --border:  #45475a;
+  --blue:    #89b4fa;
+  --blue-dk: #1d3a60;
+  --green:   #a6e3a1;
+  --teal:    #94e2d5;
+  --purple:  #cba6f7;
+  --orange:  #fab387;
+  --red:     #f38ba8;
+  --ink:     #cdd6f4;
+  --muted:   #6c7086;
+  --muted2:  #9399b2;
+  --code-bg: #181825;
+  --hi:      #3d3515;
+  --sans:    'DM Sans', system-ui, sans-serif;
+  --mono:    'Source Code Pro', 'Courier New', monospace;
+  --r:       4px;
+}
+html, body { height: 100%; overflow: hidden; }
+body { font-family: var(--sans); background: var(--bg); color: var(--ink); font-size: 15px; line-height: 1.55; }
+.shell { display: flex; flex-direction: column; height: 100vh; background: var(--surface); }
+
+.panel-hdr { background: var(--blue-dk); color: #fff; padding: 10px 14px 9px; flex-shrink: 0; border-bottom: 1px solid var(--border); }
+.panel-hdr-row { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+.panel-title { font-size: .83rem; font-weight: 600; flex: 1; color: var(--blue); }
+.panel-meta  { font-size: .65rem; color: var(--muted2); white-space: nowrap; }
+
+.search-wrap { position: relative; }
+.search-wrap .search-icon { position: absolute; left: 8px; top: 50%; transform: translateY(-50%); opacity: .45; pointer-events: none; font-size: .9rem; }
+#search { width: 100%; padding: 6px 36px 6px 26px; border: 1px solid var(--border); border-radius: var(--r); background: var(--surface2); color: var(--ink); font-family: var(--sans); font-size: .8rem; outline: none; }
+#search::placeholder { color: var(--muted); }
+#search:focus { border-color: var(--blue); }
+#search-count { position: absolute; right: 8px; top: 50%; transform: translateY(-50%); font-size: .65rem; color: var(--muted2); pointer-events: none; }
+
+.tabs { display: flex; background: var(--surface); border-bottom: 1px solid var(--border); flex-shrink: 0; overflow-x: auto; scrollbar-width: none; }
+.tabs::-webkit-scrollbar { display: none; }
+.tab { flex: none; padding: 6px 10px; font-size: .67rem; font-weight: 600; color: var(--muted2); border: none; background: none; cursor: pointer; letter-spacing: .04em; text-transform: uppercase; border-bottom: 2px solid transparent; white-space: nowrap; transition: color .12s, border-color .12s; }
+.tab.active { color: var(--blue); border-bottom-color: var(--blue); }
+.tab:hover:not(.active) { color: var(--ink); }
+
+#content { flex: 1; overflow-y: auto; padding: 2px 0 32px; }
+#content::-webkit-scrollbar { width: 4px; }
+#content::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+.no-results { padding: 28px 16px; text-align: center; color: var(--muted); font-size: .83rem; display: none; }
+
+.acc-section { border-bottom: 1px solid var(--border); }
+.acc-btn { width: 100%; display: flex; align-items: center; gap: 8px; padding: 9px 14px; background: none; border: none; cursor: pointer; text-align: left; font-family: var(--sans); transition: background .1s; user-select: none; }
+.acc-btn:hover { background: var(--surface2); }
+.caret { width: 0; height: 0; border-top: 5px solid transparent; border-bottom: 5px solid transparent; border-left: 7px solid var(--muted); flex-shrink: 0; transition: transform .18s ease; margin-top: 1px; }
+.acc-btn.open .caret { transform: rotate(90deg); }
+.dot { width: 6px; height: 6px; border-radius: 50%; background: var(--blue); flex-shrink: 0; }
+.dot.gr { background: var(--green); }
+.dot.te { background: var(--teal); }
+.dot.pu { background: var(--purple); }
+.dot.or { background: var(--orange); }
+.dot.re { background: var(--red); }
+.acc-label { flex: 1; font-size: .74rem; font-weight: 600; letter-spacing: .03em; color: var(--ink); }
+.acc-body { display: none; padding: 0 14px 14px; }
+.acc-body.open { display: block; }
+
+p { margin-bottom: 8px; font-size: .78rem; color: var(--ink); }
+p.note { font-size: .7rem; color: var(--muted2); font-style: italic; margin-top: 5px; }
+dl { margin: 4px 0; }
+dt { font-weight: 600; font-size: .8rem; color: var(--ink); margin-top: 9px; display: flex; align-items: baseline; gap: 5px; flex-wrap: wrap; }
+dt:first-child { margin-top: 2px; }
+dd { font-size: .77rem; color: var(--muted2); margin: 2px 0 4px; padding-left: 12px; line-height: 1.5; }
+
+.tag { font-size: .58rem; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--muted2); background: var(--surface2); padding: 1px 5px; border-radius: 8px; white-space: nowrap; }
+.tag.blue { background: #1a3d6b; color: var(--blue); }
+
+pre, code { font-family: var(--mono); font-size: .72rem; line-height: 1.55; }
+pre { background: var(--code-bg); border: 1px solid var(--border); border-radius: var(--r); padding: 7px 9px; overflow-x: auto; margin: 5px 0 4px; white-space: pre; tab-size: 4; color: var(--ink); }
+code { background: var(--surface2); padding: 0 4px; border-radius: 2px; font-size: .73rem; color: var(--teal); }
+
+.kw { color: #cba6f7; }
+.fn { color: #89b4fa; }
+.st { color: #a6e3a1; }
+.cm { color: #585b70; font-style: italic; }
+.nu { color: #fab387; }
+.dec{ color: #f38ba8; }
+
+table { width: 100%; border-collapse: collapse; font-size: .73rem; margin: 5px 0; }
+th { background: var(--surface2); padding: 4px 6px; border: 1px solid var(--border); font-weight: 600; text-align: left; font-size: .7rem; color: var(--ink); }
+td { padding: 3px 6px; border: 1px solid var(--border); vertical-align: top; line-height: 1.45; color: var(--muted2); }
+tr:nth-child(even) td { background: var(--bg); }
+
+mark { background: var(--hi); color: var(--orange); border-radius: 2px; padding: 0 1px; }
+
+.kbhint { display: flex; gap: 12px; padding: 5px 14px; border-top: 1px solid var(--border); background: var(--bg); flex-shrink: 0; }
+.kbhint span { font-size: .63rem; color: var(--muted2); display: flex; align-items: center; gap: 3px; }
+kbd { background: var(--surface2); border: 1px solid var(--border); border-radius: 3px; padding: 1px 4px; font-family: var(--mono); font-size: .62rem; color: var(--ink); }
+</style>
+</head>
+<body>
+<div class="shell">
+
+<div class="panel-hdr">
+  <div class="panel-hdr-row">
+    <span class="panel-title">DB 5N0783 — Reference</span>
+    <span class="panel-meta">HVIT · 2025–26</span>
+  </div>
+  <div class="search-wrap">
+    <span class="search-icon">⌕</span>
+    <input id="search" type="text" placeholder="Search anything… (/ to focus)" autocomplete="off" spellcheck="false">
+    <span id="search-count"></span>
+  </div>
+</div>
+
+<div class="tabs">
+  <button class="tab active" data-tab="all">All</button>
+  <button class="tab" data-tab="glossary">Glossary</button>
+  <button class="tab" data-tab="sqlite">SQLite</button>
+  <button class="tab" data-tab="pandas">pandas</button>
+  <button class="tab" data-tab="exam_tools">exam_tools</button>
+  <button class="tab" data-tab="python">Python</button>
+</div>
+
+<div id="content">
+<p class="no-results" id="no-results">Nothing matched — try a shorter word.</p>
+
+<!-- ══════════════════════════════════════════════════════════
+     GLOSSARY
+════════════════════════════════════════════════════════════ -->
+<div class="acc-section" data-tabs="all glossary">
+<button class="acc-btn open" onclick="toggle(this)">
+  <span class="caret"></span><span class="dot or"></span>
+  <span class="acc-label">Glossary — database and Python terms</span>
+</button>
+<div class="acc-body open">
+<dl>
+  <dt>Database</dt>
+  <dd>An organised collection of structured data stored so it can be efficiently retrieved and updated. SQLite stores a database as a single file on disk.</dd>
+
+  <dt>Table</dt>
+  <dd>A grid of data inside a database, similar to a spreadsheet. Each table has a fixed set of columns and any number of rows.</dd>
+
+  <dt>Row / Record</dt>
+  <dd>One entry in a table — a single set of values for each column. Adding a student or an item to a database creates a new row.</dd>
+
+  <dt>Column / Field / Attribute</dt>
+  <dd>A named property shared by every row in a table. Each column has a data type (TEXT, INTEGER, REAL) that determines what kind of value it can hold.</dd>
+
+  <dt>Primary Key <span class="tag blue">PK</span></dt>
+  <dd>A column (or combination of columns) whose value uniquely identifies each row. No two rows can share the same primary key value, and it cannot be NULL. Often called <code>id</code> or <code>table_name_id</code>.</dd>
+
+  <dt>NULL</dt>
+  <dd>A special marker meaning "no value" or "unknown". NULL is not the same as zero or an empty string. In SQL, use <code>IS NULL</code> or <code>IS NOT NULL</code> to check for it.</dd>
+
+  <dt>SQL — Structured Query Language</dt>
+  <dd>The standard language used to interact with relational databases. SQL statements describe <em>what</em> data you want; the database engine works out <em>how</em> to retrieve it.</dd>
+
+  <dt>Query</dt>
+  <dd>A request sent to the database — usually a SELECT statement that asks for specific rows or a summary. Queries read data without changing it.</dd>
+
+  <dt>SELECT</dt>
+  <dd>The SQL keyword that retrieves data from a table. <code>SELECT *</code> returns all columns; listing specific column names returns only those.</dd>
+
+  <dt>WHERE clause</dt>
+  <dd>A filter added to a SELECT (or INSERT/UPDATE/DELETE) that limits which rows are affected. Only rows where the condition evaluates to true are included.</dd>
+
+  <dt>ORDER BY</dt>
+  <dd>Sorts the result of a query. <code>ORDER BY column_name</code> sorts ascending (A→Z, 0→9); adding <code>DESC</code> reverses the order.</dd>
+
+  <dt>GROUP BY</dt>
+  <dd>Collapses many rows into summary groups based on a shared value. Always used alongside an aggregate function such as COUNT, SUM, or AVG.</dd>
+
+  <dt>Aggregate function</dt>
+  <dd>A function that computes a single result from a set of rows: <code>COUNT(*)</code> counts rows, <code>SUM(col)</code> adds values, <code>AVG(col)</code> calculates the average, <code>MAX</code> and <code>MIN</code> find extremes.</dd>
+
+  <dt>INSERT</dt>
+  <dd>The SQL statement that adds a new row to a table. The values provided must match the column order or be named explicitly.</dd>
+
+  <dt>commit()</dt>
+  <dd>Confirms and permanently saves all changes made since the last commit. Without calling <code>conn.commit()</code>, INSERT and UPDATE changes are lost when the connection closes.</dd>
+
+  <dt>Transaction</dt>
+  <dd>A group of database operations treated as a single unit. Either all succeed (and are committed) or all are rolled back, keeping the database consistent.</dd>
+
+  <dt>PRAGMA</dt>
+  <dd>A special SQLite command that returns information about the database itself rather than its data. <code>PRAGMA table_info(table_name)</code> lists the columns of a table.</dd>
+
+  <dt>DataFrame</dt>
+  <dd>The main data structure in pandas — a two-dimensional table with labelled rows and columns. Returned by <code>pd.read_sql()</code> and <code>pd.read_excel()</code>.</dd>
+
+  <dt>Boolean filter</dt>
+  <dd>A way of selecting rows from a DataFrame by writing a condition that evaluates to True or False for each row. Written as <code>df[df['column'] == value]</code>.</dd>
+
+  <dt>Connection / cursor</dt>
+  <dd>The <em>connection</em> (<code>conn</code>) represents the open link to a database file. The <em>cursor</em> (<code>cursor</code>) is the object you use to send SQL statements and retrieve results.</dd>
+
+  <dt>JOIN</dt>
+  <dd>A SQL operation that combines rows from two or more tables based on a matching column value. Useful when related data is split across tables.</dd>
+</dl>
+</div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════
+     SQLITE — connecting
+════════════════════════════════════════════════════════════ -->
+<div class="acc-section" data-tabs="all sqlite">
+<button class="acc-btn open" onclick="toggle(this)">
+  <span class="caret"></span><span class="dot"></span>
+  <span class="acc-label">SQLite — connecting and inspecting</span>
+</button>
+<div class="acc-body open">
+<pre><span class="kw">import</span> sqlite3
+
+<span class="cm"># Open a database file (creates it if it does not exist)</span>
+conn   = sqlite3.<span class="fn">connect</span>(<span class="st">"database.db"</span>)
+cursor = conn.<span class="fn">cursor</span>()
+
+<span class="cm"># List all tables in the database</span>
+cursor.<span class="fn">execute</span>(<span class="st">"SELECT name FROM sqlite_master WHERE type='table'"</span>)
+<span class="fn">print</span>(cursor.<span class="fn">fetchall</span>())
+
+<span class="cm"># Inspect the columns of a table</span>
+cursor.<span class="fn">execute</span>(<span class="st">"PRAGMA table_info(table_name)"</span>)
+<span class="kw">for</span> row <span class="kw">in</span> cursor.<span class="fn">fetchall</span>():
+    <span class="fn">print</span>(row)
+<span class="cm"># Returns: (cid, name, type, notnull, default_value, is_primary_key)</span>
+
+<span class="cm"># Run any query — results come back as a list of tuples</span>
+cursor.<span class="fn">execute</span>(<span class="st">"SELECT * FROM table_name"</span>)
+rows = cursor.<span class="fn">fetchall</span>()   <span class="cm"># all rows</span>
+one  = cursor.<span class="fn">fetchone</span>()   <span class="cm"># first row only</span>
+
+<span class="cm"># Close the connection when done</span>
+conn.<span class="fn">close</span>()</pre>
+</div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════
+     SQL — SELECT / WHERE / ORDER BY
+════════════════════════════════════════════════════════════ -->
+<div class="acc-section" data-tabs="all sqlite">
+<button class="acc-btn open" onclick="toggle(this)">
+  <span class="caret"></span><span class="dot gr"></span>
+  <span class="acc-label">SQL — SELECT, WHERE, ORDER BY</span>
+</button>
+<div class="acc-body open">
+<table>
+  <tr><th>Goal</th><th>SQL</th></tr>
+  <tr><td>All rows, all columns</td><td><code>SELECT * FROM table_name</code></td></tr>
+  <tr><td>Specific columns only</td><td><code>SELECT column_a, column_b FROM table_name</code></td></tr>
+  <tr><td>Filter by exact text value</td><td><code>SELECT * FROM table_name WHERE category = 'Science'</code></td></tr>
+  <tr><td>Filter by number</td><td><code>SELECT * FROM table_name WHERE attribute > 3</code></td></tr>
+  <tr><td>Two conditions (both must be true)</td><td><code>SELECT * FROM table_name WHERE type = 'X' AND value > 10</code></td></tr>
+  <tr><td>Either condition</td><td><code>SELECT * FROM table_name WHERE type = 'X' OR type = 'Y'</code></td></tr>
+  <tr><td>Sort ascending</td><td><code>SELECT * FROM table_name ORDER BY column_a</code></td></tr>
+  <tr><td>Sort descending</td><td><code>SELECT * FROM table_name ORDER BY column_a DESC</code></td></tr>
+  <tr><td>Limit number of rows</td><td><code>SELECT * FROM table_name LIMIT 5</code></td></tr>
+  <tr><td>Count all rows</td><td><code>SELECT COUNT(*) FROM table_name</code></td></tr>
+</table>
+<p class="note">String values in SQL always use single quotes: <code>'Science'</code> — not double quotes. Column and table names use no quotes at all.</p>
+</div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════
+     SQL — INSERT / commit
+════════════════════════════════════════════════════════════ -->
+<div class="acc-section" data-tabs="all sqlite">
+<button class="acc-btn" onclick="toggle(this)">
+  <span class="caret"></span><span class="dot or"></span>
+  <span class="acc-label">SQL — INSERT, commit, rollback</span>
+</button>
+<div class="acc-body">
+<pre><span class="cm"># Insert a row using placeholders — safer than building a string</span>
+cursor.<span class="fn">execute</span>(
+    <span class="st">"INSERT INTO table_name (column_a, column_b, column_c) VALUES (?, ?, ?)"</span>,
+    (<span class="st">"some text"</span>, <span class="nu">42</span>, <span class="st">"another value"</span>)
+)
+conn.<span class="fn">commit</span>()   <span class="cm"># required — saves the change permanently</span>
+
+<span class="cm"># Reading a value back from a widget before inserting</span>
+cursor.<span class="fn">execute</span>(
+    <span class="st">"INSERT INTO table_name (label, score) VALUES (?, ?)"</span>,
+    (name_input.value, <span class="fn">int</span>(score_input.value))
+)
+conn.<span class="fn">commit</span>()
+
+<span class="cm"># Roll back if something went wrong (undoes since last commit)</span>
+conn.<span class="fn">rollback</span>()</pre>
+<p class="note">Always call <code>conn.commit()</code> after INSERT/UPDATE/DELETE — without it, changes exist only in memory and are lost when the connection closes.</p>
+</div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════
+     SQL — GROUP BY
+════════════════════════════════════════════════════════════ -->
+<div class="acc-section" data-tabs="all sqlite">
+<button class="acc-btn" onclick="toggle(this)">
+  <span class="caret"></span><span class="dot pu"></span>
+  <span class="acc-label">SQL — GROUP BY and aggregation</span>
+</button>
+<div class="acc-body">
+<pre><span class="cm"># Count rows per category</span>
+df = pd.<span class="fn">read_sql</span>(
+    <span class="st">"SELECT category, COUNT(*) AS total FROM table_name GROUP BY category"</span>,
+    conn
+)
+
+<span class="cm"># Average of a numeric column per group</span>
+df = pd.<span class="fn">read_sql</span>(
+    <span class="st">"SELECT type, AVG(score) AS avg_score FROM table_name GROUP BY type"</span>,
+    conn
+)
+
+<span class="cm"># Sort the groups by count, largest first</span>
+df = pd.<span class="fn">read_sql</span>(
+    <span class="st">"SELECT category, COUNT(*) AS n FROM table_name GROUP BY category ORDER BY n DESC"</span>,
+    conn
+)
+
+<span class="cm"># JOIN two tables (for reference — combines rows on a shared column)</span>
+df = pd.<span class="fn">read_sql</span>(<span class="st">"""
+    SELECT a.label, a.value, b.description
+    FROM table_a a
+    JOIN table_b b ON a.type_id = b.id
+"""</span>, conn)</pre>
+<p class="note">The alias <code>AS total</code> sets the column name in the result. Without it the column is named <code>COUNT(*)</code>, which is harder to reference later.</p>
+</div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════
+     pandas — loading data
+════════════════════════════════════════════════════════════ -->
+<div class="acc-section" data-tabs="all pandas">
+<button class="acc-btn open" onclick="toggle(this)">
+  <span class="caret"></span><span class="dot te"></span>
+  <span class="acc-label">pandas — loading data from SQL and Excel</span>
+</button>
+<div class="acc-body open">
+<pre><span class="kw">import</span> pandas <span class="kw">as</span> pd
+
+<span class="cm"># Load a SQL query result as a DataFrame</span>
+df = pd.<span class="fn">read_sql</span>(<span class="st">"SELECT * FROM table_name"</span>, conn)
+df = pd.<span class="fn">read_sql</span>(<span class="st">"SELECT * FROM table_name WHERE attribute > 3"</span>, conn)
+
+<span class="cm"># Load an Excel file — reads the first sheet by default</span>
+df = pd.<span class="fn">read_excel</span>(<span class="st">"filename.xlsx"</span>)
+
+<span class="cm"># Load a specific sheet by name</span>
+df = pd.<span class="fn">read_excel</span>(<span class="st">"filename.xlsx"</span>, sheet_name=<span class="st">"Sheet Name"</span>)
+
+<span class="cm"># Find out what sheets exist in a file</span>
+xl = pd.<span class="fn">ExcelFile</span>(<span class="st">"filename.xlsx"</span>)
+<span class="fn">print</span>(xl.sheet_names)    <span class="cm"># e.g. ['Results', 'Summary']</span>
+
+<span class="cm"># Quick inspection</span>
+df.<span class="fn">head</span>()        <span class="cm"># first 5 rows</span>
+df.<span class="fn">head</span>(<span class="nu">10</span>)     <span class="cm"># first 10 rows</span>
+df.shape         <span class="cm"># (number_of_rows, number_of_columns) as a tuple</span>
+df.columns       <span class="cm"># list of column names</span>
+df.dtypes        <span class="cm"># data type of each column</span></pre>
+</div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════
+     pandas — filtering and sorting
+════════════════════════════════════════════════════════════ -->
+<div class="acc-section" data-tabs="all pandas">
+<button class="acc-btn open" onclick="toggle(this)">
+  <span class="caret"></span><span class="dot te"></span>
+  <span class="acc-label">pandas — boolean filters and sorting</span>
+</button>
+<div class="acc-body open">
+<pre><span class="cm"># Boolean filter — keep rows where the condition is True</span>
+result = df[df[<span class="st">'category'</span>] == <span class="st">'Science'</span>]   <span class="cm"># exact text match</span>
+result = df[df[<span class="st">'score'</span>] > <span class="nu">5</span>]               <span class="cm"># numeric comparison</span>
+result = df[df[<span class="st">'attribute'</span>] != <span class="st">'excluded'</span>] <span class="cm"># not-equal</span>
+
+<span class="cm"># Two conditions — wrap each in brackets, use & (and) or | (or)</span>
+result = df[(df[<span class="st">'type'</span>] == <span class="st">'A'</span>) &amp; (df[<span class="st">'value'</span>] > <span class="nu">10</span>)]
+result = df[(df[<span class="st">'type'</span>] == <span class="st">'A'</span>) | (df[<span class="st">'type'</span>] == <span class="st">'B'</span>)]
+
+<span class="cm"># Sort rows by a column</span>
+df.<span class="fn">sort_values</span>(<span class="st">'column_name'</span>)                    <span class="cm"># ascending</span>
+df.<span class="fn">sort_values</span>(<span class="st">'column_name'</span>, ascending=<span class="kw">False</span>)  <span class="cm"># descending</span>
+
+<span class="cm"># Select only certain columns</span>
+subset = df[[<span class="st">'column_a'</span>, <span class="st">'column_b'</span>]]
+
+<span class="cm"># Append a DataFrame to an existing database table</span>
+df.<span class="fn">to_sql</span>(<span class="st">'table_name'</span>, conn, if_exists=<span class="st">'append'</span>, index=<span class="kw">False</span>)</pre>
+<p class="note"><code>if_exists='append'</code> adds new rows without touching existing ones. <code>'replace'</code> deletes the entire table first — use with caution. <code>'fail'</code> raises an error if the table already exists.</p>
+</div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════
+     matplotlib
+════════════════════════════════════════════════════════════ -->
+<div class="acc-section" data-tabs="all pandas">
+<button class="acc-btn open" onclick="toggle(this)">
+  <span class="caret"></span><span class="dot te"></span>
+  <span class="acc-label">matplotlib — bar charts and reference lines</span>
+</button>
+<div class="acc-body open">
+<pre><span class="kw">import</span> matplotlib.pyplot <span class="kw">as</span> plt
+<span class="kw">from</span> exam_tools <span class="kw">import</span> show
+
+<span class="cm"># Vertical bar chart</span>
+fig, ax = plt.<span class="fn">subplots</span>()
+ax.<span class="fn">bar</span>(df[<span class="st">'category'</span>], df[<span class="st">'count'</span>], color=<span class="st">'steelblue'</span>)
+ax.<span class="fn">set_title</span>(<span class="st">'Chart title'</span>)
+ax.<span class="fn">set_xlabel</span>(<span class="st">'X axis label'</span>)
+ax.<span class="fn">set_ylabel</span>(<span class="st">'Y axis label'</span>)
+plt.<span class="fn">tight_layout</span>()
+<span class="fn">show</span>(fig)
+
+<span class="cm"># Horizontal bar chart — swap x and y</span>
+fig, ax = plt.<span class="fn">subplots</span>()
+ax.<span class="fn">barh</span>(df[<span class="st">'label'</span>], df[<span class="st">'value'</span>], color=<span class="st">'steelblue'</span>)
+ax.<span class="fn">set_title</span>(<span class="st">'Chart title'</span>)
+ax.<span class="fn">set_xlabel</span>(<span class="st">'Value'</span>)
+ax.<span class="fn">set_ylabel</span>(<span class="st">'Label'</span>)
+plt.<span class="fn">tight_layout</span>()
+<span class="fn">show</span>(fig)
+
+<span class="cm"># Add a vertical reference line (e.g. midpoint or threshold)</span>
+ax.<span class="fn">axvline</span>(x=<span class="nu">5</span>, color=<span class="st">'red'</span>, linestyle=<span class="st">'--'</span>, label=<span class="st">'Midpoint'</span>)
+ax.<span class="fn">legend</span>()
+
+<span class="cm"># Add a horizontal reference line</span>
+ax.<span class="fn">axhline</span>(y=<span class="nu">10</span>, color=<span class="st">'orange'</span>, linestyle=<span class="st">'--'</span>)</pre>
+<p class="note">Always use <code>fig, ax = plt.subplots()</code> and pass <code>fig</code> to <code>show(fig)</code>. Do not use <code>plt.show()</code> in the browser exam — it will not display anything.</p>
+</div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════
+     exam_tools — API table
+════════════════════════════════════════════════════════════ -->
+<div class="acc-section" data-tabs="all exam_tools">
+<button class="acc-btn open" onclick="toggle(this)">
+  <span class="caret"></span><span class="dot re"></span>
+  <span class="acc-label">exam_tools — widget API reference</span>
+</button>
+<div class="acc-body open">
+<table>
+  <tr><th>Function</th><th>What it creates</th><th>Get the value</th></tr>
+  <tr><td><code>text_input(label, placeholder="")</code></td><td>A single-line text field</td><td><code>widget.value</code> → str</td></tr>
+  <tr><td><code>number_input(label, min, max, default)</code></td><td>A numeric input field</td><td><code>widget.value</code> → float</td></tr>
+  <tr><td><code>dropdown(label, options)</code></td><td>A select / drop-down menu</td><td><code>widget.value</code> → str</td></tr>
+  <tr><td><code>button(label)</code></td><td>A clickable button — used as a decorator</td><td>Decorated function runs on click</td></tr>
+  <tr><td><code>show(obj)</code></td><td>Displays a string, DataFrame, or figure</td><td>—</td></tr>
+  <tr><td><code>show_table(rows, columns=None)</code></td><td>Displays raw <code>cursor.fetchall()</code> results as a table</td><td>—</td></tr>
+</table>
+<p style="margin-top:8px;font-size:.78rem;">The <code>dropdown</code> options argument accepts either a plain list of strings, or a list of <code>(display_text, stored_value)</code> tuples — useful when the label shown to the user differs from the value you want to store.</p>
+<p class="note">Widgets appear on screen as soon as the cell runs — no <code>display()</code> call is needed.</p>
+</div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════
+     exam_tools — worked form example
+════════════════════════════════════════════════════════════ -->
+<div class="acc-section" data-tabs="all exam_tools">
+<button class="acc-btn open" onclick="toggle(this)">
+  <span class="caret"></span><span class="dot re"></span>
+  <span class="acc-label">exam_tools — worked form example</span>
+</button>
+<div class="acc-body open">
+<pre><span class="kw">from</span> exam_tools <span class="kw">import</span> text_input, dropdown, button, show
+
+<span class="cm"># Step 1 — create widgets
+# They appear on screen immediately when the cell runs</span>
+item_name = <span class="fn">text_input</span>(<span class="st">"Item name:"</span>, placeholder=<span class="st">"e.g. Widget A"</span>)
+category  = <span class="fn">dropdown</span>(<span class="st">"Category:"</span>, options=[<span class="st">"Option A"</span>, <span class="st">"Option B"</span>, <span class="st">"Option C"</span>])
+
+<span class="cm"># Step 2 — use @button as a decorator on a function
+# That function runs every time the button is clicked</span>
+<span class="dec">@</span><span class="fn">button</span>(<span class="st">"Submit"</span>)
+<span class="kw">def</span> <span class="fn">submit</span>():
+    cursor.<span class="fn">execute</span>(
+        <span class="st">"INSERT INTO table_name (name, category) VALUES (?, ?)"</span>,
+        (item_name.value, category.value)
+    )
+    conn.<span class="fn">commit</span>()
+    <span class="fn">show</span>(<span class="st">f"Saved: {item_name.value} — {category.value}"</span>)
+    item_name.<span class="fn">clear</span>()   <span class="cm"># clear the text field after saving</span></pre>
+<dl>
+  <dt>Key differences from ipywidgets</dt>
+  <dd>No <code>display()</code> call needed — widgets appear automatically as the cell runs.</dd>
+  <dd>The button function takes <strong>no parameters</strong>: write <code>def submit():</code>, not <code>def submit(b):</code>.</dd>
+  <dd>Use <code>show()</code> for all output inside the button function — not <code>print()</code> or <code>display()</code>.</dd>
+  <dd><code>.clear()</code> empties a text_input field — call it after a successful submission.</dd>
+</dl>
+</div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════
+     exam_tools — show / show_table
+════════════════════════════════════════════════════════════ -->
+<div class="acc-section" data-tabs="all exam_tools">
+<button class="acc-btn" onclick="toggle(this)">
+  <span class="caret"></span><span class="dot re"></span>
+  <span class="acc-label">exam_tools — show() and show_table()</span>
+</button>
+<div class="acc-body">
+<pre><span class="kw">from</span> exam_tools <span class="kw">import</span> show, show_table
+
+<span class="cm"># show() handles strings, DataFrames, and matplotlib figures</span>
+<span class="fn">show</span>(<span class="st">"Done."</span>)                     <span class="cm"># plain text</span>
+<span class="fn">show</span>(df)                           <span class="cm"># DataFrame rendered as a table</span>
+<span class="fn">show</span>(df.<span class="fn">head</span>(<span class="nu">5</span>))                   <span class="cm"># first 5 rows</span>
+<span class="fn">show</span>(fig)                          <span class="cm"># matplotlib figure</span>
+<span class="fn">show</span>(<span class="st">f"Total rows: {df.shape[0]}"</span>) <span class="cm"># f-string</span>
+
+<span class="cm"># show_table() — for raw cursor.fetchall() results</span>
+cursor.<span class="fn">execute</span>(<span class="st">"SELECT column_a, column_b FROM table_name LIMIT 5"</span>)
+<span class="fn">show_table</span>(cursor.<span class="fn">fetchall</span>(), columns=[<span class="st">"Column A"</span>, <span class="st">"Column B"</span>])
+
+<span class="cm"># print() also works — output appears below the cell</span>
+<span class="fn">print</span>(df.shape)     <span class="cm"># (rows, columns)</span>
+<span class="fn">print</span>(df.dtypes)    <span class="cm"># data type of each column</span></pre>
+</div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════
+     Python — types and f-strings
+════════════════════════════════════════════════════════════ -->
+<div class="acc-section" data-tabs="all python">
+<button class="acc-btn" onclick="toggle(this)">
+  <span class="caret"></span><span class="dot pu"></span>
+  <span class="acc-label">Python — types, variables, f-strings</span>
+</button>
+<div class="acc-body">
+<pre><span class="cm"># Basic types</span>
+label  = <span class="st">"hello"</span>   <span class="cm"># str</span>
+count  = <span class="nu">42</span>        <span class="cm"># int</span>
+score  = <span class="nu">7.5</span>       <span class="cm"># float</span>
+active = <span class="kw">True</span>      <span class="cm"># bool</span>
+
+<span class="cm"># f-strings — embed values directly in a string</span>
+<span class="fn">print</span>(<span class="st">f"Label: {label}"</span>)
+<span class="fn">print</span>(<span class="st">f"Count: {count}"</span>)
+<span class="fn">print</span>(<span class="st">f"Score: {score:.1f}"</span>)   <span class="cm"># 1 decimal place → 7.5</span>
+<span class="fn">print</span>(<span class="st">f"Score: {score:.2f}"</span>)   <span class="cm"># 2 decimal places → 7.50</span>
+
+<span class="cm"># Type conversion</span>
+n = <span class="fn">int</span>(<span class="st">"42"</span>)       <span class="cm"># string → integer</span>
+s = <span class="fn">str</span>(<span class="nu">99</span>)         <span class="cm"># integer → string</span>
+f = <span class="fn">float</span>(<span class="st">"3.14"</span>)  <span class="cm"># string → float</span></pre>
+</div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════
+     Python — for loops
+════════════════════════════════════════════════════════════ -->
+<div class="acc-section" data-tabs="all python">
+<button class="acc-btn" onclick="toggle(this)">
+  <span class="caret"></span><span class="dot pu"></span>
+  <span class="acc-label">Python — for loops</span>
+</button>
+<div class="acc-body">
+<pre><span class="cm"># Iterate over query results — each row is a tuple</span>
+cursor.<span class="fn">execute</span>(<span class="st">"SELECT column_a, column_b FROM table_name"</span>)
+<span class="kw">for</span> row <span class="kw">in</span> cursor.<span class="fn">fetchall</span>():
+    <span class="fn">print</span>(row)           <span class="cm"># ('value_a', 'value_b')</span>
+    <span class="fn">print</span>(row[<span class="nu">0</span>], row[<span class="nu">1</span>])  <span class="cm"># value_a  value_b</span>
+
+<span class="cm"># Iterate over a list</span>
+items = [<span class="st">"alpha"</span>, <span class="st">"beta"</span>, <span class="st">"gamma"</span>]
+<span class="kw">for</span> item <span class="kw">in</span> items:
+    <span class="fn">print</span>(item)
+
+<span class="cm"># range(stop) — count from 0</span>
+<span class="kw">for</span> i <span class="kw">in</span> <span class="fn">range</span>(<span class="nu">5</span>):   <span class="cm"># 0 1 2 3 4</span>
+    <span class="fn">print</span>(i)
+
+<span class="cm"># Useful pattern: loop over table names</span>
+tables = [<span class="st">"table_one"</span>, <span class="st">"table_two"</span>, <span class="st">"table_three"</span>]
+<span class="kw">for</span> t <span class="kw">in</span> tables:
+    cursor.<span class="fn">execute</span>(<span class="st">f"SELECT COUNT(*) FROM {t}"</span>)
+    <span class="fn">print</span>(<span class="st">f"{t}: {cursor.<span class="fn">fetchone</span>()[<span class="nu">0</span>]} rows"</span>)</pre>
+</div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════
+     Python — conditionals
+════════════════════════════════════════════════════════════ -->
+<div class="acc-section" data-tabs="all python">
+<button class="acc-btn" onclick="toggle(this)">
+  <span class="caret"></span><span class="dot pu"></span>
+  <span class="acc-label">Python — conditionals</span>
+</button>
+<div class="acc-body">
+<pre><span class="kw">if</span> count > <span class="nu">10</span>:
+    <span class="fn">print</span>(<span class="st">"More than ten"</span>)
+<span class="kw">elif</span> count == <span class="nu">10</span>:
+    <span class="fn">print</span>(<span class="st">"Exactly ten"</span>)
+<span class="kw">else</span>:
+    <span class="fn">print</span>(<span class="st">"Fewer than ten"</span>)
+
+<span class="cm"># Boolean operators</span>
+<span class="kw">if</span> score >= <span class="nu">5</span> <span class="kw">and</span> category == <span class="st">"active"</span>:
+    <span class="fn">print</span>(<span class="st">"Passes threshold"</span>)
+
+<span class="cm"># Inline conditional (ternary)</span>
+label = <span class="st">"pass"</span> <span class="kw">if</span> score >= <span class="nu">5</span> <span class="kw">else</span> <span class="st">"fail"</span></pre>
+</div>
+</div>
+
+</div><!-- /content -->
+
+<div class="kbhint">
+  <span><kbd>/</kbd> search</span>
+  <span><kbd>Esc</kbd> clear</span>
+  <span><kbd>↑↓</kbd> scroll</span>
+  <span><kbd>Tab</kbd> tabs</span>
+</div>
+</div><!-- /shell -->
+
+<script>
+function toggle(btn) {
+  const isOpen = btn.classList.contains('open');
+  btn.classList.toggle('open', !isOpen);
+  btn.nextElementSibling.classList.toggle('open', !isOpen);
+}
+
+const tabs = document.querySelectorAll('.tab');
+tabs.forEach(tab => tab.addEventListener('click', () => activateTab(tab)));
+
+function activateTab(tab) {
+  tabs.forEach(t => t.classList.remove('active'));
+  tab.classList.add('active');
+  const active = tab.dataset.tab;
+  document.querySelectorAll('.acc-section').forEach(sec => {
+    const secTabs = (sec.dataset.tabs || '').split(' ');
+    sec.style.display = (active === 'all' || secTabs.includes(active)) ? '' : 'none';
+  });
+  if (searchInput.value.trim()) runSearch(searchInput.value.trim());
+}
+
+const originals = new Map();
+document.querySelectorAll('.acc-body').forEach(body => originals.set(body, body.innerHTML));
+
+const searchInput = document.getElementById('search');
+const searchCount = document.getElementById('search-count');
+const noResults   = document.getElementById('no-results');
+
+searchInput.addEventListener('input', () => {
+  const q = searchInput.value.trim();
+  q ? runSearch(q) : clearSearch();
+});
+
+function runSearch(q) {
+  document.querySelectorAll('.acc-section').forEach(s => s.style.display = '');
+  tabs.forEach(t => t.classList.remove('active'));
+  document.querySelector('.tab[data-tab="all"]').classList.add('active');
+  const re = new RegExp(q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'gi');
+  let totalHits = 0, visibleSections = 0;
+  document.querySelectorAll('.acc-section').forEach(sec => {
+    const body = sec.querySelector('.acc-body');
+    const btn  = sec.querySelector('.acc-btn');
+    body.innerHTML = originals.get(body);
+    let hits = 0;
+    walkAndHighlight(body, re, c => { hits += c; });
+    if (hits > 0) {
+      totalHits += hits; visibleSections++;
+      sec.style.display = '';
+      btn.classList.add('open');
+      body.classList.add('open');
+    } else {
+      sec.style.display = 'none';
+    }
+  });
+  searchCount.textContent = totalHits > 0 ? `${totalHits} match${totalHits !== 1 ? 'es' : ''}` : '';
+  noResults.style.display = visibleSections === 0 ? 'block' : 'none';
+}
+
+function walkAndHighlight(el, re, countFn) {
+  if (el.nodeType === 3) {
+    const count = (el.textContent.match(re) || []).length;
+    if (count > 0) {
+      countFn(count);
+      const span = document.createElement('span');
+      span.innerHTML = el.textContent.replace(re, m => `<mark>${m}</mark>`);
+      el.parentNode.replaceChild(span, el);
+    }
+  } else if (el.nodeType === 1 && !['SCRIPT','STYLE','MARK'].includes(el.tagName)) {
+    [...el.childNodes].forEach(child => walkAndHighlight(child, re, countFn));
+  }
+}
+
+function clearSearch() {
+  searchInput.value = '';
+  searchCount.textContent = '';
+  noResults.style.display = 'none';
+  document.querySelectorAll('.acc-body').forEach(body => body.innerHTML = originals.get(body));
+  const activeTab = document.querySelector('.tab.active');
+  if (activeTab) activateTab(activeTab);
+}
+
+document.addEventListener('keydown', e => {
+  if (e.key === '/' && document.activeElement !== searchInput) {
+    e.preventDefault(); searchInput.focus(); searchInput.select();
+  }
+  if (e.key === 'Escape') { clearSearch(); searchInput.blur(); }
+});
+</script>
+</body>
+</html>

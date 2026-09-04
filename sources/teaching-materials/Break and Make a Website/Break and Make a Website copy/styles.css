@@ -1,0 +1,386 @@
+/* ============================================
+   IRISH TAX SIMULATOR - STYLESHEET
+   ============================================
+   This file contains all the styling rules for the tax simulator.
+   CSS (Cascading Style Sheets) controls how HTML elements appear.
+   
+   Key concepts demonstrated:
+   - Box model (margin, padding, border)
+   - Flexbox and layout
+   - Typography and colors
+   - Responsive design
+   - Pseudo-classes (hover, focus)
+*/
+
+/* ============================================
+   GLOBAL STYLES
+   ============================================ */
+
+/* Reset and base styles for the entire page */
+body {
+    /* Font stack - browser will use first available font */
+    font-family: Arial, sans-serif;
+    
+    /* Remove default margin and padding */
+    margin: 0;
+    padding: 0 1rem; /* 1rem = 16px by default */
+    
+    /* Background color (light gray) */
+    background: #f5f5f5;
+    
+    /* Text color (dark gray) */
+    color: #333;
+    
+    /* Smooth scrolling when clicking anchor links */
+    scroll-behavior: smooth;
+}
+
+/* ============================================
+   HEADER SECTION
+   ============================================ */
+
+header {
+    /* Padding: space inside the element
+       Format: padding: top/bottom left/right */
+    padding: 1rem 0;
+    
+    /* Center-align text horizontally */
+    text-align: center;
+    
+    /* STUDENT EXERCISE: Try adding a background color
+       Uncomment the line below and change the color value */
+    /* background-color: #4C72B0; */
+}
+
+/* Main heading style */
+h1 {
+    /* Margin controls space outside the element */
+    margin: 0.5rem 0;
+    
+    /* STUDENT EXERCISE: Try changing the font size
+       Uncomment and modify: */
+    /* font-size: 2.5rem; */
+}
+
+/* Paragraph text in header */
+header p {
+    /* Maximum width for readability (prevents very long lines) */
+    max-width: 800px;
+    
+    /* Center the paragraph block */
+    margin: 0 auto;
+    
+    /* STUDENT EXERCISE: Try adjusting line height for readability */
+    /* line-height: 1.6; */
+}
+
+/* ============================================
+   MAIN CONTAINER
+   ============================================ */
+
+.container {
+    /* Maximum width prevents content from being too wide on large screens */
+    max-width: 900px;
+    
+    /* Center the container horizontally
+       'auto' for left/right margins centers the element */
+    margin: 0 auto;
+    
+    /* White background for the main content area */
+    background: #fff;
+    
+    /* Padding: top right bottom left */
+    padding: 1rem 2rem 2rem;
+    
+    /* Box shadow creates a subtle depth effect
+       Format: horizontal vertical blur color */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    
+    /* STUDENT EXERCISE: Try adding rounded corners
+       Uncomment: */
+    /* border-radius: 8px; */
+}
+
+/* ============================================
+   SLIDER CONTROLS
+   ============================================ */
+
+/* Container for each slider and its label */
+.slider-group {
+    /* Margin-bottom creates space between slider groups */
+    margin-bottom: 1.2rem;
+}
+
+/* Labels for form inputs */
+label {
+    /* Display as block makes label take full width */
+    display: block;
+    
+    /* Bold text for labels */
+    font-weight: bold;
+    
+    /* Small space below label before the slider */
+    margin-bottom: 0.3rem;
+}
+
+/* Range slider styling */
+input[type="range"] {
+    /* Full width of container */
+    width: 100%;
+    
+    /* Spacing around the slider */
+    margin: 0.5rem 0;
+    
+    /* Change cursor to pointer on hover */
+    cursor: pointer;
+    
+    /* STUDENT EXERCISE: Browsers have default slider styles
+       Research how to customize slider appearance with:
+       ::-webkit-slider-thumb (Chrome/Safari)
+       ::-moz-range-thumb (Firefox)
+    */
+}
+
+/* Display area showing current slider value */
+.value-display {
+    /* Slightly smaller text */
+    font-size: 0.9rem;
+    
+    /* Medium gray color */
+    color: #444;
+    
+    /* Small space above value display */
+    margin-top: 0.2rem;
+}
+
+/* ============================================
+   RESULTS AND CHARTS
+   ============================================ */
+
+/* Container for chart sections */
+.results {
+    /* Spacing around the section */
+    margin-top: 1rem;
+    padding: 0.5rem;
+    
+    /* Light blue background */
+    background: #eef5f9;
+    
+    /* Rounded corners (4px radius) */
+    border-radius: 4px;
+    
+    /* STUDENT EXERCISE: Add a subtle border
+       Uncomment: */
+    /* border: 1px solid #d0e4f0; */
+}
+
+/* Canvas elements where charts are drawn */
+canvas {
+    /* Prevent canvas from exceeding container width */
+    max-width: 100%;
+    
+    /* Fixed height for consistency */
+    height: 280px;
+    
+    /* STUDENT EXERCISE: Make height responsive
+       Try using: height: auto; 
+       Note: This may require adjustments in Chart.js options */
+}
+
+/* Summary text area */
+#summaryText {
+    /* Top margin for spacing */
+    margin-top: 1rem;
+    
+    /* Slightly smaller text */
+    font-size: 0.9rem;
+    
+    /* Preserve line breaks from JavaScript */
+    white-space: pre-line;
+    
+    /* STUDENT EXERCISE: Style this as a callout box
+       Uncomment and adjust: */
+    /* 
+    background: #fffbea;
+    border-left: 4px solid #f0b429;
+    padding: 1rem;
+    border-radius: 4px;
+    */
+}
+
+/* ============================================
+   BUTTONS
+   ============================================ */
+
+button {
+    /* Internal spacing */
+    padding: 0.5rem 1rem;
+    
+    /* Text size */
+    font-size: 0.9rem;
+    
+    /* Pointer cursor on hover */
+    cursor: pointer;
+    
+    /* Blue background color */
+    background: #4C72B0;
+    
+    /* Remove default border */
+    border: none;
+    
+    /* White text */
+    color: #fff;
+    
+    /* Rounded corners */
+    border-radius: 3px;
+    
+    /* Smooth transition for hover effects */
+    transition: background 0.3s ease;
+    
+    /* Top margin for spacing */
+    margin-top: 1rem;
+}
+
+/* Button hover state - darker blue */
+button:hover {
+    background: #41649c;
+    
+    /* STUDENT EXERCISE: Add more hover effects
+       Try: transform: translateY(-2px);
+       And add: box-shadow: 0 4px 8px rgba(0,0,0,0.2); */
+}
+
+/* Button active state (when clicked) */
+button:active {
+    /* Slightly darker when pressed */
+    background: #364f7a;
+    
+    /* STUDENT EXERCISE: Add a pressed effect
+       Try: transform: translateY(0); */
+}
+
+/* ============================================
+   STUDENT EXERCISE AREAS
+   ============================================ */
+
+/* Uncomment this section for comparison feature styling */
+/*
+.comparison-section {
+    margin-top: 2rem;
+    padding: 1.5rem;
+    background: #f9f9f9;
+    border-radius: 8px;
+    border: 2px dashed #ccc;
+}
+
+.comparison-section h2 {
+    margin-top: 0;
+    color: #4C72B0;
+}
+
+#scenarioComparison {
+    margin-top: 1rem;
+    padding: 1rem;
+    background: white;
+    border-radius: 4px;
+}
+*/
+
+/* ============================================
+   RESPONSIVE DESIGN
+   ============================================ */
+
+/* STUDENT EXERCISE: Make the site mobile-friendly
+   Media queries apply styles only when conditions are met
+   Uncomment and complete the rules below: */
+
+/*
+@media screen and (max-width: 768px) {
+    body {
+        padding: 0 0.5rem;
+    }
+    
+    .container {
+        padding: 1rem;
+    }
+    
+    h1 {
+        font-size: 1.5rem;
+    }
+    
+    canvas {
+        height: 200px;
+    }
+}
+*/
+
+/* ============================================
+   ADVANCED STUDENT EXERCISES
+   ============================================ */
+
+/* EXERCISE 1: Create a dark mode theme
+   Add a class that can be toggled with JavaScript */
+/*
+.dark-mode {
+    background: #1a1a1a;
+    color: #f0f0f0;
+}
+
+.dark-mode .container {
+    background: #2d2d2d;
+}
+
+.dark-mode .results {
+    background: #3a3a3a;
+}
+*/
+
+/* EXERCISE 2: Add animation to chart containers */
+/*
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.results {
+    animation: fadeIn 0.5s ease-out;
+}
+*/
+
+/* EXERCISE 3: Create a tooltip for technical terms */
+/*
+.tooltip {
+    position: relative;
+    display: inline-block;
+    border-bottom: 1px dotted #4C72B0;
+    cursor: help;
+}
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 200px;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    margin-left: -100px;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+}
+*/

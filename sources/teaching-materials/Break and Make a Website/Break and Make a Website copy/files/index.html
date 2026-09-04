@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML, CSS & SQL Tutorial</title>
+    <link rel="stylesheet" href="styles.css">
+    <!-- SQL.js - SQLite compiled to JavaScript, runs entirely in browser -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.8.0/sql-wasm.js"></script>
+</head>
+<body>
+    <!-- HEADER SECTION -->
+    <header>
+        <h1>Interactive Web Development & SQL Tutorial</h1>
+        <p class="subtitle">Learn HTML, CSS, and SQL with hands-on examples that run in your browser</p>
+        
+        <div class="learning-paths" style="margin: 20px 0; padding: 15px; background: #f0f4ff; border-radius: 8px;">
+            <h3 style="margin-top: 0; color: #667eea;">Choose Your Learning Path:</h3>
+            <p style="margin: 10px 0;"><strong>Structured Approach:</strong> Follow the sections in order, complete each exercise before moving on</p>
+            <p style="margin: 10px 0;"><strong>Exploratory Approach:</strong> Jump to topics that interest you, experiment freely with the SQL playground</p>
+            <p style="margin: 10px 0;"><strong>Project-Based:</strong> Start with the SQL section, build something, then learn the theory behind it</p>
+            <p style="margin: 5px 0; font-style: italic; color: #666;">There's no single "right" way to learn. Choose what works best for you.</p>
+        </div>
+        
+        <nav>
+            <a href="#html-section">HTML Basics</a>
+            <a href="#css-section">CSS Styling</a>
+            <a href="#sql-section">SQL Queries</a>
+        </nav>
+    </header>
+
+    <main>
+        <!-- ============================================
+             SECTION 1: HTML BASICS
+        ============================================= -->
+        <section id="html-section" class="tutorial-section">
+            <h2>Part 1: HTML Basics</h2>
+            
+            <div class="exploration-prompt" style="background: #fff3e0; padding: 15px; margin: 20px 0; border-left: 4px solid #ff9800; border-radius: 5px;">
+                <h4 style="margin-top: 0; color: #e65100;">How to Approach This Section:</h4>
+                <ul style="margin-bottom: 0;">
+                    <li><strong>Read First:</strong> Understand the concepts before trying examples</li>
+                    <li><strong>Try the Examples:</strong> Use the sample form to see HTML in action</li>
+                    <li><strong>Experiment:</strong> Try changing the example code in your own text editor</li>
+                    <li><strong>Ask Questions:</strong> What would happen if you changed X to Y? Test your hypotheses</li>
+                </ul>
+            </div>
+            
+            <div class="lesson">
+                <h3>What is HTML?</h3>
+                <p><strong>HTML (HyperText Markup Language)</strong> is the standard language for creating web pages. It uses <strong>tags</strong> to structure content.</p>
+                
+                <div class="example-box">
+                    <h4>HTML Structure Example:</h4>
+                    <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;My Page&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;h1&gt;Hello World!&lt;/h1&gt;
+    &lt;p&gt;This is a paragraph.&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+                </div>
+
+                <h4>Common HTML Tags:</h4>
+                <ul>
+                    <li><code>&lt;h1&gt;</code> to <code>&lt;h6&gt;</code> - Headings (h1 largest, h6 smallest)</li>
+                    <li><code>&lt;p&gt;</code> - Paragraph</li>
+                    <li><code>&lt;a href="url"&gt;</code> - Link</li>
+                    <li><code>&lt;img src="image.jpg" alt="description"&gt;</code> - Image</li>
+                    <li><code>&lt;div&gt;</code> - Container/division</li>
+                    <li><code>&lt;span&gt;</code> - Inline container</li>
+                    <li><code>&lt;ul&gt;</code> and <code>&lt;li&gt;</code> - Unordered list</li>
+                    <li><code>&lt;table&gt;</code>, <code>&lt;tr&gt;</code>, <code>&lt;td&gt;</code> - Table elements</li>
+                </ul>
+            </div>
+
+            <div class="lesson">
+                <h3>HTML Forms</h3>
+                <p>Forms collect user input. Try this example form:</p>
+                
+                <div class="interactive-demo">
+                    <form id="sample-form" onsubmit="event.preventDefault(); alert('Form submitted!');">
+                        <label for="name">Name:</label>
+                        <input type="text" id="name" name="name" required>
+                        
+                        <label for="email">Email:</label>
+                        <input type="email" id="email" name="email" required>
+                        
+                        <label for="age">Age:</label>
+                        <input type="number" id="age" name="age" min="1" max="120">
+                        
+                        <button type="submit">Submit</button>
+                    </form>
+                </div>
+
+                <div class="example-box">
+                    <h4>HTML Code for this form:</h4>
+                    <pre><code>&lt;form&gt;
+    &lt;label for="name"&gt;Name:&lt;/label&gt;
+    &lt;input type="text" id="name" name="name" required&gt;
+    
+    &lt;label for="email"&gt;Email:&lt;/label&gt;
+    &lt;input type="email" id="email" name="email" required&gt;
+    
+    &lt;button type="submit"&gt;Submit&lt;/button&gt;
+&lt;/form&gt;</code></pre>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================
+             SECTION 2: CSS BASICS
+        ============================================= -->
+        <section id="css-section" class="tutorial-section">
+            <h2>Part 2: CSS Styling</h2>
+            
+            <div class="exploration-prompt" style="background: #e3f2fd; padding: 15px; margin: 20px 0; border-left: 4px solid #2196f3; border-radius: 5px;">
+                <h4 style="margin-top: 0; color: #1565c0;">Ways to Learn CSS:</h4>
+                <ul style="margin-bottom: 0;">
+                    <li><strong>Visual Learners:</strong> Focus on the interactive demos and see how CSS changes appearance</li>
+                    <li><strong>Hands-On:</strong> Open the styles.css file and try modifying colors and sizes</li>
+                    <li><strong>Systematic:</strong> Read each selector type, then practice writing your own</li>
+                    <li><strong>Creative:</strong> Skip to the box model, then design your own styled components</li>
+                </ul>
+            </div>
+            
+            <div class="lesson">
+                <h3>What is CSS?</h3>
+                <p><strong>CSS (Cascading Style Sheets)</strong> controls how HTML elements look on the page - colors, fonts, layouts, and more.</p>
+                
+                <h4>Three Ways to Add CSS:</h4>
+                <ol>
+                    <li><strong>Inline:</strong> <code>&lt;p style="color: blue;"&gt;Text&lt;/p&gt;</code></li>
+                    <li><strong>Internal:</strong> In <code>&lt;style&gt;</code> tags within <code>&lt;head&gt;</code></li>
+                    <li><strong>External:</strong> Separate .css file (Best practice!)</li>
+                </ol>
+
+                <div class="example-box">
+                    <h4>CSS Syntax:</h4>
+                    <pre><code>selector {
+    property: value;
+    another-property: value;
+}
+
+/* Example: */
+p {
+    color: blue;
+    font-size: 16px;
+    margin: 10px;
+}</code></pre>
+                </div>
+            </div>
+
+            <div class="lesson">
+                <h3>CSS Selectors</h3>
+                <ul>
+                    <li><code>element</code> - Selects all elements of that type (e.g., <code>p</code>)</li>
+                    <li><code>.class</code> - Selects elements with that class (e.g., <code>.highlight</code>)</li>
+                    <li><code>#id</code> - Selects element with that ID (e.g., <code>#header</code>)</li>
+                    <li><code>element.class</code> - Combines selectors (e.g., <code>p.intro</code>)</li>
+                </ul>
+
+                <h4>Interactive Demo:</h4>
+                <div class="interactive-demo">
+                    <div class="css-demo-box" style="background-color: #e3f2fd; padding: 15px; border: 2px solid #2196f3; border-radius: 5px;">
+                        <p style="margin: 0; color: #1565c0;">This box is styled with CSS!</p>
+                    </div>
+                    <p style="margin-top: 10px; font-size: 14px; color: #666;">
+                        CSS used: background-color, padding, border, border-radius, color
+                    </p>
+                </div>
+            </div>
+
+            <div class="lesson">
+                <h3>The Box Model</h3>
+                <p>Every HTML element is a rectangular box with these properties:</p>
+                <div class="box-model-demo">
+                    <div class="box-layer margin-layer">
+                        <span>Margin</span>
+                        <div class="box-layer border-layer">
+                            <span>Border</span>
+                            <div class="box-layer padding-layer">
+                                <span>Padding</span>
+                                <div class="box-layer content-layer">
+                                    Content
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================
+             SECTION 3: SQL INTERACTIVE PLAYGROUND
+        ============================================= -->
+        <section id="sql-section" class="tutorial-section">
+            <h2>Part 3: SQL Database Queries</h2>
+            
+            <div class="exploration-prompt" style="background: #e8f5e9; padding: 15px; margin: 20px 0; border-left: 4px solid #4caf50; border-radius: 5px;">
+                <h4 style="margin-top: 0; color: #2e7d32;">Three Ways to Learn SQL:</h4>
+                <ul style="margin-bottom: 0;">
+                    <li><strong>Guided Path:</strong> Read the SQL commands section, then try example queries one by one</li>
+                    <li><strong>Dive In:</strong> Jump straight to the playground, click example queries, see what happens</li>
+                    <li><strong>Problem-Solving:</strong> Skip to the practice exercises and work backwards to learn what you need</li>
+                </ul>
+                <p style="margin: 10px 0 0 0; padding-top: 10px; border-top: 1px solid #ddd; font-style: italic;">
+                    <strong>Remember:</strong> This database resets when you refresh the page, so feel free to experiment. 
+                    You cannot break anything permanently. Mistakes are learning opportunities!
+                </p>
+            </div>
+            
+            <div class="lesson">
+                <h3>What is SQL?</h3>
+                <p><strong>SQL (Structured Query Language)</strong> is used to manage and query databases. It lets you store, retrieve, update, and delete data.</p>
+                
+                <h4>Our Sample Database: Students & Courses</h4>
+                <p>We've created two tables for you to practice with:</p>
+                <ul>
+                    <li><strong>students</strong> - Contains student information (id, name, age, grade)</li>
+                    <li><strong>courses</strong> - Contains course information (id, name, instructor, credits)</li>
+                </ul>
+
+                <div class="db-status" id="db-status">
+                    <span class="status-indicator">...</span> Initializing database...
+                </div>
+            </div>
+
+            <div class="lesson">
+                <h3>Basic SQL Commands</h3>
+                
+                <div class="sql-command-list">
+                    <div class="command-card">
+                        <h4>SELECT - Retrieve Data</h4>
+                        <pre><code>SELECT column1, column2 FROM table_name;</code></pre>
+                        <p>Gets data from a table. Use * to select all columns.</p>
+                    </div>
+
+                    <div class="command-card">
+                        <h4>WHERE - Filter Results</h4>
+                        <pre><code>SELECT * FROM students WHERE age > 18;</code></pre>
+                        <p>Filters results based on conditions.</p>
+                    </div>
+
+                    <div class="command-card">
+                        <h4>ORDER BY - Sort Results</h4>
+                        <pre><code>SELECT * FROM students ORDER BY name ASC;</code></pre>
+                        <p>Sorts results. Use ASC (ascending) or DESC (descending).</p>
+                    </div>
+
+                    <div class="command-card">
+                        <h4>INSERT - Add New Data</h4>
+                        <pre><code>INSERT INTO students (name, age, grade) 
+VALUES ('John', 20, 85);</code></pre>
+                        <p>Adds new rows to a table.</p>
+                    </div>
+
+                    <div class="command-card">
+                        <h4>UPDATE - Modify Data</h4>
+                        <pre><code>UPDATE students SET grade = 90 
+WHERE name = 'John';</code></pre>
+                        <p>Changes existing data. Always use WHERE!</p>
+                    </div>
+
+                    <div class="command-card">
+                        <h4>DELETE - Remove Data</h4>
+                        <pre><code>DELETE FROM students WHERE id = 5;</code></pre>
+                        <p>Removes rows from a table. Use carefully!</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="lesson">
+                <h3>Interactive SQL Playground</h3>
+                <p>Try running SQL queries below! Start with these examples or write your own:</p>
+
+                <div class="query-examples">
+                    <button onclick="setQuery('SELECT * FROM students;')">Show All Students</button>
+                    <button onclick="setQuery('SELECT * FROM courses;')">Show All Courses</button>
+                    <button onclick="setQuery('SELECT name, grade FROM students WHERE grade > 80;')">High Grades</button>
+                    <button onclick="setQuery('SELECT * FROM students ORDER BY grade DESC;')">Sort by Grade</button>
+                    <button onclick="setQuery(`SELECT COUNT(*) as total_students FROM students;`)">Count Students</button>
+                </div>
+
+                <div class="sql-editor">
+                    <label for="sql-query">Write your SQL query:</label>
+                    <textarea id="sql-query" rows="6" placeholder="SELECT * FROM students;">SELECT * FROM students;</textarea>
+                    
+                    <div class="editor-buttons">
+                        <button onclick="executeQuery()" class="run-button">▶ Run Query</button>
+                        <button onclick="clearQuery()" class="clear-button">Clear</button>
+                        <button onclick="resetDatabase()" class="reset-button">Reset Database</button>
+                    </div>
+                </div>
+
+                <div id="query-results" class="query-results">
+                    <h4>Results will appear here</h4>
+                </div>
+            </div>
+
+            <div class="lesson">
+                <h3>Practice Exercises</h3>
+                <p>These exercises progress from simple to complex. You can:</p>
+                <ul>
+                    <li>Work through them in order to build skills progressively</li>
+                    <li>Choose exercises that match your current comfort level</li>
+                    <li>Use hints when stuck, but try on your own first</li>
+                    <li>Come back to challenging exercises after completing easier ones</li>
+                </ul>
+                <p><strong>Learning Tip:</strong> If you get an error, read it carefully. SQL error messages often tell you exactly what's wrong.</p>
+
+                <div class="exercise-list">
+                    <div class="exercise">
+                        <h4>Exercise 1: Basic SELECT</h4>
+                        <p>Select only the name and age columns from the students table.</p>
+                        <details>
+                            <summary>Show Hint</summary>
+                            <p>Use: <code>SELECT column1, column2 FROM table_name;</code></p>
+                        </details>
+                    </div>
+
+                    <div class="exercise">
+                        <h4>Exercise 2: WHERE Clause</h4>
+                        <p>Find all students whose grade is less than 75.</p>
+                        <details>
+                            <summary>Show Hint</summary>
+                            <p>Use the WHERE clause with the &lt; operator.</p>
+                        </details>
+                    </div>
+
+                    <div class="exercise">
+                        <h4>Exercise 3: INSERT</h4>
+                        <p>Add yourself as a new student to the database!</p>
+                        <details>
+                            <summary>Show Hint</summary>
+                            <p>Use: <code>INSERT INTO students (name, age, grade) VALUES ('Your Name', 20, 85);</code></p>
+                        </details>
+                    </div>
+
+                    <div class="exercise">
+                        <h4>Exercise 4: Sorting</h4>
+                        <p>Show all students sorted by name in alphabetical order.</p>
+                        <details>
+                            <summary>Show Hint</summary>
+                            <p>Use ORDER BY with ASC for ascending order.</p>
+                        </details>
+                    </div>
+
+                    <div class="exercise">
+                        <h4>Exercise 5: COUNT Function</h4>
+                        <p>How many courses are in the database?</p>
+                        <details>
+                            <summary>Show Hint</summary>
+                            <p>Use: <code>SELECT COUNT(*) FROM table_name;</code></p>
+                        </details>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================
+             PUTTING IT ALL TOGETHER
+        ============================================= -->
+        <section class="tutorial-section">
+            <h2>Putting It All Together</h2>
+            
+            <div class="exploration-prompt" style="background: #f3e5f5; padding: 15px; margin: 20px 0; border-left: 4px solid #9c27b0; border-radius: 5px;">
+                <h4 style="margin-top: 0; color: #6a1b9a;">Reflection Questions:</h4>
+                <ul style="margin-bottom: 0;">
+                    <li>How does changing the HTML structure affect what you see?</li>
+                    <li>What happens when CSS rules conflict?</li>
+                    <li>Why might you use SQL instead of storing data in JavaScript variables?</li>
+                    <li>Can you think of a website you use daily? What data might it store in a database?</li>
+                </ul>
+            </div>
+            
+            <div class="lesson">
+                <h3>How These Technologies Work Together</h3>
+                <div class="tech-stack-diagram">
+                    <div class="tech-card">
+                        <h4>HTML</h4>
+                        <p>Structure & Content</p>
+                        <p class="tech-description">Defines what goes on the page</p>
+                    </div>
+                    <div class="plus">+</div>
+                    <div class="tech-card">
+                        <h4>CSS</h4>
+                        <p>Style & Layout</p>
+                        <p class="tech-description">Makes it look beautiful</p>
+                    </div>
+                    <div class="plus">+</div>
+                    <div class="tech-card">
+                        <h4>SQL</h4>
+                        <p>Data & Storage</p>
+                        <p class="tech-description">Manages information</p>
+                    </div>
+                </div>
+
+                <h4>Real-World Example:</h4>
+                <ul>
+                    <li><strong>HTML</strong> creates a login form</li>
+                    <li><strong>CSS</strong> makes the form look professional</li>
+                    <li><strong>SQL</strong> checks if the username/password exist in the database</li>
+                </ul>
+            </div>
+
+            <div class="lesson">
+                <h3>Next Steps</h3>
+                <ol>
+                    <li>Practice HTML by creating more complex page structures</li>
+                    <li>Experiment with CSS to style your pages uniquely</li>
+                    <li>Try more advanced SQL queries (JOIN, GROUP BY, etc.)</li>
+                    <li>Learn JavaScript to make your pages interactive</li>
+                    <li>Explore backend development to connect everything together</li>
+                </ol>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>Created for educational purposes | Built with HTML, CSS, and SQL.js</p>
+        <p><a href="teacher.html">Teacher Version (Solutions)</a></p>
+    </footer>
+
+    <!-- JavaScript for SQL functionality -->
+    <script src="tutorial.js"></script>
+</body>
+</html>
