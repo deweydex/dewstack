@@ -381,10 +381,10 @@ The source file is not touched.
 | SQL practice page | `HTML-CSS-SQL-JS/index.html` | `tutorials/databases/` | not started |
 | Teaching notes | `HTML-CSS-SQL-JS/teacher.html` | `planning/` | not started |
 | Plushies quiz | `WADB_Tutorials/tentacular-plushies-quiz-final.html` | `tutorials/databases/` | not started |
-| Quick reference | `WADB_Tutorials/reference.html` | `tutorials/` | not started |
-| Troubleshooting | `WADB_Tutorials/troubleshooting.html` | `tutorials/` | not started |
-| Project ideas | `WADB_Tutorials/project-ideas.html` | `tutorials/` | not started |
-| Design resources | `WADB_Tutorials/design-resources.html` | `tutorials/` | not started |
+| Quick reference | `WADB_Tutorials/reference.html`, the plushies quiz's reference panel, `uu_reference.md` | `tutorials/reference/quick-reference/` | done 2026-09-04, in two halves (HTML/CSS, then SQL) rather than the three originally planned; two-column tables, no cards |
+| Troubleshooting | `WADB_Tutorials/troubleshooting.html` | `tutorials/reference/troubleshooting/` | done 2026-09-04, condensed to the checks that matter; adds the Settings panel and search as dewstack-specific problems |
+| Project ideas | `WADB_Tutorials/project-ideas.html`, `design-resources.html`, `examples/hello-world.html`, `first-page.html`, `resume-template.html` | `tutorials/reference/project-ideas/` | done 2026-09-04, re-keyed to the starter, Flexbox/Grid, a database of your own, and the full-stack page; three small examples bundled as downloads, the larger templates (accordion, tabbed, modal, cube, spiral, blog, landing page, portfolio, photo gallery) left for when the page that teaches each pattern is written |
+| Design resources | `WADB_Tutorials/design-resources.html` | folded into `project-ideas.md`'s "Making any of them easy to read" | done 2026-09-04, condensed to three checks (typeface and size, line height, contrast) rather than kept as its own page |
 | GitHub guides 1 to 7 | `WADB_Tutorials/github-guides/` | `tutorials/` | not started |
 | Lessons 9 to 13 | `WADB_Tutorials/lessons/` | `tutorials/` | not started |
 | Lessons 1 to 8 | `WADB_Tutorials/lessons/` | decision pending | not started |

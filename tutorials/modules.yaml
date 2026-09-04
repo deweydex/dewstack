@@ -5,3 +5,4 @@
 # not appear at all, and stops the build.
 order:
   - getting-started
+  - reference

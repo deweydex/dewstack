@@ -49,7 +49,7 @@ module descriptor for later. See step 0, item 5.
 | `README.md` | The course map. GitHub shows it; the build renders it as the top of `site/index.html`. One text, two places. |
 | `build.py`, `tests/`, `pytest.ini`, `requirements-build.txt` | The build and its checks. Fourteen tests. |
 | `assets/` | dewlab's shell (`shell.html`), stylesheet (`site.css`), settings panel (`settings.js`), search (`search.js`), the two accessible typefaces and their CSS, a favicon. |
-| `tutorials/` | The build's input. Today: `modules.yaml` and `getting-started/`, which holds the `welcome` series and the hello page. |
+| `tutorials/` | The build's input. Today: `modules.yaml`, `getting-started/` (the `welcome` series and the hello page), and `reference/` (the `shelf` series: troubleshooting, quick reference, project ideas). |
 | `sources/wadb/`, `sources/playground/` | Verbatim copies of `WADB_Tutorials` and `HTML-CSS-SQL-JS`, with the course bar added. Coverage material for the rewrites. Not published. |
 | `sources/teaching-materials/` | The web authoring and database subset of everlearning's `Teaching materials/` folder: the Database Methods notebook sequence and live project brief, the Web Authoring briefs and templates, Break and Make a Website, exam material, and the Level 6 module descriptor. Coverage material, not published. Assessed in `PAGE_BY_PAGE.md` section 6. |
 | `databases/sqlite_tutorial.ipynb` | The dinosaur notebook, opened from the README in Colab. |
@@ -119,14 +119,20 @@ than moving into Arc 2. Steps 6 and 7 are no longer provisional.
 
 ### Step 2. The three reference pages
 
-Every track uses them and all three fail on a phone today. No build work
-needed. A new module, `reference`, with one series.
+Done 2026-09-04. A new module, `reference`, with one series, `shelf`.
 
-| Page | Working slug | From | Notes |
+| Page | Slug | From | Notes |
 |---|---|---|---|
-| Troubleshooting | `troubleshooting` | `sources/wadb/troubleshooting.html` | Problem-shaped cards: "the page is blank", "my image does not show". Add the dewstack-specific ones (the Settings panel, the search). |
-| Quick reference | `quick-reference` | `sources/wadb/reference.html`; the quiz's reference panel in `tentacular-plushies-quiz-final.html` | Two halves, HTML and CSS, then SQL. The build has no reference sidebar yet; this page is the reference until it does. |
-| Project ideas | `project-ideas` | `sources/wadb/project-ideas.html`, `design-resources.html`, `templates/`, `examples/` | Templates and examples fold in (decision 4). Each idea links the template that fits it. `portfolio-starter` and `basic` are dropped; the starter covers them. |
+| Troubleshooting | `troubleshooting` | `sources/wadb/troubleshooting.html` | Written as problem-shaped cards, with the Settings panel and the search added as dewstack-specific problems. |
+| Quick reference | `quick-reference` | `sources/wadb/reference.html`; `uu_reference.md` from the teaching materials | Two halves, HTML/CSS then SQL, as two-column tables rather than fixed-width cards, so nothing overflows a phone. |
+| Project ideas | `project-ideas` | `sources/wadb/project-ideas.html`, `design-resources.html`, `examples/` | Re-keyed to the starter, Flexbox/Grid, a database of your own, and the full-stack page. `hello-world.html`, `first-page.html` and `resume-template.html` are bundled as downloads; the larger templates wait for the page that teaches each pattern. |
+
+Confirmed at 1200 and 390 pixels with a headless Chromium screenshot
+through Playwright: no sideways scroll on either width, one `main`
+landmark, one `h1`, a labelled `nav` on each page. `python -m pytest -q`
+and `tools/measure_sentences.py` both pass on all three. The README's
+Troubleshooting and Quick reference links now point here instead of the
+old external copies, and a Project ideas link was added.
 
 Done when each page passes both bars in plan section 11 and renders at
 1200 and 390 pixels without sideways scroll.
@@ -244,8 +250,9 @@ step arrives.
    portfolio, and the getting-started page A3 can show both. The name
    should keep the student's address readable: `username.github.io/site/`
    is fine, `dewfolio` is not.
-3. **Module and series slugs** (blocks step 2). Proposed: `getting-started`
-   (exists), `reference`, `web` with series `first-site`, `several-pages`,
+3. **Module and series slugs.** Settled for `reference` (module
+   `reference`, series `shelf`) with step 2. Still open: `getting-started`
+   (exists), `web` with series `first-site`, `several-pages`,
    `with-data`; `data` with series `first-table`, `several-tables`. A
    slug is a contract once a class has seen it, so these should be
    settled before the first page in each.

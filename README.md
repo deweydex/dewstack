@@ -85,10 +85,11 @@ which the web authoring project needs. The same site has seven
 step-by-step GitHub guides, four small example pages, eleven starter
 templates, a troubleshooting page and a quick reference.
 
-Those pages are published at their original address. Some of them do not
-fit a phone screen well yet. We are rewriting them here, one at a time,
-and each rewrite will be shorter. The rewritten pages appear on the course
-website as they are ready.
+The lessons and guides are still published at their original address, and
+some of them do not fit a phone screen well yet. We are rewriting them
+here, one at a time, and each rewrite will be shorter. Troubleshooting,
+the quick reference and project ideas are already rewritten and live on
+this site.
 
 - The tutorials front page, with all thirteen lessons in order:
   <https://deweydex.github.io/WADB_Tutorials/>
@@ -97,9 +98,11 @@ website as they are ready.
 - The GitHub guides, from making an account to publishing a site:
   <https://deweydex.github.io/WADB_Tutorials/github-guides/01-getting-started.html>
 - Troubleshooting, for when something does not work and you cannot see
-  why: <https://deweydex.github.io/WADB_Tutorials/troubleshooting.html>
-- Quick reference for HTML tags and CSS properties:
-  <https://deweydex.github.io/WADB_Tutorials/reference.html>
+  why: <https://deweydex.github.io/dewstack/tutorials/reference/troubleshooting/>
+- Quick reference for HTML, CSS and SQL:
+  <https://deweydex.github.io/dewstack/tutorials/reference/quick-reference/>
+- Project ideas, for once you have a skill and want to practise it:
+  <https://deweydex.github.io/dewstack/tutorials/reference/project-ideas/>
 
 ## Database tutorials
 
