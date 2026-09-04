@@ -1,0 +1,222 @@
+"""The build's checks, each one a mistake a student would otherwise see.
+
+Every test builds a small tutorials tree in a temporary directory rather
+than the real one, so a test never depends on which tutorials exist today.
+"""
+
+from pathlib import Path
+
+import pytest
+
+import build
+from build import BuildError
+
+ROOT = Path(__file__).resolve().parent.parent
+
+FRONTMATTER = """---
+title: "{title}"
+slug: {slug}
+module: {module}
+module_title: "Module {module}"
+series: {series}
+version: {version}
+{extra}---
+"""
+
+
+def write_tutorial(tutorials_dir: Path, slug: str, body: str = "# A page\n\nSome text.\n",
+                   module: str = "mod", series: str = "ser", version: str = "2026.09.04.1",
+                   title: str | None = None, extra: str = "") -> Path:
+    folder = tutorials_dir / module / slug
+    folder.mkdir(parents=True, exist_ok=True)
+    path = folder / f"{slug}.md"
+    path.write_text(FRONTMATTER.format(
+        title=title or slug.replace("-", " ").title(), slug=slug, module=module,
+        series=series, version=version, extra=extra,
+    ) + body, encoding="utf-8")
+    return path
+
+
+def write_order(tutorials_dir: Path, slugs: list[str], module: str = "mod", series: str = "ser",
+                title: str = "A series") -> None:
+    (tutorials_dir / module).mkdir(parents=True, exist_ok=True)
+    (tutorials_dir / module / f"{series}.order.yaml").write_text(
+        f"series: {title}\norder:\n" + "".join(f"  - {s}\n" for s in slugs), encoding="utf-8"
+    )
+
+
+@pytest.fixture
+def tree(tmp_path: Path):
+    tutorials = tmp_path / "tutorials"
+    out = tmp_path / "site"
+    tutorials.mkdir()
+    return tutorials, out
+
+
+def run_build(tree):
+    tutorials, out = tree
+    return build.build(tutorials_dir=tutorials, out_dir=out, assets_dir=ROOT / "assets", clean=True)
+
+
+def test_builds_a_page_and_the_contents(tree):
+    tutorials, out = tree
+    write_tutorial(tutorials, "first", "# First\n\n## One\n\nText.\n\n## Two\n\nMore.\n")
+    write_tutorial(tutorials, "second")
+    write_order(tutorials, ["first", "second"])
+
+    pages = run_build(tree)
+
+    assert (out / "tutorials/mod/first/index.html").exists()
+    assert (out / "index.html").exists()
+    assert len(pages) == 3
+    first = (out / "tutorials/mod/first/index.html").read_text(encoding="utf-8")
+    assert "{{" not in first, "an unfilled shell token shipped"
+    assert 'class="dl-nav-next"' in first
+    assert 'class="dl-nav-prev"' not in first
+    assert 'class="dl-toc"' in first, "two sections should produce a contents fold"
+    contents = (out / "index.html").read_text(encoding="utf-8")
+    assert "tutorials/mod/first/index.html" in contents
+    assert "Module mod" in contents
+
+
+def test_missing_frontmatter_field_stops_the_build(tree):
+    tutorials, _ = tree
+    folder = tutorials / "mod" / "bad"
+    folder.mkdir(parents=True)
+    (folder / "bad.md").write_text("---\ntitle: Bad\nslug: bad\n---\n# Bad\n", encoding="utf-8")
+    write_order(tutorials, ["bad"])
+    with pytest.raises(BuildError, match="missing"):
+        run_build(tree)
+
+
+def test_version_must_be_dated(tree):
+    tutorials, _ = tree
+    write_tutorial(tutorials, "page", version="1.0")
+    write_order(tutorials, ["page"])
+    with pytest.raises(BuildError, match="version"):
+        run_build(tree)
+
+
+def test_tutorial_not_in_an_order_file_stops_the_build(tree):
+    tutorials, _ = tree
+    write_tutorial(tutorials, "listed")
+    write_tutorial(tutorials, "forgotten")
+    write_order(tutorials, ["listed"])
+    with pytest.raises(BuildError, match="forgotten"):
+        run_build(tree)
+
+
+def test_order_file_naming_a_missing_tutorial_stops_the_build(tree):
+    tutorials, _ = tree
+    write_tutorial(tutorials, "real")
+    write_order(tutorials, ["real", "ghost"])
+    with pytest.raises(BuildError, match="ghost"):
+        run_build(tree)
+
+
+def test_tutorial_links_resolve_or_fail(tree):
+    tutorials, out = tree
+    write_tutorial(tutorials, "one", "# One\n\nSee [two](tutorial:two#part).\n")
+    write_tutorial(tutorials, "two", "# Two\n\n## Part\n\nText.\n")
+    write_order(tutorials, ["one", "two"])
+    run_build(tree)
+    page = (out / "tutorials/mod/one/index.html").read_text(encoding="utf-8")
+    assert 'href="../../../tutorials/mod/two/index.html#part"' in page
+
+    write_tutorial(tutorials, "one", "# One\n\nSee [nowhere](tutorial:nowhere).\n")
+    with pytest.raises(BuildError, match="nowhere"):
+        run_build(tree)
+
+
+def test_image_without_alt_stops_the_build(tree):
+    tutorials, _ = tree
+    write_tutorial(tutorials, "pic", '# Pic\n\n<img src="a.png">\n')
+    write_order(tutorials, ["pic"])
+    with pytest.raises(BuildError, match="alt"):
+        run_build(tree)
+
+
+def test_image_with_alt_is_copied_beside_the_page(tree):
+    tutorials, out = tree
+    path = write_tutorial(tutorials, "pic", "# Pic\n\n![A small square](square.png)\n")
+    (path.parent / "square.png").write_bytes(b"not really a png")
+    write_order(tutorials, ["pic"])
+    run_build(tree)
+    assert (out / "tutorials/mod/pic/square.png").exists()
+
+
+def test_draft_builds_but_stays_off_the_contents_and_out_of_search(tree):
+    tutorials, out = tree
+    write_tutorial(tutorials, "shown")
+    write_tutorial(tutorials, "hidden", extra="status: draft\n")
+    write_order(tutorials, ["shown", "hidden"])
+    run_build(tree)
+    assert (out / "tutorials/mod/hidden/index.html").exists()
+    contents = (out / "index.html").read_text(encoding="utf-8")
+    assert "tutorials/mod/hidden/" not in contents
+    index = (out / "assets/search-index.json").read_text(encoding="utf-8")
+    assert "hidden" not in index
+    assert "shown" in index
+
+
+def test_search_index_carries_glossary_terms(tree):
+    tutorials, out = tree
+    path = write_tutorial(tutorials, "tables")
+    (path.parent / "tables.glossary.yaml").write_text(
+        "entries:\n  - term: primary key\n    definition: A column that identifies a row.\n",
+        encoding="utf-8",
+    )
+    write_order(tutorials, ["tables"])
+    run_build(tree)
+    index = (out / "assets/search-index.json").read_text(encoding="utf-8")
+    assert "primary key" in index
+
+
+def test_shell_tokens_all_filled_and_all_used():
+    shell = (ROOT / "assets" / "shell.html").read_text(encoding="utf-8")
+    with pytest.raises(BuildError, match="not filled"):
+        build.fill_shell(shell, {"TITLE": "x"}, "test")
+    with pytest.raises(BuildError, match="no token"):
+        build.fill_shell("<p>{{TITLE}}</p>", {"TITLE": "x", "EXTRA": "y"}, "test")
+
+
+def test_the_real_tutorials_build(tmp_path: Path):
+    pages = build.build(out_dir=tmp_path / "site", clean=True)
+    assert pages
+    assert (tmp_path / "site" / "index.html").exists()
+
+
+def test_front_page_opens_with_the_readme(tree, tmp_path: Path):
+    tutorials, out = tree
+    write_tutorial(tutorials, "first")
+    write_order(tutorials, ["first"])
+    readme = tmp_path / "README.md"
+    readme.write_text(
+        "# The course\n\nWhere to begin.\n\n## Notes\n\nSee [the plan](planning/PLAN.md) "
+        "and [the folder](planning/).\n",
+        encoding="utf-8",
+    )
+
+    build.build(tutorials_dir=tutorials, out_dir=out, assets_dir=ROOT / "assets", clean=True, readme=readme)
+
+    page = (out / "index.html").read_text(encoding="utf-8")
+    assert "<title>The course" in page
+    assert "Where to begin." in page
+    assert page.count("<h1>") == 0, "the README's title is the page title, not a heading in the body"
+    assert f'href="{build.REPO_URL}/blob/main/planning/PLAN.md"' in page
+    assert f'href="{build.REPO_URL}/tree/main/planning/"' in page
+    assert "Tutorials written here" in page
+    assert '<h3 class="dl-module-heading">Module mod</h3>' in page
+    assert "tutorials/mod/first/index.html" in page
+
+
+def test_front_page_without_a_readme_is_the_list(tree):
+    tutorials, out = tree
+    write_tutorial(tutorials, "first")
+    write_order(tutorials, ["first"])
+
+    build.build(tutorials_dir=tutorials, out_dir=out, assets_dir=ROOT / "assets", clean=True, readme=None)
+
+    page = (out / "index.html").read_text(encoding="utf-8")
+    assert "<h1>Tutorials</h1>" in page
+    assert '<h2 class="dl-module-heading">Module mod</h2>' in page

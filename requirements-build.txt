@@ -1,0 +1,3 @@
+# What build.py needs. Nothing here reaches the browser.
+Markdown>=3.5
+PyYAML>=6.0

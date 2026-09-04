@@ -1,6 +1,6 @@
 # Every page, one at a time
 
-_Written 2026-09-04, overnight. A row for every page of the three sources that feed dewstack, saying what is good, what should change, which track it belongs in, and what to do with it. Companion to `CONSOLIDATION_PLAN.md`: section 7 there is the ledger of what has moved; this is the judgement behind the order._
+_Written 2026-09-04, overnight; Josh's decisions of the same morning are folded in (all of lessons 1 to 8 rewritten; Pyodide with sqlite3 as the engine; solutions linked at the foot of each page; the copies kept as the material to check coverage against). A row for every page of the three sources that feed dewstack, saying what is good, what should change, which track it belongs in, and what to do with it. Companion to `CONSOLIDATION_PLAN.md`: section 7 there is the ledger of what has moved; this is the judgement behind the order._
 
 ## How the pages were measured
 
@@ -21,7 +21,7 @@ The columns "Track" and "Do" use these words. Track: *Web door* (the starter a s
 | `styles.css` | commented, variables at the top | Custom properties at the top mean exercise 13 changes the whole site in one place. | The two colour variables above. Nothing else. | Web door | keep |
 | `CONCEPTS.md` | 145 sentences, mean 11.5, 4 % over 25 | Optional depth in ten short sections: the box, how browsers build pages, semantic HTML, selectors, specificity, units, Flexbox, responsive design, variables, transitions. Each is the plain-statement-then-metaphor order the guide asks for. | Nothing in place. Its ten sections are the outline of the web tutorial track: each could become one short page with a live example. | Web door; seed for Web | keep; mirror |
 
-## 2. `WADB_Tutorials`, copied to `tutorials/`
+## 2. `WADB_Tutorials`, copied to `sources/wadb/` (until 2026-09-04, `tutorials/`)
 
 ### The lessons
 
@@ -32,9 +32,9 @@ The columns "Track" and "Do" use these words. Track: *Web door* (the starter a s
 | 03 CSS basics | 2867, 147, mean 19.5, 16 %, overflow | The theme switcher, the one live thing in thirteen lessons. The anatomy of a rule. | Make the switcher the opener. Cut the three-ways-to-include section to the one way we use. | Web | split into two: a rule and where it lives; the properties used first (colour, font, spacing) |
 | 04 CSS layout | 2933, 156, mean 18.8, 17 %, overflow | Box model, display, Flexbox, positioning, grid-versus-Flexbox, in a sensible order. | Four ideas on one page. Each wants a live example the reader resizes. Overlaps lesson 11 and `CONCEPTS.md`. | Web | split into four: the box; display and flow; Flexbox first steps; positioning |
 | 05 Responsive design | 2571, 139, mean 18.5, 19 %, overflow | The mobile-first section. Flexible images. | One page with a width slider over an iframe would replace most of the prose. Starter exercise 24 covers the same ground by doing. | Web | rewrite as one page around a live example |
-| 06 GitHub setup | 3218, 143, mean 22.5, 24 %, overflow | Nothing the guides do not do better. | Same content as guides 01 and 02, at twice the length. | Web | drop, in favour of guides 01 and 02 |
-| 07 GitHub workflow | 3399, 167, mean 20.3, 17 % | The complete worked example of branch, commit, pull request. | Same content as guides 03 and 04. | Web | drop, in favour of guides 03 and 04 |
-| 08 GitHub Pages | 2855, 159, mean 17.9, 16 %, overflow | The URL section explains why an address looks the way it does. | Same content as guide 05, which is the most readable page on the site. | Web | drop, in favour of guide 05; move the URL explanation into it |
+| 06 GitHub setup | 3218, 143, mean 22.5, 24 %, overflow | The interface tour. | Same content as guides 01 and 02, at twice the length. | Web | rewrite, merged with guides 01 and 02 into one page per step |
+| 07 GitHub workflow | 3399, 167, mean 20.3, 17 % | The complete worked example of branch, commit, pull request. | Same content as guides 03 and 04. | Web | rewrite, merged with guides 03 and 04; the worked example is the page's opener |
+| 08 GitHub Pages | 2855, 159, mean 17.9, 16 %, overflow | The URL section explains why an address looks the way it does. | Same content as guide 05, which is the most readable page on the site. | Web | rewrite, merged with guide 05; its URL explanation leads |
 | 09 Images | 3282, 130, mean 25.2, 30 %, 34 code blocks, overflow | File paths (relative, `../`, root) and alt text. Paths are the first cause of "my image won't load". | The longest sentences on the site after lesson 10. | Web | split into three: paths; alt text and formats; responsive images |
 | 10 Links | 2692, 89, mean 30.2, 34 %, 53 code blocks, overflow | Link states, link text, a navigation menu. | The worst sentence length on the site. Fifty-three code blocks for one topic. | Web | split into three: three kinds of link; styling links and their states; a navigation menu |
 | 11 Flexbox and Grid | 2493, 104, mean 24.0, 24 %, 17 headings, 20 code blocks | Named grid areas, `auto-fit` with `minmax()`, the holy-grail and dashboard examples. The project brief requires Flexbox and Grid. | Seventeen headings is two pages. Each half should open with a layout the reader resizes. | Web, project | split into two: Flexbox properties; Grid areas and `minmax()`. First priority in this track. |
@@ -82,13 +82,13 @@ The guides are the readable part of the site, because they are procedural: do th
 |---|---|---|---|---|---|
 | Tentacular Plushies | 782 words, 35 sentences, 26 %, six CDN loads, no landmark; fixed three-panel layout, body scroll disabled | Five tasks in a story (a shop's database), a hint under each, a SQL reference panel, and a download of the student's SQL for submission. The tasks are the right five. | Unusable on a phone (the audit: the task panel is one word wide). "Check my work" was reported broken in class in December. CodeMirror and SQL.js from a CDN. | Data | rewrite in the shell as one column, same five tasks; its reference panel becomes the SQL half of the quick reference |
 
-## 3. `HTML-CSS-SQL-JS`, copied to `databases/playground/`
+## 3. `HTML-CSS-SQL-JS`, copied to `sources/playground/` (until 2026-09-04, `databases/playground/`)
 
 | Page | Measured | Good | Change | Track | Do |
 |---|---|---|---|---|---|
 | `index.html` | 953 words, 43 sentences, mean 22.1, 23 %, phone overflow, landmark | The engine pattern: SQL.js in the page, a query typed and run, a result drawn as a table, nothing installed. Six command cards (SELECT to DELETE), five exercises, bonus exercises, reflection questions. | Parts 1 and 2 are thin repeats of the web track. The "Choose your learning path" box is illegible (white on near-white, in the source too). "Read first, then try" is the reverse of the order the style guide asks for. | Data | split: the SQL section becomes the first two data tutorials (a table is a list of rows; asking questions of a table), each with its own editor; Parts 1 and 2 become one line pointing at the web track |
-| `teacher.html` | 2260, 69, mean 32.7, 28 % | Teaching tips per section, solutions under each exercise, the sample database described. | Teaching notes are not student-facing; they belong in `planning/`. Solutions either stay public or go behind folds (plan, question 2). | Data | fold: notes to `planning/TEACHING_NOTES.md`, solutions to a practice page |
-| `tutorial.js`, `styles.css` | | The stylesheet is now the front page's. The script is 60 lines that create the tables and run a query. | The script is the seed of the full-stack track's first example. | Data; Full stack | keep |
+| `teacher.html` | 2260, 69, mean 32.7, 28 % | Teaching tips per section, solutions under each exercise, the sample database described. | Teaching notes are not student-facing; they belong in `planning/`. Solutions are linked at the foot of the page they belong to (plan, question 2). | Data | fold: notes to `planning/TEACHING_NOTES.md`, solutions to the foot of each rewritten page |
+| `tutorial.js`, `styles.css` | | The stylesheet is now the front page's. The script is 60 lines that create the tables and run a query. | With Pyodide as the engine (plan, section 8), the script is a reference for what the page must do, not code to keep. | Data; Full stack | keep until the playground is rewritten |
 
 ## 4. The notebook, `databases/sqlite_tutorial.ipynb`
 
@@ -108,4 +108,4 @@ Counting the splits, the web track is about 22 short pages and seven guides; the
 6. Lessons 01 to 05, last, because the starter covers their ground by doing and their rewrites are the longest.
 7. Guides 04, 06, 07, and the templates page.
 
-Lessons 06, 07 and 08 are not rewritten; the guides replace them.
+Lessons 06, 07 and 08 are rewritten together with guides 01 to 05, as one page per step rather than a lesson and a guide saying the same thing.
