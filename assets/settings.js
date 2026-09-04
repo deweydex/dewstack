@@ -17,7 +17,7 @@
   /* link is empty by default: the stylesheet then picks a colour that passes
      contrast in whichever theme is on. A reader's own choice overrides it. */
   const TEXTURE_DEFAULTS = {
-    theme: "system", font: "serif", size: 18, width: 34,
+    theme: "system", font: "serif", size: 18, width: 30,
     link: "", header: "full", contrast: "normal",
   };
   /* Keep in step with min= on #dl-texture-size in shell.html. */

@@ -13,15 +13,16 @@ editor and a topic tree, and is over four thousand lines. This one does
 the part a reading site needs: frontmatter, ordering, link checks, a
 shell, a contents page, a search index, and the web track's site editor
 (a fenced block tagged `site=name` becomes a live HTML/CSS/JS pane, per
-`planning/CONSOLIDATION_PLAN.md` section 13). The contents page opens
-with `README.md`, the course map, so the site's front page and the
-repository's front page are one text. What it checks, it checks
-strictly. A mistake that stops the build is a mistake a student never
-sees.
+`planning/CONSOLIDATION_PLAN.md` section 13). The front page is written
+for the student: `tutorials/front.md` gives its opening and its two
+doors, and the list of pages follows. `README.md` stays the longer map
+for people who read the repository. What it checks, it checks strictly.
+A mistake that stops the build is a mistake a student never sees.
 
 Layout it expects:
 
-    tutorials/modules.yaml                  order of modules on the contents page
+    tutorials/front.md                      the front page's opening and its doors
+    tutorials/modules.yaml                  order of modules, planned modules, notes
     tutorials/<module>/<series>.order.yaml  series title and reading order
     tutorials/<module>/<slug>/<slug>.md     the tutorial
     tutorials/<module>/<slug>/<slug>.glossary.yaml   optional, terms it introduces
@@ -54,9 +55,8 @@ OUT = ROOT / "site"
 
 SITE_NAME = "dewstack"
 REPO_URL = "https://github.com/deweydex/dewstack"
-# The course map. Rendered as the top of the site's front page, so the page
-# GitHub shows and the page Pages shows are one text.
-README = ROOT / "README.md"
+# The front page's opening and its doors live at tutorials/front.md. Without
+# that file the front page is the list of tutorials alone.
 
 REQUIRED_FRONTMATTER = ("title", "slug", "module", "module_title", "series", "version")
 VERSION_PATTERN = re.compile(r"^\d{4}\.\d{2}\.\d{2}\.\d+$")
@@ -230,6 +230,20 @@ def read_order(tutorials_dir: Path, tutorials: list[Tutorial]) -> tuple[list[str
     return module_order, series
 
 
+def read_modules(tutorials_dir: Path) -> dict:
+    """`modules.yaml` beyond the order: the modules planned but not yet
+    written, each with a title and a note, and one note per module."""
+    path = tutorials_dir / "modules.yaml"
+    if not path.exists():
+        return {"planned": {}, "notes": {}}
+    data = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
+    planned = data.get("planned") or {}
+    for module, info in planned.items():
+        if not isinstance(info, dict) or not info.get("title") or not info.get("note"):
+            raise BuildError(f"{path}: planned module {module!r} needs a title and a note")
+    return {"planned": planned, "notes": data.get("notes") or {}}
+
+
 # ---------------------------------------------------------------- rendering
 
 
@@ -377,7 +391,10 @@ def render_body(tutorial: Tutorial, by_slug: dict[str, Tutorial]) -> tuple[str, 
     source, editors = extract_site_editors(tutorial.body, tutorial.path)
     md = make_markdown()
     rendered = md.convert(source)
-    rendered = rendered.replace("<pre><code", '<pre class="dl-static"><code')
+    # tabindex="0" so a static code block that ends up wider than the reading
+    # column, and so scrolls sideways, can be reached and scrolled by keyboard
+    # rather than only by touch or a mouse.
+    rendered = rendered.replace("<pre><code", '<pre class="dl-static" tabindex="0"><code')
     rendered = resolve_links(rendered, tutorial, by_slug)
     check_images(rendered, tutorial)
     for index, editor in enumerate(editors):
@@ -434,64 +451,86 @@ def render_search_box() -> str:
     )
 
 
-RELATIVE_HREF = re.compile(r'href="(?!(?:[a-z][a-z0-9+.-]*:|#|/))([^"]+)"')
+@dataclass
+class Front:
+    """The front page's opening: its title, its introduction as HTML, and its
+    doors, each resolved to a real href."""
+    title: str
+    intro_html: str
+    doors: list[dict]
 
 
-def render_front(readme: Path) -> tuple[str, str, str]:
-    """The README as the top of the front page: its title, its HTML and its
-    table of contents.
+DOOR_FIELDS = ("title", "href", "text", "ends")
 
-    The README is written for GitHub, so a relative link in it points at a
-    file in the repository. On the built page that link would point at
-    nothing, so it is rewritten to the same file on GitHub. Everything else
-    in the text is left as it is: the two pages are meant to read the same.
+
+def read_front(path: Path, by_slug: dict[str, Tutorial]) -> Front:
+    """`tutorials/front.md`: a title and a `doors:` list in the frontmatter,
+    and the opening paragraph and points in the body.
+
+    A door opens on `tutorial:<slug>` or on a full web address. A slug that
+    does not exist stops the build, as a dead link on the front page would
+    be the first broken thing a student met.
     """
-    text = readme.read_text(encoding="utf-8")
-    title = SITE_NAME
-    lines = text.splitlines()
-    for i, line in enumerate(lines):
-        if line.startswith("# "):
-            title = line[2:].strip()
-            del lines[i]
-            break
-    md = make_markdown()
-    rendered = md.convert("\n".join(lines))
-    rendered = rendered.replace("<pre><code", '<pre class="dl-static"><code')
-    # The README's own title is the page's one level-one heading. It was
-    # lifted out above so the <title> could carry it; it goes back here so
-    # the page has an h1 for a screen reader to land on.
-    rendered = f"<h1>{html.escape(title)}</h1>\n{rendered}"
+    text = path.read_text(encoding="utf-8")
+    meta, body = split_frontmatter(text, path)
+    if not meta.get("title"):
+        raise BuildError(f"{path}: frontmatter needs a title")
+    doors = meta.get("doors") or []
+    if not isinstance(doors, list):
+        raise BuildError(f"{path}: doors must be a list")
+    resolved = []
+    for door in doors:
+        missing = [k for k in DOOR_FIELDS if not (isinstance(door, dict) and door.get(k))]
+        if missing:
+            raise BuildError(f"{path}: a door is missing {', '.join(missing)}")
+        href = str(door["href"])
+        if href.startswith("tutorial:"):
+            slug = href[len("tutorial:"):]
+            target = by_slug.get(slug)
+            if target is None:
+                raise BuildError(f"{path}: a door opens on tutorial:{slug}, which does not exist")
+            href = target.url
+        elif not href.startswith(("http://", "https://")):
+            raise BuildError(f"{path}: a door's href must be tutorial:<slug> or a full web address, not {href!r}")
+        resolved.append({**door, "href": href})
+    intro = make_markdown().convert(body)
+    # The body's first list is the points a student arrives with questions
+    # about, styled as dewlab styles its own.
+    intro = intro.replace("<ul>", '<ul class="dl-intro-points">', 1)
+    return Front(str(meta["title"]), intro, resolved)
 
-    def to_github(match: re.Match) -> str:
-        target = match.group(1)
-        kind = "tree" if target.endswith("/") else "blob"
-        return f'href="{REPO_URL}/{kind}/main/{target}"'
 
-    rendered = RELATIVE_HREF.sub(to_github, rendered)
-    return title, rendered, render_toc(md.toc_tokens)
+def render_front(front: Front) -> str:
+    """The top of the front page: the title, the opening, and the doors."""
+    out = [f"<h1>{html.escape(front.title)}</h1>", '<div class="dl-intro">', front.intro_html, "</div>"]
+    if front.doors:
+        out.append("<h2>Where to begin</h2>")
+        out.append('<div class="dl-doors">')
+        for door in front.doors:
+            classes = "dl-door dl-door-interim" if door.get("interim") else "dl-door"
+            out.append(f'<a class="{classes}" href="{html.escape(door["href"], quote=True)}">')
+            out.append(f"<h3>{html.escape(str(door['title']))}</h3>")
+            out.append(f"<p>{html.escape(str(door['text']))}</p>")
+            out.append(f'<p class="dl-door-ends"><strong>At the end:</strong> {html.escape(str(door["ends"]))}</p>')
+            out.append("</a>")
+        out.append("</div>")
+    return "\n".join(out)
 
 
 def render_contents(tutorials: list[Tutorial], module_order: list[str], series: dict,
-                    front: str | None = None) -> str:
-    """The contents page: the course map when there is one, then the search
-    box and the list of tutorials written here.
+                    front_html: str | None = None, planned: dict | None = None,
+                    notes: dict | None = None) -> str:
+    """The front page: the opening and the doors when `front.md` gives them,
+    the search box, then every module in order with its pages.
 
-    With a course map above it, the list is one section of a longer page and
-    its headings step down a level. Without one, the list is the page.
+    A module in `planned` with no pages yet gets its heading and one line,
+    so the shape of the course shows before all of it is written. A module
+    in `notes` gets one line under its list.
     """
-    heading = "h3" if front else "h2"
-    sub = "h4" if front else "h3"
-    if front:
-        out = [
-            front,
-            '<h2 id="tutorials">Tutorials written here</h2>',
-            '<div class="dl-intro">',
-            "<p>These are the pages written for this course, in the order they are "
-            "meant to be read. Each one has a Settings button, and links to the "
-            "page before it and the page after it.</p>",
-            "</div>",
-            render_search_box(),
-        ]
+    planned = planned or {}
+    notes = notes or {}
+    if front_html:
+        out = [front_html, render_search_box()]
     else:
         out = [
             "<h1>Tutorials</h1>",
@@ -499,16 +538,6 @@ def render_contents(tutorials: list[Tutorial], module_order: list[str], series: 
             "<p>These tutorials are part of the web authoring and databases course. "
             "Everything here runs in your browser. There is nothing to install and "
             "no account to make.</p>",
-            '<ul class="dl-intro-points">',
-            "<li><strong>The list below is grouped into modules.</strong> Each module "
-            "has one or more series. A series is meant to be read in order, from the top.</li>",
-            "<li><strong>The Settings button changes how the page looks.</strong> You can "
-            "choose a theme, a typeface, a text size and a line width. The choices stay "
-            "with you from page to page.</li>",
-            "<li><strong>Nothing you do here is scored.</strong> Nothing you type leaves your browser.</li>",
-            "</ul>",
-            f'<p class="dl-intro-tree">The course map, with links to every part of the course, is in the '
-            f'<a href="{REPO_URL}#readme">README</a>.</p>',
             "</div>",
             render_search_box(),
         ]
@@ -516,24 +545,41 @@ def render_contents(tutorials: list[Tutorial], module_order: list[str], series: 
     for tutorial in tutorials:
         if tutorial.module not in modules_seen:
             modules_seen.append(tutorial.module)
-    ordered = [m for m in module_order if m in modules_seen] + sorted(set(modules_seen) - set(module_order))
+    for module in module_order:
+        if module not in modules_seen and module not in planned:
+            raise BuildError(f"modules.yaml lists {module!r}, which has no pages and no planned entry")
+    ordered = [m for m in module_order if m in modules_seen or m in planned]
+    ordered += sorted(set(modules_seen) - set(module_order))
     titles = {t.module: t.module_title for t in tutorials}
     by_slug = {t.slug: t for t in tutorials}
+    md = make_markdown()
+
+    def note_html(text: str) -> str:
+        md.reset()
+        return f'<div class="dl-module-note">{md.convert(str(text))}</div>'
 
     for module in ordered:
-        out.append(f'<{heading} class="dl-module-heading">{html.escape(titles[module])}</{heading}>')
-        module_series = [(key, info) for key, info in series.items() if key[0] == module]
-        for (_, name), info in module_series:
-            live = [by_slug[s] for s in info["order"] if by_slug[s].is_live]
-            if not live:
-                continue
-            if len(module_series) > 1:
-                out.append(f"<{sub}>{html.escape(info['title'])}</{sub}>")
-            out.append('<ol class="dl-contents">')
-            for t in live:
-                out.append(f'<li><a href="{t.url}">{html.escape(t.title)}</a></li>')
-            out.append("</ol>")
+        if module in modules_seen:
+            out.append(f'<h2 class="dl-module-heading">{html.escape(titles[module])}</h2>')
+            module_series = [(key, info) for key, info in series.items() if key[0] == module]
+            for (_, name), info in module_series:
+                live = [by_slug[s] for s in info["order"] if by_slug[s].is_live]
+                if not live:
+                    continue
+                if len(module_series) > 1:
+                    out.append(f"<h3>{html.escape(info['title'])}</h3>")
+                out.append('<ol class="dl-contents">')
+                for t in live:
+                    out.append(f'<li><a href="{t.url}">{html.escape(t.title)}</a></li>')
+                out.append("</ol>")
+        else:
+            info = planned[module]
+            out.append(f'<h2 class="dl-module-heading">{html.escape(str(info["title"]))}</h2>')
+            out.append(note_html(info["note"]))
+        if module in notes:
+            out.append(note_html(notes[module]))
     return "\n".join(out)
+
 
 
 def render_footer(root_base: str) -> str:
@@ -592,11 +638,14 @@ def page_values(*, title: str, root_base: str, crumbs: str, nav: str, toc: str, 
 
 
 def build(tutorials_dir: Path = TUTORIALS, out_dir: Path = OUT, assets_dir: Path = ASSETS,
-          clean: bool = False, readme: Path | None = README) -> list[Path]:
+          clean: bool = False, front: Path | None | str = "default") -> list[Path]:
     """Write the whole site. Returns every page written.
 
-    `readme` is the course map that opens the front page. None, or a path
-    that does not exist, gives a front page that is only the list."""
+    `front` is the markdown that opens the front page. Left alone, it is
+    `front.md` inside `tutorials_dir`. None, or a path that does not exist,
+    gives a front page that is only the list."""
+    if front == "default":
+        front = tutorials_dir / "front.md"
     if clean and out_dir.exists():
         shutil.rmtree(out_dir)
     out_dir.mkdir(parents=True, exist_ok=True)
@@ -615,8 +664,9 @@ def build(tutorials_dir: Path = TUTORIALS, out_dir: Path = OUT, assets_dir: Path
         for tutorial in members:
             written.append(write_tutorial(tutorial, members, info["title"], shell, out_dir, assets_dir, by_slug))
 
-    front = readme if readme is not None and readme.exists() else None
-    written.append(write_contents(tutorials, module_order, series, shell, out_dir, assets_dir, front))
+    modules = read_modules(tutorials_dir)
+    opening = read_front(front, by_slug) if front is not None and front.exists() else None
+    written.append(write_contents(tutorials, module_order, series, shell, out_dir, assets_dir, opening, modules))
     write_search_index(tutorials, series, out_dir)
     return written
 
@@ -667,14 +717,16 @@ def write_tutorial(tutorial: Tutorial, members: list[Tutorial], series_title: st
 
 
 def write_contents(tutorials: list[Tutorial], module_order: list[str], series: dict, shell: str,
-                   out_dir: Path, assets_dir: Path, readme: Path | None = None) -> Path:
-    title, front, toc = ("Tutorials", None, "")
-    if readme is not None:
-        title, front, toc = render_front(readme)
-    body = render_contents(tutorials, module_order, series, front)
+                   out_dir: Path, assets_dir: Path, front: Front | None = None,
+                   modules: dict | None = None) -> Path:
+    modules = modules or {"planned": {}, "notes": {}}
+    title = front.title if front else "Tutorials"
+    front_html = render_front(front) if front else None
+    body = render_contents(tutorials, module_order, series, front_html,
+                           modules.get("planned"), modules.get("notes"))
     search_url = asset_url("", "search.js", assets_dir)
     page = fill_shell(shell, page_values(
-        title=title, root_base="", crumbs="", nav="", toc=toc, body=body,
+        title=title, root_base="", crumbs="", nav="", toc="", body=body,
         page_script=f'<script src="{search_url}"></script>', meta="", assets_dir=assets_dir,
     ), "contents page")
     target = out_dir / "index.html"
