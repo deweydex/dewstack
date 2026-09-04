@@ -351,7 +351,9 @@ The source file is not touched.
 | Course bar on every copied page | this plan, section 2 | `tools/add_course_bar.py` | done 2026-09-03, dewadaba#2 |
 | Page-by-page assessment of the three sources, with the order of rewrites | this plan, section 10 | `planning/PAGE_BY_PAGE.md` | done 2026-09-04, dewadaba#2 |
 | `web` "Where this fits" section | section 5, step 6 | `deweydex/web` README | drafted as web#2, closed; lands after web#1 merges |
-| Build step and hello page | `dewlab` | `build.py`, `assets/`, `tutorials/` | not started; the settings above are the first piece |
+| Build step and hello page | `dewlab` | `build.py`, `assets/`, `tutorials/` | not started; decided 2026-09-04 (section 8, question 9): a copy of dewlab's build and Pyodide runtime, trimmed |
+| Site editor component for web pages | dewmini's Site tab, WADB's code playground | the build's shell | not started; section 13 |
+| More database content from Josh | to come 2026-09-04 | `databases/` | awaited |
 | SQL tutorial | `HTML-CSS-SQL-JS/index.html` | `tutorials/databases/` | not started |
 | SQL practice page | `HTML-CSS-SQL-JS/index.html` | `tutorials/databases/` | not started |
 | Teaching notes | `HTML-CSS-SQL-JS/teacher.html` | `planning/` | not started |
@@ -405,6 +407,31 @@ The source file is not touched.
    the material to check coverage against, and the deliverable is new
    pages that meet every criterion in section 11. As each new page lands,
    the front page links to it and the copy it replaces can go.
+9. **Build and home.** Decided 2026-09-04: dewstack, on a copy of
+   dewlab's build and runtime. `build.py`, the Pyodide engine and worker,
+   `tutorial_tools.py` and the shell are copied in and trimmed; tutorials
+   are markdown with cells, dewlab's shape. One course site. The two
+   projects can drift, and the ledger notes the dewlab commit each copy
+   was taken from so a later sync is possible.
+10. **Page length.** Decided 2026-09-04: shorter than dewlab, 30 to 50
+   sentences, one idea, one live example, one "your turn", ten to fifteen
+   minutes. The thirteen WADB lessons become thirty or so pages, and that
+   is the intended outcome, not a cost.
+11. **The live element on a web page.** Decided 2026-09-04: not a cell. A
+   web tutorial page carries a small site editor with files (an HTML pane,
+   a CSS pane, a JavaScript pane) and a live preview, the way dewmini's
+   Site tab already works (dewlab DECISIONS_LOG 7.121) and the way
+   `WADB_Tutorials/js/code-playground.js` did on four lessons. Exercises
+   are not on the page at all: they are in the student's own fork,
+   published on their own GitHub Pages, in the `web` starter's model of
+   change one thing, save, look. The data track keeps cells, and a cell
+   there is a query. Section 13 has the component.
+12. **Practice.** Decided 2026-09-04: one "your turn" on the page and a
+   separate practice page beside it, solutions at the foot (question 2).
+13. **More database content is coming** (Josh, 2026-09-04): to be added
+   to the sources later today. The data track's plan in section 7 is
+   revised once it is in.
+
 ---
 
 ## 9. What the audit of `WADB_Tutorials` found, 2026-09-03
@@ -540,3 +567,21 @@ Working title: *A page that shows rows from a table*. It is the smallest page th
 **What it deliberately leaves out.** Servers, accounts, anything that sends data anywhere. A second tutorial can put a chart beside the table using the marks example from the front page; a third can draw the page from an Our World in Data extract. The projects page lists these as combined projects once the first tutorial exists.
 
 **Done when** the page passes both bars in section 11, a student who has done the prerequisites can complete steps 1 to 5 without help, and the front page's full-stack section links to it instead of saying "being written".
+
+---
+
+## 13. The site editor for web pages
+
+Decided in section 8, question 11. What a web authoring tutorial page needs is not a cell but a small site: files a student can see all at once, and the page those files make, updating as they type. Three things already do most of this and are the sources for the component.
+
+**dewmini's Site tab** (dewlab, `compose/dewmini.js`, `openSiteFile()` and the `SITE` view; DECISIONS_LOG 7.121). An `.html` file opens with its same-name `.css` and `.js` beside it: three editors on one side, a sandboxed iframe (`sandbox="allow-scripts"`, no same-origin) on the other, redrawn on every keystroke. The editors are CodeMirror, the same build dewlab vendors. It is the most complete of the three and the one to port; it already runs against a mounted folder, which the tutorial page does not need.
+
+**WADB's code playground** (`tutorials/js/code-playground.js`, used on lessons 01, 09, 10 and 13). An HTML pane and a CSS pane seeded from `data-html` and `data-css` attributes, a preview, a reset, and a `data-solution-html` pair that shows a solution. The seeding-from-attributes and the solution pair are worth keeping; the rest the Site tab does better.
+
+**The playground's interactive demo** (`databases/playground/index.html`, "Interactive Demo"): a CSS textarea applied live to a sample block. The smallest possible version, and a reminder that a demo can be one pane when the idea is one property.
+
+**What the component is.** A block a tutorial's markdown can place, seeded with an HTML, a CSS and, when the page needs it, a JavaScript file, showing the three as tabs or panes beside a live preview at a width the reader can drag (so responsive pages can be tried). Buttons: reset to the tutorial's version, and "download these files", so a student can drop them into their fork. No saving on the page: the student's fork is where work is kept, and the page says so. In the build, a fenced block with a tag (as `python exec` marks a cell) marks a site file, and consecutive site-file blocks with matching base names form one editor.
+
+**Where exercises go instead.** Every web tutorial ends with one "your turn" that is done in the student's fork: open this file, change this, save, refresh, look. The practice page beside it lists more of the same. That is the `web` starter's model, and it is why the tutorials never need to save a student's HTML.
+
+**Done when** one rewritten page (lesson 11's first half, Flexbox) ships with the component, renders at both widths, passes both bars, and a student can drag the preview narrower and watch a row wrap.
