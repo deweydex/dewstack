@@ -439,7 +439,12 @@ The source file is not touched.
    the pages exist. Until then, coverage is checked against the copies
    (question 8) and the project briefs.
 15. **The web track's order.** Josh asked for the three trajectories to
-   be compared and a hybrid proposed rather than one picked. Section 14.
+   be compared and a hybrid proposed rather than one picked. Section 14;
+   superseded in part by 16.
+16. **The design.** Decided 2026-09-04: three arcs and two starters, as
+   section 15 lays out. `web` stays the door to web Arc 1; a second
+   forkable starter, working name `site`, is the door to Arc 2, the
+   project's shape. Every arc ends in something a student can show.
 
 ---
 
