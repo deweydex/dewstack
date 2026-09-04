@@ -374,6 +374,7 @@ The source file is not touched.
 | Build step and hello page | `dewlab`, by design | `build.py`, `assets/`, `tutorials/` | done 2026-09-04, dewadaba#3, reconciled with `main` in dewstack#5; awaiting the first publish run to turn Pages on |
 | Reconciliation of dewadaba#3 with `main`: build as the platform, copies to `sources/`, README as the built front page, dewstack throughout | dewadaba#3, dewadaba#4 | this repository | done 2026-09-04, dewstack#5 |
 | Site editor component for web pages | dewmini's Site tab, WADB's code playground | the build's shell | not started; section 13 |
+| Handover: where things stand, the order of work, open questions | this plan, sections 8, 14, 15 | `planning/NEXT_STEPS.md` | done 2026-09-04; the document a session opens first |
 | More database content from Josh | to come 2026-09-04 | `databases/` | awaited |
 | SQL tutorial | `HTML-CSS-SQL-JS/index.html` | `tutorials/databases/` | not started |
 | SQL practice page | `HTML-CSS-SQL-JS/index.html` | `tutorials/databases/` | not started |
