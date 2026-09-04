@@ -202,7 +202,8 @@ def test_front_page_opens_with_the_readme(tree, tmp_path: Path):
     page = (out / "index.html").read_text(encoding="utf-8")
     assert "<title>The course" in page
     assert "Where to begin." in page
-    assert page.count("<h1>") == 0, "the README's title is the page title, not a heading in the body"
+    assert page.count("<h1>") == 1, "the README's title is the page's one level-one heading"
+    assert "<h1>The course</h1>" in page
     assert f'href="{build.REPO_URL}/blob/main/planning/PLAN.md"' in page
     assert f'href="{build.REPO_URL}/tree/main/planning/"' in page
     assert "Tutorials written here" in page
