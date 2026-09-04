@@ -1,8 +1,9 @@
 # dewstack
 
-The home of the web authoring and databases course. The README is the
-course map and is what a student sees first, on GitHub and as the top of
-the built site's front page. `build.py` turns `tutorials/**/*.md` into
+The home of the web authoring and databases course. The site's front page
+is written for the student, from `tutorials/front.md` and the module list;
+the README is the longer map for people who read the repository. The two
+are different texts on purpose. `build.py` turns `tutorials/**/*.md` into
 `site/`, which GitHub Pages serves. There is no backend and no database
 behind the site.
 

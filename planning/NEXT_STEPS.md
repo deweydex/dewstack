@@ -23,8 +23,11 @@ page, the copies moved to `sources/`, dewstack throughout).
 **Live.** The publish workflow's first run succeeded on the merge of #5,
 so GitHub Pages is on, published by Actions from `site/`. Until the
 repository is renamed the address is `deweydex.github.io/dewadaba/`. The
-site is two pages: the front page, which is the README with the list of
-tutorials after it, and the hello page.
+front page is written for the student, from `tutorials/front.md`: an
+opening, two doors, the search box, and the list of pages by module, with
+the modules not yet written shown as a heading and one line (decided
+2026-09-04, evening; see question 11 below). The README is the longer map
+for people who read the repository, and the two are no longer one text.
 
 **The repository is still called dewadaba.** Every page, link and
 document says dewstack, including the README's own link to the site and
@@ -345,12 +348,16 @@ step arrives.
     on them links nowhere. Delete the tool and the bars, or keep them
     until the copies go? Keeping costs nothing and deleting is one
     commit either way.
-11. **The README as front page, long term.** Today the whole README,
-    "For teachers" included, is the top of the site's front page. Once
-    the arcs exist and the tutorials list is long, the front page may
-    want its own shape, with the README staying the GitHub-facing map.
-    Nothing to decide now; note the seam is in `render_front()` in
-    `build.py`.
+11. **The README as front page.** Decided 2026-09-04, evening: no. The
+    README rendered as the front page was 1,600 words and 28 outbound
+    links before the list of this site's own pages, and a student had to
+    scroll past "For teachers" to reach it. The front page now has its
+    own shape, in dewlab's: `tutorials/front.md` gives an opening under
+    two hundred words and two doors that open onto pages here, then the
+    search box and the list. `modules.yaml` names the modules not yet
+    written so the shape of the course shows. The README stays the
+    GitHub-facing map. The default line width also came down from 34rem
+    to 30rem at Josh's request, with the Settings presets to match.
 12. **Dates.** Term start, the date the project brief is issued, and the
     exam window, so that steps 3, 6 and 7 have deadlines. The plan says
     January for the brief; confirm.
