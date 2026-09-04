@@ -24,12 +24,12 @@
 <body>
     <header>
         <h1>Web Authoring and Databases</h1>
-        <p class="subtitle">The course in three stages, with every link you need, on one page</p>
-        <nav aria-label="Stages">
-            <a href="#stage-1">Stage 1: a website</a>
-            <a href="#stage-2">Stage 2: data</a>
-            <a href="#stage-3">Stage 3: together</a>
-            <a href="#tutorials">Tutorials</a>
+        <p class="subtitle">Two ways to begin, two sets of tutorials, and the place where they meet</p>
+        <nav aria-label="Parts of the course">
+            <a href="#start">Begin</a>
+            <a href="#web">Web tutorials</a>
+            <a href="#data">Database tutorials</a>
+            <a href="#full-stack">Full stack</a>
             <a href="#projects">Projects</a>
         </nav>
     </header>
@@ -75,62 +75,40 @@
     </details>
 
     <main>
-        <section id="how" class="tutorial-section">
-            <h2>How the course is arranged</h2>
+        <section id="start" class="tutorial-section">
+            <h2>Two ways to begin</h2>
             <div class="lesson">
                 <p>This course is for adults who are learning to make web pages and to work with data. Many are doing this for the first time. Nothing has to be installed. You need a free GitHub account, a web browser, and a text editor.</p>
-                <p>The course has three stages. Each stage builds on the one before it. We suggest working through them in order. If some of this is already familiar, you can start where the material is new to you.</p>
-            </div>
-        </section>
+                <p>You can start with a website, or start with data. Neither assumes the other. If you are in a class, your teacher will say which comes first. If you are working on your own, pick the one that interests you more.</p>
 
-        <section id="stage-1" class="tutorial-section">
-            <h2>Stage 1: Build and publish a website</h2>
-            <div class="lesson">
+                <h3>Start with a website</h3>
                 <p>You start with nothing and finish with a personal website at its own address on the internet. Along the way we learn how HTML gives a page its structure and how CSS gives it its look.</p>
-                <p>The work happens in your own copy of the <strong>web</strong> repository. First you make a copy of it, which GitHub calls a fork. Then you change its files, one exercise at a time. Then GitHub publishes your changes at your own address.</p>
-                <p>The instructions are in that repository's README. There are twenty-five short exercises. Each one asks you to change something and look at what happens. The exercises take you through your home page, then the stylesheet, then layout, and last the touches that make a site work on a phone.</p>
+                <p>The work happens in your own copy of the <strong>web</strong> repository. First you make a copy of it, which GitHub calls a fork. Then you change its files, one exercise at a time. Then GitHub publishes your changes at your own address. There are twenty-five short exercises. Each one asks you to change something and look at what happens. At the end you have three pages, a stylesheet you understand, and an address you can share.</p>
                 <div class="example-box">
                     <h4>Start here</h4>
                     <p><a href="https://github.com/deweydex/web">github.com/deweydex/web</a></p>
                     <p>Read the README there first. It explains how to fork the repository, and it is where the exercises are.</p>
                 </div>
-            </div>
-        </section>
 
-        <section id="stage-2" class="tutorial-section">
-            <h2>Stage 2: Work with data</h2>
-            <div class="lesson">
+                <h3>Start with data</h3>
                 <p>A website often needs to remember things: the products in a shop, the members of a club, the marks in a class. A database is a program that stores this kind of information in tables. We learn to make tables, to put data in them, and to ask them questions. The questions are written in a language called SQL. Most databases understand SQL, so what you learn here is useful far beyond this course.</p>
-                <p>The database runs inside your browser. Nothing is installed, and nothing you type is sent anywhere.</p>
-                <p>Start with the playground. It has short refreshers on HTML and CSS, then SQL: SELECT, WHERE, ORDER BY, INSERT, UPDATE, DELETE, and COUNT. Then try the quiz. The notebook covers the same ideas in Python, and adds joining two tables.</p>
+                <p>The database runs inside your browser. Nothing is installed, and nothing you type is sent anywhere. At the end of the playground you can make a table, put rows in it, and ask it questions with SELECT, WHERE and ORDER BY. That takes an hour or so.</p>
                 <div class="example-box">
-                    <h4>Open the database pages</h4>
-                    <ul>
-                        <li><a href="databases/playground/index.html">The SQL playground</a>: type a query, run it, and see the result</li>
-                        <li><a href="tutorials/tentacular-plushies-quiz-final.html">The SQL quiz</a>: five tasks on a small shop database</li>
-                        <li><a href="https://colab.research.google.com/github/deweydex/dewstack/blob/main/databases/sqlite_tutorial.ipynb">The SQLite notebook</a>, opened in Google Colab, or <a href="databases/sqlite_tutorial.ipynb">the notebook file</a> to download</li>
-                        <li><a href="databases/playground/teacher.html">The playground, teacher version</a>, with solutions and notes</li>
-                    </ul>
+                    <h4>Start here</h4>
+                    <p><a href="databases/playground/index.html">The SQL playground</a></p>
+                    <p>Short refreshers on HTML and CSS, then SQL. Type a query, run it, and see the result.</p>
                 </div>
-                <p>In the playground, the database starts again each time the page is reloaded. If you write a query you want to keep, copy it into a file of your own.</p>
             </div>
         </section>
 
-        <section id="stage-3" class="tutorial-section">
-            <h2>Stage 3: Put the two together</h2>
+        <section id="web" class="tutorial-section">
+            <h2>Web authoring tutorials</h2>
             <div class="lesson">
-                <p>In the last stage we show data from a database on a web page. This stage is still being written. Its shape will be settled once stages 1 and 2 are in place.</p>
-            </div>
-        </section>
-
-        <section id="tutorials" class="tutorial-section">
-            <h2>Tutorials, guides, and templates</h2>
-            <div class="lesson">
-                <p>The exercises in Stage 1 show you what happens. The tutorials explain why. Use them when an exercise leaves you with a question, or when you want more practice.</p>
-                <p>There are thirteen lessons. Lessons 1 to 10 cover the same ground as the exercises, in more depth. Lessons 11 to 13 cover Flexbox, Grid, components, and animation. You will need those three for the web authoring project. The same site has seven step-by-step GitHub guides, four small example pages, eleven starter templates, a troubleshooting page, and a quick reference.</p>
-                <p>These pages were made for an earlier version of the course, and they are here as they were. Some of them do not fit a phone screen well yet. We are rewriting them one at a time.</p>
+                <p>The exercises in the starter show you what happens. The tutorials explain why. Use them when an exercise leaves you with a question, or when you want more practice.</p>
+                <p>There are thirteen lessons. Lessons 1 to 10 cover the same ground as the exercises, in more depth. Lessons 11 to 13 cover Flexbox, Grid, components, and animation, which the web authoring project needs. The same site has seven step-by-step GitHub guides, four small example pages, eleven starter templates, a troubleshooting page, and a quick reference.</p>
+                <p>These pages were made for an earlier version of the course, and they are here as they were. Some of them do not fit a phone screen well yet. We are rewriting them one at a time, and each rewrite will be shorter.</p>
                 <div class="example-box">
-                    <h4>Open the tutorials</h4>
+                    <h4>Open the web tutorials</h4>
                     <ul>
                         <li><a href="tutorials/index.html">The tutorials front page</a>, with all thirteen lessons in order</li>
                         <li><a href="tutorials/lessons/11-flexbox-grid-advanced.html">Lesson 11: Flexbox and Grid</a>, the first of the three for the project</li>
@@ -143,11 +121,37 @@
             </div>
         </section>
 
+        <section id="data" class="tutorial-section">
+            <h2>Database tutorials</h2>
+            <div class="lesson">
+                <p>Start with the playground. Then try the quiz. The notebook covers the same ideas in Python, and adds joining two tables.</p>
+                <div class="example-box">
+                    <h4>Open the database tutorials</h4>
+                    <ul>
+                        <li><a href="databases/playground/index.html">The SQL playground</a>, where the data track begins</li>
+                        <li><a href="tutorials/tentacular-plushies-quiz-final.html">The SQL quiz</a>, five tasks on a small shop database</li>
+                        <li><a href="https://colab.research.google.com/github/deweydex/dewstack/blob/main/databases/sqlite_tutorial.ipynb">The SQLite notebook</a>, opened in Google Colab, or <a href="databases/sqlite_tutorial.ipynb">the notebook file</a> to download</li>
+                        <li><a href="databases/playground/teacher.html">The playground, teacher version</a>, with solutions and notes</li>
+                    </ul>
+                </div>
+                <p>More database tutorials are being written, in this order: a table is a list of rows; asking questions of a table; two tables and a join; designing a database before typing; a real dataset, loaded, queried, and charted. They will appear here as they are ready.</p>
+                <p>In the playground, the database starts again each time the page is reloaded. If you write a query you want to keep, copy it into a file of your own.</p>
+            </div>
+        </section>
+
+        <section id="full-stack" class="tutorial-section">
+            <h2>Full stack: putting the two together</h2>
+            <div class="lesson">
+                <p>A full-stack page is a web page that shows information from a database and lets a visitor change it. A list of products that a form adds to. A table of marks with a chart beside it. A search box that asks a question of a table and shows the answer.</p>
+                <p>This part of the course is being written. The first tutorial will show a page that reads rows from a database and draws them as a table. It uses the same engine as the playground. It will appear here when it is ready.</p>
+            </div>
+        </section>
+
         <section id="projects" class="tutorial-section">
             <h2>Projects and the exam</h2>
             <div class="lesson">
                 <p>The college sets the assessments: a web authoring project, a database project, and a practical exam. The briefs and the dates are on your course page and on Moodle. We go through each brief in class before it is due.</p>
-                <p>The web authoring project builds on your site from Stage 1. Lessons 11 to 13 and the templates are written for it. The database project builds on Stage 2.</p>
+                <p>The web authoring project builds on your site from the starter. Lessons 11 to 13 and the templates are written for it. The database project builds on the data track. The exam draws on both.</p>
             </div>
         </section>
     </main>

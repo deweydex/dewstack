@@ -28,9 +28,9 @@ BAR = (
     'display:flex;flex-wrap:wrap;gap:4px 20px;align-items:center;box-sizing:border-box">'
     '<a href="{p}index.html" style="color:#fff;font-weight:700;text-decoration:none">'
     'Web Authoring and Databases: course front page</a>'
-    '<a href="{p}index.html#stage-1" style="color:#fff">Stage 1: a website</a>'
-    '<a href="{p}index.html#stage-2" style="color:#fff">Stage 2: data</a>'
-    '<a href="{p}index.html#tutorials" style="color:#fff">Tutorials</a>'
+    '<a href="{p}index.html#start" style="color:#fff">Begin</a>'
+    '<a href="{p}index.html#web" style="color:#fff">Web tutorials</a>'
+    '<a href="{p}index.html#data" style="color:#fff">Database tutorials</a>'
     '</nav>\n'
 )
 
