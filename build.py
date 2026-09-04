@@ -391,7 +391,10 @@ def render_body(tutorial: Tutorial, by_slug: dict[str, Tutorial]) -> tuple[str, 
     source, editors = extract_site_editors(tutorial.body, tutorial.path)
     md = make_markdown()
     rendered = md.convert(source)
-    rendered = rendered.replace("<pre><code", '<pre class="dl-static"><code')
+    # tabindex="0" so a static code block that ends up wider than the reading
+    # column, and so scrolls sideways, can be reached and scrolled by keyboard
+    # rather than only by touch or a mouse.
+    rendered = rendered.replace("<pre><code", '<pre class="dl-static" tabindex="0"><code')
     rendered = resolve_links(rendered, tutorial, by_slug)
     check_images(rendered, tutorial)
     for index, editor in enumerate(editors):

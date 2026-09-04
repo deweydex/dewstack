@@ -10,8 +10,8 @@ installed. You need a free GitHub account, a web browser and a text editor.
 The course website is at <https://deweydex.github.io/dewstack/>. Its front
 page is short: two ways to begin, then the list of tutorials. This page is
 the longer map. It has every link, including the older lessons and the
-notebook, for teachers and for anyone who wants to see how the course is
-put together.
+notebook. It is for teachers, and for anyone who wants to see how the
+course is put together.
 
 ## Before you begin
 
