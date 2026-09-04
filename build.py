@@ -349,6 +349,10 @@ def render_front(readme: Path) -> tuple[str, str, str]:
     md = make_markdown()
     rendered = md.convert("\n".join(lines))
     rendered = rendered.replace("<pre><code", '<pre class="dl-static"><code')
+    # The README's own title is the page's one level-one heading. It was
+    # lifted out above so the <title> could carry it; it goes back here so
+    # the page has an h1 for a screen reader to land on.
+    rendered = f"<h1>{html.escape(title)}</h1>\n{rendered}"
 
     def to_github(match: re.Match) -> str:
         target = match.group(1)
