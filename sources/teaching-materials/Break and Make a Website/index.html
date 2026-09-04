@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Character encoding for proper text display -->
+    <meta charset="UTF-8">
+    
+    <!-- Makes the page responsive on mobile devices -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Page title shown in browser tab -->
+    <title>Irish Tax Simulator (Real Distribution)</title>
+    
+    <!-- Link to external CSS file for styling -->
+    <link rel="stylesheet" href="styles.css">
+    
+    <!-- Chart.js library for creating interactive charts -->
+    <!-- This is a Content Delivery Network (CDN) link - loads the library from the internet -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <!-- HEADER SECTION: Contains the title and description -->
+    <header>
+        <h1>Irish Tax Simulator (Real Distribution)</h1>
+        <p>This simulator uses Revenue's 2023 individualized gross income distribution to estimate 
+           the number of earners in each income band and their total income. Adjust the sliders to 
+           change the income tax brackets, rates, credits and PRSI rate. The charts will update to 
+           show total revenue and the effective tax rate across incomes.</p>
+    </header>
+
+    <!-- MAIN CONTAINER: Holds all the interactive content -->
+    <div class="container">
+        
+        <!-- CHARTS SECTION: Visual representations of tax data -->
+        
+        <!-- Revenue comparison chart -->
+        <div class="results">
+            <p><strong>Revenue (baseline vs proposed):</strong></p>
+            <!-- Canvas element where Chart.js will draw the bar chart -->
+            <canvas id="revenueChart"></canvas>
+        </div>
+
+        <!-- Effective tax rate chart -->
+        <div class="results" style="margin-top:1.5rem;">
+            <p><strong>Effective tax rate by income:</strong></p>
+            <!-- Canvas element where Chart.js will draw the line chart -->
+            <canvas id="effectiveChart"></canvas>
+        </div>
+
+        <!-- Summary text area - will be populated by JavaScript -->
+        <div id="summaryText"></div>
+
+        <!-- CONTROLS SECTION: Interactive sliders for tax parameters -->
+        
+        <!-- First tax bracket endpoint slider -->
+        <div class="slider-group">
+            <label for="band1">First bracket ends at (€)</label>
+            <!-- Range input creates a slider
+                 min/max: limits of the slider
+                 step: increment amount when sliding
+                 value: initial/default value -->
+            <input type="range" id="band1" min="10000" max="100000" step="500" value="44000">
+            <!-- Display showing the current slider value -->
+            <div class="value-display">Value: <span id="band1Val">44000</span> €</div>
+        </div>
+
+        <!-- Second tax bracket endpoint slider (optional) -->
+        <div class="slider-group">
+            <label for="band2">Second bracket ends at (€) (0 disables)</label>
+            <input type="range" id="band2" min="0" max="350000" step="1000" value="0">
+            <div class="value-display">Value: <span id="band2Val">0</span> €</div>
+        </div>
+
+        <!-- Third tax bracket endpoint slider (optional) -->
+        <div class="slider-group">
+            <label for="band3">Third bracket ends at (€) (0 disables)</label>
+            <input type="range" id="band3" min="0" max="350000" step="1000" value="0">
+            <div class="value-display">Value: <span id="band3Val">0</span> €</div>
+        </div>
+
+        <!-- Tax rate sliders -->
+        <div class="slider-group">
+            <label for="rate1">Rate 1 (%)</label>
+            <input type="range" id="rate1" min="0" max="0.40" step="0.001" value="0.20">
+            <div class="value-display">Value: <span id="rate1Val">20.0</span> %</div>
+        </div>
+
+        <div class="slider-group">
+            <label for="rate2">Rate 2 (%)</label>
+            <input type="range" id="rate2" min="0.20" max="0.60" step="0.001" value="0.40">
+            <div class="value-display">Value: <span id="rate2Val">40.0</span> %</div>
+        </div>
+
+        <div class="slider-group">
+            <label for="rate3">Rate 3 (%)</label>
+            <input type="range" id="rate3" min="0.30" max="0.80" step="0.001" value="0.40">
+            <div class="value-display">Value: <span id="rate3Val">40.0</span> %</div>
+        </div>
+
+        <div class="slider-group">
+            <label for="rate4">Rate 4 (%)</label>
+            <input type="range" id="rate4" min="0.30" max="0.90" step="0.001" value="0.40">
+            <div class="value-display">Value: <span id="rate4Val">40.0</span> %</div>
+        </div>
+
+        <!-- Tax credit slider -->
+        <div class="slider-group">
+            <label for="credit">Tax credit (€)</label>
+            <input type="range" id="credit" min="0" max="3000" step="50" value="2000">
+            <div class="value-display">Value: <span id="creditVal">2000</span> €</div>
+        </div>
+
+        <!-- PRSI rate slider -->
+        <div class="slider-group">
+            <label for="prsiRate">PRSI rate (%)</label>
+            <input type="range" id="prsiRate" min="0" max="0.10" step="0.001" value="0.041">
+            <div class="value-display">Value: <span id="prsiRateVal">4.1</span> %</div>
+        </div>
+
+        <!-- Reset button to return to default values -->
+        <button id="resetBtn">Reset to Default Values</button>
+
+        <!-- STUDENT EXERCISE AREA (Optional additions) -->
+        <!-- Uncomment the section below to add a comparison tool -->
+        <!--
+        <div class="comparison-section">
+            <h2>Compare Two Scenarios</h2>
+            <p>Use the sliders above to set Scenario A, then click "Save Scenario A" below.</p>
+            <button id="saveScenarioBtn">Save Scenario A</button>
+            <div id="scenarioComparison"></div>
+        </div>
+        -->
+
+    </div>
+
+    <!-- Link to external JavaScript file -->
+    <!-- 'defer' means the script loads after the HTML is parsed -->
+    <script src="script.js" defer></script>
+</body>
+</html>

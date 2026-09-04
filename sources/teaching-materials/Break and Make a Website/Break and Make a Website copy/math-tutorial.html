@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Mathematics Tutorial</title>
+    <link rel="stylesheet" href="math-styles.css">
+</head>
+<body>
+    <!-- HEADER SECTION -->
+    <header>
+        <h1>Interactive Mathematics Tutorial</h1>
+        <p class="subtitle">Master foundational math concepts through hands-on exploration and visualization</p>
+        
+        <div class="learning-paths">
+            <h3>Choose Your Learning Path:</h3>
+            <p><strong>Structured Approach:</strong> Follow sections in order, master each concept before advancing</p>
+            <p><strong>Exploratory Approach:</strong> Jump to topics that interest you, play with the interactive tools</p>
+            <p><strong>Visual Learner:</strong> Focus on the visualizations and interactive demonstrations</p>
+            <p><strong>Problem-Solver:</strong> Skip to practice exercises, learn concepts as needed</p>
+            <p class="learning-note">Math is a journey, not a race. Choose what resonates with you.</p>
+        </div>
+        
+        <nav>
+            <a href="#fractions-section">Fractions</a>
+            <a href="#exponents-section">Exponents & Logs</a>
+            <a href="#statistics-section">Statistics</a>
+        </nav>
+    </header>
+
+    <main>
+        <!-- ============================================
+             SECTION 1: FRACTIONS
+        ============================================= -->
+        <section id="fractions-section" class="tutorial-section">
+            <h2>Part 1: Fractions & Rational Numbers</h2>
+            
+            <div class="exploration-prompt fractions-prompt">
+                <h4>How to Approach This Section:</h4>
+                <ul>
+                    <li><strong>Visual First:</strong> Look at the fraction visualizations to build intuition</li>
+                    <li><strong>Hands-On:</strong> Use the interactive calculator to experiment</li>
+                    <li><strong>Conceptual:</strong> Read about why fractions work the way they do</li>
+                    <li><strong>Practice:</strong> Try the exercises to solidify your understanding</li>
+                </ul>
+            </div>
+            
+            <div class="lesson">
+                <h3>What is a Fraction?</h3>
+                <p>A <strong>fraction</strong> represents a part of a whole. It has two components:</p>
+                <ul>
+                    <li><strong>Numerator</strong> (top number) - how many parts you have</li>
+                    <li><strong>Denominator</strong> (bottom number) - how many parts make up the whole</li>
+                </ul>
+                
+                <div class="example-box">
+                    <h4>Visual Representation:</h4>
+                    <div class="fraction-visual-demo">
+                        <div class="fraction-display">
+                            <span class="numerator">3</span>
+                            <span class="fraction-bar">—</span>
+                            <span class="denominator">4</span>
+                        </div>
+                        <p>means "3 parts out of 4 total parts"</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="lesson">
+                <h3>Interactive Fraction Visualizer</h3>
+                <p>See fractions come to life! Adjust the numerator and denominator to see how the fraction changes.</p>
+                
+                <div class="interactive-demo">
+                    <div class="controls">
+                        <div class="control-group">
+                            <label for="frac-numerator">Numerator: <span id="num-display">1</span></label>
+                            <input type="range" id="frac-numerator" min="0" max="12" value="1" class="slider">
+                        </div>
+                        <div class="control-group">
+                            <label for="frac-denominator">Denominator: <span id="denom-display">4</span></label>
+                            <input type="range" id="frac-denominator" min="1" max="12" value="4" class="slider">
+                        </div>
+                    </div>
+                    
+                    <div class="visualization-area">
+                        <div class="fraction-display-large">
+                            <span class="numerator" id="viz-num">1</span>
+                            <span class="fraction-bar">—</span>
+                            <span class="denominator" id="viz-denom">4</span>
+                            <span class="equals">=</span>
+                            <span class="decimal" id="viz-decimal">0.25</span>
+                        </div>
+                        
+                        <div class="fraction-bars" id="fraction-bars"></div>
+                        
+                        <div class="fraction-circle" id="fraction-circle"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="lesson">
+                <h3>Operations with Fractions</h3>
+                
+                <div class="operation-card">
+                    <h4>Addition & Subtraction</h4>
+                    <p>To add or subtract fractions, they must have the same denominator (common denominator).</p>
+                    <div class="example-box">
+                        <pre><code>1/4 + 2/4 = 3/4    (same denominator: just add numerators)
+
+1/3 + 1/4 = ?
+Step 1: Find common denominator (12)
+Step 2: Convert: 4/12 + 3/12
+Step 3: Add: 7/12</code></pre>
+                    </div>
+                </div>
+
+                <div class="operation-card">
+                    <h4>Multiplication</h4>
+                    <p>Multiply numerators together, multiply denominators together.</p>
+                    <div class="example-box">
+                        <pre><code>2/3 × 3/4 = (2×3)/(3×4) = 6/12 = 1/2</code></pre>
+                    </div>
+                </div>
+
+                <div class="operation-card">
+                    <h4>Division</h4>
+                    <p>Flip the second fraction (reciprocal) and multiply.</p>
+                    <div class="example-box">
+                        <pre><code>2/3 ÷ 3/4 = 2/3 × 4/3 = 8/9</code></pre>
+                    </div>
+                </div>
+            </div>
+
+            <div class="lesson">
+                <h3>Fraction Calculator</h3>
+                <p>Practice operations with this interactive calculator:</p>
+                
+                <div class="calculator-demo">
+                    <div class="fraction-input-group">
+                        <input type="number" id="calc-num1" value="1" min="0" class="frac-input">
+                        <span class="frac-separator">/</span>
+                        <input type="number" id="calc-denom1" value="2" min="1" class="frac-input">
+                        
+                        <select id="calc-operation" class="operation-select">
+                            <option value="add">+</option>
+                            <option value="subtract">−</option>
+                            <option value="multiply">×</option>
+                            <option value="divide">÷</option>
+                        </select>
+                        
+                        <input type="number" id="calc-num2" value="1" min="0" class="frac-input">
+                        <span class="frac-separator">/</span>
+                        <input type="number" id="calc-denom2" value="3" min="1" class="frac-input">
+                        
+                        <button onclick="calculateFractions()" class="calc-button">Calculate</button>
+                    </div>
+                    
+                    <div id="fraction-result" class="result-display"></div>
+                </div>
+            </div>
+
+            <div class="lesson">
+                <h3>Practice Exercises</h3>
+                
+                <div class="exercise-list">
+                    <div class="exercise">
+                        <h4>Exercise 1: Visualization</h4>
+                        <p>Use the visualizer above to create the fraction 3/5. What is its decimal equivalent?</p>
+                        <details>
+                            <summary>Show Answer</summary>
+                            <p>3/5 = 0.6</p>
+                        </details>
+                    </div>
+
+                    <div class="exercise">
+                        <h4>Exercise 2: Addition</h4>
+                        <p>Calculate: 1/6 + 1/6</p>
+                        <details>
+                            <summary>Show Solution</summary>
+                            <p>Same denominator, so add numerators: 1/6 + 1/6 = 2/6 = 1/3</p>
+                        </details>
+                    </div>
+
+                    <div class="exercise">
+                        <h4>Exercise 3: Different Denominators</h4>
+                        <p>Calculate: 1/2 + 1/3</p>
+                        <details>
+                            <summary>Show Solution</summary>
+                            <p>Common denominator is 6<br>
+                            1/2 = 3/6, 1/3 = 2/6<br>
+                            3/6 + 2/6 = 5/6</p>
+                        </details>
+                    </div>
+
+                    <div class="exercise">
+                        <h4>Exercise 4: Multiplication</h4>
+                        <p>Calculate: 2/5 × 3/4</p>
+                        <details>
+                            <summary>Show Solution</summary>
+                            <p>2/5 × 3/4 = (2×3)/(5×4) = 6/20 = 3/10</p>
+                        </details>
+                    </div>
+
+                    <div class="exercise">
+                        <h4>Exercise 5: Division</h4>
+                        <p>Calculate: 3/4 ÷ 2/3</p>
+                        <details>
+                            <summary>Show Solution</summary>
+                            <p>Flip and multiply: 3/4 × 3/2 = 9/8 = 1 1/8</p>
+                        </details>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================
+             SECTION 2: EXPONENTS & LOGARITHMS
+        ============================================= -->
+        <section id="exponents-section" class="tutorial-section">
+            <h2>Part 2: Exponents & Logarithms</h2>
+            
+            <div class="exploration-prompt exponents-prompt">
+                <h4>Ways to Learn This Section:</h4>
+                <ul>
+                    <li><strong>Pattern Recognition:</strong> Notice how exponents grow, use the calculator to find patterns</li>
+                    <li><strong>Visual Approach:</strong> Watch the growth visualizations to understand exponential vs linear</li>
+                    <li><strong>Practical:</strong> Focus on the rules and when to apply them</li>
+                    <li><strong>Conceptual:</strong> Understand logs as the "opposite" of exponents</li>
+                </ul>
+            </div>
+            
+            <div class="lesson">
+                <h3>What are Exponents?</h3>
+                <p>An <strong>exponent</strong> tells you how many times to multiply a number by itself.</p>
+                
+                <div class="example-box">
+                    <h4>Notation:</h4>
+                    <div class="exponent-notation">
+                        <span class="base">2</span><sup class="exponent">3</sup>
+                        <span class="equals">=</span>
+                        <span class="expansion">2 × 2 × 2 = 8</span>
+                    </div>
+                    <p>Read as "2 to the power of 3" or "2 cubed"</p>
+                    <ul>
+                        <li><strong>Base</strong>: the number being multiplied (2)</li>
+                        <li><strong>Exponent</strong>: how many times to multiply (3)</li>
+                    </ul>
+                </div>
+
+                <h4>Special Cases:</h4>
+                <ul>
+                    <li>Any number to the power of 0 equals 1: x⁰ = 1</li>
+                    <li>Any number to the power of 1 equals itself: x¹ = x</li>
+                    <li>Negative exponents mean reciprocal: x⁻ⁿ = 1/xⁿ</li>
+                </ul>
+            </div>
+
+            <div class="lesson">
+                <h3>Interactive Exponent Explorer</h3>
+                <p>See how exponents affect numbers. Try different bases and exponents!</p>
+                
+                <div class="interactive-demo">
+                    <div class="controls">
+                        <div class="control-group">
+                            <label for="exp-base">Base: <span id="base-display">2</span></label>
+                            <input type="range" id="exp-base" min="1" max="10" value="2" step="0.5" class="slider">
+                        </div>
+                        <div class="control-group">
+                            <label for="exp-power">Exponent: <span id="power-display">3</span></label>
+                            <input type="range" id="exp-power" min="-3" max="6" value="3" step="0.5" class="slider">
+                        </div>
+                    </div>
+                    
+                    <div class="visualization-area">
+                        <div class="exponent-result">
+                            <span id="exp-base-show">2</span><sup id="exp-power-show">3</sup>
+                            <span class="equals">=</span>
+                            <span id="exp-result">8</span>
+                        </div>
+                        
+                        <canvas id="exponent-graph" width="600" height="300"></canvas>
+                        <p class="graph-caption">Blue line shows exponential growth</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="lesson">
+                <h3>Exponent Rules</h3>
+                
+                <div class="rules-grid">
+                    <div class="rule-card">
+                        <h4>Product Rule</h4>
+                        <p class="rule-formula">xᵃ × xᵇ = xᵃ⁺ᵇ</p>
+                        <p class="rule-example">2³ × 2² = 2⁵ = 32</p>
+                    </div>
+
+                    <div class="rule-card">
+                        <h4>Quotient Rule</h4>
+                        <p class="rule-formula">xᵃ ÷ xᵇ = xᵃ⁻ᵇ</p>
+                        <p class="rule-example">2⁵ ÷ 2² = 2³ = 8</p>
+                    </div>
+
+                    <div class="rule-card">
+                        <h4>Power Rule</h4>
+                        <p class="rule-formula">(xᵃ)ᵇ = xᵃˣᵇ</p>
+                        <p class="rule-example">(2²)³ = 2⁶ = 64</p>
+                    </div>
+
+                    <div class="rule-card">
+                        <h4>Product to Power</h4>
+                        <p class="rule-formula">(xy)ᵃ = xᵃyᵃ</p>
+                        <p class="rule-example">(2×3)² = 2²×3² = 36</p>
+                    </div>
+
+                    <div class="rule-card">
+                        <h4>Quotient to Power</h4>
+                        <p class="rule-formula">(x/y)ᵃ = xᵃ/yᵃ</p>
+                        <p class="rule-example">(4/2)² = 4²/2² = 4</p>
+                    </div>
+
+                    <div class="rule-card">
+                        <h4>Negative Exponent</h4>
+                        <p class="rule-formula">x⁻ᵃ = 1/xᵃ</p>
+                        <p class="rule-example">2⁻³ = 1/2³ = 1/8</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="lesson">
+                <h3>Logarithms: The Inverse of Exponents</h3>
+                <p>A <strong>logarithm</strong> answers the question: "What power do I need to raise the base to, to get this number?"</p>
+                
+                <div class="example-box">
+                    <h4>Relationship between Exponents and Logs:</h4>
+                    <div class="log-exp-relationship">
+                        <div class="relationship-row">
+                            <span class="exp-form">2³ = 8</span>
+                            <span class="arrow">⟺</span>
+                            <span class="log-form">log₂(8) = 3</span>
+                        </div>
+                        <p class="explanation">"2 to what power equals 8?" Answer: 3</p>
+                    </div>
+                </div>
+
+                <h4>Common Logarithms:</h4>
+                <ul>
+                    <li><strong>log₁₀</strong> (or just "log") - base 10, common in science</li>
+                    <li><strong>ln</strong> - natural log (base e ≈ 2.718), used in calculus</li>
+                    <li><strong>log₂</strong> - base 2, used in computer science</li>
+                </ul>
+            </div>
+
+            <div class="lesson">
+                <h3>Logarithm Calculator</h3>
+                <p>Explore the relationship between exponents and logarithms:</p>
+                
+                <div class="calculator-demo">
+                    <div class="log-calculator">
+                        <div class="calc-section">
+                            <h4>Exponent → Result</h4>
+                            <div class="calc-row">
+                                <input type="number" id="log-base" value="2" min="0.1" step="0.1" class="calc-input">
+                                <sup><input type="number" id="log-exp" value="3" step="0.1" class="calc-input-small"></sup>
+                                <span class="equals">=</span>
+                                <span id="log-exp-result" class="result">8</span>
+                            </div>
+                        </div>
+                        
+                        <div class="calc-divider">⟺</div>
+                        
+                        <div class="calc-section">
+                            <h4>Result → Exponent (Log)</h4>
+                            <div class="calc-row">
+                                <span>log</span>
+                                <sub><span id="log-base-display2">2</span></sub>
+                                <span>(</span><span id="log-value-display">8</span><span>)</span>
+                                <span class="equals">=</span>
+                                <span id="log-result" class="result">3</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button onclick="calculateLog()" class="calc-button">Calculate</button>
+                </div>
+            </div>
+
+            <div class="lesson">
+                <h3>Practice Exercises</h3>
+                
+                <div class="exercise-list">
+                    <div class="exercise">
+                        <h4>Exercise 1: Basic Exponents</h4>
+                        <p>Calculate: 3⁴</p>
+                        <details>
+                            <summary>Show Solution</summary>
+                            <p>3⁴ = 3 × 3 × 3 × 3 = 81</p>
+                        </details>
+                    </div>
+
+                    <div class="exercise">
+                        <h4>Exercise 2: Negative Exponents</h4>
+                        <p>Calculate: 2⁻²</p>
+                        <details>
+                            <summary>Show Solution</summary>
+                            <p>2⁻² = 1/2² = 1/4 = 0.25</p>
+                        </details>
+                    </div>
+
+                    <div class="exercise">
+                        <h4>Exercise 3: Product Rule</h4>
+                        <p>Simplify: 5² × 5³</p>
+                        <details>
+                            <summary>Show Solution</summary>
+                            <p>5² × 5³ = 5²⁺³ = 5⁵ = 3125</p>
+                        </details>
+                    </div>
+
+                    <div class="exercise">
+                        <h4>Exercise 4: Basic Logarithm</h4>
+                        <p>Calculate: log₂(16)</p>
+                        <details>
+                            <summary>Show Solution</summary>
+                            <p>log₂(16) = 4 because 2⁴ = 16</p>
+                        </details>
+                    </div>
+
+                    <div class="exercise">
+                        <h4>Exercise 5: Logarithm Application</h4>
+                        <p>If log₁₀(x) = 2, what is x?</p>
+                        <details>
+                            <summary>Show Solution</summary>
+                            <p>x = 10² = 100</p>
+                        </details>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================
+             SECTION 3: PROBABILITY & STATISTICS
+        ============================================= -->
+        <section id="statistics-section" class="tutorial-section">
+            <h2>Part 3: Probability & Statistics</h2>
+            
+            <div class="exploration-prompt statistics-prompt">
+                <h4>Three Ways to Learn Statistics:</h4>
+                <ul>
+                    <li><strong>Experiment First:</strong> Roll the dice, flip coins, see patterns emerge</li>
+                    <li><strong>Visual Learning:</strong> Watch distributions form, see how data behaves</li>
+                    <li><strong>Practical:</strong> Start with real-world examples, then learn the theory</li>
+                    <li><strong>Mathematical:</strong> Study formulas first, then validate with simulations</li>
+                </ul>
+                <p class="learning-note">Statistics is about understanding uncertainty and finding patterns in data.</p>
+            </div>
+            
+            <div class="lesson">
+                <h3>What is Probability?</h3>
+                <p><strong>Probability</strong> measures how likely an event is to occur, expressed as a number between 0 (impossible) and 1 (certain).</p>
+                
+                <div class="example-box">
+                    <h4>Basic Formula:</h4>
+                    <pre><code>Probability = (Number of favorable outcomes) / (Total number of possible outcomes)</code></pre>
+                    
+                    <h4>Example: Coin Flip</h4>
+                    <p>Probability of heads = 1/2 = 0.5 = 50%</p>
+                    <ul>
+                        <li>Favorable outcomes: 1 (heads)</li>
+                        <li>Total outcomes: 2 (heads or tails)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="lesson">
+                <h3>Interactive Coin Flip Simulator</h3>
+                <p>Flip coins and watch probability in action!</p>
+                
+                <div class="interactive-demo">
+                    <div class="controls">
+                        <button onclick="flipCoins(1)" class="sim-button">Flip 1 Coin</button>
+                        <button onclick="flipCoins(10)" class="sim-button">Flip 10 Coins</button>
+                        <button onclick="flipCoins(100)" class="sim-button">Flip 100 Coins</button>
+                        <button onclick="flipCoins(1000)" class="sim-button">Flip 1000 Coins</button>
+                        <button onclick="resetCoinFlips()" class="reset-button">Reset</button>
+                    </div>
+                    
+                    <div class="stats-display">
+                        <div class="stat-card">
+                            <h4>Heads</h4>
+                            <div class="stat-value" id="heads-count">0</div>
+                            <div class="stat-percent" id="heads-percent">0%</div>
+                        </div>
+                        <div class="stat-card">
+                            <h4>Tails</h4>
+                            <div class="stat-value" id="tails-count">0</div>
+                            <div class="stat-percent" id="tails-percent">0%</div>
+                        </div>
+                        <div class="stat-card">
+                            <h4>Total Flips</h4>
+                            <div class="stat-value" id="total-flips">0</div>
+                        </div>
+                    </div>
+                    
+                    <canvas id="coin-chart" width="600" height="300"></canvas>
+                    <p class="observation">Notice: As you flip more coins, the percentages get closer to 50%! This is the <strong>Law of Large Numbers</strong>.</p>
+                </div>
+            </div>
+
+            <div class="lesson">
+                <h3>Dice Probability</h3>
+                <p>Rolling a standard 6-sided die has 6 equally likely outcomes.</p>
+                
+                <div class="interactive-demo">
+                    <div class="controls">
+                        <button onclick="rollDice(1)" class="sim-button">Roll 1 Die</button>
+                        <button onclick="rollDice(10)" class="sim-button">Roll 10 Dice</button>
+                        <button onclick="rollDice(100)" class="sim-button">Roll 100 Dice</button>
+                        <button onclick="rollDice(1000)" class="sim-button">Roll 1000 Dice</button>
+                        <button onclick="resetDiceRolls()" class="reset-button">Reset</button>
+                    </div>
+                    
+                    <div class="dice-visualization">
+                        <canvas id="dice-chart" width="600" height="300"></canvas>
+                        <p class="chart-caption">Each face should appear about 1/6 (16.67%) of the time</p>
+                    </div>
+                    
+                    <div class="dice-stats" id="dice-stats"></div>
+                </div>
+            </div>
+
+            <div class="lesson">
+                <h3>Descriptive Statistics</h3>
+                <p>Statistics help us summarize and understand data. Key measures include:</p>
+                
+                <div class="stats-concepts">
+                    <div class="concept-card">
+                        <h4>Mean (Average)</h4>
+                        <p class="formula">Mean = Sum of all values / Number of values</p>
+                        <p class="example">Example: [2, 4, 6, 8, 10] → Mean = 30/5 = 6</p>
+                    </div>
+
+                    <div class="concept-card">
+                        <h4>Median (Middle Value)</h4>
+                        <p class="formula">The middle value when data is sorted</p>
+                        <p class="example">Example: [2, 4, 6, 8, 10] → Median = 6</p>
+                    </div>
+
+                    <div class="concept-card">
+                        <h4>Mode (Most Common)</h4>
+                        <p class="formula">The value that appears most frequently</p>
+                        <p class="example">Example: [1, 2, 2, 3, 4] → Mode = 2</p>
+                    </div>
+
+                    <div class="concept-card">
+                        <h4>Range</h4>
+                        <p class="formula">Range = Maximum value - Minimum value</p>
+                        <p class="example">Example: [2, 4, 6, 8, 10] → Range = 10 - 2 = 8</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="lesson">
+                <h3>Interactive Statistics Calculator</h3>
+                <p>Enter a dataset and see all statistics calculated instantly!</p>
+                
+                <div class="calculator-demo">
+                    <label for="data-input">Enter numbers (separated by commas):</label>
+                    <textarea id="data-input" rows="3" placeholder="e.g., 5, 10, 15, 20, 25, 30">5, 10, 15, 20, 25</textarea>
+                    <button onclick="calculateStatistics()" class="calc-button">Calculate Statistics</button>
+                    
+                    <div id="stats-results" class="stats-results"></div>
+                    
+                    <canvas id="data-visualization" width="600" height="300"></canvas>
+                </div>
+            </div>
+
+            <div class="lesson">
+                <h3>Normal Distribution (Bell Curve)</h3>
+                <p>Many natural phenomena follow a <strong>normal distribution</strong> - most values cluster around the mean, with fewer extreme values.</p>
+                
+                <div class="interactive-demo">
+                    <div class="controls">
+                        <div class="control-group">
+                            <label for="normal-mean">Mean (μ): <span id="mean-display">0</span></label>
+                            <input type="range" id="normal-mean" min="-5" max="5" value="0" step="0.5" class="slider">
+                        </div>
+                        <div class="control-group">
+                            <label for="normal-std">Standard Deviation (σ): <span id="std-display">1</span></label>
+                            <input type="range" id="normal-std" min="0.5" max="3" value="1" step="0.1" class="slider">
+                        </div>
+                    </div>
+                    
+                    <canvas id="normal-distribution" width="600" height="300"></canvas>
+                    
+                    <div class="distribution-info">
+                        <p><strong>68-95-99.7 Rule:</strong></p>
+                        <ul>
+                            <li>68% of data falls within 1 standard deviation of the mean</li>
+                            <li>95% falls within 2 standard deviations</li>
+                            <li>99.7% falls within 3 standard deviations</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="lesson">
+                <h3>Practice Exercises</h3>
+                
+                <div class="exercise-list">
+                    <div class="exercise">
+                        <h4>Exercise 1: Basic Probability</h4>
+                        <p>What is the probability of rolling a 6 on a standard die?</p>
+                        <details>
+                            <summary>Show Solution</summary>
+                            <p>1/6 ≈ 0.167 or 16.7%</p>
+                        </details>
+                    </div>
+
+                    <div class="exercise">
+                        <h4>Exercise 2: Multiple Events</h4>
+                        <p>What is the probability of flipping two heads in a row?</p>
+                        <details>
+                            <summary>Show Solution</summary>
+                            <p>(1/2) × (1/2) = 1/4 = 0.25 or 25%</p>
+                        </details>
+                    </div>
+
+                    <div class="exercise">
+                        <h4>Exercise 3: Mean Calculation</h4>
+                        <p>Find the mean of: 10, 20, 30, 40, 50</p>
+                        <details>
+                            <summary>Show Solution</summary>
+                            <p>Mean = (10+20+30+40+50)/5 = 150/5 = 30</p>
+                        </details>
+                    </div>
+
+                    <div class="exercise">
+                        <h4>Exercise 4: Median</h4>
+                        <p>Find the median of: 3, 7, 2, 9, 5</p>
+                        <details>
+                            <summary>Show Solution</summary>
+                            <p>First sort: 2, 3, 5, 7, 9<br>Median (middle value) = 5</p>
+                        </details>
+                    </div>
+
+                    <div class="exercise">
+                        <h4>Exercise 5: Experiment</h4>
+                        <p>Use the coin flip simulator to flip 1000 coins. How close to 50% did you get?</p>
+                        <details>
+                            <summary>Discussion</summary>
+                            <p>The more trials you run, the closer you should get to the theoretical probability of 50%. This demonstrates the Law of Large Numbers!</p>
+                        </details>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================
+             PUTTING IT ALL TOGETHER
+        ============================================= -->
+        <section class="tutorial-section">
+            <h2>Putting It All Together</h2>
+            
+            <div class="exploration-prompt final-prompt">
+                <h4>Reflection Questions:</h4>
+                <ul>
+                    <li>How are fractions related to probability?</li>
+                    <li>Where might you see exponential growth in real life?</li>
+                    <li>How do statistics help us make decisions?</li>
+                    <li>Can you think of situations where you use these concepts daily?</li>
+                </ul>
+            </div>
+            
+            <div class="lesson">
+                <h3>How These Concepts Connect</h3>
+                <div class="connection-diagram">
+                    <div class="connection-card">
+                        <h4>Fractions</h4>
+                        <p>Express probabilities and statistical ratios</p>
+                    </div>
+                    <div class="arrow">→</div>
+                    <div class="connection-card">
+                        <h4>Exponents</h4>
+                        <p>Model growth, compound interest, populations</p>
+                    </div>
+                    <div class="arrow">→</div>
+                    <div class="connection-card">
+                        <h4>Statistics</h4>
+                        <p>Analyze data, make predictions, understand patterns</p>
+                    </div>
+                </div>
+
+                <h4>Real-World Applications:</h4>
+                <ul>
+                    <li><strong>Finance:</strong> Compound interest uses exponents; statistics analyze market trends</li>
+                    <li><strong>Medicine:</strong> Probabilities guide diagnosis; statistics evaluate treatment effectiveness</li>
+                    <li><strong>Technology:</strong> Algorithms use logarithms; statistics power machine learning</li>
+                    <li><strong>Sports:</strong> Fractions show win rates; statistics predict performance</li>
+                    <li><strong>Science:</strong> Exponential models describe radioactive decay, population growth, and more</li>
+                </ul>
+            </div>
+
+            <div class="lesson">
+                <h3>Next Steps in Your Math Journey</h3>
+                <ol>
+                    <li>Practice with real datasets - analyze your own data!</li>
+                    <li>Explore more advanced probability (conditional probability, Bayes' theorem)</li>
+                    <li>Learn about statistical inference and hypothesis testing</li>
+                    <li>Study calculus to understand rates of change</li>
+                    <li>Apply math to fields you're passionate about</li>
+                </ol>
+                
+                <div class="encouragement-box">
+                    <h4>Remember:</h4>
+                    <p>Mathematics is a language for describing patterns in the world. The more you practice, the more fluent you become. Every expert mathematician started exactly where you are now.</p>
+                    <p><strong>Keep exploring, keep questioning, keep learning!</strong></p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>Created for mathematical exploration and education</p>
+        <p>Built with HTML, CSS, JavaScript, and Canvas API</p>
+    </footer>
+
+    <script src="math-tutorial.js"></script>
+</body>
+</html>

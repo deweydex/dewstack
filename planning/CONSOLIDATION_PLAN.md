@@ -375,7 +375,8 @@ The source file is not touched.
 | Reconciliation of dewadaba#3 with `main`: build as the platform, copies to `sources/`, README as the built front page, dewstack throughout | dewadaba#3, dewadaba#4 | this repository | done 2026-09-04, dewstack#5 |
 | Site editor component for web pages | dewmini's Site tab, WADB's code playground | the build's shell | not started; section 13 |
 | Handover: where things stand, the order of work, open questions | this plan, sections 8, 14, 15 | `planning/NEXT_STEPS.md` | done 2026-09-04; the document a session opens first |
-| More database content from Josh | to come 2026-09-04 | `databases/` | awaited |
+| More database content from Josh | `everlearning`'s `Teaching materials/` | `sources/teaching-materials/` | arrived and copied 2026-09-04; assessed in `PAGE_BY_PAGE.md` section 6 |
+| Level 6 (`Web Development 6N1277`) coverage assessment | module descriptor Josh attached, 2026-09-04 | `planning/LEVEL6_COVERAGE.md` | done 2026-09-04; a coverage map, not new pages — nothing scheduled |
 | SQL tutorial | `HTML-CSS-SQL-JS/index.html` | `tutorials/databases/` | not started |
 | SQL practice page | `HTML-CSS-SQL-JS/index.html` | `tutorials/databases/` | not started |
 | Teaching notes | `HTML-CSS-SQL-JS/teacher.html` | `planning/` | not started |
@@ -458,10 +459,13 @@ The source file is not touched.
 13. **More database content is coming** (Josh, 2026-09-04): to be added
    to the sources later today. The data track's plan in section 7 is
    revised once it is in.
-14. **The outcomes map.** Decided 2026-09-04: later. The same material
-   may serve the Level 6 web development module, and mapping is easy once
-   the pages exist. Until then, coverage is checked against the copies
-   (question 8) and the project briefs.
+14. **The outcomes map.** First pass done 2026-09-04, once Josh sent the
+   Level 6 `Web Development 6N1277` descriptor and asked for a coverage
+   plan rather than pages yet: `planning/LEVEL6_COVERAGE.md`. Eleven of
+   seventeen outcomes already fit or adapt onto Arc 1, Arc 2 and the
+   accessibility bar; three (multi-tier architecture, an installed CMS,
+   FTP/domain hosting) don't fit a static, no-backend site at all and are
+   flagged rather than silently dropped. Nothing is scheduled from it yet.
 15. **The web track's order.** Josh asked for the three trajectories to
    be compared and a hybrid proposed rather than one picked. Section 14;
    superseded in part by 16.
@@ -699,7 +703,7 @@ The starter's one insight is worth the whole design: the student's own artefact 
 
 *Arc 1, your first site.* The `web` starter as it is: a three-page portfolio, twenty-five exercises, live from exercise 2. Beside it, one short concept page per idea the exercises touch, in the order they touch it: the page as files, the skeleton, headings and emphasis, sections and meaning, images and paths, links, navigation, then a rule, variables and colour, the box, text and units, selectors, the container, position, states, transitions, media queries. Sixteen pages. Ends with a published portfolio.
 
-*Arc 2, a site with several pages.* This is the assessed project's shape: five pages, a shared navigation, Flexbox and Grid layouts, responsive, images, a form, and the planning and documentation the brief marks. The brief says the topic must differ from the portfolio, so this arc starts from a second starter, a five-page skeleton with `planning.md` and `readme.md` templates inside it, forked the same way. Beside it: planning a site (audience, site map, wireframes); several pages and one navigation; a Flexbox row of cards; a Grid gallery; a navigation that works on a phone; a form; an images folder and file size; documenting what you built. Eight pages. Ends with the project.
+*Arc 2, a site with several pages.* This is the assessed project's shape: five pages, a shared navigation, Flexbox and Grid layouts, responsive, images, a form, and the planning and documentation the brief marks. The brief says the topic must differ from the portfolio, so this arc starts from a second starter, a five-page skeleton with `planning.md`, `readme.md` and `maintenance.md` templates inside it, forked the same way. Beside it: planning a site (audience, site map, wireframes); several pages and one navigation; a Flexbox row of cards; a Grid gallery; a navigation that works on a phone; a form; an images folder and file size; documenting what you built. Eight pages. Ends with the project. The live brief and the four template files it ships with are now in `sources/teaching-materials/Web Authoring Briefs/`; `PAGE_BY_PAGE.md` section 6 says what to adapt from them.
 
 *Arc 3, a site with data.* The full-stack track: the site shows the student's database. Three pages, section 12. Ends with a page that reads, searches and adds rows.
 

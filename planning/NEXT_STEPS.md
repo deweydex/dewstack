@@ -39,9 +39,8 @@ the fifteen-repository analysis that started all this, is a draft with
 green CI. Nothing else is open. dewlab#116 (the descriptors gathered) is
 merged.
 
-**Not yet here.** The further database content Josh said he would add.
-Section 7 of the plan and data Arc 2 in section 15 are written to be
-revised when it arrives.
+**Arrived and assessed.** The further database content, plus a Level 6
+module descriptor for later. See step 0, item 5.
 
 **What the repository holds now.**
 
@@ -52,10 +51,11 @@ revised when it arrives.
 | `assets/` | dewlab's shell (`shell.html`), stylesheet (`site.css`), settings panel (`settings.js`), search (`search.js`), the two accessible typefaces and their CSS, a favicon. |
 | `tutorials/` | The build's input. Today: `modules.yaml` and `getting-started/`, which holds the `welcome` series and the hello page. |
 | `sources/wadb/`, `sources/playground/` | Verbatim copies of `WADB_Tutorials` and `HTML-CSS-SQL-JS`, with the course bar added. Coverage material for the rewrites. Not published. |
+| `sources/teaching-materials/` | The web authoring and database subset of everlearning's `Teaching materials/` folder: the Database Methods notebook sequence and live project brief, the Web Authoring briefs and templates, Break and Make a Website, exam material, and the Level 6 module descriptor. Coverage material, not published. Assessed in `PAGE_BY_PAGE.md` section 6. |
 | `databases/sqlite_tutorial.ipynb` | The dinosaur notebook, opened from the README in Colab. |
 | `tools/add_course_bar.py` | Puts the course bar on the copies. Its links are moot now that the copies are unpublished. Keep or delete; see the questions. |
 | `tools/measure_sentences.py` | Counts sentences in a markdown file and lists the ones over twenty-five words. The first pass of the plain-language bar. |
-| `planning/` | The plan, the page-by-page assessment, and this. |
+| `planning/` | The plan, the page-by-page assessment, this, and `LEVEL6_COVERAGE.md` (a coverage map against the Level 6 module descriptor, nothing scheduled from it yet). |
 | `.github/workflows/` | `tests.yml` on every pull request; `deploy.yml` on every push to `main`. |
 
 ---
@@ -97,18 +97,25 @@ work put where the pages need it.
    plan here superseded it the same day.
 4. Point the class pages at `deweydex.github.io/dewstack/` and
    `github.com/deweydex/web`.
-5. Add the further database content. Put it under `sources/<name>/`
-   with a line in `PAGE_BY_PAGE.md` saying where it came from, and it is
-   assessed at the start of step 1.
+5. Done 2026-09-04. The further database content arrived as a
+   `Teaching materials/` folder pushed to `everlearning`'s `main`; the
+   web authoring and database subset is copied to
+   `sources/teaching-materials/` and assessed in `PAGE_BY_PAGE.md`
+   section 6. It also carried the Level 6 `Web Development 6N1277`
+   module descriptor, assessed on its own in `planning/LEVEL6_COVERAGE.md`
+   (nothing scheduled from it yet).
 
 ### Step 1. Assess the new database content, revise the data track
 
-When the content is in: measure it as `PAGE_BY_PAGE.md` measured the
-others (sentence lengths, headings, phone rendering), write it up as a
-new section there, and revise plan section 7's data rows and section 15's
-two data arcs. The question to answer is whether it changes the four-plus-
-four page shape or fills it. Until this is done, steps 6 and 7 are
-provisional.
+Done 2026-09-04. `PAGE_BY_PAGE.md` section 6 assesses it. It fills the
+four-plus-four shape rather than changing it: the real, currently-taught
+notebook sequence (pandas, matplotlib, ipywidgets, files, SQL) and the
+live 50% project brief confirm Data Arc 2 almost exactly as section 15
+already had it, and the exam material confirms the multi-table,
+keys-and-relationships half. Two calls were needed and are made: Data
+Arc 1 stays SQL-only (pandas is not pulled forward from Arc 2), and the
+ipywidgets-style interactive element stays a full-stack-arc idea rather
+than moving into Arc 2. Steps 6 and 7 are no longer provisional.
 
 ### Step 2. The three reference pages
 
@@ -280,7 +287,19 @@ step arrives.
 12. **Dates.** Term start, the date the project brief is issued, and the
     exam window, so that steps 3, 6 and 7 have deadlines. The plan says
     January for the brief; confirm.
-13. **Level 6 reuse** (plan question 14). Later, once pages exist.
+13. **Level 6 reuse** (plan question 14). First pass done:
+    `planning/LEVEL6_COVERAGE.md`. Open within it: three outcomes (a
+    multi-tier architecture with a database server, an installed CMS,
+    FTP/domain hosting) don't fit a static, no-backend site at all, and
+    whether this repository is meant to satisfy 6N1277 on its own or
+    alongside a separate CMS/hosting unit is Josh's call, not something
+    to resolve by writing a page that doesn't really cover it.
+14. **Break and Make a Website's placement.** Josh wants to consider it
+    on its own rather than as plain enrichment. `LEVEL6_COVERAGE.md`
+    proposes it as the vehicle for a Level 6 client-side-scripting step
+    (DOM manipulation, form validation, `localStorage`) sitting after
+    web Arc 2 and before the full-stack arc; the Irish Tax Simulator
+    artefact itself stays enrichment either way. Not decided.
 
 ---
 
