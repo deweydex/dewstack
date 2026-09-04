@@ -305,6 +305,16 @@ def test_page_without_a_site_block_has_no_editor_script(tree):
     assert "site-editor.js" not in page
 
 
+def test_site_editor_preview_keeps_links_inside_itself():
+    """A srcdoc iframe without a base tag resolves a relative address, a
+    same-page link included, against the parent page's own address rather
+    than its own; clicking one then loads a copy of the parent page into
+    the preview instead of jumping within it. `about:srcdoc` as the base
+    keeps it inside."""
+    script = (ROOT / "assets/site-editor.js").read_text(encoding="utf-8")
+    assert '<base href="about:srcdoc">' in script
+
+
 def test_front_page_without_front_md_is_the_list(tree):
     tutorials, out = tree
     write_tutorial(tutorials, "first")

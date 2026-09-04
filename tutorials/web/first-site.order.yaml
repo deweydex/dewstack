@@ -3,4 +3,16 @@
 
 series: Your first site
 order:
+  - a-page-is-files
+  - the-skeleton
+  - headings-and-emphasis
+  - sections-that-mean-something
+  - images-and-alt-text
+  - three-kinds-of-link
+  - navigation
+  - a-rule-and-where-it-lives
+  - variables-and-colour
+  - the-box
+  - text-and-units
+  - selectors-and-classes
   - flexbox-first-steps
