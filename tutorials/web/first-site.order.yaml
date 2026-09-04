@@ -15,4 +15,10 @@ order:
   - the-box
   - text-and-units
   - selectors-and-classes
+  - the-container
+  - position-and-the-sticky-header
+  - hover-and-focus
+  - transitions-and-transforms
+  - media-queries
+  - flexible-images
   - flexbox-first-steps

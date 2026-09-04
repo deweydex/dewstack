@@ -237,13 +237,29 @@ back to its `alt` text, an anchor link jumping inside the preview). B8
 (optional depth, the DOM) is left for later, per the plan's own allowance
 for optional-depth pages.
 
-C1 to C5 done 2026-09-04: `a-rule-and-where-it-lives` (ex 13), `variables-and-colour`
-(ex 13, 14), `the-box` (ex 15, 16), `text-and-units` (ex 17), `selectors-and-classes`
-(ex 18). C6 (optional depth, specificity) left for later, alongside B8. Same
-checks throughout: `tools/measure_sentences.py` over the whole repository,
-`python build.py --clean` (24 pages), `python -m pytest -q` (19 tests),
-Playwright at 1200 and 390 pixels, plus live checks of each demo's actual
-computed styles (the rem/px padding split, the descendant selector's colour).
+C1 to C12 done 2026-09-04, all of Arc 1's C rows bar the optional-depth C6:
+`a-rule-and-where-it-lives` (ex 13), `variables-and-colour` (ex 13, 14),
+`the-box` (ex 15, 16), `text-and-units` (ex 17), `selectors-and-classes`
+(ex 18), `the-container` (ex 19), `position-and-the-sticky-header` (ex 20,
+21, two separate site editors on one page for the two distinct
+techniques), `hover-and-focus` (ex 22, 23), `transitions-and-transforms`
+(ex 22, `transform`'s functions kept separate from `hover-and-focus`'s
+triggers), `media-queries` (ex 24, demonstrated live by dragging the
+preview width slider across the breakpoint), `flexible-images` (ex 24,
+`img { max-width: 100%; height: auto; }` from WADB lesson 9, demonstrated
+with a data-URI test image so the page needs no network). C6 (specificity,
+optional depth) and B8 (the DOM, optional depth) are the only rows left
+before D1. Same checks throughout: `tools/measure_sentences.py` over the
+whole repository, `python build.py --clean` (30 pages), `python -m
+pytest -q` (19 tests), Playwright at 1200 and 390 pixels, plus live checks
+of each demo's actual computed styles: the rem/px padding split, the
+descendant selector's colour, the container's width change, the sticky
+header's position after a scroll, the footer's bottom edge against the
+preview's own height, the button's hover transform and focus outline, the
+three transform functions' matrices, the message's background colour
+either side of the media query's breakpoint, and the two images' widths
+at a narrow preview (one overflowing at its full 500px, the other capped
+to the container).
 
 Writing `navigation`'s anchor-link demonstration found a real bug in the
 site editor: a `srcdoc` iframe with no `<base>` tag resolves a relative
