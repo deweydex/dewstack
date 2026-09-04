@@ -49,7 +49,7 @@ module descriptor for later. See step 0, item 5.
 | `README.md` | The course map. GitHub shows it; the build renders it as the top of `site/index.html`. One text, two places. |
 | `build.py`, `tests/`, `pytest.ini`, `requirements-build.txt` | The build and its checks. Fourteen tests. |
 | `assets/` | dewlab's shell (`shell.html`), stylesheet (`site.css`), settings panel (`settings.js`), search (`search.js`), the two accessible typefaces and their CSS, a favicon. |
-| `tutorials/` | The build's input. Today: `modules.yaml`, `getting-started/` (the `welcome` series and the hello page), and `reference/` (the `shelf` series: troubleshooting, quick reference, project ideas). |
+| `tutorials/` | The build's input. Today: `modules.yaml`, `getting-started/` (the `welcome` series: A0 to A6, how the pieces fit through the inspector), and `reference/` (the `shelf` series: troubleshooting, quick reference, project ideas). |
 | `sources/wadb/`, `sources/playground/` | Verbatim copies of `WADB_Tutorials` and `HTML-CSS-SQL-JS`, with the course bar added. Coverage material for the rewrites. Not published. |
 | `sources/teaching-materials/` | The web authoring and database subset of everlearning's `Teaching materials/` folder: the Database Methods notebook sequence and live project brief, the Web Authoring briefs and templates, Break and Make a Website, exam material, and the Level 6 module descriptor. Coverage material, not published. Assessed in `PAGE_BY_PAGE.md` section 6. |
 | `databases/sqlite_tutorial.ipynb` | The dinosaur notebook, opened from the README in Colab. |
@@ -139,22 +139,29 @@ Done when each page passes both bars in plan section 11 and renders at
 
 ### Step 3. Getting started, A0 to A6
 
-The starter depends on these and today says "clone it" without saying
-how. The module `getting-started` exists; the hello page is in its
-`welcome` series. Decide first whether hello stays as a page or becomes
-the opening of A0 (question 3 below).
+Done 2026-09-04. Question 3 below is resolved: hello folded into A0 and
+the `hello` slug is retired (it had been in front of no class), so the
+`welcome` series is now these seven pages in order, replacing the single
+hello page.
 
-| Page | Working slug | From |
+| Page | Slug | From |
 |---|---|---|
-| A0 How the pieces fit | `how-the-pieces-fit` | New. One picture, one paragraph: editor, GitHub, Pages, browser, this site. The README's "Before you begin" is the seed. |
-| A1 A GitHub account | `a-github-account` | `sources/wadb/github-guides/01-getting-started.html`, `lessons/06-github-setup.html` |
-| A2 An editor | `an-editor` | New. VS Code installed; GitHub's own editor as the fallback (decision, 2026-09-04). |
-| A3 Your copy of the starter | `your-copy-of-the-starter` | Guide 02, guide 06's fork section. Fork, then clone, download, or edit in the browser. |
-| A4 Publish it | `publish-it` | Guide 05, lesson 08. GitHub Pages, and why the address looks like that. |
-| A5 The two loops | `the-two-loops` | Lesson 01's first third, guide 03, lesson 07. Save and refresh; commit and wait. |
+| A0 How the pieces fit | `how-the-pieces-fit` | New, plus hello's explanation of the shell. The README's "Before you begin" is the seed; no illustration yet, described in words instead. |
+| A1 A GitHub account | `a-github-account` | `sources/wadb/github-guides/01-getting-started.html` |
+| A2 An editor | `an-editor` | New. VS Code, with GitHub's own web editor as the no-install fallback. |
+| A3 Your copy of the starter | `your-copy-of-the-starter` | Guide 06's fork section, plus guide 02. Fork, then clone, download, or edit in the browser. |
+| A4 Publish it | `publish-it` | Guide 05. GitHub Pages, and why the address looks like that. |
+| A5 The two loops | `the-two-loops` | Lesson 01's first third, guide 03. Save and refresh; commit, push, and wait. |
 | A6 Seeing under the page | `the-inspector` | Guide 07's first third. |
 
-The data track needs only A0 and A6; the pages should say so at the top.
+The data track note (only A0 and A6 needed) is in A6's opening; A0
+applies to both tracks equally, so it needed no such note.
+
+Confirmed at 1200 and 390 pixels with a headless Chromium screenshot:
+no sideways scroll, one `main` landmark, one `h1`, a labelled `nav` on
+each page. `python -m pytest -q`, `python build.py --clean` (every
+`tutorial:` cross-link between these seven pages resolves) and
+`tools/measure_sentences.py` all pass.
 
 ### Step 4. The site editor component
 
@@ -236,13 +243,9 @@ with plan section 12 as the outline of the first.
 The ones that block a step are marked. The rest can be answered when the
 step arrives.
 
-1. **Hello page or A0?** (blocks step 3). The hello page explains the
-   shell. A0 explains the course. They could be one page, "How this site
-   and the course fit together", or hello could stay as the first page
-   of the `welcome` series with A0 to A6 as a second series. One page is
-   shorter; two keep the shell's explanation out of a page a data-track
-   student also reads. Recommendation: fold hello into A0 and retire the
-   slug, since no class has seen it.
+1. **Hello page or A0?** Decided 2026-09-04, per the recommendation:
+   folded into one page. `how-the-pieces-fit` covers the course and the
+   shell together; the `hello` slug is retired.
 2. **The second starter's name and shape** (blocks step 6). Working name
    `site`. A fork, as `web` is, or a GitHub template repository, which
    gives a clean history and a "Use this template" button? A template is

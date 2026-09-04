@@ -372,6 +372,7 @@ The source file is not touched.
 | Page-by-page assessment of the three sources, with the order of rewrites | this plan, section 10 | `planning/PAGE_BY_PAGE.md` | done 2026-09-04, dewadaba#2 |
 | `web` "Where this fits" section | section 5, step 6 | `deweydex/web` README | drafted as web#2, closed; lands after web#1 merges |
 | Build step and hello page | `dewlab`, by design | `build.py`, `assets/`, `tutorials/` | done 2026-09-04, dewadaba#3, reconciled with `main` in dewstack#5; awaiting the first publish run to turn Pages on |
+| Getting started, A0 to A6 (hello folded into A0, its slug retired) | `sources/wadb/github-guides/`, `lessons/01-html-basics.html` (first third) | `tutorials/getting-started/`, series `welcome` | done 2026-09-04; `NEXT_STEPS.md` step 3 |
 | Reconciliation of dewadaba#3 with `main`: build as the platform, copies to `sources/`, README as the built front page, dewstack throughout | dewadaba#3, dewadaba#4 | this repository | done 2026-09-04, dewstack#5 |
 | Site editor component for web pages | dewmini's Site tab, WADB's code playground | the build's shell | not started; section 13 |
 | Handover: where things stand, the order of work, open questions | this plan, sections 8, 14, 15 | `planning/NEXT_STEPS.md` | done 2026-09-04; the document a session opens first |
