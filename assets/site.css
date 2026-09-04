@@ -21,7 +21,10 @@
   /* Reader-tunable, written by the Settings panel. */
   --dl-font-family: Georgia, "Iowan Old Style", "Times New Roman", serif;
   --dl-font-size: 18px;
-  --dl-line-width: 34rem;
+  /* Narrower than dewlab's 34rem, at Josh's request (2026-09-04): about
+     sixty characters a line at the default size. The Settings presets
+     (shell.html) and the default in settings.js keep in step. */
+  --dl-line-width: 30rem;
 
   /* Links. The brand orange reads at 3.5 to 1 on the light background, short
      of the 4.5 accessibility guidelines ask for, so the light theme's default
@@ -596,6 +599,39 @@ p code, li code, td code {
 .dl-module-heading { margin-top: 2.6rem; }
 .dl-contents { padding-left: 1.6rem; }
 .dl-contents li { margin-bottom: 0.45rem; }
+/* One line under a module: what is still being written, or where the older
+   pages are until they are replaced. */
+.dl-module-note { color: var(--dl-muted); font-size: 0.9rem; margin: 0.2rem 0 1rem; }
+
+/* The two doors on the front page: where to begin. Cards in the shape of
+   dewlab's workspace card, side by side when there is room, so the choice
+   reads as a choice and each card says what a student has at its end. */
+.dl-doors {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.9rem;
+  margin: 0 0 2.5rem;
+}
+@media (min-width: 34rem) {
+  .dl-doors { grid-template-columns: 1fr 1fr; }
+}
+.dl-door {
+  display: block;
+  padding: 0.9rem 1rem 1rem;
+  border: 1px solid var(--dl-cell-border);
+  border-radius: 6px;
+  background: var(--dl-panel-bg);
+  color: inherit;
+  text-decoration: none;
+}
+.dl-door:hover, .dl-door:focus-visible { border-color: var(--dl-orange); }
+.dl-door:hover h3, .dl-door:focus-visible h3 { color: var(--dl-orange); }
+.dl-door h3 { margin: 0 0 0.45rem; font-size: 1.02rem; }
+.dl-door p { margin: 0 0 0.5rem; font-size: 0.88rem; }
+.dl-door-ends { color: var(--dl-muted); font-size: 0.82rem; }
+.dl-door-ends strong { color: var(--dl-heading); font-weight: 600; }
+/* A door that opens on an older page until its own pages are written. */
+.dl-door-interim { border-style: dashed; }
 .dl-contents a { text-decoration: none; }
 .dl-contents a:hover { text-decoration: underline; }
 

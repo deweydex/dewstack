@@ -475,6 +475,14 @@ The source file is not touched.
    section 15 lays out. `web` stays the door to web Arc 1; a second
    forkable starter, working name `site`, is the door to Arc 2, the
    project's shape. Every arc ends in something a student can show.
+17. **The front page.** Decided 2026-09-04, evening: the README and the
+   front page are two texts for two readers. The README is the map for
+   people who read the repository. The front page is for the student, in
+   dewlab's shape: an opening under two hundred words, two doors that open
+   onto pages here, the search box, then the list by module, with unwritten
+   modules shown as a heading and one line. `tutorials/front.md` holds the
+   opening and the doors; `modules.yaml` holds the planned modules and
+   the one-line notes. This revises the first paragraph of section 1.
 
 ---
 

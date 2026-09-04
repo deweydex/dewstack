@@ -186,29 +186,75 @@ def test_the_real_tutorials_build(tmp_path: Path):
     assert (tmp_path / "site" / "index.html").exists()
 
 
-def test_front_page_opens_with_the_readme(tree, tmp_path: Path):
+FRONT_MD = """---
+title: "The course"
+doors:
+  - title: "Start with a website"
+    href: tutorial:first
+    text: "Fork a small site and change one thing at a time."
+    ends: "A site with its own address."
+  - title: "Start with data"
+    href: https://example.org/playground/
+    text: "Make a table and ask it questions."
+    ends: "A table you built."
+    interim: true
+---
+Where to begin.
+
+- **Two ways to begin.** Pick one.
+- **Nothing is scored.** Nothing leaves your browser.
+"""
+
+
+def test_front_page_opens_with_front_md(tree):
     tutorials, out = tree
     write_tutorial(tutorials, "first")
     write_order(tutorials, ["first"])
-    readme = tmp_path / "README.md"
-    readme.write_text(
-        "# The course\n\nWhere to begin.\n\n## Notes\n\nSee [the plan](planning/PLAN.md) "
-        "and [the folder](planning/).\n",
+    (tutorials / "front.md").write_text(FRONT_MD, encoding="utf-8")
+    (tutorials / "modules.yaml").write_text(
+        "order:\n  - mod\n  - data\nplanned:\n  data:\n    title: Data\n    note: Being written.\n"
+        "notes:\n  mod: The older pages are [elsewhere](https://example.org/old/).\n",
         encoding="utf-8",
     )
 
-    build.build(tutorials_dir=tutorials, out_dir=out, assets_dir=ROOT / "assets", clean=True, readme=readme)
+    build.build(tutorials_dir=tutorials, out_dir=out, assets_dir=ROOT / "assets", clean=True,
+                front=tutorials / "front.md")
 
     page = (out / "index.html").read_text(encoding="utf-8")
     assert "<title>The course" in page
-    assert "Where to begin." in page
-    assert page.count("<h1>") == 1, "the README's title is the page's one level-one heading"
+    assert page.count("<h1>") == 1
     assert "<h1>The course</h1>" in page
-    assert f'href="{build.REPO_URL}/blob/main/planning/PLAN.md"' in page
-    assert f'href="{build.REPO_URL}/tree/main/planning/"' in page
-    assert "Tutorials written here" in page
-    assert '<h3 class="dl-module-heading">Module mod</h3>' in page
+    assert "Where to begin." in page
+    assert '<ul class="dl-intro-points">' in page
+    assert '<a class="dl-door" href="tutorials/mod/first/index.html">' in page
+    assert '<a class="dl-door dl-door-interim" href="https://example.org/playground/">' in page
+    assert "<strong>At the end:</strong> A site with its own address." in page
+    assert '<h2 class="dl-module-heading">Module mod</h2>' in page
     assert "tutorials/mod/first/index.html" in page
+    assert '<h2 class="dl-module-heading">Data</h2>' in page
+    assert "Being written." in page
+    assert 'href="https://example.org/old/"' in page
+    assert 'id="dl-search"' in page
+    assert "Tutorials written here" not in page
+
+
+def test_front_door_to_a_missing_tutorial_stops_the_build(tree):
+    tutorials, out = tree
+    write_tutorial(tutorials, "first")
+    write_order(tutorials, ["first"])
+    (tutorials / "front.md").write_text(FRONT_MD.replace("tutorial:first", "tutorial:ghost"), encoding="utf-8")
+    with pytest.raises(BuildError, match="ghost"):
+        build.build(tutorials_dir=tutorials, out_dir=out, assets_dir=ROOT / "assets", clean=True,
+                    front=tutorials / "front.md")
+
+
+def test_module_with_no_pages_and_no_plan_stops_the_build(tree):
+    tutorials, out = tree
+    write_tutorial(tutorials, "first")
+    write_order(tutorials, ["first"])
+    (tutorials / "modules.yaml").write_text("order:\n  - mod\n  - typo\n", encoding="utf-8")
+    with pytest.raises(BuildError, match="typo"):
+        build.build(tutorials_dir=tutorials, out_dir=out, assets_dir=ROOT / "assets", clean=True, front=None)
 
 
 def test_site_block_becomes_an_editor(tree):
@@ -259,12 +305,12 @@ def test_page_without_a_site_block_has_no_editor_script(tree):
     assert "site-editor.js" not in page
 
 
-def test_front_page_without_a_readme_is_the_list(tree):
+def test_front_page_without_front_md_is_the_list(tree):
     tutorials, out = tree
     write_tutorial(tutorials, "first")
     write_order(tutorials, ["first"])
 
-    build.build(tutorials_dir=tutorials, out_dir=out, assets_dir=ROOT / "assets", clean=True, readme=None)
+    build.build(tutorials_dir=tutorials, out_dir=out, assets_dir=ROOT / "assets", clean=True, front=None)
 
     page = (out / "index.html").read_text(encoding="utf-8")
     assert "<h1>Tutorials</h1>" in page

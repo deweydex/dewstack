@@ -7,11 +7,11 @@ The course is for adults who are learning to make web pages and to work
 with data. Many are doing this for the first time. Nothing has to be
 installed. You need a free GitHub account, a web browser and a text editor.
 
-This page is also the front page of the course website, at
-<https://deweydex.github.io/dewstack/>. The website has the same parts and
-the same links. The tutorials written for this course are listed at the
-end of it. The website has a Settings button: theme, typeface, text size
-and line width. Your choices are saved on your device.
+The course website is at <https://deweydex.github.io/dewstack/>. Its front
+page is short: two ways to begin, then the list of tutorials. This page is
+the longer map. It has every link, including the older lessons and the
+notebook, for teachers and for anyone who wants to see how the course is
+put together.
 
 ## Before you begin
 
