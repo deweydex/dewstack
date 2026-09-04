@@ -389,10 +389,13 @@ The source file is not touched.
    all eight are rewritten as short pages, so a student who wants the
    explanation before the exercise has it. Lessons 6 to 8 and guides 1 to
    5 cover the same ground; the rewrite makes one page per step, not two.
-4. **Templates and examples.** Eleven templates and four examples in
-   `WADB_Tutorials`. Keep as downloads, fold into project ideas, or drop.
-5. **Attribution.** Every `WADB_Tutorials` page links to
-   `github.com/jsaaron`. The repositories live under `deweydex`.
+4. **Templates and examples.** Decided 2026-09-04: fold into the project
+   ideas page. Each idea links the template that fits it; no separate
+   templates page. `portfolio-starter` and `basic` go, since the starter
+   covers them.
+5. **Attribution.** Decided 2026-09-04: `deweydex` everywhere. One
+   account name on every page and link; the front page's footer now links
+   `github.com/deweydex` rather than a personal site.
 6. **A Pages site for `web`**, so the README can show a live example.
 7. **The name.** Decided 2026-09-03: **dewstack**, beside dewlab, dewmini
    and dewmark. Every page, link and document already says dewstack; the
@@ -431,6 +434,12 @@ The source file is not touched.
 13. **More database content is coming** (Josh, 2026-09-04): to be added
    to the sources later today. The data track's plan in section 7 is
    revised once it is in.
+14. **The outcomes map.** Decided 2026-09-04: later. The same material
+   may serve the Level 6 web development module, and mapping is easy once
+   the pages exist. Until then, coverage is checked against the copies
+   (question 8) and the project briefs.
+15. **The web track's order.** Josh asked for the three trajectories to
+   be compared and a hybrid proposed rather than one picked. Section 14.
 
 ---
 
@@ -585,3 +594,59 @@ Decided in section 8, question 11. What a web authoring tutorial page needs is n
 **Where exercises go instead.** Every web tutorial ends with one "your turn" that is done in the student's fork: open this file, change this, save, refresh, look. The practice page beside it lists more of the same. That is the `web` starter's model, and it is why the tutorials never need to save a student's HTML.
 
 **Done when** one rewritten page (lesson 11's first half, Flexbox) ships with the component, renders at both widths, passes both bars, and a student can drag the preview narrower and watch a row wrap.
+
+---
+
+## 14. The web track's order: three trajectories and a hybrid
+
+Three orders exist for the same material. They differ in where GitHub comes, where CSS starts, and whether layout is taught at all.
+
+**The starter's exercises** (`deweydex/web`, 25 exercises). Fork and publish first (1, 2), so the site is live before anything is learned. Then the home page's HTML, top to bottom: title, heading, a paragraph, emphasis, a section, an image, a link, a contact section, navigation (3 to 12). Then the stylesheet: variables and colour, backgrounds, the box, borders, text, classes (13 to 18). Then layout: the container, a sticky header, the footer (19 to 21). Then states and polish: hover, focus, a media query, a favicon (22 to 25). The trajectory is *one real page, top to bottom, then its stylesheet, top to bottom*. It never teaches Flexbox or Grid, though its stylesheet uses Flexbox in five places and exercise 21 leans on it; the project brief requires both.
+
+**`CONCEPTS.md`** (ten sections). The box; how the browser builds a page; semantic HTML; selectors; specificity; units; Flexbox; responsive design; variables; transitions. The trajectory is *from the smallest idea to the largest, concept before use*. It puts variables ninth, though the starter uses them at exercise 13, and Flexbox seventh, though the starter never asks for it.
+
+**WADB's lessons** (thirteen). HTML basics; semantics; CSS basics; layout (box, display, Flexbox, positioning); responsive design; then GitHub setup, workflow and Pages (6 to 8); then images and links (9, 10); then the three project lessons. The trajectory is *a textbook's*: all of HTML, then all of CSS, then publishing in the middle, then two topics that arrived later. Publishing in the middle is its weakest choice; the starter's first-minute publish is better, and there are no returning students to keep the old order for.
+
+**The hybrid.** The starter's spine, because each tutorial page should be "the explanation behind the exercise you just did", with concept pages placed where the starter first touches the concept, the GitHub guides running beside the first three exercises, and WADB's project material as a fourth strand after exercise 25. Thirty-three pages, in four strands a student can also read across.
+
+| # | Page (working title) | Starter exercise | Source |
+|---|---|---|---|
+| A1 | An account, a fork, a published site | 1, 2 | guides 01, 02, 05; lesson 06 |
+| A2 | Why your address looks like that | 2 | lesson 08, guide 05 |
+| A3 | Editing on GitHub, and what a commit is | 3 | guide 03, lesson 07 |
+| A4 | Seeing under the page: the inspector | 3 onward | guide 07 (first third) |
+| B1 | A page is files; save, refresh | 3 | lesson 01 (first third) |
+| B2 | The skeleton: head, body, title | 3, 4 | lesson 01 |
+| B3 | Headings, paragraphs, emphasis | 4 to 6 | lesson 01 |
+| B4 | Sections, and the tags that mean something | 7, 8 | lesson 02, CONCEPTS semantic |
+| B5 | Images, paths and alt text | 9 | lesson 09 |
+| B6 | Three kinds of link | 10, 11 | lesson 10 |
+| B7 | Navigation | 12 | lesson 10; a pointer to D1, because the starter's nav is a flex row |
+| B8 | How the browser builds a page | after 12 | CONCEPTS DOM (optional depth) |
+| C1 | A rule, and where it lives | 13 | lesson 03 |
+| C2 | Variables and colour | 13, 14 | CONCEPTS variables, lesson 12 |
+| C3 | The box | 15, 16 | CONCEPTS box, lesson 04 |
+| C4 | Text and units | 17 | CONCEPTS units, lesson 03 |
+| C5 | Selectors and classes | 18 | CONCEPTS selectors, lesson 03 |
+| C6 | When rules conflict | 18 | CONCEPTS specificity (optional depth) |
+| C7 | The container: width and centring | 19 | lesson 04 |
+| C8 | Position, and the sticky header | 20, 21 | lesson 04 |
+| C9 | States: hover and focus | 22, 23 | lesson 10 |
+| C10 | Transitions | 22 | CONCEPTS transitions, lesson 13 |
+| C11 | Media queries | 24 | CONCEPTS responsive, lesson 05 |
+| C12 | Flexible images | 24 | lessons 05, 09 |
+| D1 | Flexbox first steps | after 25 | CONCEPTS Flexbox, lesson 04 |
+| D2 | Flexbox properties | project | lesson 11 (first half) |
+| D3 | Grid areas and minmax | project | lesson 11 (second half) |
+| D4 | A navigation that works on a phone | project | lessons 05, 10 |
+| D5 | Components and a theme switch | project | lesson 12 |
+| D6 | Keyframes and transforms | project | lesson 13 |
+| D7 | Branches and pull requests | team project | guide 04, lesson 07 |
+| D8 | Working with others on GitHub | team project | guide 06 |
+| E | Troubleshooting; quick reference; project ideas with the templates folded in | any | resource pages |
+
+**Where the starter diverges from this track, and the two warnings it needs.** First, the starter reaches the end of exercise 25 with a site that uses Flexbox without ever having named it, and the project brief requires Flexbox and Grid; the starter's closing section (plan, section 5, step 3) should say so and point at D1 to D3. Second, exercise 12's navigation is a flex row, so a student who asks "why does this line up" at B7 needs a pointer forward to D1 rather than an answer on the spot; B7 carries that pointer. Everywhere else the hybrid follows the starter exactly, so a student reading the tutorials in order and doing the exercises in order never meets a page that assumes an exercise they have not done.
+
+**What the hybrid gives up.** CONCEPTS's small-to-large order has a logic of its own, and a student who likes theory first loses it; B8 and C6 are kept as optional depth so that reader has somewhere to go. WADB's all-HTML-then-all-CSS order is gone, and with it the sense that HTML is finished before CSS begins, which the starter's exercises 8 and 11 (adding sections after the stylesheet is in use) already contradict.
+
+Thirty-three pages plus three reference pages, at 30 to 50 sentences each, is the "thirty-something shorter tutorials" outcome. The order of writing them stays as `PAGE_BY_PAGE.md` section 5 has it: reference pages first, then D2 and D3, then the data track, then A1 to A3, then B5 to B7, then the rest.
