@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{TITLE}} · dewadaba</title>
+{{META}}
+<link rel="icon" href="{{ROOT_BASE}}assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="{{FONTS_CSS_URL}}">
+<link rel="stylesheet" href="{{STYLE_URL}}">
+
+<script>
+/* Apply saved reading preferences before first paint, so a reader who chose
+   dark does not get a white flash on every page. Kept inline and small on
+   purpose; the panel itself lives in settings.js. */
+(function () {
+  try {
+    var s = JSON.parse(localStorage.getItem("dewadaba:texture") || "{}");
+    var r = document.documentElement;
+    if (s.theme && s.theme !== "system") r.setAttribute("data-theme", s.theme);
+    if (s.font && s.font !== "serif") r.setAttribute("data-font", s.font);
+    if (s.contrast && s.contrast !== "normal") r.setAttribute("data-contrast", s.contrast);
+    if (s.header && s.header !== "full") r.setAttribute("data-header", s.header);
+    if (s.size) r.style.setProperty("--dl-font-size", s.size + "px");
+    if (s.width) r.style.setProperty("--dl-line-width", s.width + "rem");
+    if (s.link) r.style.setProperty("--dl-link", s.link);
+  } catch (e) { /* private mode or blocked storage: the defaults apply */ }
+})();
+</script>
+</head>
+
+<body>
+<a href="#dl-body" class="dl-skip-link">Skip to main content</a>
+
+<div class="dl-page">
+
+  <!-- The masthead and the previous/next row stick together as one group, so
+       the way back to the contents and the way to the next page are always
+       on screen. -->
+  <div class="dl-chrome" id="dl-chrome">
+    <header class="dl-masthead">
+      <a class="dl-wordmark" href="{{ROOT_BASE}}index.html">dewadaba</a>
+      <span class="dl-crumbs">{{CRUMBS}}</span>
+      <div class="dl-masthead-actions">
+        <button type="button" class="dl-settings-toggle" id="dl-settings-toggle"
+                aria-expanded="false" aria-controls="dl-settings" aria-label="Settings">
+          <span class="dl-settings-icon" aria-hidden="true"></span><span class="dl-toggle-label">Settings</span>
+        </button>
+      </div>
+    </header>
+
+    <nav class="dl-nav dl-nav-top" aria-label="Previous and next">{{NAV_PREV_NEXT}}</nav>
+  </div>
+
+  {{TOC}}
+
+  <main id="dl-body">
+{{BODY}}
+  </main>
+
+  <nav class="dl-nav dl-nav-bottom" aria-label="Previous and next, at the end of the page">{{NAV_PREV_NEXT}}</nav>
+
+  <footer class="dl-footer">
+    {{FOOTER}}
+  </footer>
+
+</div>
+
+<!-- One panel for everything a reader can change about the page. Docked to
+     the right edge on a wide screen, a sheet across the bottom on a phone.
+     Whether it was left open follows the reader from page to page. -->
+<div class="dl-settings" id="dl-settings" role="dialog" aria-modal="false"
+     aria-labelledby="dl-settings-title" tabindex="-1" hidden>
+  <div class="dl-settings-head">
+    <h2 id="dl-settings-title">Settings</h2>
+    <button type="button" class="dl-settings-close" id="dl-settings-close"
+            aria-label="Close settings">&times;</button>
+  </div>
+
+  <section class="dl-settings-section" id="dl-settings-texture">
+    <h3>Reading</h3>
+    <p class="dl-panel-note">These choices are saved in this browser and follow you from page to page.</p>
+
+    <div class="dl-texture-row">
+      <span id="dl-texture-theme-label">Theme</span>
+      <div class="dl-seg" data-texture="theme" role="group" aria-labelledby="dl-texture-theme-label">
+        <button type="button" data-value="system">auto</button>
+        <button type="button" data-value="light">light</button>
+        <button type="button" data-value="dark">dark</button>
+      </div>
+    </div>
+
+    <div class="dl-texture-row">
+      <span id="dl-texture-font-label">Font</span>
+      <div class="dl-seg" data-texture="font" role="group" aria-labelledby="dl-texture-font-label">
+        <button type="button" data-value="serif">serif</button>
+        <button type="button" data-value="sans">sans</button>
+        <button type="button" data-value="mono">mono</button>
+      </div>
+    </div>
+
+    <!-- The same data-texture="font" as the row above. Two groups sharing one
+         key need no extra code, and this lets the two accessible fonts sit on
+         their own line rather than crowding a five-wide row. -->
+    <div class="dl-texture-row">
+      <span></span>
+      <div class="dl-seg" data-texture="font" role="group" aria-label="Accessible fonts">
+        <button type="button" data-value="atkinson">Atkinson Hyperlegible</button>
+        <button type="button" data-value="opendyslexic">OpenDyslexic</button>
+      </div>
+    </div>
+
+    <div class="dl-texture-row">
+      <span id="dl-texture-contrast-label">High contrast</span>
+      <div class="dl-seg" data-texture="contrast" role="group" aria-labelledby="dl-texture-contrast-label">
+        <button type="button" data-value="normal">off</button>
+        <button type="button" data-value="high">on</button>
+      </div>
+    </div>
+
+    <div class="dl-texture-row">
+      <span>Size</span>
+      <input type="range" id="dl-texture-size" min="16" max="24" step="1" aria-label="Text size">
+    </div>
+
+    <div class="dl-texture-row">
+      <span id="dl-texture-width-label">Width</span>
+      <div class="dl-seg" data-texture="width" data-number role="group" aria-labelledby="dl-texture-width-label">
+        <button type="button" data-value="34">narrow</button>
+        <button type="button" data-value="44">medium</button>
+        <button type="button" data-value="56">wide</button>
+      </div>
+    </div>
+
+    <div class="dl-texture-row">
+      <span></span>
+      <input type="range" id="dl-texture-width" min="26" max="60" step="1"
+             aria-label="Line width, finer than the three presets">
+    </div>
+
+    <div class="dl-texture-row">
+      <span id="dl-texture-header-label">Header</span>
+      <div class="dl-seg" data-texture="header" role="group" aria-labelledby="dl-texture-header-label">
+        <button type="button" data-value="full">full</button>
+        <button type="button" data-value="minimal">minimal</button>
+      </div>
+    </div>
+
+    <div class="dl-texture-row">
+      <span>Links</span>
+      <input type="color" id="dl-texture-link" aria-label="Link colour">
+    </div>
+
+    <button type="button" class="dl-texture-reset" id="dl-texture-reset">reset to defaults</button>
+  </section>
+</div>
+
+<script src="{{SETTINGS_URL}}"></script>
+{{PAGE_SCRIPT}}
+</body>
+</html>

@@ -1,0 +1,7 @@
+# The order the modules appear on the contents page.
+#
+# A module missing from here still appears, after the listed ones, in
+# alphabetical order. A series missing from its module's order file does
+# not appear at all, and stops the build.
+order:
+  - getting-started

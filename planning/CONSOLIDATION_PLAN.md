@@ -273,9 +273,29 @@ removes the whole class.
 | The build's checks: a dead link fails the build, an image without alt text fails the build | |
 | The deploy workflow | |
 
-Copy `build.py` and trim rather than write a new one. The link validation,
-frontmatter parsing and shell rendering are the parts worth keeping. They
-are also the parts that take longest to get right from scratch.
+*Decision, 2026-09-04.* The plan first said to copy dewlab's `build.py`
+and trim it. Measured, that script is over four thousand lines and bound
+to Pyodide, the authoring editor, the topic tree, zips and the dewmini
+bundle. Trimming it would take longer than writing the part a reading
+site needs. So the build here is a new script of a few hundred lines that
+borrows the design and not the code: the same layout of `tutorials/`,
+the same frontmatter fields, the same strict checks, and dewlab's shell,
+tokens, Settings panel and search script carried over as files. What is
+left out on purpose, for now: a resizable panel, the reference sidebar,
+versioned releases, and downloadable copies. Each can come later without
+changing a page's address.
+
+*Reconciled, 2026-09-04, dewstack#5.* The build, shell and settings panel
+above were written in [dewadaba#3](https://github.com/deweydex/dewadaba/pull/3)
+while section 8's question 9 was being answered the other way, as "a copy
+of dewlab's build and runtime". Josh chose to take #3's build as the
+platform. Question 9 now reads: dewlab's design, not its code, for the
+reading site; the Pyodide engine and `tutorial_tools.py` are copied in
+from dewlab when data Arc 1 needs a SQL cell, and not before. The build
+owns `tutorials/`, so the interim copies moved to `sources/`, and the
+front page is `README.md` rendered by the build rather than a hand-made
+`index.html`. The reading settings from dewadaba#2 gave way to the shell's
+panel, which has the same choices and more.
 
 **The runtime question.** A SQL cell needs an engine in the browser.
 `HTML-CSS-SQL-JS` uses sql.js, which is light. dewlab chose Python's own
@@ -343,15 +363,16 @@ The source file is not touched.
 | README course map | this plan, section 4 | `README.md` | drafted 2026-09-03, awaiting Josh's read; the `HTML-CSS-SQL-JS` Pages link is unverified |
 | `web` audit | `deweydex/web` | section 5, step 1 | done 2026-09-03 |
 | `web` plain-language pass, colour fixes, skip link and nav label | `deweydex/web` | in place | done 2026-09-03, open as [deweydex/web#1](https://github.com/deweydex/web/pull/1), awaiting Josh's read |
-| Front page as a web page, in the playground's idiom; rewritten to the five parts of section 10 | this plan, sections 1, 4 and 10 | `index.html`, `styles.css`, `README.md` | done 2026-09-04, [dewadaba#2](https://github.com/deweydex/dewadaba/pull/2) |
-| Reading settings: theme, typeface, size, width, high contrast | `dewlab/assets/tutorial-runtime.js`, `tutorial-style.css`, `vendor/fonts` | `assets/settings.js`, `assets/settings.css`, `assets/fonts.css`, `assets/fonts/` | done 2026-09-03, dewadaba#2; the first piece of the shell in section 6 |
-| Interim shelf: `WADB_Tutorials` verbatim | `deweydex/WADB_Tutorials` | `tutorials/` | done 2026-09-03, dewadaba#2; replaced page by page below |
-| Interim copy of the playground | `deweydex/HTML-CSS-SQL-JS` | `databases/playground/` | done 2026-09-03, dewadaba#2 |
+| Front page as a web page, in the playground's idiom; rewritten to the five parts of section 10 | this plan, sections 1, 4 and 10 | `README.md`, rendered by `build.py` as the site's front page | done 2026-09-04, [dewadaba#2](https://github.com/deweydex/dewadaba/pull/2); the hand-made `index.html` and `styles.css` went in dewstack#5 |
+| Reading settings: theme, typeface, size, width, high contrast | `dewlab/assets/tutorial-runtime.js`, `tutorial-style.css`, `vendor/fonts` | the shell's Settings panel, `assets/settings.js`, `assets/site.css`, `assets/fonts/` | done 2026-09-03, dewadaba#2; superseded by dewadaba#3's panel, dewstack#5 |
+| Interim shelf: `WADB_Tutorials` verbatim | `deweydex/WADB_Tutorials` | `sources/wadb/` | done 2026-09-03, dewadaba#2; moved out of `tutorials/` in dewstack#5; coverage material, not published |
+| Interim copy of the playground | `deweydex/HTML-CSS-SQL-JS` | `sources/playground/` | done 2026-09-03, dewadaba#2; moved in dewstack#5; coverage material, not published |
 | SQLite notebook | course site assets | `databases/sqlite_tutorial.ipynb` | done 2026-09-03, dewadaba#2 |
-| Course bar on every copied page | this plan, section 2 | `tools/add_course_bar.py` | done 2026-09-03, dewadaba#2 |
+| Course bar on every copied page | this plan, section 2 | `tools/add_course_bar.py` | done 2026-09-03, dewadaba#2; now aimed at `sources/`, where the bar's links are moot because the copies are not published |
 | Page-by-page assessment of the three sources, with the order of rewrites | this plan, section 10 | `planning/PAGE_BY_PAGE.md` | done 2026-09-04, dewadaba#2 |
 | `web` "Where this fits" section | section 5, step 6 | `deweydex/web` README | drafted as web#2, closed; lands after web#1 merges |
-| Build step and hello page | `dewlab` | `build.py`, `assets/`, `tutorials/` | not started; decided 2026-09-04 (section 8, question 9): a copy of dewlab's build and Pyodide runtime, trimmed |
+| Build step and hello page | `dewlab`, by design | `build.py`, `assets/`, `tutorials/` | done 2026-09-04, dewadaba#3, reconciled with `main` in dewstack#5; awaiting the first publish run to turn Pages on |
+| Reconciliation of dewadaba#3 with `main`: build as the platform, copies to `sources/`, README as the built front page, dewstack throughout | dewadaba#3, dewadaba#4 | this repository | done 2026-09-04, dewstack#5 |
 | Site editor component for web pages | dewmini's Site tab, WADB's code playground | the build's shell | not started; section 13 |
 | More database content from Josh | to come 2026-09-04 | `databases/` | awaited |
 | SQL tutorial | `HTML-CSS-SQL-JS/index.html` | `tutorials/databases/` | not started |
@@ -410,12 +431,14 @@ The source file is not touched.
    the material to check coverage against, and the deliverable is new
    pages that meet every criterion in section 11. As each new page lands,
    the front page links to it and the copy it replaces can go.
-9. **Build and home.** Decided 2026-09-04: dewstack, on a copy of
-   dewlab's build and runtime. `build.py`, the Pyodide engine and worker,
-   `tutorial_tools.py` and the shell are copied in and trimmed; tutorials
-   are markdown with cells, dewlab's shape. One course site. The two
-   projects can drift, and the ledger notes the dewlab commit each copy
-   was taken from so a later sync is possible.
+9. **Build and home.** Decided 2026-09-04: dewstack, one course site,
+   tutorials as markdown in dewlab's shape. Revised the same day when
+   dewadaba#3 landed (section 6): the build is a short script that
+   borrows dewlab's design, and the shell and settings panel are
+   dewlab's files carried over. The Pyodide engine, its worker and
+   `tutorial_tools.py` are copied in when data Arc 1 needs a SQL cell.
+   The ledger notes the dewlab commit each copy was taken from so a later
+   sync is possible.
 10. **Page length.** Decided 2026-09-04: shorter than dewlab, 30 to 50
    sentences, one idea, one live example, one "your turn", ten to fifteen
    minutes. The thirteen WADB lessons become thirty or so pages, and that
@@ -708,7 +731,7 @@ Getting started 6, web 16 + 8 + 3, data 4 + 4, reference 3: forty-four short pag
 | The dinosaur notebook | **Keep the narrative, rebuild as pages.** Its create, insert, select, second table, join sequence is data Arc 1's order. | It needs Jupyter and a pip install; the course has removed installs. |
 | Data Arc 2 and the full-stack arc | **Fresh.** | Nothing in the sources covers design, a real dataset, or a page that shows data. The database content Josh is adding today may change this row. |
 | The site editor | **Port dewmini's Site tab** (section 13). | It exists, is sandboxed, and updates on every keystroke. |
-| The shell and build | **Copy dewlab's** (section 8, question 9). | |
+| The shell and build | **Done**, dewadaba#3: dewlab's shell and panel as files, a short build of its own (section 6). | The Pyodide runtime is copied in when data Arc 1 needs it. |
 | Reading settings, course bar | **Done.** | |
 
 ### What this changes on the front page
