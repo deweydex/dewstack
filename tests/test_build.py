@@ -211,6 +211,54 @@ def test_front_page_opens_with_the_readme(tree, tmp_path: Path):
     assert "tutorials/mod/first/index.html" in page
 
 
+def test_site_block_becomes_an_editor(tree):
+    tutorials, out = tree
+    body = (
+        "# A page\n\n"
+        "```html site=card\n<p>Hi</p>\n```\n"
+        "```css site=card\np { color: red; }\n```\n"
+    )
+    write_tutorial(tutorials, "page", body)
+    write_order(tutorials, ["page"])
+    run_build(tree)
+    page = (out / "tutorials/mod/page/index.html").read_text(encoding="utf-8")
+    assert 'class="dl-site-editor"' in page
+    assert 'sandbox="allow-scripts"' in page
+    assert "site-editor.js" in page
+
+
+def test_site_block_with_unknown_language_stops_the_build(tree):
+    tutorials, _ = tree
+    body = "# A page\n\n```python site=card\nprint('hi')\n```\n"
+    write_tutorial(tutorials, "page", body)
+    write_order(tutorials, ["page"])
+    with pytest.raises(BuildError, match="unknown language"):
+        run_build(tree)
+
+
+def test_non_consecutive_site_blocks_stop_the_build(tree):
+    tutorials, _ = tree
+    body = (
+        "# A page\n\n"
+        "```html site=card\n<p>One</p>\n```\n\n"
+        "Some prose in between.\n\n"
+        "```css site=card\np { color: red; }\n```\n"
+    )
+    write_tutorial(tutorials, "page", body)
+    write_order(tutorials, ["page"])
+    with pytest.raises(BuildError, match="not consecutive"):
+        run_build(tree)
+
+
+def test_page_without_a_site_block_has_no_editor_script(tree):
+    tutorials, out = tree
+    write_tutorial(tutorials, "plain")
+    write_order(tutorials, ["plain"])
+    run_build(tree)
+    page = (out / "tutorials/mod/plain/index.html").read_text(encoding="utf-8")
+    assert "site-editor.js" not in page
+
+
 def test_front_page_without_a_readme_is_the_list(tree):
     tutorials, out = tree
     write_tutorial(tutorials, "first")

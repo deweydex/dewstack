@@ -11,9 +11,12 @@ The shape is borrowed from dewlab's build (deweydex/dewlab, build.py),
 not its code. That script runs Python in the browser, an authoring
 editor and a topic tree, and is over four thousand lines. This one does
 the part a reading site needs: frontmatter, ordering, link checks, a
-shell, a contents page and a search index. The contents page opens with
-`README.md`, the course map, so the site's front page and the repository's
-front page are one text. What it checks, it checks strictly. A mistake that stops the build is a mistake a student never
+shell, a contents page, a search index, and the web track's site editor
+(a fenced block tagged `site=name` becomes a live HTML/CSS/JS pane, per
+`planning/CONSOLIDATION_PLAN.md` section 13). The contents page opens
+with `README.md`, the course map, so the site's front page and the
+repository's front page are one text. What it checks, it checks
+strictly. A mistake that stops the build is a mistake a student never
 sees.
 
 Layout it expects:
@@ -267,14 +270,119 @@ def relative_url(from_dir: Path, to_file: Path) -> str:
     return up + to_file.as_posix()
 
 
-def render_body(tutorial: Tutorial, by_slug: dict[str, Tutorial]) -> tuple[str, str]:
-    """The tutorial's HTML and its table of contents."""
+# -------------------------------------------------------------- site editor
+
+# A fenced block tagged `site=name`, as `python exec` would mark a cell
+# (plan, CONSOLIDATION_PLAN.md section 13). Consecutive blocks sharing a
+# name become the HTML, CSS and JavaScript panes of one editor.
+SITE_BLOCK = re.compile(r"```(?P<lang>[a-zA-Z]+) site=(?P<name>[a-z0-9-]+)\n(?P<code>.*?)\n```\n?", re.DOTALL)
+SITE_LANGS = {"html": "HTML", "css": "CSS", "js": "JavaScript"}
+SITE_PLACEHOLDER = "<!--SITE-EDITOR:{}-->"
+
+
+def extract_site_editors(body: str, path: Path) -> tuple[str, list[dict]]:
+    """Pulls `site=` fenced blocks out of the markdown source, leaving a
+    placeholder that `render_site_editor()` fills back in once the rest of
+    the page has been through markdown. Blocks sharing a name must sit back
+    to back with nothing but blank lines between them; the source is the
+    student's whole site as one glance, not the same name scattered
+    through the page's prose."""
+    matches = list(SITE_BLOCK.finditer(body))
+    if not matches:
+        return body, []
+
+    runs: list[list[re.Match]] = [[matches[0]]]
+    for prev, cur in zip(matches, matches[1:]):
+        same_name = cur.group("name") == prev.group("name")
+        only_blank_between = body[prev.end():cur.start()].strip() == ""
+        if same_name and only_blank_between:
+            runs[-1].append(cur)
+        else:
+            runs.append([cur])
+
+    editors: list[dict] = []
+    seen_names: set[str] = set()
+    for run in runs:
+        name = run[0].group("name")
+        if name in seen_names:
+            raise BuildError(f"{path}: site blocks named {name!r} are not consecutive")
+        seen_names.add(name)
+        files: dict[str, str] = {}
+        for match in run:
+            lang = match.group("lang").lower()
+            if lang not in SITE_LANGS:
+                raise BuildError(
+                    f"{path}: site block {name!r} has an unknown language {match.group('lang')!r}; "
+                    f"expected one of {', '.join(SITE_LANGS)}"
+                )
+            if lang in files:
+                raise BuildError(f"{path}: site block {name!r} has two {lang} files")
+            files[lang] = match.group("code")
+        editors.append({"name": name, "files": files})
+
+    new_body = body
+    for index, run in reversed(list(enumerate(runs))):
+        start, end = run[0].start(), run[-1].end()
+        new_body = new_body[:start] + f"\n\n{SITE_PLACEHOLDER.format(index)}\n\n" + new_body[end:]
+    return new_body, editors
+
+
+def render_site_editor(editor: dict, index: int, tutorial: Tutorial) -> str:
+    """One editor: a pane per file the block supplied, a sandboxed preview,
+    a width control so a reader can watch a responsive layout wrap, and
+    reset/download buttons. No saving here: the student's own fork is
+    where changes are kept (plan, section 13)."""
+    files = editor["files"]
+    editor_id = f"site-editor-{tutorial.slug}-{editor['name']}"
+
+    panes = []
+    for lang, label in SITE_LANGS.items():
+        if lang not in files:
+            continue
+        field_id = f"{editor_id}-{lang}"
+        panes.append(
+            f'<div class="dl-site-pane">'
+            f'<label for="{field_id}">{label}</label>'
+            f'<textarea id="{field_id}" class="dl-site-input" data-lang="{lang}" '
+            f'spellcheck="false" autocapitalize="off">{html.escape(files[lang])}</textarea>'
+            f"</div>"
+        )
+
+    return (
+        f'<div class="dl-site-editor" id="{editor_id}" data-site-name="{html.escape(editor["name"])}">'
+        f'<div class="dl-site-panes">{"".join(panes)}</div>'
+        f'<div class="dl-site-preview">'
+        f'<div class="dl-site-preview-controls">'
+        f'<label for="{editor_id}-width">Preview width</label>'
+        f'<input type="range" id="{editor_id}-width" class="dl-site-width" '
+        f'min="30" max="100" step="5" value="100" '
+        f'aria-describedby="{editor_id}-width-readout">'
+        f'<output id="{editor_id}-width-readout" for="{editor_id}-width">100%</output>'
+        f"</div>"
+        f'<div class="dl-site-frame-wrap">'
+        f'<iframe class="dl-site-frame" sandbox="allow-scripts" title="Live preview"></iframe>'
+        f"</div>"
+        f"</div>"
+        f'<div class="dl-site-actions">'
+        f'<button type="button" class="dl-site-reset">Reset</button>'
+        f'<button type="button" class="dl-site-download">Download these files</button>'
+        f"</div>"
+        f"</div>"
+    )
+
+
+def render_body(tutorial: Tutorial, by_slug: dict[str, Tutorial]) -> tuple[str, str, bool]:
+    """The tutorial's HTML, its table of contents, and whether it needs the
+    site editor's script."""
+    source, editors = extract_site_editors(tutorial.body, tutorial.path)
     md = make_markdown()
-    rendered = md.convert(tutorial.body)
+    rendered = md.convert(source)
     rendered = rendered.replace("<pre><code", '<pre class="dl-static"><code')
     rendered = resolve_links(rendered, tutorial, by_slug)
     check_images(rendered, tutorial)
-    return rendered, render_toc(md.toc_tokens)
+    for index, editor in enumerate(editors):
+        rendered = rendered.replace(SITE_PLACEHOLDER.format(index), render_site_editor(editor, index, tutorial))
+    return rendered, render_toc(md.toc_tokens), bool(editors)
 
 
 def render_toc(tokens: list[dict]) -> str:
@@ -530,7 +638,7 @@ def copy_assets(assets_dir: Path, target: Path) -> None:
 def write_tutorial(tutorial: Tutorial, members: list[Tutorial], series_title: str, shell: str,
                    out_dir: Path, assets_dir: Path, by_slug: dict[str, Tutorial]) -> Path:
     root_base = "../" * len(tutorial.rel_dir.parts)
-    body, toc = render_body(tutorial, by_slug)
+    body, toc, has_site_editor = render_body(tutorial, by_slug)
     ordered_live = [m for m in members if m.is_live] if tutorial.is_live else members
     nav = render_nav(tutorial, ordered_live, f"{root_base}index.html")
     crumbs = f"{html.escape(tutorial.module_title)} · {html.escape(series_title)}"
@@ -539,9 +647,13 @@ def write_tutorial(tutorial: Tutorial, members: list[Tutorial], series_title: st
         f'<meta name="tutorial-module" content="{html.escape(tutorial.module)}">\n'
         f'<meta name="tutorial-version" content="{html.escape(tutorial.version)}">'
     )
+    page_script = ""
+    if has_site_editor:
+        editor_url = asset_url(root_base, "site-editor.js", assets_dir)
+        page_script = f'<script src="{editor_url}"></script>'
     page = fill_shell(shell, page_values(
         title=tutorial.title, root_base=root_base, crumbs=crumbs, nav=nav, toc=toc,
-        body=body, page_script="", meta=meta, assets_dir=assets_dir,
+        body=body, page_script=page_script, meta=meta, assets_dir=assets_dir,
     ), str(tutorial.path))
 
     target_dir = out_dir / tutorial.rel_dir

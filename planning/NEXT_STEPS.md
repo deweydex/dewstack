@@ -49,7 +49,7 @@ module descriptor for later. See step 0, item 5.
 | `README.md` | The course map. GitHub shows it; the build renders it as the top of `site/index.html`. One text, two places. |
 | `build.py`, `tests/`, `pytest.ini`, `requirements-build.txt` | The build and its checks. Fourteen tests. |
 | `assets/` | dewlab's shell (`shell.html`), stylesheet (`site.css`), settings panel (`settings.js`), search (`search.js`), the two accessible typefaces and their CSS, a favicon. |
-| `tutorials/` | The build's input. Today: `modules.yaml`, `getting-started/` (the `welcome` series: A0 to A6, how the pieces fit through the inspector), and `reference/` (the `shelf` series: troubleshooting, quick reference, project ideas). |
+| `tutorials/` | The build's input. Today: `modules.yaml`, `getting-started/` (the `welcome` series: A0 to A6, how the pieces fit through the inspector), `reference/` (the `shelf` series: troubleshooting, quick reference, project ideas), and `web/` (the `first-site` series: Flexbox first steps, the site editor's first page). |
 | `sources/wadb/`, `sources/playground/` | Verbatim copies of `WADB_Tutorials` and `HTML-CSS-SQL-JS`, with the course bar added. Coverage material for the rewrites. Not published. |
 | `sources/teaching-materials/` | The web authoring and database subset of everlearning's `Teaching materials/` folder: the Database Methods notebook sequence and live project brief, the Web Authoring briefs and templates, Break and Make a Website, exam material, and the Level 6 module descriptor. Coverage material, not published. Assessed in `PAGE_BY_PAGE.md` section 6. |
 | `databases/sqlite_tutorial.ipynb` | The dinosaur notebook, opened from the README in Colab. |
@@ -165,22 +165,46 @@ each page. `python -m pytest -q`, `python build.py --clean` (every
 
 ### Step 4. The site editor component
 
-Needed before any web concept page, because every one carries a live
-example. Plan section 13 has the design; this is the build work.
+Done 2026-09-04. Question 4 decided: plain `textarea`s, per the
+recommendation, since the pages are read on phones and CodeMirror is
+heavy there. Nothing rules out CodeMirror later; the markdown contract
+(`site=name` fenced blocks) does not change either way.
 
-1. Decide the editor widget (question 4): CodeMirror, as dewmini vendors
-   it, or plain `textarea`s. The pages are read on phones.
-2. In `build.py`, a fenced block tagged as a site file (for example
-   ```` ```html site=card ````) becomes a pane, and consecutive blocks
-   with the same name form one editor with a live preview in a sandboxed
-   iframe. Seeding from the block's text; reset; download the files;
-   a draggable preview width.
-3. Port dewmini's Site tab logic from `dewlab/compose/dewmini.js`
-   (`openSiteFile()` and the `SITE` view; DECISIONS_LOG 7.121). The
-   `data-solution-*` idea from `sources/wadb/js/code-playground.js` is
-   worth keeping for practice pages.
-4. Tests: a page with one site block builds; a block with an unknown
-   tag stops the build; the preview iframe has `sandbox` set.
+A fenced block tagged `` ```html site=name `` (or `css`, or `js`)
+becomes a pane; consecutive blocks sharing a name form one editor.
+`build.py`'s `extract_site_editors()` and `render_site_editor()` do the
+work, ported in shape (not code) from dewmini's Site tab
+(`dewlab/compose/dewmini.js`, `openSiteFile()`/`renderSiteView()`;
+DECISIONS_LOG 7.121): a pane per file, a preview built from
+`<style>{css}</style>{html}<script>{js}</script>`, redrawn on every
+keystroke, in an iframe sandboxed to `allow-scripts` with no
+`allow-same-origin`. `assets/site-editor.js` is the runtime; new rules in
+`assets/site.css` under `.dl-site-editor` style it, stacked vertically
+rather than side by side, since the reading column can be as narrow as
+26rem.
+
+Two things dewmini's version does not need here and does not have:
+**reset** restores the block's original text, and **download these
+files** saves each pane as `<site-name>.<ext>`, so a reader can drop the
+result into their own fork. Nothing is saved on the page itself, since
+the student's fork is where real work lives (plan, section 13).
+
+The preview width control is a percentage, not a fixed pixel range: the
+reading column itself is reader-adjustable (26rem to 60rem in Settings),
+so a fixed width could overflow a narrow one where a percentage cannot.
+
+Tests added to `tests/test_build.py`: a page with one site block builds
+and its editor has `sandbox="allow-scripts"`; a block with a language
+other than html/css/js stops the build; site blocks sharing a name that
+are not consecutive stop the build; a page with no site block gets no
+`site-editor.js` script tag. `python -m pytest -q` (18 tests) and
+`tools/measure_sentences.py` both pass.
+
+**Done when**, satisfied: `flexbox-first-steps`, a new module `web` with
+series `first-site`, ships with the component. Checked in a real browser
+(Playwright): all three cards share one row at 100% preview width, and
+wrap across three rows at 30%, with no page-level sideways scroll at
+1200 or 390 pixels either way.
 
 Done when D1, Flexbox first steps, ships with it and a reader can drag
 the preview narrower and watch a row wrap.
@@ -259,12 +283,10 @@ step arrives.
    `with-data`; `data` with series `first-table`, `several-tables`. A
    slug is a contract once a class has seen it, so these should be
    settled before the first page in each.
-4. **The editor widget** (blocks step 4). CodeMirror is what dewmini uses
-   and what dewlab vendors; it is also heavy and awkward on a phone.
-   Plain `textarea`s with a monospace face are lighter and work
-   everywhere, and lose highlighting and bracket matching. Recommendation:
-   `textarea`s first, CodeMirror later if a page needs it; the markdown
-   contract does not change either way.
+4. **The editor widget.** Decided 2026-09-04, per the recommendation:
+   `textarea`s. CodeMirror stays an option later if a page needs
+   highlighting or bracket matching; the markdown contract (`site=name`
+   fenced blocks) would not change.
 5. **Where Pyodide is served from** (blocks step 7). dewlab's arrangement
    is the one to check: a CDN or self-hosted under `assets/vendor/`.
    Self-hosting is a large commit and no surprises; a CDN is small and a
