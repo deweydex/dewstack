@@ -369,11 +369,24 @@ The source file is not touched.
 
 ## 8. Open questions for Josh
 
-1. **The SQL engine.** sql.js, or Pyodide with sqlite3 as dewlab does.
-   sql.js is the smaller thing unless stage 3 needs Python.
-2. **Public solutions.** `teacher.html` publishes every answer. Keep that,
-   or move solutions behind a fold the way dewlab's practice pages do.
-3. **Which of lessons 1 to 8 survive** beside `web`.
+1. **The SQL engine.** Decided 2026-09-04: **Pyodide with sqlite3**, as
+   dewlab does. The data track, the full-stack track and the Python half
+   share one engine, and a SQL table and a pandas table see each other.
+   The cost is a load of about ten megabytes and a few seconds on first
+   open, which dewlab already pays and mitigates by caching. The port in
+   section 6 therefore takes dewlab's `pyodide-engine.js`, its worker,
+   `tutorial_tools.py` (`run_query()`, `load_csv()`) and dewmini's SQL
+   cell, not SQL.js. The playground and the quiz keep SQL.js until they
+   are rewritten.
+2. **Public solutions.** Decided 2026-09-04: solutions are linked at the
+   bottom of the page they belong to, after the exercises, not hidden and
+   not on a separate teacher page. The quiz is ungraded, so it shows its
+   solutions after the student submits. Teaching notes move to
+   `planning/`.
+3. **Which of lessons 1 to 8 survive** beside `web`. Decided 2026-09-04:
+   all eight are rewritten as short pages, so a student who wants the
+   explanation before the exercise has it. Lessons 6 to 8 and guides 1 to
+   5 cover the same ground; the rewrite makes one page per step, not two.
 4. **Templates and examples.** Eleven templates and four examples in
    `WADB_Tutorials`. Keep as downloads, fold into project ideas, or drop.
 5. **Attribution.** Every `WADB_Tutorials` page links to
@@ -387,14 +400,11 @@ The source file is not touched.
    home if the halves ever split; `dewpage` or `dewfolio` for the starter,
    though `web` stays, because a student's fork keeps the name and
    `username.github.io/web/` is the better address for a portfolio.
-8. **The interim shelf.** The verbatim copy of `WADB_Tutorials` under
-   `tutorials/` gives the course one address now, and it carries every
-   defect in section 9 under the course's own front page. The
-   alternative is to link out to the `WADB_Tutorials` Pages site until
-   each rewrite lands. The front page and README say plainly that these
-   pages are as they were and do not all fit a phone. Keep the shelf, or
-   link out?
-
+8. **The interim shelf.** Decided 2026-09-04: the site is not yet sent to
+   anyone, so the copies are not a student-facing problem. They stay as
+   the material to check coverage against, and the deliverable is new
+   pages that meet every criterion in section 11. As each new page lands,
+   the front page links to it and the copy it replaces can go.
 ---
 
 ## 9. What the audit of `WADB_Tutorials` found, 2026-09-03
@@ -497,7 +507,7 @@ Written 2026-09-04, after measuring every source page (`PAGE_BY_PAGE.md`). These
 
 **Two bars, both mechanical.** The plain-language bar is the eight checks in dewlab's `CLAUDE.md`, run over every sentence before a commit; the sentence-length measure in `PAGE_BY_PAGE.md` is the script that catches most of it. The accessibility bar is section 3 of this plan: no serious axe violation, no sideways scroll at 390 pixels, a `main` landmark, a labelled `nav`, 4.5 to 1 contrast. Every page is rendered at 1200 and 390 pixels and looked at before it is pushed. Code blocks scroll inside themselves; nothing on a page has a fixed width in pixels.
 
-**Live examples, one engine per track.** The web track needs an "edit and see" widget: two editors (HTML, CSS) and an iframe whose `srcdoc` is rebuilt on each change. dewmini in dewlab already has this as its Web cell (DECISIONS_LOG 7.116, 7.120); port the pattern, not Pyodide. The data track needs a SQL editor and a result table; the playground's `tutorial.js` is sixty lines that do this with SQL.js. The full-stack track uses both. Whether the data engine is SQL.js or Pyodide's `sqlite3` is question 1 in section 8; everything in this section works with either, and SQL.js is the smaller thing to carry until Python is needed.
+**Live examples, one engine per track.** The web track needs an "edit and see" widget: two editors (HTML, CSS) and an iframe whose `srcdoc` is rebuilt on each change. dewmini in dewlab already has this as its Web cell (DECISIONS_LOG 7.116, 7.120); port the pattern, not Pyodide. The data track needs a SQL editor and a result table; the playground's `tutorial.js` is sixty lines that do this with SQL.js. The full-stack track uses both. The data engine is Pyodide's `sqlite3`, decided in section 8, question 1: dewlab's engine, worker and `tutorial_tools.py` are ported as they are, and a SQL cell on a page is dewmini's SQL cell. The playground's sixty lines of SQL.js stay only until the playground is rewritten.
 
 **The starter's design is the student's.** `web` is navy and blue on purpose: it is the one design a student is meant to change, and exercise 13 changes it. The tutorials never restyle it, never show a re-skinned copy of it, and when they refer to the student's site they show it as it is, in an iframe or a screenshot. The tutorials' own look (the purple gradient, white cards) is fixed and is the course's, not the student's.
 
@@ -513,17 +523,17 @@ Written 2026-09-04, after measuring every source page (`PAGE_BY_PAGE.md`). These
 
 ## 12. The first full-stack tutorial, outlined
 
-Working title: *A page that shows rows from a table*. It is the smallest page that deserves the name full stack: HTML and CSS a student already understands, a database they already queried, and forty lines of JavaScript joining them.
+Working title: *A page that shows rows from a table*. It is the smallest page that deserves the name full stack: HTML and CSS a student already understands, a database they already queried, and a dozen lines of Python and JavaScript joining them.
 
-**Where it sits.** After the starter's exercise 12 (the student has a page with sections and navigation) and after the first two data tutorials (they have made a table and asked it questions). It uses the playground's engine, so nothing new is installed.
+**Where it sits.** After the starter's exercise 12 (the student has a page with sections and navigation) and after the first two data tutorials (they have made a table and asked it questions). It uses the same Pyodide engine as every other page here, so nothing new is installed; the first open of the day takes a few seconds while the engine loads, as dewlab's pages do.
 
 **What the student does, in order.**
 
-1. Open a page that already contains a `products` table in SQL.js, the same three columns as the playground's exercises, and a `<table>` element with a heading row and no body. Press Run. The rows appear. That is the whole idea, seen before it is explained: the page asked the database a question and drew the answer.
-2. Read the twelve lines that did it: run a query, loop over the rows, make a `<tr>` for each. Change the query to `WHERE price < 10`. The table changes.
+1. Open a page whose first cell has already made a `products` table in `sqlite3`, the same three columns as the playground's exercises, and whose web cell holds a `<table>` element with a heading row and no body. Press Run. The rows appear. That is the whole idea, seen before it is explained: the page asked the database a question and drew the answer.
+2. Read the dozen lines that did it: a Python function that runs the query and returns the rows, and the few lines of JavaScript in the web cell that call it (Pyodide exposes a Python function to the page) and make a `<tr>` for each row. Change the query to `WHERE price < 10`. The table changes.
 3. Add a search box. Its value goes into the `WHERE`. Now the visitor asks the question.
 4. Add a small form with two fields. Its submit runs an `INSERT`, then redraws the table. Now the visitor changes the data.
-5. Look back at where the work went: the database starts again on reload, as the playground does. Two buttons, "download my database" and "load a database file", use SQL.js's export and import, and the student now has a file that is theirs. This is the same "where your work is saved" question the front page raises, answered in code.
+5. Look back at where the work went: the database starts again on reload, as the playground does. Two buttons, "download my database" and "load a database file", save and restore the `.db` file through the browser's file system, as dewmini's Files section already does, and the student now has a file that is theirs. This is the same "where your work is saved" question the front page raises, answered in code.
 
 **What it names, at the end.** Three terms: query, result set, and the idea that a page is HTML plus data plus the code between them. That is what "full stack" means here, and the word is given last.
 
