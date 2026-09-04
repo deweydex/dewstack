@@ -219,17 +219,32 @@ with one series per arc. Each page: open with the question, something to
 try in the site editor, the explanation, one "your turn" done in the
 student's fork, a look back, at most three new terms listed at the end.
 
-In progress. B1 to B4 done 2026-09-04: `a-page-is-files` (ex 3), `the-skeleton`
+In progress. B1 to B7 done 2026-09-04: `a-page-is-files` (ex 3), `the-skeleton`
 (ex 3, 4), `headings-and-emphasis` (ex 4 to 6), `sections-that-mean-something`
-(ex 7, 8). `first-site.order.yaml` now lists these four before
+(ex 7, 8), `images-and-alt-text` (ex 9), `three-kinds-of-link` (ex 10, 11),
+`navigation` (ex 12). `first-site.order.yaml` lists all seven before
 `flexbox-first-steps`, which moves to the close of the series: D1 belongs
 after the B and C rows, not chronologically where its own exercise sits, per
 plan section 14. Checked the same way as steps 2 to 4: `tools/measure_sentences.py`,
-`python build.py --clean`, `python -m pytest -q` (18 tests), and a Playwright
-screenshot of all four at 1200 pixels confirming the site editor renders and
+`python build.py --clean`, `python -m pytest -q` (19 tests), and Playwright
+screenshots at 1200 and 390 pixels confirming the site editor renders and
 the demonstrations land (title/heading duplication, identical-looking
-div/section boxes, heading levels stepping down). B8 (optional depth, the DOM)
-is left for later, per the plan's own allowance for optional-depth pages.
+div/section boxes, heading levels stepping down, a broken image falling
+back to its `alt` text, an anchor link jumping inside the preview). B8
+(optional depth, the DOM) is left for later, per the plan's own allowance
+for optional-depth pages.
+
+Writing `navigation`'s anchor-link demonstration found a real bug in the
+site editor: a `srcdoc` iframe with no `<base>` tag resolves a relative
+address, a same-page `href="#id"` included, against the tutorial page's
+own address rather than its own, so clicking such a link loaded a copy of
+the real page into the preview instead of jumping within it. Fixed in
+`assets/site-editor.js` by setting `<base href="about:srcdoc">` on the
+generated document; a test in `tests/test_build.py` guards the fix.
+Confirmed with a headless click through Playwright: the preview now
+scrolls to the matching `id` and the outer page's own address never
+changes. `flexbox-first-steps` re-checked after the fix: its cards still
+share one row at 100% and wrap to three at 30%.
 
 ### Step 6. The second starter and web Arc 2
 
