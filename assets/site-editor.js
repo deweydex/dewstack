@@ -22,7 +22,12 @@
     const html = valueOf(editor, "html");
     const css = valueOf(editor, "css");
     const js = valueOf(editor, "js");
-    frame.srcdoc = `<!DOCTYPE html><html><head><style>${css}</style></head>`
+    /* Without a base tag, a srcdoc document resolves relative addresses,
+     * including a same-page link like href="#two", against this page's own
+     * address rather than its own. "about:srcdoc" keeps a link inside the
+     * preview instead of loading a copy of this page into it. */
+    frame.srcdoc = `<!DOCTYPE html><html><head><base href="about:srcdoc">`
+      + `<style>${css}</style></head>`
       + `<body>${html}<script>${js}<\/script></body></html>`;
   }
 
