@@ -33,6 +33,24 @@ last, for the data track.
 | `<section>`, `<article>` | Mark a named part of the page, and a piece of content that stands on its own. |
 | `<form>`, `<input>`, `<button>` | Make a form, one field in it, and a button. |
 | `<table>`, `<tr>`, `<th>`, `<td>` | Make a table, one row, a header cell, and an ordinary cell. |
+| `<link>` | Connects a stylesheet to the page. Sits in `<head>`. |
+| `<script>` | Connects or writes JavaScript. |
+
+### Attributes
+
+An attribute sits inside an opening tag and gives the browser extra
+information about that element.
+
+| Attribute | What it does |
+|---|---|
+| `id="…"` | Names one element uniquely on the page. Used once per page per name. |
+| `class="…"` | Names a group an element belongs to, for CSS or JavaScript to target. Any number of elements can share one. |
+| `href="…"` | Names the address a link or a stylesheet points to. |
+| `src="…"` | Names the file an image or a script loads. |
+| `alt="…"` | Describes an image for a reader who can't see it. Required on every `<img>`. |
+| `target="_blank"` | Opens a link in a new tab. |
+| `placeholder="…"` | Shows faint hint text inside an empty form field. |
+| `required` | Stops a form submitting until this field has a value. |
 
 ## CSS
 
@@ -56,7 +74,23 @@ last, for the data track.
 | `gap` | Adds space between flex or grid items. |
 | `max-width` | Limits how wide an element is allowed to be. Keeps a line of text from stretching too far. |
 | `:hover`, `:focus` | Applies only while the pointer is over an element, or while it has keyboard focus. |
+| `:link`, `:visited` | Applies to a link before it has been clicked, and after. |
+| `:active` | Applies only during the click itself. |
 | `@media (max-width: …)` | Applies a rule only below a given screen width. |
+
+### Units
+
+| Unit | What it measures in |
+|---|---|
+| `px` | A fixed number of pixels. Does not grow or shrink with anything else. |
+| `%` | A share of the parent element's size. |
+| `em` | A multiple of the current element's own font size. |
+| `rem` | A multiple of the page's base font size, wherever it's used. |
+| `vh`, `vw` | A percentage of the browser window's height or width. |
+
+Write link states in this order: `:link`, then `:visited`, then `:hover`,
+then `:active`. A later rule can override an earlier one that should have
+won.
 
 ## SQL
 

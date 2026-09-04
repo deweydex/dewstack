@@ -59,6 +59,79 @@ disagreeing about the same element.
   see the alt text where the picture should be, the path is wrong, not
   the file.
 
+### My file won't open in the browser
+
+This is usually a file extension problem rather than anything wrong with
+the page itself.
+
+- Check the file ends in `.html`, not `.txt` or `.doc`. A browser only
+  recognises a page by its extension.
+- If it opens in a text editor instead of a browser, right-click it,
+  choose "Open with", and pick your browser instead.
+- You can always open a file from inside the browser itself: press
+  `Ctrl+O` (Windows) or `Cmd+O` (Mac), then find the file. This works
+  regardless of which program your computer normally opens it with.
+
+## My code has a mistake I can't find
+
+A page can look almost right and still hide one small error. These are
+the three that cause most of the trouble.
+
+### An unclosed tag
+
+Every opening HTML tag needs a closing one, or the browser misreads
+everything that follows it.
+
+```html
+<!-- Correct -->
+<p>This paragraph ends where it should.</p>
+
+<!-- Incorrect: the closing tag is missing -->
+<p>This paragraph never ends, so everything after it
+```
+
+Work through the file from the top, and check that each tag you opened
+has a matching one closed in the right place. `<img>` and `<br>` are the
+exception: they never need a closing tag.
+
+### An unclosed brace in CSS
+
+A missing `}` breaks every rule that comes after it, not just the one it
+belongs to.
+
+```css
+/* Correct */
+p {
+    color: blue;
+}
+
+/* Incorrect: the closing brace is missing */
+p {
+    color: blue;
+```
+
+Most code editors highlight the brace that matches the one your cursor
+is on. Use that to check each `{` has a `}` where you expect it.
+
+### A missing semicolon
+
+In CSS, a property without its semicolon can take the next line down
+with it.
+
+```css
+/* Correct */
+p {
+    color: blue;
+    font-size: 16px;
+}
+
+/* Incorrect: font-size is silently ignored */
+p {
+    color: blue
+    font-size: 16px;
+}
+```
+
 ## Nothing changed after I edited something
 
 ### The page still shows the old version
