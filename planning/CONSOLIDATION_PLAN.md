@@ -374,7 +374,8 @@ The source file is not touched.
 | Build step and hello page | `dewlab`, by design | `build.py`, `assets/`, `tutorials/` | done 2026-09-04, dewadaba#3, reconciled with `main` in dewstack#5; awaiting the first publish run to turn Pages on |
 | Getting started, A0 to A6 (hello folded into A0, its slug retired) | `sources/wadb/github-guides/`, `lessons/01-html-basics.html` (first third) | `tutorials/getting-started/`, series `welcome` | done 2026-09-04; `NEXT_STEPS.md` step 3 |
 | Reconciliation of dewadaba#3 with `main`: build as the platform, copies to `sources/`, README as the built front page, dewstack throughout | dewadaba#3, dewadaba#4 | this repository | done 2026-09-04, dewstack#5 |
-| Site editor component for web pages | dewmini's Site tab, WADB's code playground | the build's shell | not started; section 13 |
+| Site editor component for web pages | dewmini's Site tab (`dewlab/compose/dewmini.js`) | `build.py`, `assets/site-editor.js`, `assets/site.css` | done 2026-09-04; `NEXT_STEPS.md` step 4; textareas, not CodeMirror |
+| Flexbox first steps, the first page to use it | `web/CONCEPTS.md`, `sources/wadb/lessons/04-css-layout.html` | `tutorials/web/flexbox-first-steps/`, module `web`, series `first-site` | done 2026-09-04; section 13's "done when" |
 | Handover: where things stand, the order of work, open questions | this plan, sections 8, 14, 15 | `planning/NEXT_STEPS.md` | done 2026-09-04; the document a session opens first |
 | More database content from Josh | `everlearning`'s `Teaching materials/` | `sources/teaching-materials/` | arrived and copied 2026-09-04; assessed in `PAGE_BY_PAGE.md` section 6 |
 | Level 6 (`Web Development 6N1277`) coverage assessment | module descriptor Josh attached, 2026-09-04 | `planning/LEVEL6_COVERAGE.md` | done 2026-09-04; a coverage map, not new pages — nothing scheduled |

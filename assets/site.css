@@ -2,8 +2,9 @@
  *
  * The tokens, the reading frame, the masthead and the Settings panel are
  * dewlab's (deweydex/dewlab, assets/tutorial-style.css), so the two sites
- * read as siblings. Everything about running code is left out: this is a
- * reading site.
+ * read as siblings. This is mostly a reading site: the data track's SQL
+ * cell is not here yet. The web track's site editor is, entirely
+ * client-side, in .dl-site-editor below.
  *
  * Every colour is a token on :root. The dark block and the high-contrast
  * block redefine only tokens, never rules, so a rule written once is right
@@ -709,6 +710,91 @@ p code, li code, td code {
 }
 .dl-footer a { color: inherit; }
 .dl-footer a:hover { color: var(--dl-fg); }
+
+/* ------------------------------------------------------------- site editor */
+
+/* The web track's live example: an HTML/CSS/JS pane the reader can type
+   into, and a sandboxed preview beside it. Panes stack vertically rather
+   than sitting side by side, because the reading column itself can be as
+   narrow as 26rem (Settings, "Width"); a split view has nowhere to go at
+   that size. */
+.dl-site-editor {
+  margin: 1.5rem 0;
+  padding: 1rem;
+  border: 1px solid var(--dl-cell-border);
+  border-radius: 8px;
+  background: var(--dl-cell-bg);
+}
+
+.dl-site-panes { display: flex; flex-direction: column; gap: 0.85rem; }
+
+.dl-site-pane label {
+  display: block;
+  margin-bottom: 0.3rem;
+  font-family: var(--dl-mono);
+  font-size: 0.78rem;
+  color: var(--dl-muted);
+}
+
+.dl-site-input {
+  display: block;
+  width: 100%;
+  min-height: 6rem;
+  padding: 0.6rem 0.7rem;
+  box-sizing: border-box;
+  font-family: var(--dl-mono);
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: var(--dl-fg);
+  background: var(--dl-output-bg);
+  border: 1px solid var(--dl-cell-border);
+  border-radius: 4px;
+  resize: vertical;
+}
+
+.dl-site-preview { margin-top: 1rem; }
+
+.dl-site-preview-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 0.5rem;
+  font-size: 0.78rem;
+  color: var(--dl-muted);
+}
+.dl-site-preview-controls label { flex: none; }
+.dl-site-width { flex: 1 1 auto; min-width: 0; }
+.dl-site-preview-controls output { flex: none; font-family: var(--dl-mono); }
+
+.dl-site-frame-wrap {
+  width: 100%;
+  max-width: 100%;
+  border: 1px solid var(--dl-cell-border);
+  border-radius: 4px;
+  overflow: hidden;
+  transition: width 0.15s ease;
+}
+
+.dl-site-frame {
+  display: block;
+  width: 100%;
+  height: 16rem;
+  border: none;
+  background: #fff;
+}
+
+.dl-site-actions { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.85rem; }
+.dl-site-actions button {
+  font-family: var(--dl-mono);
+  font-size: 0.78rem;
+  padding: 0.4rem 0.75rem;
+  border: 1px solid var(--dl-cell-border);
+  border-radius: 4px;
+  background: none;
+  color: var(--dl-fg);
+  cursor: pointer;
+}
+.dl-site-actions button:hover { color: var(--dl-orange); border-color: var(--dl-orange); }
 
 /* ------------------------------------------------------------------ print */
 
