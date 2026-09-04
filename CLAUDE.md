@@ -11,9 +11,11 @@ in `sources/wadb/` and `HTML-CSS-SQL-JS` in `sources/playground/`. They
 are coverage material for the rewrites, not part of the build, and the
 README links to the originals rather than to them.
 
-`planning/CONSOLIDATION_PLAN.md` says where the content is coming from,
-in what order, and what "done" means for each step. Read it before moving
-anything, and update its ledger when you finish a piece.
+`planning/NEXT_STEPS.md` is where a session starts: where things stand,
+the order of work, and the open questions. `planning/CONSOLIDATION_PLAN.md`
+says where the content is coming from, in what order, and what "done"
+means for each step. Read both before moving anything, and update the
+plan's ledger when you finish a piece.
 
 ## Running things
 
@@ -21,6 +23,7 @@ anything, and update its ledger when you finish a piece.
 pip install -r requirements-build.txt   # first time only
 python3 build.py --clean                # writes site/ from scratch
 python3 -m pytest                       # the build's checks
+python3 tools/measure_sentences.py README.md tutorials/**/*.md   # the sentence bar
 ```
 
 `site/` is gitignored and rebuilt every time. Never edit it.

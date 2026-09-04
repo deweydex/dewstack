@@ -113,10 +113,14 @@ website as they are ready.
 - The playground, teacher version, with solutions and notes:
   <https://deweydex.github.io/HTML-CSS-SQL-JS/teacher.html>
 
-More database tutorials are being written, in this order: a table is a
-list of rows; asking questions of a table; two tables and a join;
-designing a database before typing; a real dataset, loaded, queried and
-charted. They will appear on the course website as they are ready.
+More database tutorials are being written. They will appear on the
+course website as they are ready, in this order:
+
+1. A table is a list of rows.
+2. Asking questions of a table.
+3. Two tables and a join.
+4. Designing a database before typing.
+5. A real dataset, loaded, queried and charted.
 
 ## Full stack: putting the two together
 
