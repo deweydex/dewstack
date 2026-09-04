@@ -219,6 +219,18 @@ with one series per arc. Each page: open with the question, something to
 try in the site editor, the explanation, one "your turn" done in the
 student's fork, a look back, at most three new terms listed at the end.
 
+In progress. B1 to B4 done 2026-09-04: `a-page-is-files` (ex 3), `the-skeleton`
+(ex 3, 4), `headings-and-emphasis` (ex 4 to 6), `sections-that-mean-something`
+(ex 7, 8). `first-site.order.yaml` now lists these four before
+`flexbox-first-steps`, which moves to the close of the series: D1 belongs
+after the B and C rows, not chronologically where its own exercise sits, per
+plan section 14. Checked the same way as steps 2 to 4: `tools/measure_sentences.py`,
+`python build.py --clean`, `python -m pytest -q` (18 tests), and a Playwright
+screenshot of all four at 1200 pixels confirming the site editor renders and
+the demonstrations land (title/heading duplication, identical-looking
+div/section boxes, heading levels stepping down). B8 (optional depth, the DOM)
+is left for later, per the plan's own allowance for optional-depth pages.
+
 ### Step 6. The second starter and web Arc 2
 
 Before the project brief is issued (January, per the plan; confirm the

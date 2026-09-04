@@ -3,4 +3,8 @@
 
 series: Your first site
 order:
+  - a-page-is-files
+  - the-skeleton
+  - headings-and-emphasis
+  - sections-that-mean-something
   - flexbox-first-steps
