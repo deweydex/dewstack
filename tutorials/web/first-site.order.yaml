@@ -13,4 +13,6 @@ order:
   - a-rule-and-where-it-lives
   - variables-and-colour
   - the-box
+  - text-and-units
+  - selectors-and-classes
   - flexbox-first-steps

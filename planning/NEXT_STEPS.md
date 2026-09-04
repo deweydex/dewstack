@@ -234,10 +234,13 @@ back to its `alt` text, an anchor link jumping inside the preview). B8
 (optional depth, the DOM) is left for later, per the plan's own allowance
 for optional-depth pages.
 
-C1 to C3 done 2026-09-04: `a-rule-and-where-it-lives` (ex 13), `variables-and-colour`
-(ex 13, 14), `the-box` (ex 15, 16). Same checks: `tools/measure_sentences.py`
-over the whole repository, `python build.py --clean` (22 pages), `python -m
-pytest -q` (19 tests), Playwright at 1200 and 390 pixels.
+C1 to C5 done 2026-09-04: `a-rule-and-where-it-lives` (ex 13), `variables-and-colour`
+(ex 13, 14), `the-box` (ex 15, 16), `text-and-units` (ex 17), `selectors-and-classes`
+(ex 18). C6 (optional depth, specificity) left for later, alongside B8. Same
+checks throughout: `tools/measure_sentences.py` over the whole repository,
+`python build.py --clean` (24 pages), `python -m pytest -q` (19 tests),
+Playwright at 1200 and 390 pixels, plus live checks of each demo's actual
+computed styles (the rem/px padding split, the descendant selector's colour).
 
 Writing `navigation`'s anchor-link demonstration found a real bug in the
 site editor: a `srcdoc` iframe with no `<base>` tag resolves a relative
