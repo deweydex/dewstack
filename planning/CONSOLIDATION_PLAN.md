@@ -236,9 +236,17 @@ removes the whole class.
 | The build's checks: a dead link fails the build, an image without alt text fails the build | |
 | The deploy workflow | |
 
-Copy `build.py` and trim rather than write a new one. The link validation,
-frontmatter parsing and shell rendering are the parts worth keeping. They
-are also the parts that take longest to get right from scratch.
+*Decision, 2026-09-04.* The plan first said to copy dewlab's `build.py`
+and trim it. Measured, that script is over four thousand lines and bound
+to Pyodide, the authoring editor, the topic tree, zips and the dewmini
+bundle. Trimming it would take longer than writing the part a reading
+site needs. So the build here is a new script of a few hundred lines that
+borrows the design and not the code: the same layout of `tutorials/`,
+the same frontmatter fields, the same strict checks, and dewlab's shell,
+tokens, Settings panel and search script carried over as files. What is
+left out on purpose, for now: a resizable panel, the reference sidebar,
+versioned releases, and downloadable copies. Each can come later without
+changing a page's address.
 
 **The runtime question.** A SQL cell needs an engine in the browser.
 `HTML-CSS-SQL-JS` uses sql.js, which is light. dewlab chose Python's own
@@ -306,7 +314,7 @@ The source file is not touched.
 | README course map | this plan, section 4 | `README.md` | drafted 2026-09-03, awaiting Josh's read; the `HTML-CSS-SQL-JS` Pages link is unverified |
 | `web` audit | `deweydex/web` | section 5, step 1 | done 2026-09-03 |
 | `web` plain-language pass, colour fixes, skip link and nav label | `deweydex/web` | in place | done 2026-09-03, open as [deweydex/web#1](https://github.com/deweydex/web/pull/1), awaiting Josh's read |
-| Build step and hello page | `dewlab` | `build.py`, `assets/`, `tutorials/` | not started |
+| Build step and hello page | `dewlab` | `build.py`, `assets/`, `tutorials/` | done 2026-09-04; awaiting the first publish run to turn Pages on |
 | SQL tutorial | `HTML-CSS-SQL-JS/index.html` | `tutorials/databases/` | not started |
 | SQL practice page | `HTML-CSS-SQL-JS/index.html` | `tutorials/databases/` | not started |
 | Teaching notes | `HTML-CSS-SQL-JS/teacher.html` | `planning/` | not started |

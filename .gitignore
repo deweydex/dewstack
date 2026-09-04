@@ -1,0 +1,10 @@
+# Build output. Generated fresh on push and deployed to Pages, never committed.
+/site/
+
+# Python bytecode.
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# Editors and operating systems.
+.DS_Store

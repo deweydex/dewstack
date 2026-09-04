@@ -64,6 +64,7 @@ your own.
 
 | What it is | Repository | Published site |
 |---|---|---|
+| **dewadaba**: this repository, and the tutorials being written here | [deweydex/dewadaba](https://github.com/deweydex/dewadaba) | [Open the tutorials](https://deweydex.github.io/dewadaba/) |
 | **web**: stage 1, the site you fork and make your own | [deweydex/web](https://github.com/deweydex/web) | Your own fork has its own address once you turn on GitHub Pages. Exercise 2 shows how. |
 | **HTML, CSS and SQL**: one page covering all three, with a database you can query | [deweydex/HTML-CSS-SQL-JS](https://github.com/deweydex/HTML-CSS-SQL-JS) | [Open the page](https://deweydex.github.io/HTML-CSS-SQL-JS/) |
 | **Learn HTML, CSS, GitHub and more**: thirteen lessons, GitHub guides, templates, a quick reference and troubleshooting | [deweydex/WADB_Tutorials](https://github.com/deweydex/WADB_Tutorials) | [Open the site](https://deweydex.github.io/WADB_Tutorials/) |
