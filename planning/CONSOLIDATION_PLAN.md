@@ -652,4 +652,69 @@ Three orders exist for the same material. They differ in where GitHub comes, whe
 
 **What the hybrid gives up.** CONCEPTS's small-to-large order has a logic of its own, and a student who likes theory first loses it; B8 and C6 are kept as optional depth so that reader has somewhere to go. WADB's all-HTML-then-all-CSS order is gone, and with it the sense that HTML is finished before CSS begins, which the starter's exercises 8 and 11 (adding sections after the stylesheet is in use) already contradict.
 
-Thirty-six pages plus three reference pages, at 30 to 50 sentences each, is the "thirty-something shorter tutorials" outcome. The order of writing them stays as `PAGE_BY_PAGE.md` section 5 has it: reference pages first, then D2 and D3, then the data track, then A1 to A3, then B5 to B7, then the rest.
+Thirty-six pages plus three reference pages, at 30 to 50 sentences each, is the "thirty-something shorter tutorials" outcome.
+
+Josh's reply to this section (2026-09-04): the past structure of the source pages need not be kept; think it through from scratch, and say where an existing thing is upgraded and where something starts fresh. Section 15 does that, and where it differs from the hybrid above, section 15 wins. The table above stays as the inventory of where each source page's material goes. The order of writing them stays as `PAGE_BY_PAGE.md` section 5 has it: reference pages first, then D2 and D3, then the data track, then A1 to A3, then B5 to B7, then the rest.
+
+---
+
+## 15. From scratch: three arcs, two starters, and what to upgrade or begin fresh
+
+If nothing existed and the brief were "adults, first time, nothing installed, two modules assessed by a web project, a database project and a practical exam", this is the course.
+
+### The spine is a thing the student builds, not a syllabus
+
+The starter's one insight is worth the whole design: the student's own artefact grows, and the teaching hangs off its growth. Fork, publish, change one thing, look. Generalised, every track is an artefact that grows in arcs, and each arc ends in something the student can show. The tutorial pages are not a parallel syllabus to read through; each is the explanation behind one step of the artefact, thirty to fifty sentences, with something to try in place and a "your turn" done on the artefact itself.
+
+**The web track, three arcs.**
+
+*Arc 1, your first site.* The `web` starter as it is: a three-page portfolio, twenty-five exercises, live from exercise 2. Beside it, one short concept page per idea the exercises touch, in the order they touch it: the page as files, the skeleton, headings and emphasis, sections and meaning, images and paths, links, navigation, then a rule, variables and colour, the box, text and units, selectors, the container, position, states, transitions, media queries. Sixteen pages. Ends with a published portfolio.
+
+*Arc 2, a site with several pages.* This is the assessed project's shape: five pages, a shared navigation, Flexbox and Grid layouts, responsive, images, a form, and the planning and documentation the brief marks. The brief says the topic must differ from the portfolio, so this arc starts from a second starter, a five-page skeleton with `planning.md` and `readme.md` templates inside it, forked the same way. Beside it: planning a site (audience, site map, wireframes); several pages and one navigation; a Flexbox row of cards; a Grid gallery; a navigation that works on a phone; a form; an images folder and file size; documenting what you built. Eight pages. Ends with the project.
+
+*Arc 3, a site with data.* The full-stack track: the site shows the student's database. Three pages, section 12. Ends with a page that reads, searches and adds rows.
+
+**The data track, two arcs, meeting the third.**
+
+*Arc 1, your first table.* The student's own database, on a topic they choose, kept as a file they download and load (dewmini's Files). Four pages: a table is a list of rows; asking questions of a table; changing what is in it; a second table and a join. The dinosaurs are the worked example on every page; the "your turn" is the student's own table. Cells are queries.
+
+*Arc 2, a database with several tables.* The database project's shape: design before typing (what goes in which table, keys, one-to-many); a real dataset from Our World in Data, loaded, cleaned, queried; questions that need two tables; a chart from a query. Four pages. Ends with the project's database and the queries the practical exam asks for.
+
+**Getting started, before both tracks.** Six pages (section 14, A0 to A6): how the pieces fit; an account; an editor, VS Code installed with GitHub's own editor as the fallback (decided 2026-09-04); your copy of the starter; publishing it and the address; the two loops; the inspector. The data track needs only the first and the last.
+
+**Reference, beside everything.** Troubleshooting as problem-shaped cards; a quick reference in two halves, HTML and CSS, and SQL; project ideas with the templates folded in. Three pages.
+
+Getting started 6, web 16 + 8 + 3, data 4 + 4, reference 3: forty-four short pages. More than thirty-six, and each one shorter, because Arc 2 of both tracks is material none of the sources has and the brief marks.
+
+### Upgrade or fresh, piece by piece
+
+| Piece | Verdict | Why |
+|---|---|---|
+| `web`, the starter | **Upgrade, lightly.** web#1's pass, the assessment file gap, the closing section. Keep every exercise number. | The shape is the design. Its one gap, Flexbox used without being named, is closed by the concept pages, not by more exercises. |
+| A second starter for the project | **Fresh.** A five-page skeleton with the brief's file list, planning and README templates inside, fork-able. Working name `site`. | The brief wants a different topic from the portfolio and marks planning; nothing existing gives a student that starting point. |
+| `CONCEPTS.md` | **Upgrade into the Arc 1 concept pages.** Its ten sections, in the starter's order rather than its own, each with a site editor. | Already the right register and length; only the order and the live element are missing. |
+| WADB lessons 1 to 10 | **Quarry, do not upgrade.** Take the file-and-refresh insight, the paths section, alt text, link states, the box model prose; leave the shape. | Their shape (outcomes, why-it-matters, definitions, then examples) is the reverse of the one we want, and reversing a page is more work than writing it from the concept pages. |
+| WADB lessons 11 to 13 | **Quarry the examples, write Arc 2 fresh.** The holy-grail, dashboard, card and gallery examples become the live editors' seeds. | The examples are good and project-shaped; the prose around them is a reference manual. |
+| WADB GitHub guides | **Upgrade into getting started.** Shorten by half, keep the steps, merge each with its lesson twin. | Procedural pages survive being shortened; nothing about them needs rethinking. |
+| Troubleshooting, quick reference, project ideas | **Upgrade.** Keep the structure, rewrite the prose, add the SQL half and the dewstack-specific problems. | The structures are right; the sentences and the phone layout are wrong. |
+| WADB templates and examples | **Fold** into project ideas (decided). | |
+| The playground | **Quarry and rebuild.** The six command cards and five exercises seed data Arc 1; the page is rebuilt in the shell with Pyodide. | The engine changes, the parts 1 and 2 duplicate the web track, and the page is one long scroll. |
+| The quiz | **Rebuild, keep the tasks.** One column in the shell, the same five tasks, its reference panel into the quick reference, solutions after submission. | The three-panel layout is unusable on a phone and "check my work" was reported broken. |
+| The dinosaur notebook | **Keep the narrative, rebuild as pages.** Its create, insert, select, second table, join sequence is data Arc 1's order. | It needs Jupyter and a pip install; the course has removed installs. |
+| Data Arc 2 and the full-stack arc | **Fresh.** | Nothing in the sources covers design, a real dataset, or a page that shows data. The database content Josh is adding today may change this row. |
+| The site editor | **Port dewmini's Site tab** (section 13). | It exists, is sandboxed, and updates on every keystroke. |
+| The shell and build | **Copy dewlab's** (section 8, question 9). | |
+| Reading settings, course bar | **Done.** | |
+
+### What this changes on the front page
+
+Nothing in the five parts; the parts stay. Inside "Web authoring tutorials" and "Database tutorials", pages are listed by arc rather than by source, and each arc names what a student has at its end. The second starter joins the "Begin" part when it exists, as the door to Arc 2.
+
+### The order of writing, revised
+
+1. The three reference pages (every track, fail on a phone today).
+2. Getting started A0 to A6, because the starter depends on it and the term has begun.
+3. Web Arc 1's sixteen concept pages, in the starter's order, each a small pull request with its site editor.
+4. The second starter and web Arc 2, before the project brief is issued in January.
+5. Data Arc 1 as soon as the build step and Pyodide are in place; the playground and quiz rebuilt as part of it.
+6. Data Arc 2, then the full-stack arc.
