@@ -607,14 +607,17 @@ Three orders exist for the same material. They differ in where GitHub comes, whe
 
 **WADB's lessons** (thirteen). HTML basics; semantics; CSS basics; layout (box, display, Flexbox, positioning); responsive design; then GitHub setup, workflow and Pages (6 to 8); then images and links (9, 10); then the three project lessons. The trajectory is *a textbook's*: all of HTML, then all of CSS, then publishing in the middle, then two topics that arrived later. Publishing in the middle is its weakest choice; the starter's first-minute publish is better, and there are no returning students to keep the old order for.
 
-**The hybrid.** The starter's spine, because each tutorial page should be "the explanation behind the exercise you just did", with concept pages placed where the starter first touches the concept, the GitHub guides running beside the first three exercises, and WADB's project material as a fourth strand after exercise 25. Thirty-three pages, in four strands a student can also read across.
+**The hybrid.** A getting-started strand first, before either door, because the starter relies on a GitHub account, an editor and a fork, and today it says "clone it" without saying how (Josh, 2026-09-04: "an overview of everything with steps to get up and running before the practice"). Then the starter's spine, because each tutorial page should be "the explanation behind the exercise you just did", with concept pages placed where the starter first touches the concept, and WADB's project material as a fourth strand after exercise 25. Thirty-six pages, in four strands a student can also read across. The front page gains a "Before you begin" part above the two doors that says the same in five sentences and links strand A.
 
 | # | Page (working title) | Starter exercise | Source |
 |---|---|---|---|
-| A1 | An account, a fork, a published site | 1, 2 | guides 01, 02, 05; lesson 06 |
-| A2 | Why your address looks like that | 2 | lesson 08, guide 05 |
-| A3 | Editing on GitHub, and what a commit is | 3 | guide 03, lesson 07 |
-| A4 | Seeing under the page: the inspector | 3 onward | guide 07 (first third) |
+| A0 | How the pieces fit: editor, GitHub, Pages, browser, this site | before 1 | new; one picture and a paragraph |
+| A1 | A GitHub account | before 1 | guide 01, lesson 06 |
+| A2 | An editor: VS Code, or the editor inside GitHub | before 1 | new; the course site's "Programs to Install" page is empty today |
+| A3 | Your copy of the starter: fork, then clone, download, or edit in the browser | 1 | guide 02, guide 06 (fork section); the starter says "clone" without saying how |
+| A4 | Publish it: GitHub Pages, and why your address looks like that | 2 | guide 05, lesson 08 |
+| A5 | The two loops: save and refresh on your computer; commit and wait on GitHub | 3 | lesson 01 (first third), guide 03, lesson 07 |
+| A6 | Seeing under the page: the inspector | 3 onward | guide 07 (first third) |
 | B1 | A page is files; save, refresh | 3 | lesson 01 (first third) |
 | B2 | The skeleton: head, body, title | 3, 4 | lesson 01 |
 | B3 | Headings, paragraphs, emphasis | 4 to 6 | lesson 01 |
@@ -649,4 +652,4 @@ Three orders exist for the same material. They differ in where GitHub comes, whe
 
 **What the hybrid gives up.** CONCEPTS's small-to-large order has a logic of its own, and a student who likes theory first loses it; B8 and C6 are kept as optional depth so that reader has somewhere to go. WADB's all-HTML-then-all-CSS order is gone, and with it the sense that HTML is finished before CSS begins, which the starter's exercises 8 and 11 (adding sections after the stylesheet is in use) already contradict.
 
-Thirty-three pages plus three reference pages, at 30 to 50 sentences each, is the "thirty-something shorter tutorials" outcome. The order of writing them stays as `PAGE_BY_PAGE.md` section 5 has it: reference pages first, then D2 and D3, then the data track, then A1 to A3, then B5 to B7, then the rest.
+Thirty-six pages plus three reference pages, at 30 to 50 sentences each, is the "thirty-something shorter tutorials" outcome. The order of writing them stays as `PAGE_BY_PAGE.md` section 5 has it: reference pages first, then D2 and D3, then the data track, then A1 to A3, then B5 to B7, then the rest.
