@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tabbed Interface - Pure CSS Template</title>
+    <style>
+        /* ===================================
+           HOW TO EDIT THIS TEMPLATE
+           ===================================
+
+           This is a COMPLETE, WORKING template that demonstrates pure CSS tabs using :target.
+
+           TO VIEW THE SOURCE CODE:
+           - Right-click anywhere on this page
+           - Select "View Page Source" or "Inspect Element"
+           - Or use Ctrl+U (Windows/Linux) or Cmd+Option+U (Mac)
+
+           WHAT YOU CAN CUSTOMIZE:
+
+           1. TAB CONTENT (Lines ~350-450):
+              - Change tab titles and content
+              - Add or remove tabs
+              - Add images, code examples, or any HTML
+              - Create different content types per tab
+
+           2. COLORS (Lines ~70-85):
+              - Change CSS custom properties
+              - Modify active tab color
+              - Adjust background colors
+              - Change text colors
+
+           3. ANIMATION (Lines ~220-240):
+              - Change fade-in animation
+              - Modify transition duration
+              - Add slide or scale effects
+              - Adjust timing functions
+
+           4. LAYOUT (Lines ~120-200):
+              - Adjust tab sizes
+              - Change content padding
+              - Modify border radius
+              - Adjust spacing
+
+           5. DEFAULT TAB (Line ~370):
+              - Set which tab shows by default
+              - Add #tab1, #tab2, etc. to URL
+              - Or use :first-child styling
+
+           KEY CONCEPTS DEMONSTRATED:
+           - :target pseudo-class for URL hash navigation
+           - Hash links (#tab1, #tab2, etc.)
+           - Display toggling based on URL
+           - CSS-only tab switching
+           - Smooth transitions between states
+           - Keyboard accessible navigation
+
+           CHALLENGE IDEAS:
+           - Add vertical tabs (side navigation)
+           - Create nested tabs (tabs within tabs)
+           - Add tab indicators/underlines
+           - Implement tab memory (keep selection on reload)
+           - Add icons to tabs
+           - Create different tab styles (pills, buttons)
+           - Add transition effects (slide, fade, scale)
+        */
+
+        /* Reset and base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            /* Color scheme */
+            --color-bg: #f8fafc;
+            --color-text: #1e293b;
+            --color-text-light: #64748b;
+            --color-primary: #3b82f6;
+            --color-primary-dark: #2563eb;
+            --color-primary-light: #93c5fd;
+            --color-border: #e2e8f0;
+            --color-tab-inactive: #f1f5f9;
+            --color-tab-active: #ffffff;
+            --color-shadow: rgba(0, 0, 0, 0.1);
+
+            /* Spacing */
+            --spacing-md: 1rem;
+            --spacing-lg: 1.5rem;
+            --spacing-xl: 2rem;
+
+            /* Border radius */
+            --radius-md: 0.5rem;
+            --radius-lg: 0.75rem;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: var(--color-text);
+            min-height: 100vh;
+            padding: 2rem 1rem;
+            line-height: 1.6;
+        }
+
+        /* Container */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        /* Header */
+        header {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: white;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        /* Tabs Container */
+        .tabs {
+            background: white;
+            border-radius: var(--radius-lg);
+            box-shadow: 0 10px 30px var(--color-shadow);
+            overflow: hidden;
+        }
+
+        /* Tab Navigation */
+        .tab-nav {
+            display: flex;
+            background: var(--color-tab-inactive);
+            border-bottom: 2px solid var(--color-border);
+        }
+
+        .tab-link {
+            flex: 1;
+            padding: var(--spacing-md) var(--spacing-lg);
+            text-align: center;
+            text-decoration: none;
+            color: var(--color-text-light);
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border-bottom: 3px solid transparent;
+            position: relative;
+        }
+
+        .tab-link:hover {
+            background: rgba(59, 130, 246, 0.1);
+            color: var(--color-primary);
+        }
+
+        /* Tab Panels */
+        .tab-panel {
+            display: none;
+            padding: var(--spacing-xl);
+            animation: fadeIn 0.4s ease;
+        }
+
+        /* Show panel when targeted */
+        .tab-panel:target {
+            display: block;
+        }
+
+        /* Default: show first tab if no hash in URL */
+        .tab-panel:first-of-type {
+            display: block;
+        }
+
+        /* Hide first tab when another is targeted */
+        .tab-panel:target ~ .tab-panel:first-of-type {
+            display: none;
+        }
+
+        /* Active tab link styling */
+        .tab-link:focus {
+            outline: 2px solid var(--color-primary);
+            outline-offset: -2px;
+        }
+
+        /* Use JavaScript alternative: match URL hash */
+        /* This shows active state but requires JavaScript
+           For pure CSS, we rely on :target for panel display */
+
+        /* Fade in animation */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Alternative: Slide in animation */
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* Content styling */
+        .tab-panel h2 {
+            font-size: 1.75rem;
+            margin-bottom: var(--spacing-md);
+            color: var(--color-primary);
+        }
+
+        .tab-panel h3 {
+            font-size: 1.25rem;
+            margin-top: var(--spacing-lg);
+            margin-bottom: var(--spacing-md);
+            color: var(--color-text);
+        }
+
+        .tab-panel p {
+            margin-bottom: var(--spacing-md);
+            color: var(--color-text-light);
+        }
+
+        .tab-panel ul, .tab-panel ol {
+            margin-left: 1.5rem;
+            margin-bottom: var(--spacing-md);
+            color: var(--color-text-light);
+        }
+
+        .tab-panel li {
+            margin-bottom: 0.5rem;
+        }
+
+        .tab-panel code {
+            background: rgba(59, 130, 246, 0.1);
+            padding: 0.2rem 0.5rem;
+            border-radius: 0.25rem;
+            font-family: 'Courier New', monospace;
+            color: var(--color-primary-dark);
+            font-size: 0.9em;
+        }
+
+        .tab-panel pre {
+            background: #1e293b;
+            color: #f1f5f9;
+            padding: var(--spacing-md);
+            border-radius: var(--radius-md);
+            overflow-x: auto;
+            margin-bottom: var(--spacing-md);
+        }
+
+        .tab-panel pre code {
+            background: none;
+            color: inherit;
+            padding: 0;
+        }
+
+        /* Highlight boxes */
+        .highlight-box {
+            background: rgba(59, 130, 246, 0.1);
+            border-left: 4px solid var(--color-primary);
+            padding: var(--spacing-md);
+            border-radius: 0.25rem;
+            margin: var(--spacing-md) 0;
+        }
+
+        .highlight-box.success {
+            background: rgba(34, 197, 94, 0.1);
+            border-left-color: #22c55e;
+        }
+
+        .highlight-box.warning {
+            background: rgba(234, 179, 8, 0.1);
+            border-left-color: #eab308;
+        }
+
+        .highlight-box p {
+            margin: 0;
+            color: var(--color-text);
+        }
+
+        /* Info section */
+        .info {
+            background: white;
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-xl);
+            margin-top: 2rem;
+            box-shadow: 0 4px 12px var(--color-shadow);
+        }
+
+        .info h2 {
+            color: var(--color-primary);
+            margin-bottom: var(--spacing-md);
+            font-size: 1.5rem;
+        }
+
+        .info p {
+            color: var(--color-text-light);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .info code {
+            background: rgba(59, 130, 246, 0.1);
+            padding: 0.2rem 0.5rem;
+            border-radius: 0.25rem;
+            font-family: 'Courier New', monospace;
+            color: var(--color-primary-dark);
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            .tab-nav {
+                flex-wrap: wrap;
+            }
+
+            .tab-link {
+                flex: 1 1 50%;
+                font-size: 0.95rem;
+            }
+
+            .tab-panel {
+                padding: var(--spacing-lg);
+            }
+
+            .tab-panel h2 {
+                font-size: 1.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 1rem 0.5rem;
+            }
+
+            h1 {
+                font-size: 1.75rem;
+            }
+
+            .subtitle {
+                font-size: 1rem;
+            }
+
+            .tab-link {
+                flex: 1 1 100%;
+                padding: 0.75rem;
+            }
+
+            .tab-panel {
+                padding: var(--spacing-md);
+            }
+
+            .info {
+                padding: var(--spacing-md);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Tabbed Interface</h1>
+            <p class="subtitle">Pure CSS Tabs Using :target Pseudo-Class</p>
+        </header>
+
+        <div class="tabs">
+            <!-- Tab Navigation -->
+            <nav class="tab-nav">
+                <a href="#overview" class="tab-link">Overview</a>
+                <a href="#how-it-works" class="tab-link">How It Works</a>
+                <a href="#examples" class="tab-link">Examples</a>
+                <a href="#customization" class="tab-link">Customization</a>
+            </nav>
+
+            <!-- Tab Panel 1: Overview -->
+            <div id="overview" class="tab-panel">
+                <h2>🎯 Overview</h2>
+                <p>
+                    This tabbed interface is built entirely with HTML and CSS—no JavaScript required!
+                    It uses the powerful <code>:target</code> pseudo-class to show and hide content
+                    based on the URL hash.
+                </p>
+
+                <h3>Key Features</h3>
+                <ul>
+                    <li>✨ Pure CSS - no JavaScript needed</li>
+                    <li>🔗 URL-based navigation (bookmark-friendly)</li>
+                    <li>⌨️ Keyboard accessible</li>
+                    <li>📱 Fully responsive</li>
+                    <li>🎨 Smooth animations</li>
+                    <li>♿ Screen reader friendly</li>
+                </ul>
+
+                <div class="highlight-box success">
+                    <p>
+                        <strong>💡 Pro Tip:</strong> Notice how the URL changes when you click tabs?
+                        This means you can bookmark specific tabs or share direct links to tab content!
+                    </p>
+                </div>
+
+                <h3>Browser Support</h3>
+                <p>
+                    The <code>:target</code> pseudo-class is supported in all modern browsers,
+                    including Chrome, Firefox, Safari, Edge, and even Internet Explorer 9+.
+                </p>
+            </div>
+
+            <!-- Tab Panel 2: How It Works -->
+            <div id="how-it-works" class="tab-panel">
+                <h2>⚙️ How It Works</h2>
+                <p>
+                    The magic happens through a combination of hash links and the <code>:target</code>
+                    pseudo-class. Here's the breakdown:
+                </p>
+
+                <h3>1. Hash Links</h3>
+                <p>
+                    Each tab link points to a hash (fragment identifier) in the URL:
+                </p>
+                <pre><code>&lt;a href="#overview"&gt;Overview&lt;/a&gt;
+&lt;a href="#how-it-works"&gt;How It Works&lt;/a&gt;</code></pre>
+
+                <h3>2. Tab Panels with IDs</h3>
+                <p>
+                    Each content panel has an <code>id</code> matching the hash:
+                </p>
+                <pre><code>&lt;div id="overview" class="tab-panel"&gt;
+    Content here...
+&lt;/div&gt;</code></pre>
+
+                <h3>3. The :target Selector</h3>
+                <p>
+                    CSS uses <code>:target</code> to show the panel that matches the current URL hash:
+                </p>
+                <pre><code>.tab-panel {
+    display: none;  /* Hide all panels by default */
+}
+
+.tab-panel:target {
+    display: block;  /* Show the targeted panel */
+    animation: fadeIn 0.4s ease;
+}</code></pre>
+
+                <div class="highlight-box">
+                    <p>
+                        When you click a tab link, the URL changes to include the hash (e.g., <code>#overview</code>).
+                        The browser then applies the <code>:target</code> pseudo-class to the element with that ID,
+                        making it visible!
+                    </p>
+                </div>
+
+                <h3>4. Default Tab</h3>
+                <p>
+                    To show a default tab when no hash is present, we use:
+                </p>
+                <pre><code>.tab-panel:first-of-type {
+    display: block;  /* Show first tab by default */
+}</code></pre>
+            </div>
+
+            <!-- Tab Panel 3: Examples -->
+            <div id="examples" class="tab-panel">
+                <h2>📝 Code Examples</h2>
+
+                <h3>Basic HTML Structure</h3>
+                <pre><code>&lt;div class="tabs"&gt;
+    &lt;nav class="tab-nav"&gt;
+        &lt;a href="#tab1" class="tab-link"&gt;Tab 1&lt;/a&gt;
+        &lt;a href="#tab2" class="tab-link"&gt;Tab 2&lt;/a&gt;
+    &lt;/nav&gt;
+
+    &lt;div id="tab1" class="tab-panel"&gt;
+        Tab 1 content
+    &lt;/div&gt;
+    &lt;div id="tab2" class="tab-panel"&gt;
+        Tab 2 content
+    &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+
+                <h3>Essential CSS</h3>
+                <pre><code>/* Hide all panels by default */
+.tab-panel {
+    display: none;
+}
+
+/* Show targeted panel */
+.tab-panel:target {
+    display: block;
+}
+
+/* Show first panel if no target */
+.tab-panel:first-of-type {
+    display: block;
+}
+
+/* Hide first panel when another is targeted */
+.tab-panel:target ~ .tab-panel:first-of-type {
+    display: none;
+}</code></pre>
+
+                <div class="highlight-box warning">
+                    <p>
+                        <strong>⚠️ Important:</strong> Each tab panel must have a unique <code>id</code>
+                        that matches the <code>href</code> value in the corresponding tab link!
+                    </p>
+                </div>
+
+                <h3>Adding Animations</h3>
+                <pre><code>@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.tab-panel:target {
+    animation: fadeIn 0.4s ease;
+}</code></pre>
+            </div>
+
+            <!-- Tab Panel 4: Customization -->
+            <div id="customization" class="tab-panel">
+                <h2>🎨 Customization Guide</h2>
+
+                <h3>Colors</h3>
+                <p>
+                    All colors are defined using CSS custom properties in the <code>:root</code> selector.
+                    Find them at the top of the CSS (around line 70-85):
+                </p>
+                <ul>
+                    <li><code>--color-primary</code> - Main accent color</li>
+                    <li><code>--color-tab-active</code> - Active tab background</li>
+                    <li><code>--color-tab-inactive</code> - Inactive tab background</li>
+                    <li><code>--color-border</code> - Border colors</li>
+                </ul>
+
+                <h3>Adding New Tabs</h3>
+                <ol>
+                    <li>Add a new link to <code>.tab-nav</code>:
+                        <pre><code>&lt;a href="#newtab" class="tab-link"&gt;New Tab&lt;/a&gt;</code></pre>
+                    </li>
+                    <li>Add a new panel with matching ID:
+                        <pre><code>&lt;div id="newtab" class="tab-panel"&gt;
+    Your content here
+&lt;/div&gt;</code></pre>
+                    </li>
+                </ol>
+
+                <h3>Animation Options</h3>
+                <p>Try different animations by changing the keyframes:</p>
+                <ul>
+                    <li><strong>Slide In:</strong> Change <code>translateY</code> to <code>translateX</code></li>
+                    <li><strong>Scale:</strong> Add <code>transform: scale(0.95)</code> in the <code>from</code> state</li>
+                    <li><strong>Faster/Slower:</strong> Adjust the duration (e.g., <code>0.2s</code> or <code>0.6s</code>)</li>
+                </ul>
+
+                <div class="highlight-box success">
+                    <p>
+                        <strong>✨ Challenge:</strong> Try creating vertical tabs by changing the <code>.tab-nav</code>
+                        from <code>flex-direction: row</code> to <code>flex-direction: column</code> and adjusting
+                        the layout!
+                    </p>
+                </div>
+
+                <h3>Accessibility Tips</h3>
+                <ul>
+                    <li>Use semantic HTML (<code>&lt;nav&gt;</code>, proper headings)</li>
+                    <li>Ensure sufficient color contrast</li>
+                    <li>Maintain focus indicators for keyboard navigation</li>
+                    <li>Use descriptive link text</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="info">
+            <h2>📚 Learn More</h2>
+            <p>
+                This template demonstrates concepts from <strong>Lesson 13: CSS Animations & Transitions</strong>.
+                The <code>:target</code> pseudo-class is a powerful tool for creating interactive UIs without JavaScript!
+            </p>
+            <p>
+                To view the complete source code, right-click anywhere on this page and select "View Page Source"
+                or press <code>Ctrl+U</code> (Windows/Linux) or <code>Cmd+Option+U</code> (Mac).
+            </p>
+        </div>
+    </div>
+</body>
+</html>

@@ -4,8 +4,9 @@ How the web authoring and database materials come together in this
 repository, in what order, and what "done" means for each step. Written so
 that a later session can pick it up without rediscovering the reasoning.
 
-Last updated: 2026-09-03. Nothing in this plan has been carried out yet.
-The ledger in section 7 says what has moved and what has not.
+Last updated: 2026-09-03, late evening, after the front page, the reading
+settings and the interim copies landed (section 7). The ledger in section 7
+says what has moved and what has not.
 
 ---
 
@@ -15,10 +16,15 @@ The ledger in section 7 says what has moved and what has not.
 the web authoring and database course. Everything else either feeds into it
 or is linked from it.
 
-**The main page is the README.** GitHub renders it, so it needs no build
-step, no hosting and no styling to go wrong. `HTML-CSS-SQL-JS` already works
-this way and its README is the model for the layout. The text itself is
-rewritten to the house style (section 3).
+**The main page is the README, and `index.html` is its published twin.**
+GitHub renders the README, so it needs no build step, no hosting and no
+styling to go wrong. `HTML-CSS-SQL-JS` already works this way and its README
+is the model for the layout. The text itself is rewritten to the house style
+(section 3). Josh also asked for the front page as a web page in the idiom
+of the `HTML-CSS-SQL-JS` page, with dewlab's reading settings, so
+`index.html` carries the same stages and links as the README, in the same
+order, using a copy of the playground's stylesheet. When one changes, the
+other changes to match; the README is the text of record.
 
 **The README is a course map, in stages.** Each stage names what the student
 will be able to do at the end of it, and links to where the work happens.
@@ -43,8 +49,8 @@ hand-written HTML.
 | Repository | Fate |
 |---|---|
 | `web` | Stays. Linked from the README as stage 1. The one tutorial we edit now (section 4). |
-| `HTML-CSS-SQL-JS` | Stays untouched until its SQL section and teacher notes have moved here. Then archived. |
-| `WADB_Tutorials` | Stays untouched until its content has moved here, piece by piece. Then archived. Its Pages site stays live throughout. |
+| `HTML-CSS-SQL-JS` | Stays untouched until its SQL section and teacher notes have moved here. Then archived. Meanwhile a verbatim copy sits at `databases/playground/` here, so the course has one address. |
+| `WADB_Tutorials` | Stays untouched until its content has moved here, piece by piece. Then archived. Its Pages site stays live throughout. Meanwhile a verbatim copy sits at `tutorials/` here as an interim shelf; it inherits every defect in section 9 and is replaced page by page as section 7 proceeds. |
 | `dewlab` | Stays. The source of the shell, settings and search we port. Not edited from here. |
 | `portfoliotest` | Personal. Left alone. |
 | `aiml-web-authoring`, `webauthoringdemo` | Already removed. |
@@ -55,7 +61,13 @@ hand-written HTML.
 
 **Nothing is deleted or rewritten at its source.** Content is copied here,
 improved here, and the original stays where it was until the new version
-has been in front of a class. Archiving a repository is Josh's action, taken
+has been in front of a class. The interim copies under `tutorials/` and
+`databases/playground/` are byte-identical to their sources apart from one
+addition, made at Josh's request so the pages link together: a course bar
+at the top of each page with a link to the front page and its stages.
+`tools/add_course_bar.py` inserts it, after the skip-to-content link where
+there is one, and can insert it again after a copy is refreshed. Templates
+and examples do not get it, because students copy those files. Archiving a repository is Josh's action, taken
 after the links have moved. `web` is the one exception, because it is the
 introduction and it is worth fixing in place.
 
@@ -141,6 +153,14 @@ this environment. A link that does not resolve is a bug, not a note.
 **Done when** the eight checks pass, every link resolves, the old name
 "databaseL5" is gone, and Josh has read it.
 
+*2026-09-03, evening.* The README has the three stages as drafted, plus the
+stage 2 links now that the playground is here, a section for the interim
+tutorials shelf, and the published twin `index.html` with reading settings
+(theme, typeface with Atkinson Hyperlegible and OpenDyslexic self-hosted,
+text size, line width, high contrast; `assets/`). The Pages addresses for
+`HTML-CSS-SQL-JS`, `WADB_Tutorials` and this repository could not be
+fetched from the session that wrote this note either; they stay unverified.
+
 ---
 
 ## 5. Phase 2: `web`, the one tutorial we edit
@@ -202,6 +222,23 @@ colours, and the comment text, which is student-facing too.
 **Step 4. Decide whether `web` gets a Pages site of its own.** It would let
 the README link to a live example. It is not needed for the tutorial to
 work.
+
+**Step 5. The gap against the assessment brief.** Assignment 1 asks for
+`index.html`, `about.html`, `contact.html`, `styles.css`, `planning.md`,
+`readme.md` and an `images/` folder. The starter has the first two and the
+stylesheet. Add `contact.html` in the same commented style, with two or
+three exercises of its own after exercise 12, and an `images/` folder with
+a note in it. Point at the planning and README templates on the course
+site rather than copying them, so the brief stays the one source. Done
+when a student can go from fork to the brief's file list by following the
+README alone.
+
+**Step 6. Say where the tutorial fits.** A short section after the welcome
+naming this tutorial as stage 1 of the course, with links to the front
+page, the tutorials and the GitHub guides. Drafted as
+[deweydex/web#2](https://github.com/deweydex/web/pull/2) and closed
+unmerged, because it touches the paragraph #1 rewrites; the text is in that
+PR and goes in on top of #1 once #1 has merged.
 
 **Needs before starting.** `web` is attached to this session for reading
 only. Editing it needs it attached with push access, and its own branch and
@@ -306,7 +343,15 @@ The source file is not touched.
 | README course map | this plan, section 4 | `README.md` | drafted 2026-09-03, awaiting Josh's read; the `HTML-CSS-SQL-JS` Pages link is unverified |
 | `web` audit | `deweydex/web` | section 5, step 1 | done 2026-09-03 |
 | `web` plain-language pass, colour fixes, skip link and nav label | `deweydex/web` | in place | done 2026-09-03, open as [deweydex/web#1](https://github.com/deweydex/web/pull/1), awaiting Josh's read |
-| Build step and hello page | `dewlab` | `build.py`, `assets/`, `tutorials/` | not started |
+| Front page as a web page, in the playground's idiom; rewritten to the five parts of section 10 | this plan, sections 1, 4 and 10 | `index.html`, `styles.css`, `README.md` | done 2026-09-04, [dewadaba#2](https://github.com/deweydex/dewadaba/pull/2) |
+| Reading settings: theme, typeface, size, width, high contrast | `dewlab/assets/tutorial-runtime.js`, `tutorial-style.css`, `vendor/fonts` | `assets/settings.js`, `assets/settings.css`, `assets/fonts.css`, `assets/fonts/` | done 2026-09-03, dewadaba#2; the first piece of the shell in section 6 |
+| Interim shelf: `WADB_Tutorials` verbatim | `deweydex/WADB_Tutorials` | `tutorials/` | done 2026-09-03, dewadaba#2; replaced page by page below |
+| Interim copy of the playground | `deweydex/HTML-CSS-SQL-JS` | `databases/playground/` | done 2026-09-03, dewadaba#2 |
+| SQLite notebook | course site assets | `databases/sqlite_tutorial.ipynb` | done 2026-09-03, dewadaba#2 |
+| Course bar on every copied page | this plan, section 2 | `tools/add_course_bar.py` | done 2026-09-03, dewadaba#2 |
+| Page-by-page assessment of the three sources, with the order of rewrites | this plan, section 10 | `planning/PAGE_BY_PAGE.md` | done 2026-09-04, dewadaba#2 |
+| `web` "Where this fits" section | section 5, step 6 | `deweydex/web` README | drafted as web#2, closed; lands after web#1 merges |
+| Build step and hello page | `dewlab` | `build.py`, `assets/`, `tutorials/` | not started; the settings above are the first piece |
 | SQL tutorial | `HTML-CSS-SQL-JS/index.html` | `tutorials/databases/` | not started |
 | SQL practice page | `HTML-CSS-SQL-JS/index.html` | `tutorials/databases/` | not started |
 | Teaching notes | `HTML-CSS-SQL-JS/teacher.html` | `planning/` | not started |
@@ -334,10 +379,21 @@ The source file is not touched.
 5. **Attribution.** Every `WADB_Tutorials` page links to
    `github.com/jsaaron`. The repositories live under `deweydex`.
 6. **A Pages site for `web`**, so the README can show a live example.
-7. **The name.** `dewadaba` reads as dew, data, base and sits beside
-   `dewlab`. Alternatives with the same prefix are in the session notes.
-   A rename after students have the address breaks their bookmarks, so
-   this is decided before phase 1 ships.
+7. **The name.** Decided 2026-09-03: **dewstack**, beside dewlab, dewmini
+   and dewmark. Every page, link and document already says dewstack; the
+   GitHub repository still needs renaming to match, and GitHub redirects
+   the old name. The alternatives considered: `dewsite` for the combined
+   site; `dewbase`, `dewsql`, `dewquery`, `dewtable` for a database-only
+   home if the halves ever split; `dewpage` or `dewfolio` for the starter,
+   though `web` stays, because a student's fork keeps the name and
+   `username.github.io/web/` is the better address for a portfolio.
+8. **The interim shelf.** The verbatim copy of `WADB_Tutorials` under
+   `tutorials/` gives the course one address now, and it carries every
+   defect in section 9 under the course's own front page. The
+   alternative is to link out to the `WADB_Tutorials` Pages site until
+   each rewrite lands. The front page and README say plainly that these
+   pages are as they were and do not all fit a phone. Keep the shelf, or
+   link out?
 
 ---
 
@@ -345,6 +401,13 @@ The source file is not touched.
 
 Kept here so the bar in section 3 has its reasons attached. Ten pages were
 rendered at 1280 and 390 pixels and run through axe.
+
+One defect is worth a line of its own because it is on the page students
+meet first in stage 2. The playground's "Choose Your Learning Path" box
+sits inside the header and inherits the header's white text, on a
+near-white background, so it is illegible at every width. The fix is one
+rule, `.learning-paths { color: #333; }`, made in the source and copied, or
+made here when the SQL section moves.
 
 - Seven of ten pages scroll sideways on a phone. The home page hero clips
   its heading. Every lesson page overflows on one bibliography link whose
@@ -366,3 +429,104 @@ rendered at 1280 and 390 pixels and run through axe.
   percentages. On a phone the task panel is one word wide.
 
 Almost all of these are drift defects, which is the case for section 5.
+
+---
+
+## 10. The page structure, proposed 2026-09-03, late
+
+Josh's steer, in his words: web authoring and databases exist as separate
+tutorials, with combined projects and tutorials as a third option; two
+"getting started" links, then tutorial links for each subject, then
+combined full-stack tutorials. That replaces the strictly sequential three
+stages in sections 1 and 4 with two parallel tracks and a third that joins
+them. A student can start on either track, and the college's timetable
+(web authoring in the autumn, databases from January) is one order among
+several rather than the only one.
+
+The front page and README would then have five parts, in this order:
+
+1. **Getting started**, two doors side by side. *Start with a website*:
+   fork `web`, the exercises, a published portfolio. *Start with data*: the
+   SQL playground, a first query in a minute. Each door says what the
+   student will have at the end of it, and neither assumes the other.
+2. **Web authoring tutorials**: the lessons, the GitHub guides, the
+   templates and examples, the reference and troubleshooting, in the order
+   a student who has done the starter needs them (project-facing lessons
+   11 to 13 first).
+3. **Database tutorials**: the playground, the quiz, the notebook, then
+   the five tutorials in section 7 as they are written (a table is a list
+   of rows; asking questions of a table; two tables; designing before
+   typing; a real dataset).
+4. **Full stack: putting the two together**. Combined tutorials and
+   projects: a page that shows rows from a database, a form that adds a
+   row, a chart drawn from a query. This is the former stage 3, now a
+   track of its own rather than a finish line. Nothing exists here yet.
+5. **Projects and the exam**: what the college sets, and which track each
+   project draws on.
+
+The course bar on every copied page then carries: front page, Start with
+a website, Start with data, Web tutorials, Database tutorials.
+
+Applied on 2026-09-04: `README.md`, `index.html` and the course bar now follow this structure. `PAGE_BY_PAGE.md` is the page-by-page assessment (b). Sections 11 and 12 below are (c) and (d).
+
+What the next session should do with this, in order: (a) settle the
+structure with Josh and rewrite the README and `index.html` to it; (b) go
+through every page on each of the three source sites and say, page by
+page, what is good, what should change, and whether it belongs in track 2,
+3 or 4, extending the ledger in section 7 with a row per page; (c) write
+down the style considerations for the rewrites: one shell and one set of
+reading settings across all tracks, the plain-language bar, the
+accessibility bar in section 3, the SQL engine decision, and how the
+`web` starter's deliberately student-changeable design sits beside the
+fixed design of the tutorials; (d) begin the full-stack track with one
+small worked example, because it is the part with nothing behind it.
+
+---
+
+## 11. Style considerations for the rewrites
+
+Written 2026-09-04, after measuring every source page (`PAGE_BY_PAGE.md`). These are the decisions a rewrite should not have to make again.
+
+**One shell.** Every rewritten page, on every track, uses the front page's stylesheet, its reading settings (`assets/settings.css`, `assets/settings.js`, the two self-hosted typefaces) and the course bar. Until the build step in section 6 exists, a rewritten page is one HTML file that links those three things by relative path; when `build.py` arrives, its shell template absorbs exactly those three, and the pages are converted to markdown without changing what a student sees. Nothing is styled twice.
+
+**The shape of a page, from dewlab's style guide, section 3.** Open with the question: what is this for, where would somebody meet it. Give them something to try before anything is explained: an HTML and CSS pane with a live preview for the web track, a SQL editor for the data track. Then the explanation, connecting what they saw to the idea. Then their turn, with a hint that scaffolds rather than answers. Close by looking back. No "learning outcomes" preamble: the outcome is one sentence at the end, "what you can now do". No "why this matters" section: if the opening question does not say why, the page has the wrong opening. The bibliography becomes one line, "where this came from".
+
+**Size.** One idea per page. Under 60 sentences of prose, a mean under 18 words, none over 25, at most six second-level headings. Where a source lesson has twelve to eighteen headings, that is three or four pages, and `PAGE_BY_PAGE.md` says where the cuts fall. Splitting is the main work; shortening a sentence is the easy part.
+
+**Discover first, name afterwards.** The source lessons define, then show. The rewrites show, then define, then say what the name is for. A student who has dragged a window narrower and watched a Flexbox row wrap has met `flex-wrap`; the word comes after, with the sentence that says it is the word to search for.
+
+**Two bars, both mechanical.** The plain-language bar is the eight checks in dewlab's `CLAUDE.md`, run over every sentence before a commit; the sentence-length measure in `PAGE_BY_PAGE.md` is the script that catches most of it. The accessibility bar is section 3 of this plan: no serious axe violation, no sideways scroll at 390 pixels, a `main` landmark, a labelled `nav`, 4.5 to 1 contrast. Every page is rendered at 1200 and 390 pixels and looked at before it is pushed. Code blocks scroll inside themselves; nothing on a page has a fixed width in pixels.
+
+**Live examples, one engine per track.** The web track needs an "edit and see" widget: two editors (HTML, CSS) and an iframe whose `srcdoc` is rebuilt on each change. dewmini in dewlab already has this as its Web cell (DECISIONS_LOG 7.116, 7.120); port the pattern, not Pyodide. The data track needs a SQL editor and a result table; the playground's `tutorial.js` is sixty lines that do this with SQL.js. The full-stack track uses both. Whether the data engine is SQL.js or Pyodide's `sqlite3` is question 1 in section 8; everything in this section works with either, and SQL.js is the smaller thing to carry until Python is needed.
+
+**The starter's design is the student's.** `web` is navy and blue on purpose: it is the one design a student is meant to change, and exercise 13 changes it. The tutorials never restyle it, never show a re-skinned copy of it, and when they refer to the student's site they show it as it is, in an iframe or a screenshot. The tutorials' own look (the purple gradient, white cards) is fixed and is the course's, not the student's.
+
+**Names and numbers.** The starter's exercise numbers are a contract; they never change. New tutorial pages are named with words, not numbers (`flexbox-first-steps`, not `11a`), as dewlab does, so that inserting a page never renumbers its neighbours. The old lesson numbers appear only in `PAGE_BY_PAGE.md`, as provenance.
+
+**Practice apart from reading.** As in dewlab (style guide, section 6): the reading page ends with one "your turn"; the practice page beside it holds the rest of the problems with answers behind folds. For the data track, the playground's five exercises and the quiz's five tasks become practice pages. Whether solutions stay public is question 2.
+
+**Terms.** A rewritten page introduces at most three new terms and lists them at its end with one-line meanings. The quick reference is assembled from those lists, by hand until the build step does it, the way dewlab's reference panel is assembled from glossary files.
+
+**What stays out.** Practice exams and anything the college marks. Teaching notes go to `planning/`, not to a page a student can reach.
+
+---
+
+## 12. The first full-stack tutorial, outlined
+
+Working title: *A page that shows rows from a table*. It is the smallest page that deserves the name full stack: HTML and CSS a student already understands, a database they already queried, and forty lines of JavaScript joining them.
+
+**Where it sits.** After the starter's exercise 12 (the student has a page with sections and navigation) and after the first two data tutorials (they have made a table and asked it questions). It uses the playground's engine, so nothing new is installed.
+
+**What the student does, in order.**
+
+1. Open a page that already contains a `products` table in SQL.js, the same three columns as the playground's exercises, and a `<table>` element with a heading row and no body. Press Run. The rows appear. That is the whole idea, seen before it is explained: the page asked the database a question and drew the answer.
+2. Read the twelve lines that did it: run a query, loop over the rows, make a `<tr>` for each. Change the query to `WHERE price < 10`. The table changes.
+3. Add a search box. Its value goes into the `WHERE`. Now the visitor asks the question.
+4. Add a small form with two fields. Its submit runs an `INSERT`, then redraws the table. Now the visitor changes the data.
+5. Look back at where the work went: the database starts again on reload, as the playground does. Two buttons, "download my database" and "load a database file", use SQL.js's export and import, and the student now has a file that is theirs. This is the same "where your work is saved" question the front page raises, answered in code.
+
+**What it names, at the end.** Three terms: query, result set, and the idea that a page is HTML plus data plus the code between them. That is what "full stack" means here, and the word is given last.
+
+**What it deliberately leaves out.** Servers, accounts, anything that sends data anywhere. A second tutorial can put a chart beside the table using the marks example from the front page; a third can draw the page from an Our World in Data extract. The projects page lists these as combined projects once the first tutorial exists.
+
+**Done when** the page passes both bars in section 11, a student who has done the prerequisites can complete steps 1 to 5 without help, and the front page's full-stack section links to it instead of saying "being written".

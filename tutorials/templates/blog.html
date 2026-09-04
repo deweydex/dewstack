@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<!-- 
+    ====================================================================
+    HOW TO USE THIS TEMPLATE
+    ====================================================================
+    
+    VIEWING THE CODE:
+    To see this HTML code, you have several options:
+    
+    1. Right-click on this page in your browser and select "View Page Source"
+       (or "View Source" in some browsers)
+    
+    2. Press Ctrl+U (Windows/Linux) or Cmd+Option+U (Mac) to view source
+    
+    3. Open this file directly in a text editor like Notepad, TextEdit, 
+       or VS Code to see and edit the code
+    
+    EDITING THE CODE:
+    
+    1. Save this file to your computer (Right-click -> Save As)
+    
+    2. Open the saved file in a text editor
+    
+    3. Look for placeholder text in curly braces {like this} or brackets [like this]
+       and replace it with your own content
+    
+    4. After making changes, save the file and refresh your browser to see updates
+    
+    PLACEHOLDER NOTATION:
+    Throughout this template, you'll see placeholders like:
+    - {your content here} - Replace with your actual content
+    - [edit this] - Indicates something you should customize
+    - {your title} - Replace with your page title
+    
+    These placeholders show you exactly what to change!
+    
+    ====================================================================
+    
+    Blog Template
+    
+    This template provides a structure for a blog or content-focused website.
+    It includes:
+    - Header with site title and navigation
+    - Main content area for blog posts
+    - Sidebar for additional content (categories, recent posts, etc.)
+    - Footer with site information
+    
+    Customize the layout, colors, and content sections to match your blog's style.
+-->
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog Template</title>
+    <style>
+        /* 
+            ========================================
+            CSS RESET AND BASE STYLES
+            ========================================
+        */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            /* Ensures padding/borders included in width */
+        }
+        
+        body {
+            font-family: Georgia, 'Times New Roman', serif;
+            /* 
+                SERIF FONTS:
+                Serif fonts (with decorative strokes) are traditional for blogs.
+                They're considered more readable for long-form text.
+                Alternatives: 'Merriweather', 'Lora', or sans-serif fonts like Arial
+            */
+            
+            line-height: 1.8;
+            /* 
+                GENEROUS LINE HEIGHT:
+                1.8 is higher than normal (usually 1.5-1.6) for better readability
+                in long blog posts. Makes dense text easier to read.
+            */
+            
+            color: #333;
+            background-color: #f5f5f5;
+            /* Light gray background for subtle contrast */
+        }
+        
+        /* 
+            ========================================
+            HEADER - BLOG TITLE AND TAGLINE
+            ========================================
+        */
+        header {
+            background-color: #2c3e50;
+            /* Dark blue-gray - professional and readable */
+            
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+        }
+        
+        header h1 {
+            margin-bottom: 0.5rem;
+        }
+        
+        header p {
+            opacity: 0.9;
+            /* Slightly transparent for subtle effect */
+        }
+        
+        /* 
+            ========================================
+            NAVIGATION - BLOG CATEGORIES/PAGES
+            ========================================
+        */
+        nav {
+            background-color: #34495e;
+            /* Slightly lighter than header for distinction */
+            
+            padding: 1rem 0;
+        }
+        
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+        }
+        
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+        }
+        
+        nav a:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            /* Subtle highlight on hover */
+        }
+        
+        /* 
+            ========================================
+            MAIN LAYOUT - TWO COLUMN GRID
+            ========================================
+            
+            This creates a classic blog layout:
+            - Main content area (larger, left side)
+            - Sidebar (smaller, right side)
+        */
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+            
+            display: grid;
+            /* CSS Grid for the two-column layout */
+            
+            grid-template-columns: 2fr 1fr;
+            /* 
+                COLUMN PROPORTIONS:
+                - 2fr = main content takes 2 parts
+                - 1fr = sidebar takes 1 part
+                - Total: 3 parts, so main is 2/3, sidebar is 1/3
+                
+                You can adjust:
+                - grid-template-columns: 3fr 1fr; (sidebar smaller)
+                - grid-template-columns: 1fr 1fr; (equal columns)
+            */
+            
+            gap: 2rem;
+            /* Space between main content and sidebar */
+        }
+        
+        /* 
+            ========================================
+            MAIN CONTENT - BLOG POSTS
+            ========================================
+            
+            This is where your blog posts/articles appear.
+            White background makes content stand out.
+        */
+        main {
+            background-color: white;
+            /* White card on gray background */
+            
+            padding: 2rem;
+            border-radius: 8px;
+            /* Rounded corners */
+            
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            /* Subtle shadow for depth */
+        }
+        
+        /* Individual Blog Post/Article */
+        article {
+            margin-bottom: 3rem;
+            /* Space between articles */
+            
+            padding-bottom: 2rem;
+            border-bottom: 1px solid #eee;
+            /* Separates each post */
+        }
+        
+        article:last-child {
+            border-bottom: none;
+            /* No border after last post */
+        }
+        
+        article h2 {
+            color: #2c3e50;
+            /* Matches header color */
+            margin-bottom: 1rem;
+        }
+        
+        .post-meta {
+            color: #7f8c8d;
+            /* Muted gray for date/author info */
+            font-size: 0.9rem;
+            /* Slightly smaller text */
+            margin-bottom: 1rem;
+        }
+        
+        article p {
+            margin-bottom: 1rem;
+            /* Space between paragraphs */
+        }
+        
+        /* Read More Link */
+        .read-more {
+            color: #3498db;
+            /* Blue link color */
+            text-decoration: none;
+        }
+        
+        .read-more:hover {
+            text-decoration: underline;
+            /* Underline on hover */
+        }
+        
+        /* 
+            ========================================
+            SIDEBAR - ADDITIONAL CONTENT
+            ========================================
+            
+            Sidebar typically contains:
+            - Categories
+            - Recent posts
+            - About section
+            - Social media links
+            - Search bar
+        */
+        aside {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            /* Matches main content styling */
+            
+            height: fit-content;
+            /* Only takes as much height as needed */
+        }
+        
+        aside h3 {
+            color: #2c3e50;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #3498db;
+            /* Blue underline for sidebar headings */
+        }
+        
+        aside ul {
+            list-style: none;
+            /* Remove bullet points */
+        }
+        
+        aside li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #eee;
+            /* Separates list items */
+        }
+        
+        aside a {
+            color: #3498db;
+            text-decoration: none;
+        }
+        
+        aside a:hover {
+            text-decoration: underline;
+        }
+        
+        .sidebar-section {
+            margin-bottom: 2rem;
+            /* Space between sidebar sections */
+        }
+        
+        /* 
+            ========================================
+            FOOTER - SITE INFORMATION
+            ========================================
+        */
+        footer {
+            background-color: #2c3e50;
+            /* Matches header */
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 2rem;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <!-- Site title and tagline appear here -->
+    <header>
+        <h1>My Blog</h1>
+        <p>Sharing thoughts and experiences</p>
+    </header>
+    
+    <!-- Navigation -->
+    <!-- Main navigation links -->
+    <nav>
+        <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#archive">Archive</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+    
+    <!-- Main Content Area -->
+    <div class="container">
+        <!-- Blog Posts -->
+        <main>
+            <!-- Blog Post 1 -->
+            <article>
+                <h2>Blog Post Title One</h2>
+                <div class="post-meta">Published on January 1, 2024 | Category: Web Development</div>
+                <p>This is the beginning of your blog post. Write engaging content that captures your readers' attention. The first paragraph should introduce the topic and hook the reader.</p>
+                <p>Continue writing your post content here. Add paragraphs as needed to fully develop your ideas. Use clear, straightforward language that communicates effectively with your audience.</p>
+                <a href="#" class="read-more">Read more</a>
+            </article>
+            
+            <!-- Blog Post 2 -->
+            <article>
+                <h2>Blog Post Title Two</h2>
+                <div class="post-meta">Published on December 15, 2023 | Category: Design</div>
+                <p>Another blog post example. Each article should have a clear topic and provide value to your readers. Write about your experiences, insights, or things you've learned.</p>
+                <p>Include examples, explanations, and practical advice when relevant. Good blog posts educate, inspire, or entertain readers while maintaining authenticity.</p>
+                <a href="#" class="read-more">Read more</a>
+            </article>
+            
+            <!-- Blog Post 3 -->
+            <article>
+                <h2>Blog Post Title Three</h2>
+                <div class="post-meta">Published on December 1, 2023 | Category: Learning</div>
+                <p>Add more blog posts as needed. The layout automatically accommodates multiple articles, with each one separated visually for easy reading.</p>
+                <p>Consider organizing posts by date, category, or topic. A consistent posting schedule helps build readership and keeps your blog active and engaging.</p>
+                <a href="#" class="read-more">Read more</a>
+            </article>
+        </main>
+        
+        <!-- Sidebar -->
+        <!-- Additional content like categories, recent posts, or about section -->
+        <aside>
+            <div class="sidebar-section">
+                <h3>About</h3>
+                <p>Brief description of yourself or your blog. What topics do you write about? What can readers expect?</p>
+            </div>
+            
+            <div class="sidebar-section">
+                <h3>Categories</h3>
+                <ul>
+                    <li><a href="#">Web Development</a></li>
+                    <li><a href="#">Design</a></li>
+                    <li><a href="#">Learning</a></li>
+                    <li><a href="#">Tutorials</a></li>
+                </ul>
+            </div>
+            
+            <div class="sidebar-section">
+                <h3>Recent Posts</h3>
+                <ul>
+                    <li><a href="#">Blog Post Title One</a></li>
+                    <li><a href="#">Blog Post Title Two</a></li>
+                    <li><a href="#">Blog Post Title Three</a></li>
+                </ul>
+            </div>
+        </aside>
+    </div>
+    
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 My Blog. All rights reserved.</p>
+    </footer>
+</body>
+</html>
+

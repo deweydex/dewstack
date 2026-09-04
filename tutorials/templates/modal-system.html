@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modal System - Pure CSS Template</title>
+    <style>
+        /* ===================================
+           HOW TO EDIT THIS TEMPLATE
+           ===================================
+
+           This is a COMPLETE, WORKING template that demonstrates pure CSS modals using :target.
+
+           TO VIEW THE SOURCE CODE:
+           - Right-click anywhere on this page
+           - Select "View Page Source" or "Inspect Element"
+           - Or use Ctrl+U (Windows/Linux) or Cmd+Option+U (Mac)
+
+           WHAT YOU CAN CUSTOMIZE:
+
+           1. MODAL CONTENT (Lines ~400-550):
+              - Change modal titles and content
+              - Add or remove modals
+              - Add images, forms, or any HTML
+              - Create different modal types (alert, confirm, form)
+
+           2. COLORS (Lines ~75-90):
+              - Change CSS custom properties
+              - Modify backdrop color
+              - Adjust modal background
+              - Change button colors
+
+           3. ANIMATIONS (Lines ~250-300):
+              - Choose different entrance effects
+              - Modify animation duration
+              - Add exit animations
+              - Adjust timing functions
+
+           4. MODAL SIZE (Lines ~180-200):
+              - Adjust max-width
+              - Change padding
+              - Modify border radius
+              - Set min/max heights
+
+           5. BACKDROP (Lines ~160-170):
+              - Change overlay opacity
+              - Modify blur effect
+              - Adjust backdrop color
+
+           KEY CONCEPTS DEMONSTRATED:
+           - :target pseudo-class for URL-based state
+           - Fixed positioning for overlay
+           - Flexbox for centering modals
+           - Smooth animations (fade, slide, scale)
+           - Click-outside-to-close pattern
+           - Multiple modals in one system
+           - Keyboard accessible (ESC key works via #)
+
+           CHALLENGE IDEAS:
+           - Add different modal sizes (small, large, fullscreen)
+           - Create modal with form submission
+           - Add confirm/alert modal variations
+           - Implement modal chaining (one modal opens another)
+           - Add image lightbox modal
+           - Create video player modal
+           - Add custom close animations
+        */
+
+        /* Reset and base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            /* Color scheme */
+            --color-bg: #f8fafc;
+            --color-text: #1e293b;
+            --color-text-light: #64748b;
+            --color-primary: #3b82f6;
+            --color-primary-dark: #2563eb;
+            --color-success: #22c55e;
+            --color-warning: #eab308;
+            --color-danger: #ef4444;
+            --color-modal-bg: #ffffff;
+            --color-backdrop: rgba(0, 0, 0, 0.75);
+            --color-border: #e2e8f0;
+
+            /* Spacing */
+            --spacing-sm: 0.5rem;
+            --spacing-md: 1rem;
+            --spacing-lg: 1.5rem;
+            --spacing-xl: 2rem;
+
+            /* Border radius */
+            --radius-md: 0.5rem;
+            --radius-lg: 0.75rem;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: var(--color-text);
+            min-height: 100vh;
+            padding: 2rem 1rem;
+            line-height: 1.6;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        /* Header */
+        header {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: white;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        /* Main content card */
+        .content-card {
+            background: white;
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-xl);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            margin-bottom: 2rem;
+        }
+
+        .content-card h2 {
+            font-size: 1.75rem;
+            margin-bottom: var(--spacing-md);
+            color: var(--color-primary);
+        }
+
+        .content-card p {
+            color: var(--color-text-light);
+            margin-bottom: var(--spacing-md);
+        }
+
+        /* Button styles */
+        .btn {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--radius-md);
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
+            font-size: 1rem;
+        }
+
+        .btn-primary {
+            background: var(--color-primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--color-primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+        }
+
+        .btn-success {
+            background: var(--color-success);
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #16a34a;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(34, 197, 94, 0.4);
+        }
+
+        .btn-warning {
+            background: var(--color-warning);
+            color: #1e293b;
+        }
+
+        .btn-warning:hover {
+            background: #ca8a04;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(234, 179, 8, 0.4);
+        }
+
+        .btn-danger {
+            background: var(--color-danger);
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #dc2626;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.4);
+        }
+
+        .button-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        /* Modal Overlay */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--color-backdrop);
+            backdrop-filter: blur(4px);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+
+        /* Show modal when targeted */
+        .modal:target {
+            display: flex;
+            animation: fadeIn 0.3s ease;
+        }
+
+        /* Modal Content */
+        .modal-content {
+            background: var(--color-modal-bg);
+            border-radius: var(--radius-lg);
+            max-width: 600px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Different animation styles for different modals */
+        .modal-fade .modal-content {
+            animation: modalFadeIn 0.3s ease;
+        }
+
+        .modal-slide .modal-content {
+            animation: modalSlideDown 0.4s ease;
+        }
+
+        .modal-scale .modal-content {
+            animation: modalScale 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        /* Modal Header */
+        .modal-header {
+            padding: var(--spacing-lg);
+            border-bottom: 1px solid var(--color-border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .modal-header h3 {
+            font-size: 1.5rem;
+            color: var(--color-text);
+            margin: 0;
+        }
+
+        /* Close button */
+        .modal-close {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: var(--color-border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            color: var(--color-text);
+            font-size: 1.5rem;
+            line-height: 1;
+            transition: all 0.2s ease;
+            flex-shrink: 0;
+            margin-left: 1rem;
+        }
+
+        .modal-close:hover {
+            background: var(--color-danger);
+            color: white;
+            transform: rotate(90deg);
+        }
+
+        /* Modal Body */
+        .modal-body {
+            padding: var(--spacing-lg);
+        }
+
+        .modal-body p {
+            color: var(--color-text-light);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .modal-body h4 {
+            color: var(--color-text);
+            margin-top: var(--spacing-lg);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .modal-body ul {
+            margin-left: 1.5rem;
+            margin-bottom: var(--spacing-md);
+        }
+
+        .modal-body li {
+            margin-bottom: var(--spacing-sm);
+            color: var(--color-text-light);
+        }
+
+        .modal-body code {
+            background: rgba(59, 130, 246, 0.1);
+            padding: 0.2rem 0.5rem;
+            border-radius: 0.25rem;
+            font-family: 'Courier New', monospace;
+            color: var(--color-primary-dark);
+            font-size: 0.9em;
+        }
+
+        /* Modal Footer */
+        .modal-footer {
+            padding: var(--spacing-lg);
+            border-top: 1px solid var(--color-border);
+            display: flex;
+            gap: 0.75rem;
+            justify-content: flex-end;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes modalFadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes modalSlideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes modalScale {
+            from {
+                opacity: 0;
+                transform: scale(0.7);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* Info box */
+        .info-box {
+            background: rgba(59, 130, 246, 0.1);
+            border-left: 4px solid var(--color-primary);
+            padding: var(--spacing-md);
+            border-radius: 0.25rem;
+            margin: var(--spacing-md) 0;
+        }
+
+        .info-box p {
+            margin: 0;
+            color: var(--color-text);
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            .content-card {
+                padding: var(--spacing-lg);
+            }
+
+            .button-group {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+                text-align: center;
+            }
+
+            .modal-content {
+                max-width: 95%;
+            }
+
+            .modal-header h3 {
+                font-size: 1.25rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 1rem 0.5rem;
+            }
+
+            h1 {
+                font-size: 1.75rem;
+            }
+
+            .subtitle {
+                font-size: 1rem;
+            }
+
+            .content-card {
+                padding: var(--spacing-md);
+            }
+
+            .modal-header,
+            .modal-body,
+            .modal-footer {
+                padding: var(--spacing-md);
+            }
+
+            .modal-footer {
+                flex-direction: column;
+            }
+
+            .modal-footer .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Modal System</h1>
+            <p class="subtitle">Pure CSS Modals Using :target Pseudo-Class</p>
+        </header>
+
+        <div class="content-card">
+            <h2>Welcome to the Modal System</h2>
+            <p>
+                This modal system is built entirely with HTML and CSS—no JavaScript required!
+                Click the buttons below to see different modal styles and animations.
+            </p>
+
+            <div class="button-group">
+                <a href="#modal-info" class="btn btn-primary">Information Modal</a>
+                <a href="#modal-success" class="btn btn-success">Success Modal</a>
+                <a href="#modal-warning" class="btn btn-warning">Warning Modal</a>
+                <a href="#modal-form" class="btn btn-danger">Form Modal</a>
+            </div>
+
+            <div class="info-box">
+                <p>
+                    <strong>💡 How it works:</strong> These modals use the <code>:target</code> pseudo-class.
+                    When you click a button, the URL hash changes (e.g., <code>#modal-info</code>), and CSS
+                    displays the corresponding modal. Click the × or outside the modal to close it!
+                </p>
+            </div>
+
+            <h2 style="margin-top: 2rem;">Key Features</h2>
+            <ul style="margin-left: 1.5rem; color: #64748b;">
+                <li>✨ Pure CSS - no JavaScript needed</li>
+                <li>🎨 Multiple animation styles (fade, slide, scale)</li>
+                <li>📱 Fully responsive</li>
+                <li>⌨️ Keyboard accessible (ESC key works via # link)</li>
+                <li>🔗 URL-based state management</li>
+                <li>🎯 Click outside to close</li>
+                <li>♿ Screen reader friendly</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Modal 1: Information (Fade animation) -->
+    <div id="modal-info" class="modal modal-fade">
+        <a href="#" class="modal-content-wrapper" style="width: 100%; height: 100%; position: absolute;"></a>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>ℹ️ Information</h3>
+                <a href="#" class="modal-close" aria-label="Close modal">&times;</a>
+            </div>
+            <div class="modal-body">
+                <p>
+                    This is a simple information modal with a <strong>fade-in</strong> animation.
+                    It demonstrates how to create modal dialogs using pure CSS and the <code>:target</code>
+                    pseudo-class.
+                </p>
+
+                <h4>How the :target Pseudo-Class Works</h4>
+                <p>
+                    When you click a link with a hash (like <code>#modal-info</code>), the browser:
+                </p>
+                <ol style="margin-left: 1.5rem; margin-bottom: 1rem;">
+                    <li>Updates the URL to include that hash</li>
+                    <li>Applies the <code>:target</code> pseudo-class to the element with matching ID</li>
+                    <li>CSS changes the element's display from <code>none</code> to <code>flex</code></li>
+                    <li>The modal becomes visible with a smooth animation!</li>
+                </ol>
+
+                <div class="info-box">
+                    <p>
+                        <strong>Tip:</strong> Click the backdrop (dark area) or the × button to close the modal.
+                        Both link to <code>#</code>, which clears the URL hash and hides the modal.
+                    </p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <a href="#" class="btn btn-primary">Got it!</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal 2: Success (Slide-down animation) -->
+    <div id="modal-success" class="modal modal-slide">
+        <a href="#" class="modal-content-wrapper" style="width: 100%; height: 100%; position: absolute;"></a>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>✅ Success!</h3>
+                <a href="#" class="modal-close" aria-label="Close modal">&times;</a>
+            </div>
+            <div class="modal-body">
+                <p>
+                    This modal uses a <strong>slide-down</strong> animation. The content slides in from
+                    the top using <code>transform: translateY(-50px)</code> in the keyframes.
+                </p>
+
+                <h4>Animation Code</h4>
+                <p>
+                    The animation is defined like this:
+                </p>
+                <pre style="background: #1e293b; color: #f1f5f9; padding: 1rem; border-radius: 0.5rem; overflow-x: auto; margin: 1rem 0;"><code>@keyframes modalSlideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}</code></pre>
+
+                <h4>Different Modal Types</h4>
+                <ul style="margin-left: 1.5rem;">
+                    <li><strong>Fade:</strong> Simple opacity transition</li>
+                    <li><strong>Slide:</strong> Slides in from top (this modal)</li>
+                    <li><strong>Scale:</strong> Zooms in from center (try the warning modal)</li>
+                </ul>
+            </div>
+            <div class="modal-footer">
+                <a href="#" class="btn btn-success">Awesome!</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal 3: Warning (Scale animation) -->
+    <div id="modal-warning" class="modal modal-scale">
+        <a href="#" class="modal-content-wrapper" style="width: 100%; height: 100%; position: absolute;"></a>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>⚠️ Warning</h3>
+                <a href="#" class="modal-close" aria-label="Close modal">&times;</a>
+            </div>
+            <div class="modal-body">
+                <p>
+                    This modal features a <strong>scale</strong> animation with a playful bounce effect
+                    using <code>cubic-bezier(0.68, -0.55, 0.265, 1.55)</code> for the timing function.
+                </p>
+
+                <h4>Advantages of CSS-Only Modals</h4>
+                <ul style="margin-left: 1.5rem; margin-bottom: 1rem;">
+                    <li>✅ No JavaScript dependencies</li>
+                    <li>✅ Lighter page weight</li>
+                    <li>✅ Works even if JS is disabled</li>
+                    <li>✅ Simple to implement and maintain</li>
+                    <li>✅ Inherently accessible</li>
+                </ul>
+
+                <h4>Limitations to Consider</h4>
+                <ul style="margin-left: 1.5rem;">
+                    <li>⚠️ Cannot prevent body scroll</li>
+                    <li>⚠️ No complex state management</li>
+                    <li>⚠️ Limited control over close behavior</li>
+                    <li>⚠️ Changes URL (may affect browser history)</li>
+                </ul>
+
+                <div class="info-box">
+                    <p>
+                        For more complex needs, consider combining with minimal JavaScript for features like
+                        preventing body scroll or adding custom close logic.
+                    </p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <a href="#" class="btn btn-warning">Understood</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal 4: Form Example -->
+    <div id="modal-form" class="modal modal-fade">
+        <a href="#" class="modal-content-wrapper" style="width: 100%; height: 100%; position: absolute;"></a>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>📝 Contact Form</h3>
+                <a href="#" class="modal-close" aria-label="Close modal">&times;</a>
+            </div>
+            <div class="modal-body">
+                <p>
+                    You can include forms, images, or any HTML content in your modals!
+                    This example shows a contact form layout.
+                </p>
+
+                <form style="margin-top: 1.5rem;">
+                    <div style="margin-bottom: 1rem;">
+                        <label for="name" style="display: block; margin-bottom: 0.25rem; font-weight: 600;">Name</label>
+                        <input type="text" id="name" name="name"
+                               style="width: 100%; padding: 0.5rem; border: 1px solid #e2e8f0; border-radius: 0.5rem; font-size: 1rem;">
+                    </div>
+
+                    <div style="margin-bottom: 1rem;">
+                        <label for="email" style="display: block; margin-bottom: 0.25rem; font-weight: 600;">Email</label>
+                        <input type="email" id="email" name="email"
+                               style="width: 100%; padding: 0.5rem; border: 1px solid #e2e8f0; border-radius: 0.5rem; font-size: 1rem;">
+                    </div>
+
+                    <div style="margin-bottom: 1rem;">
+                        <label for="message" style="display: block; margin-bottom: 0.25rem; font-weight: 600;">Message</label>
+                        <textarea id="message" name="message" rows="4"
+                                  style="width: 100%; padding: 0.5rem; border: 1px solid #e2e8f0; border-radius: 0.5rem; font-size: 1rem; resize: vertical;"></textarea>
+                    </div>
+                </form>
+
+                <div class="info-box" style="margin-top: 1rem;">
+                    <p>
+                        <strong>Note:</strong> This is a demonstration form. In a real application, you would
+                        add <code>action</code> and <code>method</code> attributes to handle form submission.
+                    </p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <a href="#" class="btn" style="background: #e2e8f0; color: #1e293b;">Cancel</a>
+                <button type="submit" class="btn btn-primary">Send Message</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

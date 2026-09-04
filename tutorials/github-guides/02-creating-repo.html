@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Creating Your First Repository</title>
+    <link rel="stylesheet" href="../css/base.css">
+    <link rel="stylesheet" href="../css/navigation.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <link rel="stylesheet" href="../css/guides.css">
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <nav class="dewstack-bar" aria-label="Course" style="background:#2d3748;color:#fff;font:15px/1.5 system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;padding:8px 16px;display:flex;flex-wrap:wrap;gap:4px 20px;align-items:center;box-sizing:border-box"><a href="../../index.html" style="color:#fff;font-weight:700;text-decoration:none">Web Authoring and Databases: course front page</a><a href="../../index.html#start" style="color:#fff">Begin</a><a href="../../index.html#web" style="color:#fff">Web tutorials</a><a href="../../index.html#data" style="color:#fff">Database tutorials</a></nav>
+<header>
+        <nav class="navbar minimal">
+            <div class="container">
+                <button class="menu-toggle" aria-label="Open navigation menu" aria-expanded="false">
+                    ☰ Menu
+                </button>
+                <div class="site-header-content">
+                    <a href="../index.html" class="logo">Learn HTML, CSS, GitHub, and More!</a>
+                    <p class="site-subtitle">
+                        A series of tutorials (and experiments) from
+                        <a href="https://jsaaron.com" target="_blank" rel="noopener noreferrer">Joshua Aaron</a> |
+                        <a href="https://github.com/jsaaron" target="_blank" rel="noopener noreferrer">GitHub</a>
+                    </p>
+                </div>
+
+                <div class="header-right">
+                    <a href="../about.html">About</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="menu-overlay"></div>
+
+    <ul class="nav-links">
+        <li><a href="../index.html#home">Home</a></li>
+        <li class="nav-section-header">Lessons</li>
+        <li><a href="../lessons/01-html-basics.html">01. HTML Basics</a></li>
+        <li><a href="../lessons/02-html-semantics.html">02. Semantic HTML</a></li>
+        <li><a href="../lessons/03-css-basics.html">03. CSS Basics</a></li>
+        <li><a href="../lessons/04-css-layout.html">04. CSS Layout</a></li>
+        <li><a href="../lessons/05-responsive-design.html">05. Responsive Design</a></li>
+        <li><a href="../lessons/06-github-setup.html">06. GitHub Setup</a></li>
+        <li><a href="../lessons/07-github-workflow.html">07. GitHub Workflow</a></li>
+        <li><a href="../lessons/08-github-pages.html">08. GitHub Pages</a></li>
+        <li><a href="../lessons/09-images.html">09. Working with Images</a></li>
+        <li><a href="../lessons/10-links.html">10. Working with Links</a></li>
+        <li class="nav-section-header">Resources</li>
+        <li><a href="../index.html#examples">Examples</a></li>
+        <li><a href="../index.html#templates">Templates</a></li>
+        <li><a href="../index.html#github">GitHub Guides</a></li>
+        <li><a href="../design-resources.html">Design Resources</a></li>
+        <li><a href="../troubleshooting.html">Troubleshooting</a></li>
+        <li><a href="../reference.html">Quick Reference</a></li>
+        <li><a href="../project-ideas.html">Project Ideas</a></li>
+        <li><a href="../about.html">About</a></li>
+    </ul>
+
+    <main id="main-content">
+        <div class="guide-container">
+            <div class="guide-nav-links">
+                <a href="../index.html">Back to Home</a> |
+                <a href="01-getting-started.html">Previous Guide</a> |
+                <a href="03-first-commit.html">Next Guide: Making Your First Commit</a>
+            </div>
+
+        <h1>Creating Your First Repository</h1>
+
+        <div class="learning-outcomes">
+            <h2>Learning Outcomes</h2>
+            <p>After completing this guide, you will understand what a repository is and how it functions as a storage location for your projects. You will be able to create a new repository on GitHub through the web interface, configure its basic settings, and understand the options available when creating repositories. You will also know how to upload files to your repository and verify they're stored correctly.</p>
+            
+            <h3>Prerequisites</h3>
+            <p>You should have created a GitHub account from the previous guide. You should also have at least one HTML or CSS file that you want to store in your repository, though you can create an empty repository and add files later if needed.</p>
+        </div>
+
+        <div class="concept-section">
+            <h2>Understanding Repositories</h2>
+            
+            <p>A <strong>repository</strong>, often shortened to <strong>"repo,"</strong> is a storage location for a project on GitHub. Each repository contains:</p>
+            
+            <ul>
+                <li><strong>All the files</strong> for one project</li>
+                <li>The <strong>complete history</strong> of changes made to those files over time</li>
+                <li><strong>Documentation</strong> (README files, etc.)</li>
+            </ul>
+            
+            <p>Understanding what repositories are and how they work is <em>essential</em> for using GitHub effectively.</p>
+
+            <h3>Public vs Private Repositories</h3>
+            <p>Repositories can be either <strong>public</strong> or <strong>private</strong>:</p>
+            
+            <p><strong>Public Repositories:</strong></p>
+            <ul>
+                <li>Visible to <strong>anyone on the internet</strong> who has the repository URL</li>
+                <li>Anyone can <strong>view your code</strong>, download your files, and see your commit history</li>
+                <li><strong>Common for learning and portfolio projects</strong> because they allow you to:
+                    <ul>
+                        <li><strong>Share your work</strong></li>
+                        <li><strong>Demonstrate your skills</strong></li>
+                        <li><strong>Receive feedback</strong> from others</li>
+                    </ul>
+                </li>
+            </ul>
+            
+            <p><strong>Private Repositories:</strong></p>
+            <ul>
+                <li>Only visible to <strong>you and people you specifically invite</strong> as collaborators</li>
+                <li>Useful for:
+                    <ul>
+                        <li>Projects you're <strong>not ready to share</strong></li>
+                        <li><strong>Assignments</strong> you're working on</li>
+                        <li>Projects that contain <strong>sensitive information</strong></li>
+                    </ul>
+                </li>
+            </ul>
+            
+            <p><strong>GitHub provides free private repositories</strong>, so you can choose the privacy level that makes sense for each project. You can also change this setting later!</p>
+            
+            <p>Learn more about repository visibility in GitHub's <a href="https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/managing-repository-settings/changing-a-repositorys-visibility" target="_blank">documentation</a>.</p>
+
+            <h3>Repository URLs</h3>
+            <p>Each repository has its own <strong>unique URL</strong> on GitHub, following the pattern:</p>
+            
+            <div class="code-example">
+                <code>github.com/username/repository-name</code>
+            </div>
+            
+            <p>This URL serves as both:</p>
+            <ul>
+                <li>The <strong>web address</strong> where you can view the repository online</li>
+                <li>The <strong>remote location</strong> where your code is stored in the cloud</li>
+            </ul>
+            
+            <p><strong>Example:</strong> If your GitHub username is <code>"johndoe"</code> and your repository is called <code>"my-first-website"</code>, your repository URL would be:</p>
+            
+            <div class="code-example">
+                <code>github.com/johndoe/my-first-website</code>
+            </div>
+            
+            <p>This URL structure makes it easy to <strong>predict your repository address</strong> and share it with others.</p>
+
+            <h3>Version History</h3>
+            <p>Repositories track the <strong>complete history</strong> of your project. Every time you save changes to GitHub, Git creates a snapshot called a <strong>commit</strong>.</p>
+            
+            <p>Each commit records:</p>
+            <ul>
+                <li><strong>What changed</strong> (which files were modified)</li>
+                <li><strong>When it changed</strong> (timestamp)</li>
+                <li><strong>Who made the change</strong> (your username)</li>
+            </ul>
+            
+            <p>This history allows you to:</p>
+            <ul>
+                <li><strong>See how your project evolved</strong></li>
+                <li><strong>Revert to previous versions</strong> if something goes wrong</li>
+                <li><strong>Understand what each change accomplished</strong></li>
+            </ul>
+            
+            <p>For beginners, this history is <em>valuable</em> for learning from your progress and recovering from mistakes. You can view the commit history at any time to see how your project developed over time.</p>
+
+            <h3>README Files</h3>
+            <p>Repositories also include a <strong>README file option</strong>, which is a markdown document that describes the project. The README appears on the repository's main page and helps visitors understand:</p>
+            
+            <ul>
+                <li><strong>What the project does</strong></li>
+                <li><strong>How to use it</strong></li>
+                <li><strong>How to contribute</strong> (if applicable)</li>
+            </ul>
+            
+            <p><strong>While optional, adding a README to your repositories is good practice</strong> because it:</p>
+            <ul>
+                <li>Helps others <strong>understand your work</strong></li>
+                <li>Serves as <strong>documentation for your future self</strong></li>
+                <li>Establishes <strong>professionalism and clarity</strong></li>
+            </ul>
+            
+            <p>Even for simple projects, a brief README explaining what the project is and what technologies it uses helps establish professionalism and clarity.</p>
+            
+            <p>Learn how to create great README files in GitHub's <a href="https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-readmes" target="_blank">README documentation</a>.</p>
+        </div>
+
+        <div class="concept-section">
+            <h2>Creating a Repository</h2>
+            
+            <p>Creating a repository on GitHub is a <strong>simple process</strong> completed through the GitHub web interface. The process involves a few configuration choices that determine how your repository behaves and appears to others.</p>
+
+            <h3>Step 1: Access Repository Creation</h3>
+            <p>After logging into your GitHub account, look for a <strong>plus icon (+)</strong> in the top right corner of the page. This icon appears near your profile picture and notifications.</p>
+            
+            <p>Clicking this icon opens a dropdown menu with several options including:</p>
+            <ul>
+                <li><strong>"New repository"</strong> - Create a new repository</li>
+                <li><strong>"Import repository"</strong> - Import from another location</li>
+                <li><strong>"New codespace"</strong> - Start a development environment</li>
+            </ul>
+            
+            <p>Select <strong>"New repository"</strong> from this menu. This action takes you to the repository creation page where you'll configure your new repository.</p>
+            
+            <p><strong>Alternative:</strong> You can also visit <a href="https://github.com/new" target="_blank">github.com/new</a> directly.</p>
+
+            <h3>Step 2: Choose a Repository Name</h3>
+            <p>On the repository creation page, you'll see a form asking for several pieces of information. The <strong>first and most important field is the repository name</strong>.</p>
+            
+            <p><strong>Choose a name that clearly describes your project</strong>. Good repository names are:</p>
+            <ul>
+                <li><strong>Short</strong> - Easy to remember and type</li>
+                <li><strong>Descriptive</strong> - Tells others what the project is about</li>
+                <li><strong>Web-friendly</strong> - Use lowercase letters with hyphens instead of spaces</li>
+            </ul>
+            
+            <p><strong>Good examples:</strong></p>
+            <ul>
+                <li><code>my-first-website</code> ✓</li>
+                <li><code>portfolio-site</code> ✓</li>
+                <li><code>html-css-tutorial</code> ✓</li>
+            </ul>
+            
+            <p><strong>Avoid:</strong></p>
+            <ul>
+                <li><code>My Website</code> ✗ (has spaces, mixed case)</li>
+                <li><code>project1</code> ✗ (not descriptive)</li>
+            </ul>
+            
+            <p>The repository name becomes part of the URL, so it should be web-friendly. GitHub will check if the name is available - if someone else has already used your chosen name, you'll need to pick a different one.</p>
+            
+            <p>For detailed guidance, see GitHub's <a href="https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-new-repository" target="_blank">repository creation documentation</a>.</p>
+
+            <h3>Step 3: Add a Description (Optional)</h3>
+            <p>The next section asks for a <strong>description</strong>, which is optional but helpful.</p>
+            
+            <p><strong>A good description briefly explains what the project is:</strong></p>
+            <ul>
+                <li><code>"My first HTML and CSS website project"</code></li>
+                <li><code>"A responsive portfolio site built with HTML and CSS"</code></li>
+            </ul>
+            
+            <p>This description appears on your repository's main page, in search results, and when others browse your repositories. While you can skip this field, adding a description helps others understand your project at a glance and makes your repositories <strong>more professional and discoverable</strong>.</p>
+
+            <h3>Step 4: Choose Public or Private</h3>
+            <p>You'll see options for making the repository <strong>public</strong> or <strong>private</strong>:</p>
+            
+            <p><strong>Public Repositories:</strong></p>
+            <ul>
+                <li>Typically <strong>preferred for learning projects and portfolios</strong></li>
+                <li>Allow you to <strong>share your work</strong> and demonstrate your skills</li>
+                <li>Enable <strong>GitHub Pages hosting</strong> (free website publishing)</li>
+                <li>Potentially receive <strong>feedback from the community</strong></li>
+            </ul>
+            
+            <p><strong>Private Repositories:</strong></p>
+            <ul>
+                <li>Free on GitHub (unlimited private repositories)</li>
+                <li>Useful if you want to keep a project private while working on it</li>
+                <li>You can <strong>make it public later</strong> when it's ready</li>
+            </ul>
+            
+            <p><strong>You can change the privacy setting at any time</strong> after creating the repository, so you're not locked into your initial choice.</p>
+
+            <h3>Step 5: Initialize Options</h3>
+            <p>GitHub offers to initialize the repository with:</p>
+            
+            <ul>
+                <li><strong>README file</strong> - A markdown document describing your project</li>
+                <li><strong>.gitignore file</strong> - Helps exclude files you don't want to track</li>
+                <li><strong>License</strong> - Specifies how others can use your code</li>
+            </ul>
+            
+            <p><strong>For your first repository:</strong></p>
+            <ul>
+                <li><strong>✓ Add a README</strong> - Recommended! It gives you a file you can edit to describe your project</li>
+                <li><strong>✗ .gitignore</strong> - Not needed for simple HTML/CSS projects (more relevant for projects that build or compile code)</li>
+                <li><strong>? License</strong> - Optional for learning projects (you can add one later if needed)</li>
+            </ul>
+
+            <h3>Step 6: Create the Repository</h3>
+            <p>After filling in the repository name, optionally adding a description, choosing public or private, and deciding whether to initialize with a README, click the <strong>green "Create repository" button</strong> at the bottom of the page.</p>
+            
+            <p>GitHub will create your repository and display a page with <strong>instructions for getting started</strong>. This page shows different options depending on whether you're creating a new project or adding an existing project to GitHub.</p>
+            
+            <p>Since you likely have HTML and CSS files already created on your computer, you'll want to follow the instructions for adding files to your repository.</p>
+        </div>
+
+        <div class="concept-section">
+            <h2>Adding Files to Your Repository</h2>
+            
+            <p>Once your repository is created, you need to <strong>add your HTML and CSS files</strong> to it. GitHub provides several methods for adding files, and the <strong>web interface method is simplest for beginners</strong>.</p>
+
+            <h3>Accessing the Upload Interface</h3>
+            <p>If you didn't initialize your repository with a README, GitHub will show you instructions for creating your first file or uploading existing files.</p>
+            
+            <p>Look for links or buttons that say:</p>
+            <ul>
+                <li><strong>"uploading an existing file"</strong></li>
+                <li><strong>"Add file"</strong></li>
+            </ul>
+            
+            <p>Clicking these options takes you to GitHub's file upload interface.</p>
+            
+            <p>You can also navigate to your repository's main page and click the <strong>"Add file"</strong> button, then select <strong>"Upload files"</strong>.</p>
+
+            <h3>Uploading Files</h3>
+            <p>The upload interface allows you to:</p>
+            
+            <ul>
+                <li><strong>Drag and drop files</strong> directly from your computer into the browser</li>
+                <li><strong>Click to browse and select files</strong></li>
+                <li><strong>Upload multiple files at once</strong> by selecting them all</li>
+            </ul>
+            
+            <p>After selecting your files, GitHub shows them in a list with options to:</p>
+            <ul>
+                <li><strong>Rename</strong> files before committing</li>
+                <li><strong>Remove</strong> files from the upload list</li>
+            </ul>
+            
+            <p><strong>You can also create new files directly</strong> in the interface by clicking <strong>"Add file"</strong> and choosing <strong>"Create new file"</strong>, then typing or pasting your code.</p>
+
+            <h3>Committing Your Files</h3>
+            <p>After uploading or creating your files, scroll down to the <strong>"Commit changes"</strong> section at the bottom of the page.</p>
+            
+            <p>Here you'll see a field for a <strong>commit message</strong>. Write a descriptive message explaining what you're adding:</p>
+            
+            <ul>
+                <li><code>"Add initial HTML and CSS files"</code> ✓</li>
+                <li><code>"Upload first website project"</code> ✓</li>
+                <li><code>"Initial commit: Add website files"</code> ✓</li>
+            </ul>
+            
+            <p>Commit messages help you track what changed and when, so <strong>clear messages are valuable even for your first commit</strong>.</p>
+            
+            <p>Once you've written your commit message, click the <strong>green "Commit changes" button</strong>. GitHub saves your files and creates the first commit in your repository's history.</p>
+
+            <h3>Viewing Your Files</h3>
+            <p>After the commit completes, you'll see your files listed in the repository. You can:</p>
+            
+            <ul>
+                <li><strong>Click on any file</strong> to view its contents</li>
+                <li><strong>See syntax highlighting</strong> that makes code easier to read</li>
+                <li><strong>Edit files</strong> directly through the web interface</li>
+            </ul>
+            
+            <p>For more detailed instructions, see GitHub's guide on <a href="https://docs.github.com/en/repositories/working-with-files/managing-files/adding-a-file-to-a-repository" target="_blank">adding files to a repository</a>.</p>
+        </div>
+
+        <div class="concept-section">
+            <h2>Verifying Your Repository</h2>
+            <p>After uploading files, verify that everything is stored correctly. Navigate to your repository's main page by clicking the repository name or using the breadcrumb navigation at the top. You should see all your files listed in the file browser interface. Click on files to view their contents and confirm they display correctly.</p>
+
+            <p>Check that file paths are correct, especially if your HTML files link to CSS files or images. Relative paths should work correctly since the file structure in your repository matches how files will be served. If you have an index.html file, GitHub will automatically recognize it as the main page when viewing your repository, though this doesn't automatically publish it as a website - that requires enabling GitHub Pages, which is covered in a later guide.</p>
+
+            <p>Your repository now serves as both backup storage and a way to share your project with others. The repository URL can be shared with anyone, allowing them to view your code and download your files. Each time you make changes and commit them, those changes are permanently recorded in your repository's history, creating a complete record of your project's development.</p>
+        </div>
+
+        <div class="concept-section">
+            <h2>Next Steps</h2>
+            <p>With your repository created and files uploaded, you're ready to learn about making commits and managing changes. The next guide, "Making Your First Commit," explains how to save changes to your repository and write effective commit messages that document your project's evolution.</p>
+        </div>
+
+        <div class="concept-section">
+            <h2>Bibliography</h2>
+            <p>GitHub. "Creating a new repository." GitHub Docs. <a href="https://docs.github.com/en/get-started/quickstart/create-a-repo">https://docs.github.com/en/get-started/quickstart/create-a-repo</a></p>
+            
+            <p>GitHub. "Adding a file to a repository." GitHub Docs. <a href="https://docs.github.com/en/repositories/working-with-files/managing-files/adding-a-file-to-a-repository">https://docs.github.com/en/repositories/working-with-files/managing-files/adding-a-file-to-a-repository</a></p>
+
+            <p>Pro Git Book. "Git Basics - Getting a Git Repository." Pro Git. <a href="https://git-scm.com/book/en/v2/Git-Basics-Getting-a-Git-Repository">https://git-scm.com/book/en/v2/Git-Basics-Getting-a-Git-Repository</a></p>
+
+            <p>The Odin Project. "Introduction to Git." The Odin Project Curriculum. <a href="https://www.theodinproject.com/paths/foundations/courses/foundations">https://www.theodinproject.com/paths/foundations/courses/foundations</a></p>
+        </div>
+
+        <div class="guide-nav-links" style="margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--border-color);">
+            <a href="../index.html">Back to Home</a> |
+            <a href="01-getting-started.html">Previous Guide</a> |
+            <a href="03-first-commit.html">Next Guide: Making Your First Commit</a>
+        </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Learn HTML, CSS, GitHub, and More! | Created by <a href="https://jsaaron.com" target="_blank" rel="noopener noreferrer">Joshua Aaron</a></p>
+        </div>
+    </footer>
+
+    <script src="../script.js"></script>
+</body>
+</html>
+

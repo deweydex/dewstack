@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Branches and Pull Requests</title>
+    <link rel="stylesheet" href="../css/base.css">
+    <link rel="stylesheet" href="../css/navigation.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <link rel="stylesheet" href="../css/guides.css">
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <nav class="dewstack-bar" aria-label="Course" style="background:#2d3748;color:#fff;font:15px/1.5 system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;padding:8px 16px;display:flex;flex-wrap:wrap;gap:4px 20px;align-items:center;box-sizing:border-box"><a href="../../index.html" style="color:#fff;font-weight:700;text-decoration:none">Web Authoring and Databases: course front page</a><a href="../../index.html#start" style="color:#fff">Begin</a><a href="../../index.html#web" style="color:#fff">Web tutorials</a><a href="../../index.html#data" style="color:#fff">Database tutorials</a></nav>
+<header>
+        <nav class="navbar minimal">
+            <div class="container">
+                <button class="menu-toggle" aria-label="Open navigation menu" aria-expanded="false">
+                    ☰ Menu
+                </button>
+                <div class="site-header-content">
+                    <a href="../index.html" class="logo">Learn HTML, CSS, GitHub, and More!</a>
+                    <p class="site-subtitle">
+                        A series of tutorials (and experiments) from
+                        <a href="https://jsaaron.com" target="_blank" rel="noopener noreferrer">Joshua Aaron</a> |
+                        <a href="https://github.com/jsaaron" target="_blank" rel="noopener noreferrer">GitHub</a>
+                    </p>
+                </div>
+
+                <div class="header-right">
+                    <a href="../about.html">About</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="menu-overlay"></div>
+
+    <ul class="nav-links">
+        <li><a href="../index.html#home">Home</a></li>
+        <li class="nav-section-header">Lessons</li>
+        <li><a href="../lessons/01-html-basics.html">01. HTML Basics</a></li>
+        <li><a href="../lessons/02-html-semantics.html">02. Semantic HTML</a></li>
+        <li><a href="../lessons/03-css-basics.html">03. CSS Basics</a></li>
+        <li><a href="../lessons/04-css-layout.html">04. CSS Layout</a></li>
+        <li><a href="../lessons/05-responsive-design.html">05. Responsive Design</a></li>
+        <li><a href="../lessons/06-github-setup.html">06. GitHub Setup</a></li>
+        <li><a href="../lessons/07-github-workflow.html">07. GitHub Workflow</a></li>
+        <li><a href="../lessons/08-github-pages.html">08. GitHub Pages</a></li>
+        <li><a href="../lessons/09-images.html">09. Working with Images</a></li>
+        <li><a href="../lessons/10-links.html">10. Working with Links</a></li>
+        <li class="nav-section-header">Resources</li>
+        <li><a href="../index.html#examples">Examples</a></li>
+        <li><a href="../index.html#templates">Templates</a></li>
+        <li><a href="../index.html#github">GitHub Guides</a></li>
+        <li><a href="../design-resources.html">Design Resources</a></li>
+        <li><a href="../troubleshooting.html">Troubleshooting</a></li>
+        <li><a href="../reference.html">Quick Reference</a></li>
+        <li><a href="../project-ideas.html">Project Ideas</a></li>
+        <li><a href="../about.html">About</a></li>
+    </ul>
+
+    <main id="main-content">
+        <div class="guide-container">
+            <div class="guide-nav-links">
+                <a href="../index.html">Back to Home</a> |
+                <a href="03-first-commit.html">Previous Guide</a> |
+                <a href="05-github-pages.html">Next Guide: Deploying with GitHub Pages</a>
+            </div>
+
+        <h1>Branches and Pull Requests</h1>
+        <div class="learning-outcomes">
+            <h2>Learning Outcomes</h2>
+            <p>After reading this guide, you will understand what branches are and how they allow you to work on different versions of your project simultaneously. You will be able to create branches, make changes on branches, and understand what pull requests are and how to use them. You will also recognize how branches and pull requests enable safe experimentation and organized collaboration workflows.</p>
+            <h3>Prerequisites</h3>
+            <p>You should understand how to make commits from the previous guide. Familiarity with the basic GitHub interface and repository structure is also necessary.</p>
+        </div>
+        <div class="concept-section">
+            <h2>Understanding Branches</h2>
+            <p>Branches in Git and GitHub allow you to work on different versions of your project simultaneously without affecting the main version. Think of branches like alternate timelines - you can experiment with new features, try different approaches, or work on multiple tasks in parallel, all while keeping your main branch stable and functional.</p>
+            <p>The main branch, typically called "main" or "master," represents the primary, stable version of your project. This is the version that's ready to share, deploy, or use. When you first create a repository, it starts with just the main branch. As your project grows, you might want to experiment with new features or redesigns without risking your stable main version. Branches let you create copies of your project where you can make changes safely.</p>
+            <p>When you create a new branch, you're creating an independent line of development that starts from the current state of your main branch. Changes you make on this new branch don't affect the main branch until you decide to merge them together. This means you can try out ideas, experiment with designs, or work on features without worrying about breaking your working website. If an experiment doesn't work out, you can simply delete the branch without affecting your main project.</p>
+            <p>Branches are especially useful when working on larger changes or multiple features simultaneously. For example, you might create a branch called "redesign-header" to work on updating your website's header, and another branch called "add-contact-form" to work on a new contact page. Both branches start from the same point but develop independently. When each feature is complete and tested, you can merge the branch back into main, incorporating the changes into your primary project.</p>
+            <p>Naming branches clearly helps you remember what each branch is for. Good branch names are descriptive and use hyphens instead of spaces, such as "fix-navigation-bug" or "add-responsive-images". Some teams use naming conventions like starting with feature/, fix/, or experiment/ to categorize branches, but for personal projects, clear descriptive names are sufficient. The important thing is that the name tells you what work happens on that branch.</p>
+            <p>Understanding branches becomes increasingly valuable as projects grow. Even for simple websites, branches provide a safe way to experiment with design changes or try new features. The ability to work on changes independently, test them thoroughly, and then merge them only when ready creates a professional workflow that scales from personal projects to large team collaborations.</p>
+        </div>
+        <div class="concept-section">
+            <h2>Creating and Using Branches</h2>
+            <p>Creating a branch on GitHub is straightforward through the web interface. You can create branches to experiment with changes, work on new features, or try different approaches to your design without affecting your main branch.</p>
+            <p>To create a new branch, navigate to your repository and look near the top left where you'll see a dropdown or button showing your current branch name, typically "main". Clicking this opens a branch selector interface. You'll see an option to create a new branch, or you can type a new branch name in a search field. When you type a branch name that doesn't exist, GitHub offers to create it for you. Enter a descriptive name for your branch and confirm the creation.</p>
+            <p>After creating or switching to a branch, you'll see that branch name displayed where the branch selector was. Any commits you make now will go to this branch instead of main. The branch starts as an exact copy of main at the point you created it, so all your existing files and their current state are present. You can now make changes, edit files, and create commits on this branch without affecting main.</p>
+            <p>When working on a branch, the workflow is the same as working on main - you edit files, write commit messages, and save changes. The difference is that these changes exist only on your branch until you merge them. You can view your branch's commit history separately from main, seeing exactly what changes you've made. This isolation lets you experiment freely, knowing your main branch remains unchanged.</p>
+            <p>When you're ready to incorporate your branch's changes into main, you merge the branch. Merging combines the changes from your branch into main, bringing those commits and file modifications into the main branch. GitHub provides a simple interface for merging through pull requests, which we'll discuss next. After merging, your branch's changes become part of main, and you can continue working from there or create new branches for future features.</p>
+        </div>
+        <div class="concept-section">
+            <h2>Understanding Pull Requests</h2>
+            
+            <p><strong>Pull requests</strong>, often abbreviated as <strong>PRs</strong>, are proposals to merge changes from one branch into another. While the name might suggest requesting someone else to pull your changes, pull requests are <em>valuable even when working alone</em> because they provide a structured way to review, discuss, and merge changes before they become part of your main branch.</p>
+
+            <h3>What Pull Requests Do</h3>
+            <p>When you create a pull request, you're proposing that changes from a branch should be merged into another branch, typically from a <strong>feature branch into main</strong>.</p>
+            
+            <p>The pull request shows exactly what would change:</p>
+            <ul>
+                <li><strong>Which files</strong> would be modified, added, or deleted</li>
+                <li><strong>What the specific changes</strong> are (line by line)</li>
+                <li>A <strong>preview</strong> of how the merge would work</li>
+            </ul>
+            
+            <p>This preview allows you to <strong>review changes</strong> before they're merged, ensuring everything looks correct and works as intended.</p>
+            
+            <p>Learn more in GitHub's <a href="https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/about-pull-requests" target="_blank">pull requests documentation</a>.</p>
+
+            <h3>Components of a Pull Request</h3>
+            <p>Pull requests include several important components:</p>
+            
+            <ul>
+                <li><strong>Title</strong> - Should clearly describe what the pull request does, similar to a good commit message
+                    <ul>
+                        <li>Example: <code>"Update color scheme to green palette"</code></li>
+                    </ul>
+                </li>
+                <li><strong>Description</strong> - Allows you to explain the changes in detail, why you made them, and any relevant context</li>
+                <li><strong>Diff</strong> - GitHub automatically shows a side-by-side comparison of all files that would change, highlighting exactly what's being added, removed, or modified</li>
+            </ul>
+            
+            <p>This visual representation makes it easy to <strong>review changes</strong> before merging.</p>
+
+            <h3>Using Pull Requests When Working Alone</h3>
+            <p>When working alone, pull requests serve as a <strong>review checkpoint</strong>. Before merging changes into main, you can:</p>
+            
+            <ul>
+                <li><strong>Review the pull request</strong> to ensure everything is correct</li>
+                <li><strong>Test any changes</strong> if possible</li>
+                <li><strong>Write notes</strong> about what was changed and why</li>
+            </ul>
+            
+            <p>This practice:</p>
+            <ul>
+                <li>Creates <strong>good habits</strong> for collaboration</li>
+                <li>Helps <strong>catch mistakes</strong> before they become part of your main branch</li>
+                <li>Creates a <strong>record of why changes were made</strong>, which is valuable when looking back at project history</li>
+            </ul>
+
+            <h3>Pull Requests in Collaboration</h3>
+            <p>In collaborative projects, pull requests become <strong>essential communication tools</strong>. Team members can:</p>
+            
+            <ul>
+                <li><strong>Review</strong> proposed changes</li>
+                <li><strong>Leave comments</strong> asking questions or suggesting improvements</li>
+                <li><strong>Discuss</strong> the implementation before merging</li>
+            </ul>
+            
+            <p>The pull request author can make additional commits to address feedback, and all of this discussion is <strong>preserved in the project history</strong>.</p>
+            
+            <p>Even for solo projects, using pull requests:</p>
+            <ul>
+                <li><strong>Prepares you</strong> for professional workflows</li>
+                <li>Creates <strong>better organized</strong> project histories</li>
+                <li>Helps you <strong>think through changes</strong> more carefully</li>
+            </ul>
+            
+            <p>For guidance on creating effective pull requests, see GitHub's <a href="https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request" target="_blank">creating pull requests guide</a>.</p>
+        </div>
+        <div class="concept-section">
+            <h2>Creating and Merging Pull Requests</h2>
+            <p>Creating a pull request involves a few simple steps that lead to reviewing and merging your changes. This process ensures changes are reviewed before becoming part of your main branch.</p>
+            <p>After you've made commits on a branch and want to merge those changes into main, navigate to the "Pull requests" tab in your repository. Click "New pull request" to begin creating one. GitHub will ask you to select which branches to compare - choose your feature branch as the source and "main" as the destination. GitHub shows you a preview of what would change if you merge the pull request, displaying the diff of all modified files.</p>
+            <p>Write a clear title for your pull request that summarizes the changes. For example, "Update website color scheme to green palette" is better than "Changes" or "Updates". In the description field, explain what changed and why. For example, "This PR updates the color scheme from blue to green to better match the project's theme. Also includes font size adjustments to improve readability with the new colors." This description helps you remember the reasoning later and serves as documentation for your project history.</p>
+            <p>Review the changes GitHub shows in the diff view. Make sure all modifications look correct and that nothing unintended was changed. The diff highlights additions in green and deletions in red, making it easy to see what's changing. If you notice something that needs adjustment, you can make additional commits to your branch, and they'll automatically appear in the pull request. This iterative process allows you to refine changes before merging.</p>
+            <p>When you're satisfied with the changes and ready to merge, click the "Merge pull request" button. GitHub merges your branch into main, incorporating all your commits and changes. After merging, you can delete the feature branch since its changes are now in main. Your main branch now contains your updated code, and the pull request serves as a permanent record of what changed and why.</p>
+            <p>This workflow - create branch, make changes, create pull request, review, merge - might seem like extra steps for simple changes. However, it creates organized, reviewable changes and establishes habits that scale well as projects grow. Even for solo projects, this process helps catch mistakes and creates clearer project history.</p>
+        </div>
+        <div class="concept-section">
+            <h2>Best Practices</h2>
+            
+            <p>Following <strong>best practices</strong> when using branches and pull requests creates better organized projects and prepares you for professional workflows.</p>
+
+            <h3>1. Keep Branches Focused</h3>
+            <p>Keep branches focused on <strong>single features or concerns</strong>. If you find yourself working on multiple unrelated changes on one branch, consider splitting them into separate branches.</p>
+            
+            <p><strong>This makes pull requests easier to review and understand.</strong></p>
+            
+            <p><strong>Example:</strong> If you're updating styles and adding new content, those could be <strong>two separate branches and pull requests</strong>, making it clear what each change accomplishes.</p>
+
+            <h3>2. Write Descriptive Branch Names</h3>
+            <p>Write <strong>descriptive branch names</strong> that clearly indicate what work happens on that branch.</p>
+            
+            <p><strong>Good examples:</strong></p>
+            <ul>
+                <li><code>fix-navigation-bug</code> ✓</li>
+                <li><code>add-contact-form</code> ✓</li>
+                <li><code>update-color-scheme</code> ✓</li>
+            </ul>
+            
+            <p><strong>Avoid:</strong></p>
+            <ul>
+                <li><code>changes</code> ✗ (provides no useful information)</li>
+                <li><code>branch1</code> ✗ (not descriptive)</li>
+                <li><code>test</code> ✗ (too vague)</li>
+            </ul>
+            
+            <p>Good naming helps you <strong>navigate your branches</strong> and understand your project's structure.</p>
+
+            <h3>3. Create Pull Requests for All Work</h3>
+            <p>Create pull requests <strong>even for your own work</strong>. The review process helps:</p>
+            <ul>
+                <li><strong>Catch mistakes</strong> before they're merged</li>
+                <li>Create a <strong>clear record</strong> of what changed</li>
+                <li>Provide <strong>documentation</strong> of your development process</li>
+            </ul>
+            
+            <p>Write <strong>detailed descriptions</strong> explaining not just what changed, but <em>why</em> you made those changes. This documentation becomes valuable when looking back at your project history.</p>
+
+            <h3>4. Review Your Own Pull Requests</h3>
+            <p><strong>Review your own pull requests before merging</strong>. Take time to:</p>
+            <ul>
+                <li><strong>Look at the diff</strong> - See exactly what's changing</li>
+                <li><strong>Verify changes are correct</strong> - Make sure everything works as intended</li>
+                <li><strong>Ensure nothing unintended</strong> is included</li>
+            </ul>
+            
+            <p>This self-review process helps you:</p>
+            <ul>
+                <li><strong>Develop attention to detail</strong></li>
+                <li><strong>Catch issues</strong> before they become part of your main branch</li>
+                <li><strong>Build good habits</strong> for professional workflows</li>
+            </ul>
+        </div>
+        <div class="concept-section">
+            <h2>Next Steps</h2>
+            <p>Now that you understand branches and pull requests, you're ready to learn about publishing your websites. The next guide, "Deploying with GitHub Pages," explains how to publish your HTML and CSS websites for free using GitHub Pages hosting.</p>
+        </div>
+        <div class="concept-section">
+            <h2>Bibliography</h2>
+            <p>GitHub. "About pull requests." GitHub Docs. <a href="https://docs.github.com/en/pull-requests/collaborating-with-pull-requests">https://docs.github.com/en/pull-requests/collaborating-with-pull-requests</a></p>
+            <p>GitHub. "About branches." GitHub Docs. <a href="https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/about-branches">https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/about-branches</a></p>
+            <p>Pro Git Book. "Git Branching." Pro Git. <a href="https://git-scm.com/book/en/v2/Git-Branching-Branches-in-a-Nutshell">https://git-scm.com/book/en/v2/Git-Branching-Branches-in-a-Nutshell</a></p>
+            <p>Atlassian. "Git Branching Tutorial." Atlassian Git Tutorials. <a href="https://www.atlassian.com/git/tutorials/using-branches">https://www.atlassian.com/git/tutorials/using-branches</a></p>
+        </div>
+        <div class="guide-nav-links" style="margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--border-color);">
+            <a href="../index.html">Back to Home</a> |
+            <a href="03-first-commit.html">Previous Guide</a> |
+            <a href="05-github-pages.html">Next Guide: Deploying with GitHub Pages</a>
+        </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Learn HTML, CSS, GitHub, and More! | Created by <a href="https://jsaaron.com" target="_blank" rel="noopener noreferrer">Joshua Aaron</a></p>
+        </div>
+    </footer>
+
+    <script src="../script.js"></script>
+</body>
+</html>
+

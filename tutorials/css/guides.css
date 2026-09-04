@@ -1,0 +1,51 @@
+/* 
+    Guide Page Styles
+    
+    This file contains styles specific to GitHub guide pages.
+    Similar to lesson pages but may have unique requirements.
+*/
+
+/* 
+    Guide Container
+    
+    Limits the width of guide content for optimal readability.
+    Centered layout with padding for comfortable reading.
+*/
+.guide-container,
+.lesson-container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+/* 
+    Guide Page Navigation Links
+    
+    These are the previous/next/home links found at the top
+    and bottom of guide pages.
+*/
+.guide-nav-links,
+.lesson-nav-links {
+    margin-bottom: 2rem;
+}
+
+.guide-nav-links a,
+.lesson-nav-links a {
+    color: var(--primary-color);
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.guide-nav-links a:hover,
+.lesson-nav-links a:hover {
+    color: var(--primary-dark);
+    text-decoration: underline;
+}
+
+.guide-nav-links a:focus,
+.lesson-nav-links a:focus {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 2px;
+    border-radius: 4px;
+}
+

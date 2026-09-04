@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D Rotating Cube - CSS Animation Template</title>
+    <style>
+        /* ===================================
+           HOW TO EDIT THIS TEMPLATE
+           ===================================
+
+           This is a COMPLETE, WORKING template that demonstrates 3D CSS transforms.
+
+           TO VIEW THE SOURCE CODE:
+           - Right-click anywhere on this page
+           - Select "View Page Source" or "Inspect Element"
+           - Or use Ctrl+U (Windows/Linux) or Cmd+Option+U (Mac)
+
+           WHAT YOU CAN CUSTOMIZE:
+
+           1. CUBE CONTENT (Lines ~180-200):
+              - Change text on each face
+              - Add images or icons to faces
+              - Modify background colors
+
+           2. COLORS (Lines ~70-80):
+              - Change CSS custom properties
+              - Modify face colors individually
+              - Adjust gradient backgrounds
+
+           3. ANIMATION SPEED (Line ~165):
+              - Change animation duration
+              - Modify rotation axes
+              - Add or remove animations
+
+           4. CUBE SIZE (Line ~100):
+              - Adjust --cube-size variable
+              - Scale the entire scene
+
+           5. PERSPECTIVE (Line ~95):
+              - Change perspective value
+              - Modify viewing angle
+
+           KEY CONCEPTS DEMONSTRATED:
+           - transform-style: preserve-3d
+           - perspective property
+           - 3D rotations (rotateX, rotateY, rotateZ)
+           - translateZ for depth
+           - Keyframe animations
+           - CSS custom properties
+
+           CHALLENGE IDEAS:
+           - Add controls to pause/resume rotation
+           - Create multiple cubes
+           - Add images to each face
+           - Make cube interactive (click to change rotation)
+           - Create different 3D shapes (pyramid, prism)
+        */
+
+        /* Reset and base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            /* Color scheme */
+            --color-bg: #0f172a;
+            --color-text: #f1f5f9;
+            --color-accent: #3b82f6;
+
+            /* Cube colors */
+            --face-front: rgba(239, 68, 68, 0.9);
+            --face-back: rgba(59, 130, 246, 0.9);
+            --face-right: rgba(34, 197, 94, 0.9);
+            --face-left: rgba(234, 179, 8, 0.9);
+            --face-top: rgba(168, 85, 247, 0.9);
+            --face-bottom: rgba(236, 72, 153, 0.9);
+
+            /* Dimensions */
+            --cube-size: 200px;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: var(--color-text);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            overflow: hidden;
+        }
+
+        /* Scene container with perspective */
+        .scene {
+            width: var(--cube-size);
+            height: var(--cube-size);
+            perspective: 1000px;
+            margin: 2rem auto;
+        }
+
+        /* Cube container */
+        .cube {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            animation: rotateCube 12s linear infinite;
+        }
+
+        /* Pause animation on hover */
+        .cube:hover {
+            animation-play-state: paused;
+        }
+
+        /* Cube faces */
+        .cube__face {
+            position: absolute;
+            width: var(--cube-size);
+            height: var(--cube-size);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            font-weight: bold;
+            opacity: 0.95;
+            backface-visibility: visible;
+            transition: opacity 0.3s ease;
+        }
+
+        .cube:hover .cube__face {
+            opacity: 1;
+        }
+
+        /* Position each face in 3D space */
+        .cube__face--front {
+            background: var(--face-front);
+            transform: rotateY(0deg) translateZ(calc(var(--cube-size) / 2));
+        }
+
+        .cube__face--back {
+            background: var(--face-back);
+            transform: rotateY(180deg) translateZ(calc(var(--cube-size) / 2));
+        }
+
+        .cube__face--right {
+            background: var(--face-right);
+            transform: rotateY(90deg) translateZ(calc(var(--cube-size) / 2));
+        }
+
+        .cube__face--left {
+            background: var(--face-left);
+            transform: rotateY(-90deg) translateZ(calc(var(--cube-size) / 2));
+        }
+
+        .cube__face--top {
+            background: var(--face-top);
+            transform: rotateX(90deg) translateZ(calc(var(--cube-size) / 2));
+        }
+
+        .cube__face--bottom {
+            background: var(--face-bottom);
+            transform: rotateX(-90deg) translateZ(calc(var(--cube-size) / 2));
+        }
+
+        /* Rotation animation */
+        @keyframes rotateCube {
+            0% {
+                transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+            }
+            100% {
+                transform: rotateX(360deg) rotateY(360deg) rotateZ(360deg);
+            }
+        }
+
+        /* Header */
+        header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            color: #94a3b8;
+        }
+
+        /* Info section */
+        .info {
+            max-width: 600px;
+            text-align: center;
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 1rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .info h2 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--color-accent);
+        }
+
+        .info p {
+            line-height: 1.6;
+            color: #cbd5e1;
+            margin-bottom: 1rem;
+        }
+
+        .info code {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 0.2rem 0.5rem;
+            border-radius: 0.25rem;
+            font-family: 'Courier New', monospace;
+            color: #fbbf24;
+        }
+
+        /* Legend */
+        .legend {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 0.75rem;
+            margin-top: 1.5rem;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .legend-color {
+            width: 24px;
+            height: 24px;
+            border-radius: 0.25rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            :root {
+                --cube-size: 150px;
+            }
+
+            .cube__face {
+                font-size: 1.5rem;
+            }
+
+            .info {
+                padding: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            :root {
+                --cube-size: 120px;
+            }
+
+            .cube__face {
+                font-size: 1.2rem;
+            }
+
+            h1 {
+                font-size: 1.5rem;
+            }
+
+            .subtitle {
+                font-size: 0.95rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>3D Rotating Cube</h1>
+        <p class="subtitle">Pure CSS 3D Transforms & Animations</p>
+    </header>
+
+    <div class="scene">
+        <div class="cube">
+            <div class="cube__face cube__face--front">Front</div>
+            <div class="cube__face cube__face--back">Back</div>
+            <div class="cube__face cube__face--right">Right</div>
+            <div class="cube__face cube__face--left">Left</div>
+            <div class="cube__face cube__face--top">Top</div>
+            <div class="cube__face cube__face--bottom">Bottom</div>
+        </div>
+    </div>
+
+    <div class="info">
+        <h2>How It Works</h2>
+        <p>
+            This cube is created using pure CSS with <code>transform-style: preserve-3d</code>
+            and <code>perspective</code>. Each face is positioned in 3D space using
+            <code>rotateX()</code>, <code>rotateY()</code>, and <code>translateZ()</code>.
+        </p>
+        <p>
+            The cube rotates continuously using a <code>@keyframes</code> animation that
+            rotates all three axes simultaneously. Hover over the cube to pause the rotation!
+        </p>
+
+        <div class="legend">
+            <div class="legend-item">
+                <div class="legend-color" style="background: var(--face-front);"></div>
+                <span>Front</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: var(--face-back);"></div>
+                <span>Back</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: var(--face-right);"></div>
+                <span>Right</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: var(--face-left);"></div>
+                <span>Left</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: var(--face-top);"></div>
+                <span>Top</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: var(--face-bottom);"></div>
+                <span>Bottom</span>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

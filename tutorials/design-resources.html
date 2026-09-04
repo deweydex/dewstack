@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Design Resources - Typography, Readability, and Accessibility</title>
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/navigation.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/design-resources.css">
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <nav class="dewstack-bar" aria-label="Course" style="background:#2d3748;color:#fff;font:15px/1.5 system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;padding:8px 16px;display:flex;flex-wrap:wrap;gap:4px 20px;align-items:center;box-sizing:border-box"><a href="../index.html" style="color:#fff;font-weight:700;text-decoration:none">Web Authoring and Databases: course front page</a><a href="../index.html#start" style="color:#fff">Begin</a><a href="../index.html#web" style="color:#fff">Web tutorials</a><a href="../index.html#data" style="color:#fff">Database tutorials</a></nav>
+<header>
+        <nav class="navbar minimal">
+            <div class="container">
+                <button class="menu-toggle" aria-label="Open navigation menu" aria-expanded="false">
+                    ☰ Menu
+                </button>
+                <div class="site-header-content">
+                    <a href="index.html" class="logo">Learn HTML, CSS, GitHub, and More!</a>
+                    <p class="site-subtitle">
+                        A series of tutorials (and experiments) from
+                        <a href="https://jsaaron.com" target="_blank" rel="noopener noreferrer">Joshua Aaron</a> |
+                        <a href="https://github.com/jsaaron" target="_blank" rel="noopener noreferrer">GitHub</a>
+                    </p>
+                </div>
+
+                <div class="header-right">
+                    <a href="about.html">About</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="menu-overlay"></div>
+
+    <ul class="nav-links">
+        <li><a href="index.html#home">Home</a></li>
+        <li class="nav-section-header">Lessons</li>
+        <li><a href="lessons/01-html-basics.html">01. HTML Basics</a></li>
+        <li><a href="lessons/02-html-semantics.html">02. Semantic HTML</a></li>
+        <li><a href="lessons/03-css-basics.html">03. CSS Basics</a></li>
+        <li><a href="lessons/04-css-layout.html">04. CSS Layout</a></li>
+        <li><a href="lessons/05-responsive-design.html">05. Responsive Design</a></li>
+        <li><a href="lessons/06-github-setup.html">06. GitHub Setup</a></li>
+        <li><a href="lessons/07-github-workflow.html">07. GitHub Workflow</a></li>
+        <li><a href="lessons/08-github-pages.html">08. GitHub Pages</a></li>
+        <li><a href="lessons/09-images.html">09. Working with Images</a></li>
+        <li><a href="lessons/10-links.html">10. Working with Links</a></li>
+        <li class="nav-section-header">Resources</li>
+        <li><a href="index.html#examples">Examples</a></li>
+        <li><a href="index.html#templates">Templates</a></li>
+        <li><a href="index.html#github">GitHub Guides</a></li>
+        <li><a href="design-resources.html">Design Resources</a></li>
+        <li><a href="troubleshooting.html">Troubleshooting</a></li>
+        <li><a href="reference.html">Quick Reference</a></li>
+        <li><a href="project-ideas.html">Project Ideas</a></li>
+        <li><a href="about.html">About</a></li>
+    </ul>
+
+    <main id="main-content">
+        <div class="resource-container">
+            <h1>Design Resources: Typography, Readability, and Accessibility</h1>
+
+        <div class="resource-section">
+            <h2>Choosing Good Fonts</h2>
+            <p>Fonts, or typefaces, significantly impact how readable and professional your website appears. Understanding font selection helps you create websites that are both visually appealing and easy to read.</p>
+
+            <p>Font families fall into two main categories: serif and sans-serif. Serif fonts have small decorative strokes at the ends of letters, like Times New Roman or Georgia. These fonts are traditional and often feel formal. Sans-serif fonts lack these decorative strokes, like Arial or Helvetica, and typically feel modern and clean. For web content, sans-serif fonts are generally easier to read on screens, especially for body text. Serif fonts work well for headings when you want a more traditional or elegant feel.</p>
+
+            <p>When choosing fonts, consider readability above all else. Fancy or decorative fonts might look interesting, but if they're difficult to read, they hurt your website's usability. Stick to web-safe fonts that are available on most computers, or use web fonts from services like Google Fonts that load reliably. Common web-safe font stacks include Arial, Helvetica, sans-serif for body text and Georgia, Times New Roman, serif for headings.</p>
+
+            <p>Font size matters greatly for readability. Body text should typically be at least 16 pixels, with 18 pixels often being more comfortable for reading. Headings can be larger to create visual hierarchy - a main heading might be 32 to 48 pixels, while subheadings might be 24 to 32 pixels. Avoid making text too small, as this strains readers' eyes and excludes people with vision difficulties. Larger text is more accessible and generally more professional-looking.</p>
+
+            <div class="example-box good-example">
+                <h3>Good Font Example</h3>
+                <p style="font-family: Arial, Helvetica, sans-serif; font-size: 18px; line-height: 1.6;">This text uses a sans-serif font at 18 pixels with appropriate line height. It's easy to read and comfortable for extended reading.</p>
+            </div>
+
+            <div class="example-box bad-example">
+                <h3>Poor Font Example</h3>
+                <p style="font-family: 'Comic Sans MS', cursive; font-size: 12px; line-height: 1.2;">This text uses a decorative font at 12 pixels with tight line spacing. It's difficult to read and looks unprofessional.</p>
+            </div>
+        </div>
+
+        <div class="resource-section">
+            <h2>Improving Readability</h2>
+            <p>Readability refers to how easily users can read and understand your content. Good readability makes your website accessible to more people and creates a better user experience.</p>
+
+            <p>Line height, also called leading, is the vertical space between lines of text. Too little space makes text feel cramped and difficult to read, while too much space breaks up the text unnaturally. A line height of 1.5 to 1.8 times the font size generally provides comfortable reading. For example, if your font size is 16 pixels, a line height of 24 to 28 pixels works well. This spacing gives readers' eyes room to move between lines without feeling lost.</p>
+
+            <p>Line length, or measure, is how wide your text blocks are. Lines that are too long make it difficult for readers to find the start of the next line when their eyes move back. Lines that are too short create awkward breaks and feel choppy. A good line length is typically 45 to 75 characters, or about 600 to 900 pixels wide for body text. You can control this using the max-width CSS property on your paragraphs or container elements.</p>
+
+            <p>Color contrast is essential for readability. Text needs sufficient contrast against its background to be readable. Dark text on a light background or light text on a dark background provides good contrast. Avoid placing similar colors together, like gray text on a light gray background, which becomes difficult to read. The Web Content Accessibility Guidelines recommend a contrast ratio of at least 4.5:1 for normal text and 3:1 for large text.</p>
+
+            <div class="example-box good-example">
+                <h3>Good Readability</h3>
+                <div style="max-width: 600px; line-height: 1.7; font-size: 16px; color: #1f2937;">
+                    <p>This paragraph has appropriate line height, comfortable line length, and good color contrast. It's easy to read and doesn't strain your eyes. The spacing and width create a pleasant reading experience.</p>
+                </div>
+            </div>
+
+            <div class="example-box bad-example">
+                <h3>Poor Readability</h3>
+                <div style="max-width: 1200px; line-height: 1.1; font-size: 12px; color: #6b7280;">
+                    <p>This paragraph has very long lines, tight line spacing, small text, and low contrast. Reading this requires effort and can cause eye strain. It demonstrates how poor readability hurts user experience.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="resource-section">
+            <h2>Web Accessibility Fundamentals</h2>
+            <p>Accessibility means designing websites that can be used by people with diverse abilities and needs. Creating accessible websites isn't just the right thing to do - it also makes your sites usable for more people and often improves the experience for everyone.</p>
+
+            <p>Semantic HTML provides the foundation for accessibility. Using proper HTML elements like headings, paragraphs, lists, and semantic tags helps screen readers understand and navigate your content. When you use an <code>&lt;h1&gt;</code> tag for your main heading, screen readers announce it as a heading, allowing users to jump between headings. Using <code>&lt;nav&gt;</code> for navigation helps users find and skip to the main content. Semantic HTML works with assistive technologies to make websites usable without visual cues.</p>
+
+            <p>Alternative text for images, written in the alt attribute, describes images for people who can't see them. Screen readers read this text aloud, so users understand what images convey. Good alt text is concise but descriptive - it explains what the image shows or its purpose in the context of the page. For decorative images that don't convey information, you can use an empty alt attribute, but images that contain information always need descriptive alt text.</p>
+
+            <p>Keyboard navigation allows users to navigate your website without a mouse. Many people use keyboards for navigation, including people with motor disabilities and power users who prefer keyboard shortcuts. Make sure all interactive elements like links and buttons can be reached and activated using only the keyboard. Visible focus indicators show which element currently has keyboard focus, helping users understand where they are on the page.</p>
+
+            <p>Color contrast requirements ensure text is readable for people with various types of color vision. As mentioned in the readability section, sufficient contrast between text and background is essential. Additionally, don't rely solely on color to convey information - if you use red text to indicate errors, also include text labels or icons so the information is accessible to people who can't distinguish colors.</p>
+        </div>
+
+        <div class="resource-section">
+            <h2>Practical Design Tips</h2>
+            <p>These practical tips combine typography, readability, and accessibility principles to help you create better websites.</p>
+
+            <p>Establish visual hierarchy using font sizes, weights, and spacing. Your most important content should be visually prominent through larger text, bold weight, or more spacing. Headings create clear structure when they're noticeably larger than body text and use consistent sizing to show importance levels. This hierarchy helps users scan content and find what they need quickly.</p>
+
+            <p>Use consistent spacing throughout your site. Consistent margins and padding create visual rhythm and make your design feel cohesive. White space, or empty space between elements, gives content room to breathe and improves readability. Don't be afraid of white space - it's not wasted space but rather a design element that helps organize content.</p>
+
+            <p>Limit your color palette to a few main colors. Too many colors create visual chaos and make your site feel unprofessional. Choose two or three main colors for your site - perhaps one primary color for important elements, one secondary color for accents, and neutral colors like black, white, or gray for text and backgrounds. This limited palette creates cohesion while still allowing visual interest.</p>
+
+            <p>Test your designs on different devices and screen sizes. What looks good on a large desktop monitor might be difficult to read on a phone. Check your font sizes, line lengths, and spacing at different screen sizes. Make sure text remains readable and buttons remain easily clickable on smaller screens. This responsive testing helps you create designs that work for all users.</p>
+        </div>
+
+        <div class="resource-section">
+            <h2>Resources for Further Learning</h2>
+            <p>These resources provide deeper information about web design, typography, and accessibility.</p>
+
+            <p><strong>Web Content Accessibility Guidelines (WCAG)</strong>: The official standards for web accessibility. Understanding these guidelines helps you create websites accessible to everyone. Visit <a href="https://www.w3.org/WAI/WCAG21/quickref/">https://www.w3.org/WAI/WCAG21/quickref/</a> for quick reference guides.</p>
+
+            <p><strong>Google Fonts</strong>: A free library of web fonts that load reliably and look professional. Browse fonts at <a href="https://fonts.google.com/">https://fonts.google.com/</a> to find typefaces that match your project's style.</p>
+
+            <p><strong>WebAIM</strong>: Web Accessibility In Mind provides resources and tools for creating accessible websites. Their contrast checker helps verify your color choices meet accessibility standards. Visit <a href="https://webaim.org/">https://webaim.org/</a> for articles and tools.</p>
+
+            <p><strong>MDN Web Docs - Accessibility</strong>: Comprehensive documentation on web accessibility practices. Learn about semantic HTML, ARIA attributes, and accessibility testing. Available at <a href="https://developer.mozilla.org/en-US/docs/Web/Accessibility">https://developer.mozilla.org/en-US/docs/Web/Accessibility</a>.</p>
+
+            <p><strong>A List Apart</strong>: Articles about web design, typography, and user experience written by industry professionals. Visit <a href="https://alistapart.com/">https://alistapart.com/</a> for thoughtful articles about design and development.</p>
+        </div>
+
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Learn HTML, CSS, GitHub, and More! | Created by <a href="https://jsaaron.com" target="_blank" rel="noopener noreferrer">Joshua Aaron</a></p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
+

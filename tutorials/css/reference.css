@@ -1,0 +1,271 @@
+/* 
+    Quick Reference Page Styles
+    
+    This file contains styles for the quick reference/glossary page
+    that provides easy lookup of HTML tags and CSS properties.
+    
+    Students can learn how to create organized, scannable reference
+    materials with visual hierarchy and clear categorization.
+*/
+
+.reference-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+}
+
+.reference-header {
+    margin-bottom: 3rem;
+    text-align: center;
+}
+
+.reference-header h1 {
+    color: var(--primary-color, #2563eb);
+    margin-bottom: 1rem;
+    font-size: 2.5rem;
+}
+
+.intro-text {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: var(--text-color, #334155);
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+/* 
+    Quick Navigation
+    
+    Provides easy jumping to different sections of the reference.
+*/
+.quick-nav {
+    background-color: #f0f9ff;
+    padding: 2rem;
+    border-radius: 8px;
+    margin-bottom: 3rem;
+    border-left: 4px solid var(--primary-color, #2563eb);
+}
+
+.quick-nav h2 {
+    margin-bottom: 1.5rem;
+    color: var(--primary-color, #2563eb);
+}
+
+.nav-buttons {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+}
+
+.nav-button {
+    display: block;
+    padding: 0.75rem 1rem;
+    background-color: white;
+    color: var(--primary-color, #2563eb);
+    text-decoration: none;
+    border-radius: 4px;
+    border: 1px solid #e2e8f0;
+    text-align: center;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.nav-button:hover {
+    background-color: var(--primary-color, #2563eb);
+    color: white;
+    border-color: var(--primary-color, #2563eb);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.nav-button:focus {
+    outline: 2px solid var(--primary-color, #2563eb);
+    outline-offset: 2px;
+}
+
+/* 
+    Reference Sections
+    
+    Each major section (HTML tags, CSS properties, etc.)
+    has clear visual separation.
+*/
+.reference-section {
+    margin-bottom: 4rem;
+    padding-bottom: 3rem;
+    border-bottom: 2px solid #e2e8f0;
+    scroll-margin-top: 80px;
+}
+
+.reference-section:last-of-type {
+    border-bottom: none;
+}
+
+.reference-section h2 {
+    color: var(--primary-color, #2563eb);
+    margin-bottom: 1rem;
+    font-size: 2rem;
+}
+
+.section-intro {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: var(--text-color, #334155);
+    margin-bottom: 2rem;
+}
+
+/* 
+    Tag/Property Categories
+    
+    Groups related tags or properties together.
+*/
+.tag-category,
+.property-category,
+.unit-category {
+    margin-bottom: 3rem;
+}
+
+.tag-category h3,
+.property-category h3,
+.unit-category h3 {
+    color: #1e293b;
+    margin-bottom: 1.5rem;
+    font-size: 1.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid #e2e8f0;
+}
+
+/* 
+    Grid Layouts
+    
+    Creates responsive card grids for tags, properties, and attributes.
+*/
+.tag-grid,
+.property-grid,
+.attribute-grid,
+.unit-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+}
+
+/* 
+    Tag Cards
+    
+    Individual cards showing HTML tags with examples.
+*/
+.tag-card,
+.property-card,
+.attribute-card,
+.unit-card {
+    background-color: white;
+    border: 1px solid var(--border-color, #e2e8f0);
+    border-radius: 8px;
+    padding: 1.5rem;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.tag-card:hover,
+.property-card:hover,
+.attribute-card:hover,
+.unit-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.tag-name,
+.property-name,
+.attribute-name,
+.unit-name {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--primary-color, #2563eb);
+    margin-bottom: 0.75rem;
+    padding: 0.5rem;
+    background-color: #f8fafc;
+    border-radius: 4px;
+}
+
+.tag-description,
+.property-description,
+.attribute-description,
+.unit-description {
+    color: var(--text-color, #334155);
+    line-height: 1.6;
+    margin-bottom: 1rem;
+    font-size: 0.95rem;
+}
+
+.tag-example,
+.property-example,
+.attribute-example,
+.unit-example {
+    margin-top: 1rem;
+}
+
+.tag-example pre,
+.property-example pre,
+.attribute-example pre,
+.unit-example pre {
+    margin: 0;
+    background-color: #1e293b;
+    border-radius: 4px;
+}
+
+/* 
+    Footer Navigation
+    
+    Easy way to return to homepage.
+*/
+.reference-footer {
+    margin-top: 4rem;
+    padding-top: 2rem;
+    border-top: 2px solid #e2e8f0;
+    text-align: center;
+}
+
+.reference-footer p {
+    margin-bottom: 0.5rem;
+    color: var(--text-color, #334155);
+}
+
+.reference-footer a {
+    color: var(--primary-color, #2563eb);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.reference-footer a:hover {
+    text-decoration: underline;
+}
+
+/* 
+    Responsive Design
+    
+    Stacks cards on smaller screens for better mobile experience.
+*/
+@media (max-width: 768px) {
+    .reference-container {
+        padding: 1rem 0.5rem;
+    }
+
+    .reference-header h1 {
+        font-size: 2rem;
+    }
+
+    .tag-grid,
+    .property-grid,
+    .attribute-grid,
+    .unit-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .nav-buttons {
+        grid-template-columns: 1fr;
+    }
+
+    .reference-section h2 {
+        font-size: 1.75rem;
+    }
+}
+

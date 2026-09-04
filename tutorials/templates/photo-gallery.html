@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<!--
+    ====================================================================
+    HOW TO USE THIS TEMPLATE
+    ====================================================================
+    
+    VIEWING THE CODE:
+    To see this HTML code, you have several options:
+    
+    1. Right-click on this page in your browser and select "View Page Source"
+       (or "View Source" in some browsers)
+    
+    2. Press Ctrl+U (Windows/Linux) or Cmd+Option+U (Mac) to view source
+    
+    3. Open this file directly in a text editor like Notepad, TextEdit, 
+       or VS Code to see and edit the code
+    
+    EDITING THE CODE:
+    
+    1. Save this file to your computer (Right-click -> Save As)
+    
+    2. Open the saved file in a text editor
+    
+    3. Look for placeholder text in curly braces {like this} or brackets [like this]
+       and replace it with your own content
+    
+    4. After making changes, save the file and refresh your browser to see updates
+    
+    PLACEHOLDER NOTATION:
+    Throughout this template, you'll see placeholders like:
+    - {your content here} - Replace with your actual content
+    - [edit this] - Indicates something you should customize
+    - {your title} - Replace with your page title
+    
+    These placeholders show you exactly what to change!
+    
+    ====================================================================
+    
+    Photo Gallery Template (Advanced)
+    
+    This advanced template demonstrates concepts from Lesson 09: Working with Images
+    
+    Features:
+    - Responsive image grid using CSS Grid
+    - Lightbox/modal for viewing full-size images (pure CSS, no JavaScript!)
+    - Lazy loading attributes for performance
+    - Image optimization techniques
+    - srcset for responsive images
+    - Masonry-style layout
+    - Hover effects and transitions
+    - Image captions and metadata
+    - Filter/category system
+    
+    Perfect for: Photography portfolios, product galleries, image showcases,
+    travel blogs, design portfolios
+    
+    This template uses the :target pseudo-class from Lesson 13 for the lightbox!
+    
+    ====================================================================
+-->
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="{Your gallery description for search engines}">
+    <title>{Your Gallery Name} - Photo Gallery</title>
+    <style>
+        /*
+            ========================================
+            CSS RESET AND BASE STYLES
+            ========================================
+        */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            /* CSS Variables for easy customization */
+            --primary-color: #2563eb;
+            --dark: #1f2937;
+            --light: #f9fafb;
+            --border: #e5e7eb;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background: var(--light);
+        }
+
+        /*
+            ========================================
+            HEADER SECTION
+            ========================================
+        */
+        header {
+            background: white;
+            padding: 2rem;
+            text-align: center;
+            border-bottom: 1px solid var(--border);
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--dark);
+        }
+
+        header p {
+            color: #6b7280;
+            font-size: 1.125rem;
+        }
+
+        /*
+            ========================================
+            FILTER/CATEGORY BUTTONS
+            Using checkbox hack for filtering
+            ========================================
+        */
+        .filters {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            padding: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 0.75rem 1.5rem;
+            border: 2px solid var(--border);
+            background: white;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+        }
+
+        .filter-btn:hover {
+            border-color: var(--primary-color);
+            color: var(--primary-color);
+        }
+
+        .filter-btn.active {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        /*
+            ========================================
+            PHOTO GRID - CSS Grid Layout
+            From Lesson 05: Responsive Design
+            ========================================
+        */
+        .gallery-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .photo-grid {
+            display: grid;
+            /*
+                auto-fill creates as many columns as fit
+                minmax(300px, 1fr) makes each column at least 300px
+                but grow to fill available space equally
+            */
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+            /* gap creates space between grid items */
+        }
+
+        /*
+            ========================================
+            PHOTO CARDS
+            ========================================
+        */
+        .photo-card {
+            position: relative;
+            overflow: hidden;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        .photo-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+        }
+
+        .photo-card img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            /*
+                object-fit: cover ensures images fill the space
+                while maintaining aspect ratio (from Lesson 09)
+            */
+            display: block;
+            transition: transform 0.3s ease;
+        }
+
+        .photo-card:hover img {
+            transform: scale(1.05);
+            /* Subtle zoom effect on hover */
+        }
+
+        .photo-info {
+            padding: 1rem;
+        }
+
+        .photo-info h3 {
+            font-size: 1.125rem;
+            margin-bottom: 0.5rem;
+            color: var(--dark);
+        }
+
+        .photo-info p {
+            color: #6b7280;
+            font-size: 0.875rem;
+        }
+
+        .photo-meta {
+            display: flex;
+            gap: 1rem;
+            margin-top: 0.5rem;
+            font-size: 0.75rem;
+            color: #9ca3af;
+        }
+
+        .photo-category {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background: var(--light);
+            border-radius: 1rem;
+            font-size: 0.75rem;
+            color: var(--primary-color);
+            font-weight: 500;
+            margin-top: 0.5rem;
+        }
+
+        /*
+            ========================================
+            LIGHTBOX/MODAL - Pure CSS!
+            Uses :target pseudo-class (Lesson 13)
+            ========================================
+        */
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+        }
+
+        /*
+            When URL contains #photo1, #photo2, etc.
+            the corresponding lightbox appears
+        */
+        .lightbox:target {
+            display: flex;
+        }
+
+        .lightbox-content {
+            max-width: 90%;
+            max-height: 90%;
+            position: relative;
+            animation: zoomIn 0.3s ease;
+        }
+
+        @keyframes zoomIn {
+            from {
+                transform: scale(0.8);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .lightbox img {
+            max-width: 100%;
+            max-height: 85vh;
+            object-fit: contain;
+            border-radius: 0.5rem;
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: -40px;
+            right: 0;
+            color: white;
+            text-decoration: none;
+            font-size: 2rem;
+            font-weight: 300;
+            line-height: 1;
+            padding: 0.5rem 1rem;
+            transition: opacity 0.3s ease;
+        }
+
+        .lightbox-close:hover {
+            opacity: 0.7;
+        }
+
+        .lightbox-caption {
+            color: white;
+            text-align: center;
+            margin-top: 1rem;
+            font-size: 1.125rem;
+        }
+
+        /*
+            ========================================
+            RESPONSIVE DESIGN
+            From Lesson 05
+            ========================================
+        */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2rem;
+            }
+
+            .photo-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+                gap: 1rem;
+            }
+
+            .gallery-container {
+                padding: 1rem;
+            }
+
+            .filters {
+                padding: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .photo-grid {
+                grid-template-columns: 1fr;
+                /* Single column on very small screens */
+            }
+        }
+
+        /* Smooth scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
+</head>
+<body>
+    <!--
+        ========================================
+        HEADER
+        ========================================
+    -->
+    <header>
+        <h1>{Your Gallery Title}</h1>
+        <p>{Brief description of your gallery or photography style}</p>
+    </header>
+
+    <!--
+        ========================================
+        FILTER BUTTONS (Optional)
+        ========================================
+    -->
+    <div class="filters">
+        <a href="#" class="filter-btn active">All Photos</a>
+        <a href="#" class="filter-btn">Nature</a>
+        <a href="#" class="filter-btn">Architecture</a>
+        <a href="#" class="filter-btn">Portrait</a>
+        <a href="#" class="filter-btn">Travel</a>
+    </div>
+
+    <!--
+        ========================================
+        PHOTO GALLERY GRID
+        ========================================
+        
+        USING REAL IMAGES:
+        Replace the placeholder divs with actual image tags.
+        
+        Example with responsive images (from Lesson 09):
+        
+        <a href="#photo1">
+            <img
+                src="photo-800w.jpg"
+                srcset="photo-400w.jpg 400w,
+                        photo-800w.jpg 800w,
+                        photo-1200w.jpg 1200w"
+                sizes="(max-width: 768px) 100vw,
+                       (max-width: 1200px) 50vw,
+                       33vw"
+                alt="Photo description"
+                loading="lazy">
+        </a>
+        
+        The loading="lazy" attribute tells the browser to only load
+        images when they're about to enter the viewport (performance!)
+    -->
+    <div class="gallery-container">
+        <div class="photo-grid">
+            <!-- Photo 1 -->
+            <div class="photo-card">
+                <a href="#photo1">
+                    <!-- Replace with actual image -->
+                    <div style="width: 100%; height: 300px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); display: flex; align-items: center; justify-content: center; color: white; font-size: 2rem;">
+                        📷
+                    </div>
+                </a>
+                <div class="photo-info">
+                    <h3>{Photo Title 1}</h3>
+                    <p>{Brief description or location}</p>
+                    <span class="photo-category">Nature</span>
+                    <div class="photo-meta">
+                        <span>📅 Jan 2024</span>
+                        <span>📍 Location</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Photo 2 -->
+            <div class="photo-card">
+                <a href="#photo2">
+                    <div style="width: 100%; height: 300px; background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); display: flex; align-items: center; justify-content: center; color: white; font-size: 2rem;">
+                        📷
+                    </div>
+                </a>
+                <div class="photo-info">
+                    <h3>{Photo Title 2}</h3>
+                    <p>{Brief description or location}</p>
+                    <span class="photo-category">Architecture</span>
+                    <div class="photo-meta">
+                        <span>📅 Feb 2024</span>
+                        <span>📍 Location</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Photo 3 -->
+            <div class="photo-card">
+                <a href="#photo3">
+                    <div style="width: 100%; height: 300px; background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); display: flex; align-items: center; justify-content: center; color: white; font-size: 2rem;">
+                        📷
+                    </div>
+                </a>
+                <div class="photo-info">
+                    <h3>{Photo Title 3}</h3>
+                    <p>{Brief description or location}</p>
+                    <span class="photo-category">Portrait</span>
+                    <div class="photo-meta">
+                        <span>📅 Mar 2024</span>
+                        <span>📍 Location</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Photo 4 -->
+            <div class="photo-card">
+                <a href="#photo4">
+                    <div style="width: 100%; height: 300px; background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); display: flex; align-items: center; justify-content: center; color: white; font-size: 2rem;">
+                        📷
+                    </div>
+                </a>
+                <div class="photo-info">
+                    <h3>{Photo Title 4}</h3>
+                    <p>{Brief description or location}</p>
+                    <span class="photo-category">Travel</span>
+                    <div class="photo-meta">
+                        <span>📅 Apr 2024</span>
+                        <span>📍 Location</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Photo 5 -->
+            <div class="photo-card">
+                <a href="#photo5">
+                    <div style="width: 100%; height: 300px; background: linear-gradient(135deg, #30cfd0 0%, #330867 100%); display: flex; align-items: center; justify-content: center; color: white; font-size: 2rem;">
+                        📷
+                    </div>
+                </a>
+                <div class="photo-info">
+                    <h3>{Photo Title 5}</h3>
+                    <p>{Brief description or location}</p>
+                    <span class="photo-category">Nature</span>
+                    <div class="photo-meta">
+                        <span>📅 May 2024</span>
+                        <span>📍 Location</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Photo 6 -->
+            <div class="photo-card">
+                <a href="#photo6">
+                    <div style="width: 100%; height: 300px; background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%); display: flex; align-items: center; justify-content: center; color: #333; font-size: 2rem;">
+                        📷
+                    </div>
+                </a>
+                <div class="photo-info">
+                    <h3>{Photo Title 6}</h3>
+                    <p>{Brief description or location}</p>
+                    <span class="photo-category">Architecture</span>
+                    <div class="photo-meta">
+                        <span>📅 Jun 2024</span>
+                        <span>📍 Location</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Add more photo cards here -->
+        </div>
+    </div>
+
+    <!--
+        ========================================
+        LIGHTBOX MODALS
+        Pure CSS using :target pseudo-class!
+        ========================================
+    -->
+    
+    <!-- Lightbox for Photo 1 -->
+    <div id="photo1" class="lightbox">
+        <div class="lightbox-content">
+            <a href="#" class="lightbox-close">×</a>
+            <!-- Replace with actual full-size image -->
+            <div style="width: 800px; max-width: 100%; height: 600px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 0.5rem; display: flex; align-items: center; justify-content: center; color: white; font-size: 3rem;">
+                📷
+            </div>
+            <p class="lightbox-caption">{Photo Title 1} - {Description}</p>
+        </div>
+    </div>
+
+    <!-- Lightbox for Photo 2 -->
+    <div id="photo2" class="lightbox">
+        <div class="lightbox-content">
+            <a href="#" class="lightbox-close">×</a>
+            <div style="width: 800px; max-width: 100%; height: 600px; background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); border-radius: 0.5rem; display: flex; align-items: center; justify-content: center; color: white; font-size: 3rem;">
+                📷
+            </div>
+            <p class="lightbox-caption">{Photo Title 2} - {Description}</p>
+        </div>
+    </div>
+
+    <!-- Lightbox for Photo 3 -->
+    <div id="photo3" class="lightbox">
+        <div class="lightbox-content">
+            <a href="#" class="lightbox-close">×</a>
+            <div style="width: 800px; max-width: 100%; height: 600px; background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); border-radius: 0.5rem; display: flex; align-items: center; justify-content: center; color: white; font-size: 3rem;">
+                📷
+            </div>
+            <p class="lightbox-caption">{Photo Title 3} - {Description}</p>
+        </div>
+    </div>
+
+    <!-- Lightbox for Photo 4 -->
+    <div id="photo4" class="lightbox">
+        <div class="lightbox-content">
+            <a href="#" class="lightbox-close">×</a>
+            <div style="width: 800px; max-width: 100%; height: 600px; background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); border-radius: 0.5rem; display: flex; align-items: center; justify-content: center; color: white; font-size: 3rem;">
+                📷
+            </div>
+            <p class="lightbox-caption">{Photo Title 4} - {Description}</p>
+        </div>
+    </div>
+
+    <!-- Lightbox for Photo 5 -->
+    <div id="photo5" class="lightbox">
+        <div class="lightbox-content">
+            <a href="#" class="lightbox-close">×</a>
+            <div style="width: 800px; max-width: 100%; height: 600px; background: linear-gradient(135deg, #30cfd0 0%, #330867 100%); border-radius: 0.5rem; display: flex; align-items: center; justify-content: center; color: white; font-size: 3rem;">
+                📷
+            </div>
+            <p class="lightbox-caption">{Photo Title 5} - {Description}</p>
+        </div>
+    </div>
+
+    <!-- Lightbox for Photo 6 -->
+    <div id="photo6" class="lightbox">
+        <div class="lightbox-content">
+            <a href="#" class="lightbox-close">×</a>
+            <div style="width: 800px; max-width: 100%; height: 600px; background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%); border-radius: 0.5rem; display: flex; align-items: center; justify-content: center; color: #333; font-size: 3rem;">
+                📷
+            </div>
+            <p class="lightbox-caption">{Photo Title 6} - {Description}</p>
+        </div>
+    </div>
+
+    <!--
+        ========================================
+        TIPS FOR USING THIS TEMPLATE:
+        ========================================
+        
+        1. Replace all gradient backgrounds with actual images
+        
+        2. Use responsive images with srcset:
+           <img src="image-800w.jpg"
+                srcset="image-400w.jpg 400w,
+                        image-800w.jpg 800w,
+                        image-1200w.jpg 1200w"
+                sizes="(max-width: 768px) 100vw, 33vw"
+                alt="Description"
+                loading="lazy">
+        
+        3. Optimize images before uploading:
+           - Use appropriate file formats (JPEG for photos, PNG for graphics)
+           - Compress images to reduce file size
+           - Create multiple sizes for srcset
+        
+        4. Add more photo cards by copying the photo-card div structure
+        
+        5. Create corresponding lightbox divs for each photo
+        
+        6. Customize colors in the :root variables at the top of CSS
+        
+        7. Add actual filter functionality with JavaScript if desired
+           (this template shows the UI only)
+        
+        This template demonstrates concepts from:
+        - Lesson 05: Responsive Design (CSS Grid, media queries)
+        - Lesson 09: Working with Images (srcset, lazy loading, optimization)
+        - Lesson 13: CSS Animations (:target pseudo-class, transitions)
+    -->
+</body>
+</html>

@@ -1,0 +1,290 @@
+/* 
+    Search Functionality Styles
+    
+    This file contains styles for the site-wide search feature.
+    Students can learn how to style search interfaces and create
+    accessible, user-friendly search experiences.
+*/
+
+/* 
+    Search Container
+    
+    Contains the search input and button, centered in the header.
+*/
+.search-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;  /* Centers the search horizontally */
+    gap: 0.5rem;
+    margin-top: 1rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    border-top: 1px solid var(--border-color, #e2e8f0);
+    width: 100%;
+    max-width: 600px;  /* Limits width for better appearance */
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* 
+    Search Input
+    
+    Text input where users type their search queries.
+*/
+.search-input {
+    padding: 0.5rem 1rem;
+    padding-right: 2.5rem;
+    border: 2px solid var(--border-color, #e2e8f0);
+    border-radius: 20px;
+    font-size: 0.9rem;
+    width: 100%;
+    max-width: 500px;
+    transition: all 0.2s ease;
+    background-color: white;
+    flex: 1;
+    margin: 0 auto;  /* Centers the input within container */
+}
+
+.search-input:focus {
+    outline: none;
+    border-color: var(--primary-color, #2563eb);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.search-input::placeholder {
+    color: #94a3b8;
+}
+
+/* 
+    Search Button
+    
+    Button to trigger search (though Enter key also works).
+*/
+.search-button,
+.search-close {
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+    padding: 0.25rem 0.5rem;
+    color: var(--text-color, #334155);
+    transition: color 0.2s ease;
+    line-height: 1;
+}
+
+.search-button:hover,
+.search-close:hover {
+    color: var(--primary-color, #2563eb);
+}
+
+.search-button:focus,
+.search-close:focus {
+    outline: 2px solid var(--primary-color, #2563eb);
+    outline-offset: 2px;
+    border-radius: 4px;
+}
+
+/* 
+    Search Results Container
+    
+    Displays the search results below the search input.
+*/
+.search-results {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    margin-top: 0.5rem;
+    background-color: white;
+    border: 2px solid var(--border-color, #e2e8f0);
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    max-height: 500px;
+    overflow-y: auto;
+    z-index: 1000;
+    padding: 1rem;
+}
+
+.search-results-header {
+    padding-bottom: 1rem;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid var(--border-color, #e2e8f0);
+    color: var(--text-color, #334155);
+    font-size: 0.9rem;
+}
+
+.search-results-header strong {
+    color: var(--primary-color, #2563eb);
+}
+
+/* 
+    Search Results Groups
+    
+    Groups results by type (Lesson, Guide, Concept, etc.).
+*/
+.search-results-group {
+    margin-bottom: 1.5rem;
+}
+
+.search-results-group:last-child {
+    margin-bottom: 0;
+}
+
+.search-results-type {
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #64748b;
+    margin-bottom: 0.75rem;
+    font-weight: 600;
+}
+
+/* 
+    Individual Result Card
+    
+    Each search result is displayed as a card with title,
+    description, and URL.
+*/
+.search-result-card {
+    padding: 1rem;
+    border: 1px solid var(--border-color, #e2e8f0);
+    border-radius: 6px;
+    margin-bottom: 0.75rem;
+    transition: all 0.2s ease;
+    background-color: #f8fafc;
+}
+
+.search-result-card:hover {
+    background-color: white;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transform: translateY(-1px);
+}
+
+.search-result-card:last-child {
+    margin-bottom: 0;
+}
+
+.search-result-card h4 {
+    margin: 0 0 0.5rem 0;
+    font-size: 1rem;
+}
+
+.search-result-card h4 a {
+    color: var(--primary-color, #2563eb);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.search-result-card h4 a:hover {
+    text-decoration: underline;
+}
+
+.search-result-card h4 a mark {
+    background-color: #fef08a;
+    color: #78350f;
+    padding: 0.1rem 0.2rem;
+    border-radius: 2px;
+    font-weight: 700;
+}
+
+.search-result-description {
+    color: var(--text-color, #334155);
+    font-size: 0.9rem;
+    line-height: 1.5;
+    margin: 0.5rem 0;
+}
+
+.search-result-description mark {
+    background-color: #fef08a;
+    color: #78350f;
+    padding: 0.1rem 0.2rem;
+    border-radius: 2px;
+    font-weight: 500;
+}
+
+.search-result-url {
+    display: block;
+    font-size: 0.75rem;
+    color: #64748b;
+    font-family: 'Courier New', Courier, monospace;
+    margin-top: 0.5rem;
+}
+
+/* 
+    Empty State
+    
+    Shown when no results are found.
+*/
+.search-results-empty {
+    text-align: center;
+    padding: 2rem 1rem;
+    color: var(--text-color, #334155);
+}
+
+.search-results-empty p {
+    margin-bottom: 1rem;
+}
+
+.search-suggestions {
+    font-size: 0.9rem;
+    color: #64748b;
+}
+
+.search-suggestions a {
+    color: var(--primary-color, #2563eb);
+    text-decoration: none;
+}
+
+.search-suggestions a:hover {
+    text-decoration: underline;
+}
+
+/* 
+    Responsive Design
+    
+    On smaller screens, adjust search input width and results positioning.
+*/
+@media (max-width: 768px) {
+    .search-container {
+        width: 100%;
+        max-width: 100%;
+        margin: 1rem auto;
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+    
+    .search-input {
+        width: 100%;
+        flex: 1;
+    }
+    
+    .search-input:focus {
+        width: 100%;
+    }
+    
+    .search-results {
+        position: fixed;
+        top: auto;
+        left: 1rem;
+        right: 1rem;
+        bottom: 1rem;
+        max-height: 60vh;
+    }
+}
+
+/* 
+    Search in navigation bar appears below menu, centered
+*/
+.navbar.minimal .search-container {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+@media (max-width: 768px) {
+    .navbar.minimal .search-container {
+        margin-top: 0.5rem;
+        padding-top: 0.5rem;
+    }
+}
+

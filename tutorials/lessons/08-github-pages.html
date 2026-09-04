@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lesson 08: GitHub Pages</title>
+    <link rel="stylesheet" href="../css/base.css">
+    <link rel="stylesheet" href="../css/navigation.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <link rel="stylesheet" href="../css/lessons.css">
+    <!-- 
+        Links to external CSS files organized by purpose.
+        base.css: foundational styles and CSS variables
+        navigation.css: header and navigation (minimal on lesson pages)
+        components.css: shared components like learning-outcomes and code-example
+        lessons.css: lesson page-specific styles
+    -->
+    <!-- Prism.js for syntax highlighting -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+    <script src="../script.js"></script>
+    <script src="../js/copy-code.js"></script>
+    <script src="../js/progress-tracker.js"></script>
+</head>
+<body>
+<nav class="dewstack-bar" aria-label="Course" style="background:#2d3748;color:#fff;font:15px/1.5 system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;padding:8px 16px;display:flex;flex-wrap:wrap;gap:4px 20px;align-items:center;box-sizing:border-box"><a href="../../index.html" style="color:#fff;font-weight:700;text-decoration:none">Web Authoring and Databases: course front page</a><a href="../../index.html#start" style="color:#fff">Begin</a><a href="../../index.html#web" style="color:#fff">Web tutorials</a><a href="../../index.html#data" style="color:#fff">Database tutorials</a></nav>
+    <!-- 
+        Navigation Header
+        
+        The navigation header includes a hamburger menu button on the left,
+        followed by the site title and subtitle. Clicking the hamburger menu
+        opens a side overlay navigation panel that slides in from the left.
+        This keeps the page focused on content while providing easy access
+        to all navigation when needed.
+    -->
+    <header>
+        <nav class="navbar minimal">
+            <div class="container">
+                <button class="menu-toggle" aria-label="Open navigation menu" aria-expanded="false">
+                    ☰ Menu
+                </button>
+                <div class="site-header-content">
+                    <a href="../index.html" class="logo">Learn HTML, CSS, GitHub, and More!</a>
+                    <p class="site-subtitle">
+                        A series of tutorials (and experiments) from 
+                        <a href="https://jsaaron.com" target="_blank" rel="noopener noreferrer">Joshua Aaron</a> | 
+                        <a href="https://github.com/jsaaron" target="_blank" rel="noopener noreferrer">GitHub</a>
+                    </p>
+                </div>
+                
+                <!-- Header right side - About link -->
+                <div class="header-right">
+                    <a href="../about.html">About</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="menu-overlay"></div>
+
+    <ul class="nav-links">
+        <li><a href="../index.html#home">Home</a></li>
+        <li class="nav-section-header">Lessons</li>
+        <li><a href="01-html-basics.html">01. HTML Basics</a></li>
+        <li><a href="02-html-semantics.html">02. Semantic HTML</a></li>
+        <li><a href="03-css-basics.html">03. CSS Basics</a></li>
+        <li><a href="04-css-layout.html">04. CSS Layout</a></li>
+        <li><a href="05-responsive-design.html">05. Responsive Design</a></li>
+        <li><a href="06-github-setup.html">06. GitHub Setup</a></li>
+        <li><a href="07-github-workflow.html">07. GitHub Workflow</a></li>
+        <li><a href="08-github-pages.html">08. GitHub Pages</a></li>
+        <li><a href="09-images.html">09. Working with Images</a></li>
+        <li><a href="10-links.html">10. Working with Links</a></li>
+        <li><a href="11-flexbox-grid-advanced.html">11. Advanced Flexbox & Grid</a></li>
+        <li><a href="12-component-design.html">12. Component Design</a></li>
+        <li><a href="13-css-animations.html">13. CSS Animations</a></li>
+        <li class="nav-section-header">Resources</li>
+        <li><a href="../index.html#examples">Examples</a></li>
+        <li><a href="../index.html#templates">Templates</a></li>
+        <li><a href="../index.html#github">GitHub Guides</a></li>
+        <li><a href="../design-resources.html">Design Resources</a></li>
+        <li><a href="../troubleshooting.html">Troubleshooting</a></li>
+        <li><a href="../reference.html">Quick Reference</a></li>
+        <li><a href="../project-ideas.html">Project Ideas</a></li>
+        <li><a href="../about.html">About</a></li>
+    </ul>
+
+    <div class="lesson-container">
+        <div class="lesson-nav-links">
+            <a href="../index.html">Back to Home</a> | 
+            <a href="07-github-workflow.html">Previous Lesson</a>
+        </div>
+
+        <h1>Lesson 08: GitHub Pages</h1>
+
+        <!-- Table of Contents -->
+        <nav class="table-of-contents">
+            <h2>Table of Contents</h2>
+            <ul>
+                <li><a href="#learning-outcomes">Learning Outcomes</a></li>
+                <li><a href="#what-is-github-pages">What is GitHub Pages and Why Use It?</a></li>
+                <li><a href="#github-pages-urls">Understanding GitHub Pages URLs</a></li>
+                <li><a href="#enabling-github-pages">Enabling GitHub Pages</a></li>
+                <li><a href="#worked-example">Worked Example: Publishing a Website with GitHub Pages</a></li>
+                <li><a href="#best-practices">Best Practices for GitHub Pages</a></li>
+                <li><a href="#updating-website">Updating Your Published Website</a></li>
+                <li><a href="#practice">Practice Opportunity</a></li>
+                <li><a href="#summary">Summary of Key Concepts</a></li>
+                <li><a href="#next-steps">Next Steps</a></li>
+                <li><a href="#bibliography">Bibliography</a></li>
+            </ul>
+        </nav>
+
+        <div class="learning-outcomes" id="learning-outcomes">
+            <h2>Learning Outcomes</h2>
+            <p>After completing this lesson, you will understand what GitHub Pages is and how it provides free website hosting. You will be able to enable GitHub Pages for a repository, configure it to serve your HTML and CSS files, and access your published website through a public URL. You will also understand how to update your website by pushing changes to GitHub, and recognize best practices for using GitHub Pages for web projects.</p>
+            
+            <h3>Prerequisites</h3>
+            <p>You should have a GitHub account with at least one repository containing HTML and CSS files from previous lessons. Understanding how to make commits and work with repositories from Lessons 06 and 07 is necessary.</p>
+        </div>
+
+        <div class="concept-section" id="what-is-github-pages">
+            <h2>What is GitHub Pages and Why Use It?</h2>
+            
+            <p><strong>GitHub Pages</strong> is a <em>free static website hosting service</em> provided by GitHub. It takes files from a GitHub repository and publishes them as a <strong>live website</strong> that anyone can visit on the internet.</p>
+            
+            <p>For HTML and CSS projects, GitHub Pages provides an easy way to publish websites without needing to:</p>
+            
+            <ul>
+                <li><strong>Purchase web hosting</strong></li>
+                <li><strong>Configure servers</strong></li>
+                <li><strong>Manage technical infrastructure</strong></li>
+            </ul>
+
+            <h3>How GitHub Pages Works</h3>
+            <p>GitHub Pages works by <strong>serving files directly from your GitHub repository</strong>. When you enable GitHub Pages for a repository, GitHub automatically:</p>
+            
+            <ul>
+                <li><strong>Takes</strong> the HTML, CSS, and other files you've stored there</li>
+                <li><strong>Makes them accessible</strong> through a web address</li>
+                <li><strong>Updates automatically</strong> each time you update files in your repository</li>
+            </ul>
+            
+            <p>Your live site always reflects your latest changes. This integration between your <strong>code storage and website hosting</strong> simplifies the process of publishing and maintaining websites.</p>
+            
+            <p>Learn more in GitHub's <a href="https://docs.github.com/en/pages/getting-started-with-github-pages/about-github-pages" target="_blank">GitHub Pages documentation</a>.</p>
+
+            <h3>Why GitHub Pages Matters</h3>
+            <p>Using GitHub Pages matters because it <strong>removes barriers</strong> to publishing websites online.</p>
+            
+            <p><strong>Traditionally, publishing a website required:</strong></p>
+            <ul>
+                <li><strong>Finding and paying</strong> for web hosting</li>
+                <li><strong>Understanding</strong> how to upload files to servers</li>
+                <li><strong>Managing</strong> technical details that can be intimidating for beginners</li>
+            </ul>
+            
+            <p><strong>GitHub Pages eliminates these barriers</strong> by providing:</p>
+            <ul>
+                <li><strong>Free hosting</strong> directly connected to where you're already storing your code</li>
+                <li>The ability to publish websites <strong>immediately</strong> after learning HTML and CSS basics</li>
+                <li>No need to learn server management or file transfer protocols</li>
+            </ul>
+
+            <h3>What Types of Websites Work with GitHub Pages?</h3>
+            <p>GitHub Pages is particularly well-suited for <strong>static websites</strong> built with HTML, CSS, and JavaScript.</p>
+            
+            <p><strong>Static websites</strong> are those that don't require:</p>
+            <ul>
+                <li><strong>Server-side processing</strong></li>
+                <li><strong>Databases</strong></li>
+                <li><strong>Backend functionality</strong></li>
+            </ul>
+            
+            <p>They're just files that browsers download and display. For learning web development, this covers the <em>vast majority of projects</em> you'll create.</p>
+            
+            <p><strong>Perfect for GitHub Pages:</strong></p>
+            <ul>
+                <li><strong>Portfolio sites</strong></li>
+                <li><strong>Documentation</strong></li>
+                <li><strong>Project showcases</strong></li>
+                <li><strong>Simple interactive websites</strong> (with JavaScript)</li>
+                <li><strong>Personal blogs</strong> (with static site generators)</li>
+            </ul>
+
+            <h3>Benefits of GitHub Pages</h3>
+            <p>The free nature of GitHub Pages makes it accessible for students, learners, and anyone building personal or small project websites.</p>
+            
+            <p><strong>Key benefits:</strong></p>
+            <ul>
+                <li><strong>No usage limits</strong> for reasonable personal use</li>
+                <li><strong>HTTPS encryption automatically</strong> - ensures your websites load securely</li>
+                <li><strong>Easy integration</strong> with GitHub repositories</li>
+                <li><strong>Automatic updates</strong> when you commit changes</li>
+                <li><strong>Zero cost</strong> - completely free</li>
+            </ul>
+            
+            <p>This combination of <strong>ease, integration with GitHub, and zero cost</strong> makes GitHub Pages an ideal solution for publishing the websites you build while learning web development.</p>
+        </div>
+
+        <div class="concept-section" id="github-pages-urls">
+            <h2>Understanding GitHub Pages URLs</h2>
+            
+            <p>GitHub Pages provides each published website with a <strong>unique URL</strong> where visitors can access it. Understanding how these URLs work helps you share your websites and understand the relationship between your repository and your published site.</p>
+
+            <h3>Standard Repository URLs</h3>
+            <p>For repositories in personal accounts, GitHub Pages URLs follow a specific pattern:</p>
+            
+            <div class="code-example">
+                <code>username.github.io/repository-name</code>
+            </div>
+            
+            <p><strong>Example:</strong> If your GitHub username is <code>"johndoe"</code> and your repository is called <code>"my-website"</code>, your GitHub Pages URL would be:</p>
+            
+            <div class="code-example">
+                <code>https://johndoe.github.io/my-website</code>
+            </div>
+            
+            <p>This URL structure makes it easy to <strong>predict your website address</strong> based on your repository name.</p>
+
+            <h3>Special Repository Format: username.github.io</h3>
+            <p>There's also a <strong>special repository format</strong> where if you create a repository named exactly <code>"username.github.io"</code> (replacing "username" with your actual GitHub username), GitHub Pages serves it from the root domain <em>without the repository name</em>.</p>
+            
+            <p><strong>Example:</strong> If you create a repository called <code>"johndoe.github.io"</code>, it would be accessible at:</p>
+            
+            <div class="code-example">
+                <code>https://johndoe.github.io</code>
+            </div>
+            
+            <p>Rather than <code>https://johndoe.github.io/johndoe.github.io</code>.</p>
+            
+            <p><strong>This format is useful if you want:</strong></p>
+            <ul>
+                <li>A <strong>shorter URL</strong></li>
+                <li>To plan to use a <strong>custom domain name</strong> later</li>
+                <li>A <strong>cleaner, more professional</strong> web address</li>
+            </ul>
+            
+            <p>Learn more about custom domains in GitHub's <a href="https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site" target="_blank">custom domain documentation</a>.</p>
+
+            <h3>HTTPS Encryption</h3>
+            <p>GitHub automatically provides <strong>HTTPS encryption</strong> for all GitHub Pages sites, so your URLs will use <code>"https://"</code> rather than <code>"http://"</code>.</p>
+            
+            <p>This secure connection:</p>
+            <ul>
+                <li><strong>Protects visitors</strong> from security threats</li>
+                <li>Is <strong>required</strong> for many modern web features</li>
+                <li>Is <strong>automatic</strong> and requires no configuration on your part</li>
+            </ul>
+
+            <h3>Accessing Your URL</h3>
+            <p>After enabling GitHub Pages, GitHub displays your website URL in the repository settings, making it easy to copy and share.</p>
+            
+            <p>You can:</p>
+            <ul>
+                <li><strong>Bookmark</strong> this URL</li>
+                <li><strong>Share it</strong> with others</li>
+                <li><strong>Use it</strong> to access your published website from any device</li>
+            </ul>
+            
+            <p>The URL remains <strong>active as long as</strong> your repository exists and GitHub Pages remains enabled.</p>
+        </div>
+
+        <div class="concept-section" id="enabling-github-pages">
+            <h2>Enabling GitHub Pages</h2>
+            <p>Enabling GitHub Pages for a repository is a straightforward process completed through the repository's settings. Once enabled, GitHub automatically publishes your website and provides you with the URL where it's accessible.</p>
+
+            <p>Navigate to your repository on GitHub and click the "Settings" tab, which appears in the row of tabs near the top of the repository page. In the left sidebar of the Settings page, find and click "Pages" in the menu. This takes you to the GitHub Pages configuration section where you can enable and configure the service.</p>
+
+            <p>The Pages settings section shows several options. The most important is selecting which branch GitHub should use as the source for your website. For simple projects, you'll typically choose your main branch, which contains your HTML and CSS files. GitHub also asks whether to serve files from the root of the branch or from a specific folder like "/docs". For standard HTML and CSS projects where your index.html file is in the repository root, choose the root directory option.</p>
+
+            <p>After selecting your source branch and directory, click "Save" to enable GitHub Pages. GitHub processes your repository and sets up the website hosting. This process typically takes a minute or two. Once complete, GitHub displays a message indicating that your site is published, along with the URL where it's accessible. GitHub also sends an email notification when your site is ready.</p>
+
+            <p>It's important to understand that GitHub Pages looks for an index.html file to serve as the homepage. If your main HTML file has a different name, you'll need to either rename it to index.html or configure GitHub Pages to serve a specific file. The standard convention of naming your main page "index.html" ensures it's automatically served when someone visits your site's root URL.</p>
+
+            <p>After enabling GitHub Pages, any changes you make to files in your repository and commit to the selected branch will automatically appear on your published website within a few minutes. There's no separate publishing step - the live site stays in sync with your repository, making it easy to update your website by simply committing changes to GitHub.</p>
+        </div>
+
+        <div class="worked-example" id="worked-example">
+            <h2>Worked Example: Publishing a Website with GitHub Pages</h2>
+            <p>This example walks through the complete process of publishing an HTML and CSS website using GitHub Pages, from ensuring your files are ready to accessing your live website. Following these steps demonstrates how straightforward publishing becomes when your code is already on GitHub.</p>
+
+            <p>Start by verifying your repository contains the files needed for your website. You should have at least an index.html file, and if you're using external CSS, a styles.css file or similar. These files should be in your repository's main branch. If you haven't committed your HTML and CSS files yet, do so now through the GitHub web interface or by uploading them.</p>
+
+            <p>Ensure your index.html file uses relative paths for linking to CSS files and images. For example, if your CSS file is in the same folder as your HTML, the link tag should reference it as "styles.css" rather than an absolute path. Relative paths ensure your website works correctly when served through GitHub Pages, since the file structure matches your repository structure.</p>
+
+            <p>Navigate to your repository's Settings page by clicking the Settings tab at the top of your repository. In the left sidebar, click "Pages" to access the GitHub Pages configuration. You'll see a section titled "Source" where you can choose which branch to publish from. Select your main branch from the dropdown menu. Below that, choose "/ (root)" as the folder option, which tells GitHub to serve files from the root of your branch.</p>
+
+            <p>Click the "Save" button to enable GitHub Pages. GitHub will show a message indicating it's building your site. Wait a minute or two for GitHub to process your repository and set up hosting. During this time, you might see a status indicator showing that your site is being built.</p>
+
+            <p>Once GitHub finishes processing, you'll see a green message indicating your site is published, along with the URL where it's accessible. The URL follows the pattern username.github.io/repository-name. Copy this URL or click it to visit your published website. Your HTML and CSS should display exactly as they appear in your repository.</p>
+
+            <p>Test your published website by visiting the URL in a web browser. Check that all your pages load correctly, that CSS styling applies properly, and that any images or other assets display correctly. If something doesn't work, verify that file paths in your HTML are relative and that all necessary files are committed to your repository in the correct locations.</p>
+
+            <p>To update your website, simply edit files in your repository and commit the changes. Within a few minutes, GitHub will automatically rebuild and republish your site with the updates. There's no need to manually publish or upload files - the synchronization between your repository and your live website happens automatically.</p>
+
+            <p>If you need to make your site private or disable GitHub Pages later, you can return to the Pages settings and either change it to private (if you have a paid GitHub plan) or disable it entirely. For most learning and portfolio projects, keeping GitHub Pages enabled provides ongoing hosting for your websites at no cost.</p>
+        </div>
+
+        <div class="concept-section" id="best-practices">
+            <h2>Best Practices for GitHub Pages</h2>
+            <p>Following best practices when using GitHub Pages ensures your websites load quickly, display correctly, and provide good experiences for visitors. These practices also help you maintain your sites efficiently as they grow.</p>
+
+            <p>Always use relative paths when linking to CSS files, images, and other resources. Relative paths specify file locations relative to the current file, such as "styles.css" for a file in the same folder or "images/photo.jpg" for a file in a subfolder. Absolute paths that reference your local computer won't work when files are served through GitHub Pages. Relative paths ensure your links work correctly regardless of where the website is hosted.</p>
+
+            <p>Keep your repository organized with a clear file structure. Place HTML files in logical locations, organize CSS files clearly, and group related assets like images into folders. A well-organized repository makes it easier to maintain your website and helps if you later move to different hosting. Good organization also makes your code more professional and easier for others to understand if you share your repositories.</p>
+
+            <p>Test your website locally before committing changes. Open your HTML files in a web browser on your computer to verify everything works before pushing to GitHub. This catches issues early and ensures your GitHub Pages site displays correctly when published. Local testing is faster than waiting for GitHub Pages to rebuild after each change.</p>
+
+            <p>Write clear commit messages when updating your website. Since GitHub Pages automatically publishes commits, clear messages help you track what changed and when. If you need to revert changes or understand your site's evolution, good commit messages make the history meaningful and useful.</p>
+
+            <p>Consider the public nature of GitHub Pages sites. If your repository is public, your website is accessible to anyone on the internet. This is typically desirable for portfolios and project showcases, but be mindful of any personal information or content you include. If you need a private website, you can make your repository private, though free GitHub accounts have limitations on private repository Pages.</p>
+
+            <p>GitHub Pages works well for static sites but has limitations. It doesn't support server-side processing, databases, or backend functionality. For HTML and CSS websites, this isn't a limitation, but it's important to understand that GitHub Pages is designed for static content. As you learn more advanced web development, you might need different hosting for dynamic features, but GitHub Pages remains excellent for the vast majority of front-end web projects.</p>
+        </div>
+
+        <div class="concept-section" id="updating-website">
+            <h2>Updating Your Published Website</h2>
+            <p>One of GitHub Pages' greatest advantages is how easily you can update your published website. Because your live site automatically syncs with your repository, updating your website requires only committing changes to GitHub.</p>
+
+            <p>When you want to update your website, edit your HTML, CSS, or other files either through GitHub's web interface or by working locally and pushing changes. Make your modifications, write a commit message describing what changed, and commit the changes to your repository's main branch (or whichever branch you've configured for GitHub Pages).</p>
+
+            <p>After committing, GitHub automatically detects the changes and rebuilds your website. This process typically takes one to two minutes. You can see the build status in your repository's Pages settings or in the Actions tab if you want to monitor the deployment process. Once GitHub finishes rebuilding, your changes appear on your live website automatically.</p>
+
+            <p>This automatic deployment means you don't need to manually upload files, configure servers, or perform separate publishing steps. Your development workflow becomes simply: make changes, commit to GitHub, and your website updates. This simplicity allows you to iterate quickly, test changes, and keep your published site current with minimal effort.</p>
+
+            <p>If you need to revert changes, you can view your repository's commit history, find a previous commit before the unwanted changes, and revert to that commit. GitHub Pages will rebuild using the earlier version, effectively undoing recent changes. This ability to roll back provides safety when experimenting with your website, knowing you can always return to a previous working version.</p>
+        </div>
+
+        <div class="exercise" id="practice">
+            <h2>Practice Opportunity</h2>
+            <p>Enable GitHub Pages for one of your repositories containing HTML and CSS files. Follow the settings configuration steps to select your main branch and root directory. Wait for GitHub to build your site, then visit the provided URL to see your website published online. Share the URL with someone else to verify they can access it.</p>
+
+            <p>Make a small change to your website - perhaps update some text or modify a color in your CSS. Commit this change to your repository and wait for GitHub Pages to rebuild. Visit your website URL again and verify that your changes appear on the live site. Practice this update process a few times to become comfortable with the workflow of editing, committing, and seeing changes go live.</p>
+        </div>
+
+        <div class="concept-section" id="summary">
+            <h2>Summary of Key Concepts</h2>
+            <p>GitHub Pages provides free static website hosting by automatically publishing files from GitHub repositories as live websites. Enabling GitHub Pages involves configuring repository settings to select a source branch and directory. Once enabled, GitHub provides a public URL where your website is accessible, and any commits to the selected branch automatically update the published site. This integration simplifies website publishing and maintenance, eliminating the need for separate hosting services or manual file uploads.</p>
+
+            <p>GitHub Pages is ideal for HTML and CSS projects because it provides free, automatic hosting with minimal configuration. The service removes barriers to publishing websites online, making it accessible for learners and developers at all levels. Understanding how to use GitHub Pages completes your workflow for creating, storing, and sharing websites, giving you the ability to take projects from local files to published websites that anyone can visit. This skill demonstrates practical web development competency and provides a platform for sharing your work with others.</p>
+        </div>
+
+        <div class="concept-section" id="next-steps">
+            <h2>Next Steps</h2>
+            <p>Congratulations on completing the HTML, CSS, and GitHub lessons! You now have the knowledge to create websites, style them effectively, and publish them online using GitHub. Continue practicing by building more projects, exploring the examples and templates provided in this tutorial, and experimenting with the concepts you've learned. Each project you build reinforces these skills and helps you develop as a web developer.</p>
+        </div>
+
+        <div class="concept-section" id="bibliography">
+            <h2>Bibliography</h2>
+            <p>GitHub. "Getting Started with GitHub Pages." GitHub Guides. <a href="https://guides.github.com/features/pages/">https://guides.github.com/features/pages/</a></p>
+            
+            <p>GitHub. "GitHub Pages Documentation." GitHub Docs. <a href="https://docs.github.com/en/pages">https://docs.github.com/en/pages</a></p>
+
+            <p>Mozilla Developer Network. "Deploying Websites." MDN Web Docs. <a href="https://developer.mozilla.org/en-US/docs/Learn/Getting_started_with_the_web/Publishing_your_website">https://developer.mozilla.org/en-US/docs/Learn/Getting_started_with_the_web/Publishing_your_website</a></p>
+
+            <p>The Odin Project. "Introduction to HTML and CSS." The Odin Project Curriculum. <a href="https://www.theodinproject.com/paths/foundations/courses/foundations">https://www.theodinproject.com/paths/foundations/courses/foundations</a></p>
+        </div>
+
+        <div class="lesson-nav-links" style="margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--border-color);">
+            <a href="../index.html">Back to Home</a> | 
+            <a href="07-github-workflow.html">Previous Lesson</a>
+        </div>
+    </div>
+</body>
+</html>
+

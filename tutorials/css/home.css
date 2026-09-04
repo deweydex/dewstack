@@ -1,0 +1,604 @@
+/* 
+    Homepage-Specific Styles
+    
+    This file contains styles only used on the homepage.
+    Students can learn how to organize page-specific styles separately
+    from base and component styles.
+*/
+
+/* 
+    Hero Section
+    
+    The hero is the large introductory section at the top of the homepage.
+    This demonstrates gradient backgrounds, which create visual interest.
+*/
+.hero {
+    /* 
+        Linear gradient creates a smooth color transition.
+        135deg is the angle (diagonal from top-left to bottom-right).
+        Colors transition from purple-blue to purple from 0% to 100%.
+    */
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;         /* White text for contrast against dark background */
+    padding: 4rem 0;      /* Large vertical padding for breathing room */
+    margin-bottom: 4rem;  /* Space below hero section */
+}
+
+.hero h2 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.hero-subtitle {
+    font-size: 1.25rem;
+    text-align: center;
+    margin-bottom: 3rem;
+    opacity: 0.95;
+}
+
+/* 
+    CSS Grid Layout for Hero Content
+    
+    Grid creates a two-column layout automatically.
+    1fr 1fr means two equal-width columns (1 fraction unit each).
+    gap creates space between grid items.
+    This is a modern alternative to floats or flexbox for complex layouts.
+*/
+.hero-content {
+    display: grid;                    /* Creates grid layout */
+    grid-template-columns: 1fr 1fr;   /* Two equal columns */
+    gap: 3rem;                        /* Space between columns */
+    align-items: center;              /* Vertically centers grid items */
+    margin-top: 2rem;                 /* Space above grid */
+}
+
+.hero-text p {
+    font-size: 1.1rem;
+    margin-bottom: 1.5rem;
+}
+
+.features-list {
+    list-style: none;
+    margin-bottom: 2rem;
+}
+
+.features-list li {
+    padding: 0.5rem 0;
+    font-size: 1.05rem;
+}
+
+.cta-buttons {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+/* 
+    Button Styles
+    
+    Buttons use inline-block so they behave like inline elements but
+    can have width, height, and vertical margins set. This is useful
+    for clickable elements that need padding.
+*/
+.btn {
+    display: inline-block;    /* Allows setting width/height while staying inline */
+    padding: 0.75rem 2rem;    /* Vertical and horizontal padding for clickable area */
+    border-radius: 8px;       /* Rounds the corners for modern appearance */
+    text-decoration: none;    /* Removes underline from links styled as buttons */
+    font-weight: 600;         /* Bold text for emphasis */
+    transition: transform 0.2s, box-shadow 0.2s;  /* Smooth animation effects */
+}
+
+/* 
+    Primary Button Variant
+    
+    Different button styles for different purposes.
+    This creates a white button with blue text.
+*/
+.btn-primary {
+    background-color: white;           /* White background */
+    color: var(--primary-color);      /* Blue text */
+}
+
+/* 
+    Button Hover Effect
+    
+    Transform moves the button up slightly on hover, creating a
+    "lifted" effect. Combined with increased shadow, this gives
+    strong visual feedback when users hover.
+*/
+.btn-primary:hover {
+    transform: translateY(-2px);      /* Moves button 2px up */
+    box-shadow: var(--shadow-lg);     /* Increases shadow for depth effect */
+}
+
+/* 
+    Focus State for Primary Buttons
+    
+    Focus styles are crucial for keyboard users. When a button receives focus
+    (via Tab key), users need clear visual feedback. We use both an outline
+    and a box-shadow to ensure the focus state is highly visible.
+*/
+.btn-primary:focus {
+    outline: 3px solid var(--primary-color);  /* Solid blue outline */
+    outline-offset: 2px;                      /* Space between outline and button */
+    box-shadow: var(--shadow-lg), 0 0 0 2px rgba(37, 99, 235, 0.3);  /* Additional shadow for emphasis */
+}
+
+.btn-secondary {
+    background-color: transparent;
+    color: white;
+    border: 2px solid white;
+}
+
+.btn-secondary:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* 
+    Focus State for Secondary Buttons
+    
+    For buttons on dark backgrounds (like the hero section), we use a white
+    outline to ensure visibility. The outline-offset creates space so the
+    outline doesn't overlap the border.
+*/
+.btn-secondary:focus {
+    outline: 3px solid white;         /* White outline for contrast on dark background */
+    outline-offset: 2px;            /* Space between outline and button */
+    background-color: rgba(255, 255, 255, 0.2);  /* Slightly lighter background on focus */
+}
+
+.hero-preview {
+    background-color: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 12px;
+    padding: 1.5rem;
+}
+
+.code-preview {
+    background-color: #1e293b;
+    border-radius: 8px;
+    padding: 1.5rem;
+    overflow-x: auto;
+}
+
+.code-preview pre {
+    margin: 0;
+    color: #e2e8f0;
+    font-family: 'Courier New', monospace;
+    font-size: 0.9rem;
+    line-height: 1.6;
+}
+
+/* Sections */
+section {
+    padding: 4rem 0;
+}
+
+section h2 {
+    font-size: 2.5rem;
+    text-align: center;
+    margin-bottom: 1rem;
+    color: var(--text-color);
+}
+
+.section-intro {
+    text-align: center;
+    color: var(--text-light);
+    font-size: 1.1rem;
+    margin-bottom: 3rem;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* 
+    Lessons Section
+    
+    This section demonstrates responsive grid layouts that automatically
+    adjust the number of columns based on available space.
+*/
+.lessons-section {
+    background-color: var(--bg-light);  /* Light gray background for contrast */
+}
+
+/* 
+    Responsive Grid Layout
+    
+    repeat(auto-fit, minmax(280px, 1fr)) creates a flexible grid that:
+    - Creates as many columns as can fit
+    - Each column is minimum 280px wide
+    - Columns share remaining space equally (1fr = 1 fraction)
+    - Automatically wraps to new rows when needed
+    This creates a responsive layout without media queries!
+*/
+.lessons-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;           /* Space between grid items */
+    margin-top: 2rem;    /* Space above grid */
+}
+
+/* 
+    Progress Tracking Styles
+*/
+
+.overall-progress {
+    background-color: #e2e8f0;
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.progress-bar-container {
+    width: 100%;
+    height: 24px;
+    background-color: #cbd5e1;
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 0.5rem;
+}
+
+.progress-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #2563eb 0%, #3b82f6 100%);
+    border-radius: 12px;
+    transition: width 0.5s ease;
+    width: 0%;
+}
+
+.progress-text {
+    text-align: center;
+    color: var(--text-color);
+    font-weight: 500;
+    font-size: 0.95rem;
+}
+
+.progress-indicator {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 1.2rem;
+    z-index: 10;
+}
+
+.progress-indicator.status-completed {
+    background-color: #16a34a;
+    color: white;
+}
+
+.progress-indicator.status-in-progress {
+    background-color: #f59e0b;
+    color: white;
+}
+
+.progress-indicator.status-not-started {
+    background-color: #e2e8f0;
+    color: #64748b;
+}
+
+.progress-icon {
+    display: block;
+    line-height: 1;
+}
+
+/* 
+    Lesson Card Styles
+    
+    Cards are reusable components that contain related content.
+    They have rounded corners, shadows, and hover effects for interactivity.
+    The entire card is now a clickable link for better UX.
+*/
+.lesson-card {
+    display: block;                         /* Makes the anchor tag display as block */
+    background-color: white;
+    border-radius: 12px;                    /* Rounded corners */
+    padding: 2rem;                          /* Internal spacing */
+    box-shadow: var(--shadow);              /* Subtle shadow for depth */
+    transition: transform 0.3s, box-shadow 0.3s;  /* Smooth hover animation */
+    border: 1px solid var(--border-color); /* Subtle border */
+    text-decoration: none;                  /* Removes underline from link */
+    color: inherit;                         /* Inherits text color from parent */
+    cursor: pointer;                         /* Shows pointer cursor on hover */
+}
+
+/* 
+    Card Hover Effect
+    
+    When users hover over a card, it lifts up and the shadow increases.
+    This provides clear visual feedback that the card is interactive.
+*/
+.lesson-card:hover {
+    transform: translateY(-5px);  /* Moves card 5px upward */
+    box-shadow: var(--shadow-lg);  /* Larger shadow for more depth */
+    text-decoration: none;         /* Ensures no underline appears */
+    color: inherit;                /* Maintains text color */
+}
+
+.lesson-number {
+    display: inline-block;
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+}
+
+.lesson-card h3 {
+    font-size: 1.5rem;
+    margin-bottom: 0.75rem;
+    color: var(--text-color);
+}
+
+.lesson-card p {
+    color: var(--text-light);
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+}
+
+.lesson-link {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 600;
+    display: inline-block;
+    transition: transform 0.2s;
+}
+
+.lesson-card:hover .lesson-link {
+    transform: translateX(5px);
+}
+
+/* 
+    Focus State for Lesson Cards
+    
+    When navigating with keyboard, the entire card should show focus.
+    This ensures keyboard users can see which card they're about to activate.
+*/
+.lesson-card:focus {
+    outline: 3px solid var(--primary-color);
+    outline-offset: 4px;
+    border-radius: 12px;
+}
+
+/* Examples Section */
+.examples-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.example-card {
+    display: block;                         /* Makes the anchor tag display as block */
+    background-color: white;
+    border: 2px solid var(--border-color);
+    border-radius: 12px;
+    padding: 2rem;
+    transition: border-color 0.3s, transform 0.3s;
+    text-decoration: none;                  /* Removes underline from link */
+    color: inherit;                         /* Inherits text color from parent */
+    cursor: pointer;                         /* Shows pointer cursor on hover */
+}
+
+.example-card:hover {
+    border-color: var(--primary-color);
+    transform: translateY(-3px);
+    text-decoration: none;         /* Ensures no underline appears */
+    color: inherit;                /* Maintains text color */
+}
+
+/* Focus state for example cards */
+.example-card:focus {
+    outline: 3px solid var(--primary-color);
+    outline-offset: 4px;
+    border-radius: 12px;
+}
+
+.example-card h3 {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+    color: var(--text-color);
+}
+
+.example-card p {
+    color: var(--text-light);
+    margin-bottom: 1.5rem;
+}
+
+.example-link {
+    color: var(--secondary-color);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.example-card:hover .example-link {
+    text-decoration: underline;
+}
+
+/* Templates Section */
+.templates-section {
+    background-color: var(--bg-light);
+}
+
+.templates-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.template-card {
+    display: block;                         /* Makes the anchor tag display as block */
+    background-color: white;
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: var(--shadow);
+    transition: transform 0.3s;
+    border-left: 4px solid var(--secondary-color);
+    text-decoration: none;                  /* Removes underline from link */
+    color: inherit;                         /* Inherits text color from parent */
+    cursor: pointer;                         /* Shows pointer cursor on hover */
+}
+
+.template-card:hover {
+    transform: translateY(-3px);
+    text-decoration: none;         /* Ensures no underline appears */
+    color: inherit;                /* Maintains text color */
+}
+
+/* Focus state for template cards */
+.template-card:focus {
+    outline: 3px solid var(--secondary-color);
+    outline-offset: 4px;
+    border-radius: 12px;
+}
+
+.template-card h3 {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+    color: var(--text-color);
+}
+
+.template-card p {
+    color: var(--text-light);
+    margin-bottom: 1.5rem;
+}
+
+.template-link {
+    color: var(--secondary-color);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.template-card:hover .template-link {
+    text-decoration: underline;
+}
+
+/* GitHub Section */
+.github-guides-list {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.guide-item {
+    display: flex;
+    gap: 1.5rem;
+    background-color: white;
+    border-radius: 12px;
+    padding: 2rem;
+    margin-bottom: 1.5rem;
+    box-shadow: var(--shadow);
+    transition: transform 0.3s;
+}
+
+.guide-item:hover {
+    transform: translateX(5px);
+}
+
+.guide-number {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background-color: var(--primary-color);
+    color: white;
+    border-radius: 50%;
+    font-weight: 700;
+    flex-shrink: 0;
+}
+
+.guide-content h3 {
+    margin-bottom: 0.5rem;
+}
+
+.guide-content h3 a {
+    color: var(--text-color);
+    text-decoration: none;
+    font-size: 1.25rem;
+}
+
+.guide-content h3 a:hover {
+    color: var(--primary-color);
+}
+
+/* 
+    Focus State for Guide Links
+    
+    Guide links in the GitHub section need visible focus indicators.
+*/
+.guide-content h3 a:focus {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 4px;
+    border-radius: 4px;
+}
+
+.guide-content p {
+    color: var(--text-light);
+}
+
+/* Footer */
+footer {
+    background-color: var(--text-color);
+    color: white;
+    text-align: center;
+    padding: 2rem 0;
+    margin-top: 4rem;
+}
+
+/* 
+    Responsive Design with Media Queries
+    
+    Media queries allow us to apply different styles at different screen sizes.
+    This ensures the site works well on phones, tablets, and desktops.
+    
+    max-width: 768px means "when screen is 768px or smaller, apply these styles"
+    This is a mobile-first approach - we enhance for larger screens and
+    simplify for smaller ones.
+*/
+@media (max-width: 768px) {
+    /* Smaller heading on mobile to fit better */
+    .hero h2 {
+        font-size: 2rem;  /* Reduced from 3rem */
+    }
+    
+    /* Stack hero content vertically on mobile */
+    .hero-content {
+        grid-template-columns: 1fr;  /* Single column instead of two */
+    }
+    
+    /* Single column layout for all grids on mobile */
+    .lessons-grid,
+    .examples-grid,
+    .templates-grid {
+        grid-template-columns: 1fr;  /* One column on small screens */
+    }
+    
+    /* Less vertical padding on mobile to fit more content */
+    section {
+        padding: 2rem 0;  /* Reduced from 4rem */
+    }
+    
+    /* Stack buttons vertically on mobile */
+    .cta-buttons {
+        flex-direction: column;  /* Buttons stack instead of sitting side-by-side */
+    }
+}
+

@@ -1,0 +1,729 @@
+/* 
+    CSS Reset and Base Styles
+    
+    This section establishes the foundational styles for the entire website.
+    Students can learn from these patterns to create consistent, professional designs.
+*/
+
+/* 
+    Universal Reset
+    The asterisk (*) is a universal selector that targets all elements.
+    This removes default browser styling so we can build styles from scratch.
+    box-sizing: border-box makes width calculations include padding and borders,
+    which makes layout calculations much easier and more predictable.
+*/
+* {
+    margin: 0;              /* Removes default margins browsers add */
+    padding: 0;             /* Removes default padding browsers add */
+    box-sizing: border-box; /* Makes width include padding and borders */
+}
+
+/* 
+    Skip to Content Link
+    
+    The skip link is visually hidden by default but appears when focused.
+    This allows keyboard users to skip past navigation and jump directly
+    to the main content. position: absolute removes it from normal flow,
+    and negative positioning moves it off-screen. When focused, it becomes
+    visible at the top of the page.
+*/
+.skip-link {
+    position: absolute;
+    top: -40px;
+    left: 0;
+    background-color: var(--primary-color);
+    color: white;
+    padding: 8px 16px;
+    text-decoration: none;
+    z-index: 1000;
+    border-radius: 0 0 4px 0;
+    font-weight: 600;
+}
+
+.skip-link:focus {
+    top: 0;
+    outline: 3px solid white;
+    outline-offset: 2px;
+}
+
+/* 
+    CSS Custom Properties (CSS Variables)
+    
+    Custom properties allow us to define values once and reuse them throughout
+    the stylesheet. This makes it easy to change colors, spacing, or other
+    values consistently across the entire site. If you want to change the
+    primary color, you only need to change it in one place.
+    
+    Variables are defined using --variable-name: value;
+    They're accessed using var(--variable-name)
+    
+    This pattern makes maintaining and updating styles much easier.
+*/
+:root {
+    --primary-color: #2563eb;        /* Main brand color - blue */
+    --primary-dark: #1e40af;         /* Darker shade of primary for hover states */
+    --secondary-color: #10b981;       /* Accent color - green */
+    --text-color: #1f2937;           /* Main text color - dark gray */
+    --text-light: #4b5563;           /* Lighter text for less important content - darkened for better contrast */
+    --bg-color: #ffffff;             /* Main background - white */
+    --bg-light: #f9fafb;            /* Light gray for section backgrounds */
+    --border-color: #e5e7eb;        /* Subtle border color */
+    --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);      /* Subtle shadow for cards */
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1); /* Larger shadow for depth */
+}
+
+/* 
+    Body Styles
+    
+    The body element styles apply to the entire page and serve as defaults
+    for all other elements unless overridden. Setting font-family here means
+    all text uses this font unless a more specific rule changes it.
+*/
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    /* 
+        Font stack: browsers try each font in order until they find one
+        installed on the user's computer. This ensures good typography
+        across different operating systems.
+    */
+    line-height: 1.6;  /* Spacing between lines of text - improves readability */
+    color: var(--text-color);           /* Uses our custom color variable */
+    background-color: var(--bg-color);  /* Sets page background to white */
+}
+
+/* 
+    Container Class
+    
+    This is a common pattern for limiting content width and centering it.
+    max-width prevents content from becoming too wide on large screens,
+    which improves readability. margin: 0 auto centers the container
+    horizontally. Padding adds space on the sides for smaller screens.
+*/
+.container {
+    max-width: 1200px;  /* Content won't exceed 1200px wide */
+    margin: 0 auto;      /* Centers the container: 0 top/bottom, auto left/right */
+    padding: 0 20px;     /* Adds 20px padding on left and right sides */
+}
+
+/* 
+    Header and Navigation Styles
+    
+    The header contains the site navigation and stays visible at the top
+    of the page as users scroll. This section demonstrates flexbox layout
+    and sticky positioning.
+*/
+header {
+    background-color: var(--bg-color);              /* White background */
+    border-bottom: 1px solid var(--border-color);  /* Subtle bottom border */
+    position: sticky;  /* Sticks to top when scrolling - stays visible */
+    top: 0;            /* Position at top of viewport when sticky */
+    z-index: 100;      /* Ensures header appears above other content */
+    box-shadow: var(--shadow);  /* Adds shadow below header for depth */
+}
+
+.navbar {
+    padding: 1rem 0;  /* Vertical padding: 1rem top and bottom, 0 left and right */
+}
+
+/* 
+    Flexbox Layout for Navigation
+    
+    display: flex creates a flexible container that arranges children horizontally
+    by default. justify-content: space-between puts maximum space between items,
+    pushing the logo to the left and nav links to the right.
+    align-items: center vertically centers items within the flex container.
+*/
+.navbar .container {
+    display: flex;                      /* Creates flexible layout */
+    justify-content: space-between;     /* Maximum space between logo and nav */
+    align-items: center;                /* Vertically centers all items */
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--primary-color);
+}
+
+/* 
+    Navigation Links List
+    
+    This removes default list styling and arranges links horizontally.
+    gap property creates consistent spacing between flex items.
+*/
+.nav-links {
+    display: flex;        /* Arranges list items horizontally */
+    list-style: none;     /* Removes default bullet points */
+    gap: 2rem;            /* Space between each navigation link */
+}
+
+/* 
+    Navigation Link Styles
+    
+    Links are styled to match the site design. The transition property
+    creates smooth color changes when hovering.
+*/
+.nav-links a {
+    text-decoration: none;        /* Removes default underline */
+    color: var(--text-color);      /* Default link color */
+    font-weight: 500;              /* Medium font weight */
+    transition: color 0.3s;        /* Smooth color change over 0.3 seconds */
+}
+
+/* 
+    Hover State for Links
+    
+    Pseudo-class :hover styles elements when users move their mouse over them.
+    This provides visual feedback that the link is interactive.
+*/
+.nav-links a:hover {
+    color: var(--primary-color);  /* Changes to blue on hover */
+}
+
+/* 
+    Focus State for Navigation Links
+    
+    The :focus pseudo-class styles elements when they receive keyboard focus.
+    This is essential for keyboard accessibility - users navigating with Tab
+    need to see which element is currently focused. outline creates a visible
+    border that browsers typically provide by default, but we're styling it
+    to match our design while ensuring it's clearly visible.
+*/
+.nav-links a:focus {
+    outline: 2px solid var(--primary-color);  /* Blue outline for visibility */
+    outline-offset: 2px;                      /* Space between outline and element */
+    border-radius: 4px;                       /* Rounded corners on focus outline */
+}
+
+/* 
+    Active Navigation State
+    
+    The .active class is added by JavaScript when a navigation link corresponds
+    to the currently visible section. This provides visual feedback to users
+    showing which section of the page they're viewing. The underline and color
+    change make it clear which navigation item is active.
+*/
+.nav-links a.active {
+    color: var(--primary-color);         /* Blue color for active state */
+    border-bottom: 2px solid var(--primary-color);  /* Underline indicator */
+    padding-bottom: 2px;                  /* Space for the underline */
+}
+
+/* 
+    Hero Section
+    
+    The hero is the large introductory section at the top of the homepage.
+    This demonstrates gradient backgrounds, which create visual interest.
+*/
+.hero {
+    /* 
+        Linear gradient creates a smooth color transition.
+        135deg is the angle (diagonal from top-left to bottom-right).
+        Colors transition from purple-blue to purple from 0% to 100%.
+    */
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;         /* White text for contrast against dark background */
+    padding: 4rem 0;      /* Large vertical padding for breathing room */
+    margin-bottom: 4rem;  /* Space below hero section */
+}
+
+.hero h2 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.hero-subtitle {
+    font-size: 1.25rem;
+    text-align: center;
+    margin-bottom: 3rem;
+    opacity: 0.95;
+}
+
+/* 
+    CSS Grid Layout for Hero Content
+    
+    Grid creates a two-column layout automatically.
+    1fr 1fr means two equal-width columns (1 fraction unit each).
+    gap creates space between grid items.
+    This is a modern alternative to floats or flexbox for complex layouts.
+*/
+.hero-content {
+    display: grid;                    /* Creates grid layout */
+    grid-template-columns: 1fr 1fr;   /* Two equal columns */
+    gap: 3rem;                        /* Space between columns */
+    align-items: center;              /* Vertically centers grid items */
+    margin-top: 2rem;                 /* Space above grid */
+}
+
+.hero-text p {
+    font-size: 1.1rem;
+    margin-bottom: 1.5rem;
+}
+
+.features-list {
+    list-style: none;
+    margin-bottom: 2rem;
+}
+
+.features-list li {
+    padding: 0.5rem 0;
+    font-size: 1.05rem;
+}
+
+.cta-buttons {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+/* 
+    Button Styles
+    
+    Buttons use inline-block so they behave like inline elements but
+    can have width, height, and vertical margins set. This is useful
+    for clickable elements that need padding.
+*/
+.btn {
+    display: inline-block;    /* Allows setting width/height while staying inline */
+    padding: 0.75rem 2rem;    /* Vertical and horizontal padding for clickable area */
+    border-radius: 8px;       /* Rounds the corners for modern appearance */
+    text-decoration: none;    /* Removes underline from links styled as buttons */
+    font-weight: 600;         /* Bold text for emphasis */
+    transition: transform 0.2s, box-shadow 0.2s;  /* Smooth animation effects */
+}
+
+/* 
+    Primary Button Variant
+    
+    Different button styles for different purposes.
+    This creates a white button with blue text.
+*/
+.btn-primary {
+    background-color: white;           /* White background */
+    color: var(--primary-color);      /* Blue text */
+}
+
+/* 
+    Button Hover Effect
+    
+    Transform moves the button up slightly on hover, creating a
+    "lifted" effect. Combined with increased shadow, this gives
+    strong visual feedback when users hover.
+*/
+.btn-primary:hover {
+    transform: translateY(-2px);      /* Moves button 2px up */
+    box-shadow: var(--shadow-lg);     /* Increases shadow for depth effect */
+}
+
+/* 
+    Focus State for Primary Buttons
+    
+    Focus styles are crucial for keyboard users. When a button receives focus
+    (via Tab key), users need clear visual feedback. We use both an outline
+    and a box-shadow to ensure the focus state is highly visible.
+*/
+.btn-primary:focus {
+    outline: 3px solid var(--primary-color);  /* Solid blue outline */
+    outline-offset: 2px;                      /* Space between outline and button */
+    box-shadow: var(--shadow-lg), 0 0 0 2px rgba(37, 99, 235, 0.3);  /* Additional shadow for emphasis */
+}
+
+.btn-secondary {
+    background-color: transparent;
+    color: white;
+    border: 2px solid white;
+}
+
+.btn-secondary:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* 
+    Focus State for Secondary Buttons
+    
+    For buttons on dark backgrounds (like the hero section), we use a white
+    outline to ensure visibility. The outline-offset creates space so the
+    outline doesn't overlap the border.
+*/
+.btn-secondary:focus {
+    outline: 3px solid white;         /* White outline for contrast on dark background */
+    outline-offset: 2px;            /* Space between outline and button */
+    background-color: rgba(255, 255, 255, 0.2);  /* Slightly lighter background on focus */
+}
+
+.hero-preview {
+    background-color: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 12px;
+    padding: 1.5rem;
+}
+
+.code-preview {
+    background-color: #1e293b;
+    border-radius: 8px;
+    padding: 1.5rem;
+    overflow-x: auto;
+}
+
+.code-preview pre {
+    margin: 0;
+    color: #e2e8f0;
+    font-family: 'Courier New', monospace;
+    font-size: 0.9rem;
+    line-height: 1.6;
+}
+
+/* Sections */
+section {
+    padding: 4rem 0;
+}
+
+section h2 {
+    font-size: 2.5rem;
+    text-align: center;
+    margin-bottom: 1rem;
+    color: var(--text-color);
+}
+
+.section-intro {
+    text-align: center;
+    color: var(--text-light);
+    font-size: 1.1rem;
+    margin-bottom: 3rem;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* 
+    Lessons Section
+    
+    This section demonstrates responsive grid layouts that automatically
+    adjust the number of columns based on available space.
+*/
+.lessons-section {
+    background-color: var(--bg-light);  /* Light gray background for contrast */
+}
+
+/* 
+    Responsive Grid Layout
+    
+    repeat(auto-fit, minmax(280px, 1fr)) creates a flexible grid that:
+    - Creates as many columns as can fit
+    - Each column is minimum 280px wide
+    - Columns share remaining space equally (1fr = 1 fraction)
+    - Automatically wraps to new rows when needed
+    This creates a responsive layout without media queries!
+*/
+.lessons-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;           /* Space between grid items */
+    margin-top: 2rem;    /* Space above grid */
+}
+
+/* 
+    Lesson Card Styles
+    
+    Cards are reusable components that contain related content.
+    They have rounded corners, shadows, and hover effects for interactivity.
+*/
+.lesson-card {
+    background-color: white;
+    border-radius: 12px;                    /* Rounded corners */
+    padding: 2rem;                          /* Internal spacing */
+    box-shadow: var(--shadow);              /* Subtle shadow for depth */
+    transition: transform 0.3s, box-shadow 0.3s;  /* Smooth hover animation */
+    border: 1px solid var(--border-color); /* Subtle border */
+}
+
+/* 
+    Card Hover Effect
+    
+    When users hover over a card, it lifts up and the shadow increases.
+    This provides clear visual feedback that the card is interactive.
+*/
+.lesson-card:hover {
+    transform: translateY(-5px);  /* Moves card 5px upward */
+    box-shadow: var(--shadow-lg);  /* Larger shadow for more depth */
+}
+
+.lesson-number {
+    display: inline-block;
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+}
+
+.lesson-card h3 {
+    font-size: 1.5rem;
+    margin-bottom: 0.75rem;
+    color: var(--text-color);
+}
+
+.lesson-card p {
+    color: var(--text-light);
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+}
+
+.lesson-link {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 600;
+    display: inline-block;
+    transition: transform 0.2s;
+}
+
+.lesson-link:hover {
+    transform: translateX(5px);
+}
+
+/* 
+    Focus State for Lesson Links
+    
+    Lesson links need clear focus indicators so keyboard users can see
+    which lesson they're about to navigate to.
+*/
+.lesson-link:focus {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 4px;
+    border-radius: 4px;
+}
+
+/* Examples Section */
+.examples-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.example-card {
+    background-color: white;
+    border: 2px solid var(--border-color);
+    border-radius: 12px;
+    padding: 2rem;
+    transition: border-color 0.3s, transform 0.3s;
+}
+
+.example-card:hover {
+    border-color: var(--primary-color);
+    transform: translateY(-3px);
+}
+
+.example-card h3 {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+    color: var(--text-color);
+}
+
+.example-card p {
+    color: var(--text-light);
+    margin-bottom: 1.5rem;
+}
+
+.example-link {
+    color: var(--secondary-color);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.example-link:hover {
+    text-decoration: underline;
+}
+
+/* 
+    Focus State for Example Links
+    
+    Example links use the secondary color, so we use a matching focus outline.
+*/
+.example-link:focus {
+    outline: 2px solid var(--secondary-color);
+    outline-offset: 4px;
+    border-radius: 4px;
+}
+
+/* Templates Section */
+.templates-section {
+    background-color: var(--bg-light);
+}
+
+.templates-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.template-card {
+    background-color: white;
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: var(--shadow);
+    transition: transform 0.3s;
+    border-left: 4px solid var(--secondary-color);
+}
+
+.template-card:hover {
+    transform: translateY(-3px);
+}
+
+.template-card h3 {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+    color: var(--text-color);
+}
+
+.template-card p {
+    color: var(--text-light);
+    margin-bottom: 1.5rem;
+}
+
+.template-link {
+    color: var(--secondary-color);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.template-link:hover {
+    text-decoration: underline;
+}
+
+/* 
+    Focus State for Template Links
+    
+    Template links match the example link styling for consistency.
+*/
+.template-link:focus {
+    outline: 2px solid var(--secondary-color);
+    outline-offset: 4px;
+    border-radius: 4px;
+}
+
+/* GitHub Section */
+.github-guides-list {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.guide-item {
+    display: flex;
+    gap: 1.5rem;
+    background-color: white;
+    border-radius: 12px;
+    padding: 2rem;
+    margin-bottom: 1.5rem;
+    box-shadow: var(--shadow);
+    transition: transform 0.3s;
+}
+
+.guide-item:hover {
+    transform: translateX(5px);
+}
+
+.guide-number {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background-color: var(--primary-color);
+    color: white;
+    border-radius: 50%;
+    font-weight: 700;
+    flex-shrink: 0;
+}
+
+.guide-content h3 {
+    margin-bottom: 0.5rem;
+}
+
+.guide-content h3 a {
+    color: var(--text-color);
+    text-decoration: none;
+    font-size: 1.25rem;
+}
+
+.guide-content h3 a:hover {
+    color: var(--primary-color);
+}
+
+/* 
+    Focus State for Guide Links
+    
+    Guide links in the GitHub section need visible focus indicators.
+*/
+.guide-content h3 a:focus {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 4px;
+    border-radius: 4px;
+}
+
+.guide-content p {
+    color: var(--text-light);
+}
+
+/* Footer */
+footer {
+    background-color: var(--text-color);
+    color: white;
+    text-align: center;
+    padding: 2rem 0;
+    margin-top: 4rem;
+}
+
+/* 
+    Responsive Design with Media Queries
+    
+    Media queries allow us to apply different styles at different screen sizes.
+    This ensures the site works well on phones, tablets, and desktops.
+    
+    max-width: 768px means "when screen is 768px or smaller, apply these styles"
+    This is a mobile-first approach - we enhance for larger screens and
+    simplify for smaller ones.
+*/
+@media (max-width: 768px) {
+    /* Smaller heading on mobile to fit better */
+    .hero h2 {
+        font-size: 2rem;  /* Reduced from 3rem */
+    }
+    
+    /* Stack hero content vertically on mobile */
+    .hero-content {
+        grid-template-columns: 1fr;  /* Single column instead of two */
+    }
+    
+    /* Tighter spacing for navigation on mobile */
+    .nav-links {
+        gap: 1rem;        /* Reduced spacing between links */
+        font-size: 0.9rem; /* Slightly smaller text */
+    }
+    
+    /* Single column layout for all grids on mobile */
+    .lessons-grid,
+    .examples-grid,
+    .templates-grid {
+        grid-template-columns: 1fr;  /* One column on small screens */
+    }
+    
+    /* Less vertical padding on mobile to fit more content */
+    section {
+        padding: 2rem 0;  /* Reduced from 4rem */
+    }
+    
+    /* Stack buttons vertically on mobile */
+    .cta-buttons {
+        flex-direction: column;  /* Buttons stack instead of sitting side-by-side */
+    }
+}
+
