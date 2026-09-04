@@ -22,13 +22,14 @@ programs, GitHub has an editor built into its website, and every exercise
 works there too. Third, a browser you know how to refresh.
 
 That is how the pieces fit. Your editor changes the files. GitHub keeps
-them and publishes them. Your browser shows the result. The tutorials
-here explain what you see. Nothing else is installed for the web track,
-and nothing at all for the data track.
+them and publishes them. Your browser shows the result. Nothing else is
+installed for the web track, and nothing at all for the data track.
 
-- Making a GitHub account, step by step:
-  <https://deweydex.github.io/WADB_Tutorials/github-guides/01-getting-started.html>
-- VS Code: <https://code.visualstudio.com/>
+Seven short pages walk through all of this: an account, an editor, your
+copy of the starter, publishing it, the two loops, and the inspector.
+Start at [how the pieces
+fit](https://deweydex.github.io/dewstack/tutorials/getting-started/how-the-pieces-fit/).
+The data track only needs the first of these pages and the last.
 
 ## Two ways to begin
 
