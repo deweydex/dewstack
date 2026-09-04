@@ -4,7 +4,7 @@
  * initSettingsPanel, trackChromeHeight, restoreSidebarState), cut down to
  * what a reading site needs. No Python, no cells, no manifest.
  *
- * State is one small object in localStorage under "dewadaba:texture". The
+ * State is one small object in localStorage under "dewstack:texture". The
  * inline script in shell.html applies it before first paint; this file
  * wires the controls, keeps them in step with the state, and saves changes.
  */
@@ -12,8 +12,8 @@
 (function () {
   "use strict";
 
-  const TEXTURE_KEY = "dewadaba:texture";
-  const SIDEBAR_KEY = "dewadaba:sidebars";
+  const TEXTURE_KEY = "dewstack:texture";
+  const SIDEBAR_KEY = "dewstack:sidebars";
   /* link is empty by default: the stylesheet then picks a colour that passes
      contrast in whichever theme is on. A reader's own choice overrides it. */
   const TEXTURE_DEFAULTS = {

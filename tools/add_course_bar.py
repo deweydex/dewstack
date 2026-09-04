@@ -15,6 +15,11 @@ are skipped on purpose, because students copy those files to start their
 own pages, and the bar must not travel with them.
 
     python3 tools/add_course_bar.py
+
+Since 2026-09-04 the copies live under sources/ and are not published:
+the build owns tutorials/, and the README links to the originals. The
+bar stays on the copies so that a page opened from the repository still
+says what it belongs to, but its links only resolve on a served copy.
 """
 import re
 from pathlib import Path
@@ -34,12 +39,13 @@ BAR = (
     '</nav>\n'
 )
 
+WADB = ROOT / 'sources' / 'wadb'
+PLAYGROUND = ROOT / 'sources' / 'playground'
 TARGETS = (
-    sorted((ROOT / 'tutorials').glob('*.html')) +
-    sorted((ROOT / 'tutorials' / 'lessons').glob('*.html')) +
-    sorted((ROOT / 'tutorials' / 'github-guides').glob('*.html')) +
-    [ROOT / 'databases' / 'playground' / 'index.html',
-     ROOT / 'databases' / 'playground' / 'teacher.html']
+    sorted(WADB.glob('*.html')) +
+    sorted((WADB / 'lessons').glob('*.html')) +
+    sorted((WADB / 'github-guides').glob('*.html')) +
+    [PLAYGROUND / 'index.html', PLAYGROUND / 'teacher.html']
 )
 
 SKIP_LINK = re.compile(r'\s*<a [^>]*class="skip-link"[^>]*>.*?</a>\s*', re.S)

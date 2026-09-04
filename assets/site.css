@@ -1,4 +1,4 @@
-/* dewadaba's stylesheet.
+/* dewstack's stylesheet.
  *
  * The tokens, the reading frame, the masthead and the Settings panel are
  * dewlab's (deweydex/dewlab, assets/tutorial-style.css), so the two sites
@@ -158,8 +158,11 @@ body {
 }
 
 /* Wide things, tables and code, may exceed the reading measure. They scroll
-   inside their own box. The page never scrolls sideways. */
+   inside their own box. The page never scrolls sideways. A long web
+   address written out in the text is allowed to break anywhere, because
+   the course map shows its addresses in full. */
 .dl-page > * { min-width: 0; }
+main a, main code { overflow-wrap: anywhere; }
 
 /* The first link on every page. Hidden until a keyboard user presses Tab,
    then shown at the top left. Following it jumps past the masthead. */

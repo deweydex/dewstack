@@ -184,3 +184,39 @@ def test_the_real_tutorials_build(tmp_path: Path):
     pages = build.build(out_dir=tmp_path / "site", clean=True)
     assert pages
     assert (tmp_path / "site" / "index.html").exists()
+
+
+def test_front_page_opens_with_the_readme(tree, tmp_path: Path):
+    tutorials, out = tree
+    write_tutorial(tutorials, "first")
+    write_order(tutorials, ["first"])
+    readme = tmp_path / "README.md"
+    readme.write_text(
+        "# The course\n\nWhere to begin.\n\n## Notes\n\nSee [the plan](planning/PLAN.md) "
+        "and [the folder](planning/).\n",
+        encoding="utf-8",
+    )
+
+    build.build(tutorials_dir=tutorials, out_dir=out, assets_dir=ROOT / "assets", clean=True, readme=readme)
+
+    page = (out / "index.html").read_text(encoding="utf-8")
+    assert "<title>The course" in page
+    assert "Where to begin." in page
+    assert page.count("<h1>") == 0, "the README's title is the page title, not a heading in the body"
+    assert f'href="{build.REPO_URL}/blob/main/planning/PLAN.md"' in page
+    assert f'href="{build.REPO_URL}/tree/main/planning/"' in page
+    assert "Tutorials written here" in page
+    assert '<h3 class="dl-module-heading">Module mod</h3>' in page
+    assert "tutorials/mod/first/index.html" in page
+
+
+def test_front_page_without_a_readme_is_the_list(tree):
+    tutorials, out = tree
+    write_tutorial(tutorials, "first")
+    write_order(tutorials, ["first"])
+
+    build.build(tutorials_dir=tutorials, out_dir=out, assets_dir=ROOT / "assets", clean=True, readme=None)
+
+    page = (out / "index.html").read_text(encoding="utf-8")
+    assert "<h1>Tutorials</h1>" in page
+    assert '<h2 class="dl-module-heading">Module mod</h2>' in page

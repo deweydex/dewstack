@@ -21,7 +21,7 @@ The columns "Track" and "Do" use these words. Track: *Web door* (the starter a s
 | `styles.css` | commented, variables at the top | Custom properties at the top mean exercise 13 changes the whole site in one place. | The two colour variables above. Nothing else. | Web door | keep |
 | `CONCEPTS.md` | 145 sentences, mean 11.5, 4 % over 25 | Optional depth in ten short sections: the box, how browsers build pages, semantic HTML, selectors, specificity, units, Flexbox, responsive design, variables, transitions. Each is the plain-statement-then-metaphor order the guide asks for. | Nothing in place. Its ten sections are the outline of the web tutorial track: each could become one short page with a live example. | Web door; seed for Web | keep; mirror |
 
-## 2. `WADB_Tutorials`, copied to `tutorials/`
+## 2. `WADB_Tutorials`, copied to `sources/wadb/` (until 2026-09-04, `tutorials/`)
 
 ### The lessons
 
@@ -82,7 +82,7 @@ The guides are the readable part of the site, because they are procedural: do th
 |---|---|---|---|---|---|
 | Tentacular Plushies | 782 words, 35 sentences, 26 %, six CDN loads, no landmark; fixed three-panel layout, body scroll disabled | Five tasks in a story (a shop's database), a hint under each, a SQL reference panel, and a download of the student's SQL for submission. The tasks are the right five. | Unusable on a phone (the audit: the task panel is one word wide). "Check my work" was reported broken in class in December. CodeMirror and SQL.js from a CDN. | Data | rewrite in the shell as one column, same five tasks; its reference panel becomes the SQL half of the quick reference |
 
-## 3. `HTML-CSS-SQL-JS`, copied to `databases/playground/`
+## 3. `HTML-CSS-SQL-JS`, copied to `sources/playground/` (until 2026-09-04, `databases/playground/`)
 
 | Page | Measured | Good | Change | Track | Do |
 |---|---|---|---|---|---|

@@ -11,8 +11,9 @@ The shape is borrowed from dewlab's build (deweydex/dewlab, build.py),
 not its code. That script runs Python in the browser, an authoring
 editor and a topic tree, and is over four thousand lines. This one does
 the part a reading site needs: frontmatter, ordering, link checks, a
-shell, a contents page and a search index. What it checks, it checks
-strictly. A mistake that stops the build is a mistake a student never
+shell, a contents page and a search index. The contents page opens with
+`README.md`, the course map, so the site's front page and the repository's
+front page are one text. What it checks, it checks strictly. A mistake that stops the build is a mistake a student never
 sees.
 
 Layout it expects:
@@ -48,8 +49,11 @@ TUTORIALS = ROOT / "tutorials"
 ASSETS = ROOT / "assets"
 OUT = ROOT / "site"
 
-SITE_NAME = "dewadaba"
-REPO_URL = "https://github.com/deweydex/dewadaba"
+SITE_NAME = "dewstack"
+REPO_URL = "https://github.com/deweydex/dewstack"
+# The course map. Rendered as the top of the site's front page, so the page
+# GitHub shows and the page Pages shows are one text.
+README = ROOT / "README.md"
 
 REQUIRED_FRONTMATTER = ("title", "slug", "module", "module_title", "series", "version")
 VERSION_PATTERN = re.compile(r"^\d{4}\.\d{2}\.\d{2}\.\d+$")
@@ -322,27 +326,80 @@ def render_search_box() -> str:
     )
 
 
-def render_contents(tutorials: list[Tutorial], module_order: list[str], series: dict) -> str:
-    """The contents page. One short introduction, the search box, then the list."""
-    out = [
-        "<h1>Tutorials</h1>",
-        '<div class="dl-intro">',
-        "<p>These tutorials are part of the web authoring and databases course. "
-        "Everything here runs in your browser. There is nothing to install and "
-        "no account to make.</p>",
-        '<ul class="dl-intro-points">',
-        "<li><strong>The list below is grouped into modules.</strong> Each module "
-        "has one or more series. A series is meant to be read in order, from the top.</li>",
-        "<li><strong>The Settings button changes how the page looks.</strong> You can "
-        "choose a theme, a typeface, a text size and a line width. The choices stay "
-        "with you from page to page.</li>",
-        "<li><strong>Nothing you do here is scored.</strong> Nothing you type leaves your browser.</li>",
-        "</ul>",
-        f'<p class="dl-intro-tree">The course map, with links to every part of the course, is in the '
-        f'<a href="{REPO_URL}#readme">README</a>.</p>',
-        "</div>",
-        render_search_box(),
-    ]
+RELATIVE_HREF = re.compile(r'href="(?!(?:[a-z][a-z0-9+.-]*:|#|/))([^"]+)"')
+
+
+def render_front(readme: Path) -> tuple[str, str, str]:
+    """The README as the top of the front page: its title, its HTML and its
+    table of contents.
+
+    The README is written for GitHub, so a relative link in it points at a
+    file in the repository. On the built page that link would point at
+    nothing, so it is rewritten to the same file on GitHub. Everything else
+    in the text is left as it is: the two pages are meant to read the same.
+    """
+    text = readme.read_text(encoding="utf-8")
+    title = SITE_NAME
+    lines = text.splitlines()
+    for i, line in enumerate(lines):
+        if line.startswith("# "):
+            title = line[2:].strip()
+            del lines[i]
+            break
+    md = make_markdown()
+    rendered = md.convert("\n".join(lines))
+    rendered = rendered.replace("<pre><code", '<pre class="dl-static"><code')
+
+    def to_github(match: re.Match) -> str:
+        target = match.group(1)
+        kind = "tree" if target.endswith("/") else "blob"
+        return f'href="{REPO_URL}/{kind}/main/{target}"'
+
+    rendered = RELATIVE_HREF.sub(to_github, rendered)
+    return title, rendered, render_toc(md.toc_tokens)
+
+
+def render_contents(tutorials: list[Tutorial], module_order: list[str], series: dict,
+                    front: str | None = None) -> str:
+    """The contents page: the course map when there is one, then the search
+    box and the list of tutorials written here.
+
+    With a course map above it, the list is one section of a longer page and
+    its headings step down a level. Without one, the list is the page.
+    """
+    heading = "h3" if front else "h2"
+    sub = "h4" if front else "h3"
+    if front:
+        out = [
+            front,
+            '<h2 id="tutorials">Tutorials written here</h2>',
+            '<div class="dl-intro">',
+            "<p>These are the pages written for this course, in the order they are "
+            "meant to be read. Each one has a Settings button, and links to the "
+            "page before it and the page after it.</p>",
+            "</div>",
+            render_search_box(),
+        ]
+    else:
+        out = [
+            "<h1>Tutorials</h1>",
+            '<div class="dl-intro">',
+            "<p>These tutorials are part of the web authoring and databases course. "
+            "Everything here runs in your browser. There is nothing to install and "
+            "no account to make.</p>",
+            '<ul class="dl-intro-points">',
+            "<li><strong>The list below is grouped into modules.</strong> Each module "
+            "has one or more series. A series is meant to be read in order, from the top.</li>",
+            "<li><strong>The Settings button changes how the page looks.</strong> You can "
+            "choose a theme, a typeface, a text size and a line width. The choices stay "
+            "with you from page to page.</li>",
+            "<li><strong>Nothing you do here is scored.</strong> Nothing you type leaves your browser.</li>",
+            "</ul>",
+            f'<p class="dl-intro-tree">The course map, with links to every part of the course, is in the '
+            f'<a href="{REPO_URL}#readme">README</a>.</p>',
+            "</div>",
+            render_search_box(),
+        ]
     modules_seen = []
     for tutorial in tutorials:
         if tutorial.module not in modules_seen:
@@ -352,14 +409,14 @@ def render_contents(tutorials: list[Tutorial], module_order: list[str], series: 
     by_slug = {t.slug: t for t in tutorials}
 
     for module in ordered:
-        out.append(f'<h2 class="dl-module-heading">{html.escape(titles[module])}</h2>')
+        out.append(f'<{heading} class="dl-module-heading">{html.escape(titles[module])}</{heading}>')
         module_series = [(key, info) for key, info in series.items() if key[0] == module]
         for (_, name), info in module_series:
             live = [by_slug[s] for s in info["order"] if by_slug[s].is_live]
             if not live:
                 continue
             if len(module_series) > 1:
-                out.append(f"<h3>{html.escape(info['title'])}</h3>")
+                out.append(f"<{sub}>{html.escape(info['title'])}</{sub}>")
             out.append('<ol class="dl-contents">')
             for t in live:
                 out.append(f'<li><a href="{t.url}">{html.escape(t.title)}</a></li>')
@@ -423,8 +480,11 @@ def page_values(*, title: str, root_base: str, crumbs: str, nav: str, toc: str, 
 
 
 def build(tutorials_dir: Path = TUTORIALS, out_dir: Path = OUT, assets_dir: Path = ASSETS,
-          clean: bool = False) -> list[Path]:
-    """Write the whole site. Returns every page written."""
+          clean: bool = False, readme: Path | None = README) -> list[Path]:
+    """Write the whole site. Returns every page written.
+
+    `readme` is the course map that opens the front page. None, or a path
+    that does not exist, gives a front page that is only the list."""
     if clean and out_dir.exists():
         shutil.rmtree(out_dir)
     out_dir.mkdir(parents=True, exist_ok=True)
@@ -443,7 +503,8 @@ def build(tutorials_dir: Path = TUTORIALS, out_dir: Path = OUT, assets_dir: Path
         for tutorial in members:
             written.append(write_tutorial(tutorial, members, info["title"], shell, out_dir, assets_dir, by_slug))
 
-    written.append(write_contents(tutorials, module_order, series, shell, out_dir, assets_dir))
+    front = readme if readme is not None and readme.exists() else None
+    written.append(write_contents(tutorials, module_order, series, shell, out_dir, assets_dir, front))
     write_search_index(tutorials, series, out_dir)
     return written
 
@@ -490,11 +551,14 @@ def write_tutorial(tutorial: Tutorial, members: list[Tutorial], series_title: st
 
 
 def write_contents(tutorials: list[Tutorial], module_order: list[str], series: dict, shell: str,
-                   out_dir: Path, assets_dir: Path) -> Path:
-    body = render_contents(tutorials, module_order, series)
+                   out_dir: Path, assets_dir: Path, readme: Path | None = None) -> Path:
+    title, front, toc = ("Tutorials", None, "")
+    if readme is not None:
+        title, front, toc = render_front(readme)
+    body = render_contents(tutorials, module_order, series, front)
     search_url = asset_url("", "search.js", assets_dir)
     page = fill_shell(shell, page_values(
-        title="Tutorials", root_base="", crumbs="", nav="", toc="", body=body,
+        title=title, root_base="", crumbs="", nav="", toc=toc, body=body,
         page_script=f'<script src="{search_url}"></script>', meta="", assets_dir=assets_dir,
     ), "contents page")
     target = out_dir / "index.html"

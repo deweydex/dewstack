@@ -1,9 +1,15 @@
-# dewadaba
+# dewstack
 
 The home of the web authoring and databases course. The README is the
-course map and is what a student sees first. `build.py` turns
-`tutorials/**/*.md` into `site/`, which GitHub Pages serves. There is no
-backend and no database behind the site.
+course map and is what a student sees first, on GitHub and as the top of
+the built site's front page. `build.py` turns `tutorials/**/*.md` into
+`site/`, which GitHub Pages serves. There is no backend and no database
+behind the site.
+
+`sources/` holds verbatim copies of the two older sites, `WADB_Tutorials`
+in `sources/wadb/` and `HTML-CSS-SQL-JS` in `sources/playground/`. They
+are coverage material for the rewrites, not part of the build, and the
+README links to the originals rather than to them.
 
 `planning/CONSOLIDATION_PLAN.md` says where the content is coming from,
 in what order, and what "done" means for each step. Read it before moving

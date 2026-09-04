@@ -15,8 +15,9 @@ laid out, so that nothing on the later pages is a surprise.
 ## What is on every page
 
 At the top of every page there is a bar that stays in view while you
-scroll. On the left is the word **dewadaba**. Clicking it takes you back
-to the list of tutorials. On the right is the **Settings** button.
+scroll. On the left is the word **dewstack**. Clicking it takes you back
+to the front page, which ends with the list of tutorials. On the right is
+the **Settings** button.
 
 Under that bar there are links to the previous page and the next page.
 The same links appear again at the bottom.
@@ -47,5 +48,6 @@ run it are planned for later.
 
 ## Where to go next
 
-The list of tutorials is one click away, on the word **dewadaba** at the
-top of the page. New tutorials will appear there as they are written.
+The front page is one click away, on the word **dewstack** at the top
+of the page. It ends with the list of tutorials. New tutorials will appear
+there as they are written.

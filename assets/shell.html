@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>{{TITLE}} · dewadaba</title>
+<title>{{TITLE}} · dewstack</title>
 {{META}}
 <link rel="icon" href="{{ROOT_BASE}}assets/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="{{FONTS_CSS_URL}}">
@@ -15,7 +15,7 @@
    purpose; the panel itself lives in settings.js. */
 (function () {
   try {
-    var s = JSON.parse(localStorage.getItem("dewadaba:texture") || "{}");
+    var s = JSON.parse(localStorage.getItem("dewstack:texture") || "{}");
     var r = document.documentElement;
     if (s.theme && s.theme !== "system") r.setAttribute("data-theme", s.theme);
     if (s.font && s.font !== "serif") r.setAttribute("data-font", s.font);
@@ -39,7 +39,7 @@
        on screen. -->
   <div class="dl-chrome" id="dl-chrome">
     <header class="dl-masthead">
-      <a class="dl-wordmark" href="{{ROOT_BASE}}index.html">dewadaba</a>
+      <a class="dl-wordmark" href="{{ROOT_BASE}}index.html">dewstack</a>
       <span class="dl-crumbs">{{CRUMBS}}</span>
       <div class="dl-masthead-actions">
         <button type="button" class="dl-settings-toggle" id="dl-settings-toggle"
