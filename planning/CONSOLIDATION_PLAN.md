@@ -351,7 +351,9 @@ The source file is not touched.
 | Course bar on every copied page | this plan, section 2 | `tools/add_course_bar.py` | done 2026-09-03, dewadaba#2 |
 | Page-by-page assessment of the three sources, with the order of rewrites | this plan, section 10 | `planning/PAGE_BY_PAGE.md` | done 2026-09-04, dewadaba#2 |
 | `web` "Where this fits" section | section 5, step 6 | `deweydex/web` README | drafted as web#2, closed; lands after web#1 merges |
-| Build step and hello page | `dewlab` | `build.py`, `assets/`, `tutorials/` | not started; the settings above are the first piece |
+| Build step and hello page | `dewlab` | `build.py`, `assets/`, `tutorials/` | not started; decided 2026-09-04 (section 8, question 9): a copy of dewlab's build and Pyodide runtime, trimmed |
+| Site editor component for web pages | dewmini's Site tab, WADB's code playground | the build's shell | not started; section 13 |
+| More database content from Josh | to come 2026-09-04 | `databases/` | awaited |
 | SQL tutorial | `HTML-CSS-SQL-JS/index.html` | `tutorials/databases/` | not started |
 | SQL practice page | `HTML-CSS-SQL-JS/index.html` | `tutorials/databases/` | not started |
 | Teaching notes | `HTML-CSS-SQL-JS/teacher.html` | `planning/` | not started |
@@ -369,15 +371,31 @@ The source file is not touched.
 
 ## 8. Open questions for Josh
 
-1. **The SQL engine.** sql.js, or Pyodide with sqlite3 as dewlab does.
-   sql.js is the smaller thing unless stage 3 needs Python.
-2. **Public solutions.** `teacher.html` publishes every answer. Keep that,
-   or move solutions behind a fold the way dewlab's practice pages do.
-3. **Which of lessons 1 to 8 survive** beside `web`.
-4. **Templates and examples.** Eleven templates and four examples in
-   `WADB_Tutorials`. Keep as downloads, fold into project ideas, or drop.
-5. **Attribution.** Every `WADB_Tutorials` page links to
-   `github.com/jsaaron`. The repositories live under `deweydex`.
+1. **The SQL engine.** Decided 2026-09-04: **Pyodide with sqlite3**, as
+   dewlab does. The data track, the full-stack track and the Python half
+   share one engine, and a SQL table and a pandas table see each other.
+   The cost is a load of about ten megabytes and a few seconds on first
+   open, which dewlab already pays and mitigates by caching. The port in
+   section 6 therefore takes dewlab's `pyodide-engine.js`, its worker,
+   `tutorial_tools.py` (`run_query()`, `load_csv()`) and dewmini's SQL
+   cell, not SQL.js. The playground and the quiz keep SQL.js until they
+   are rewritten.
+2. **Public solutions.** Decided 2026-09-04: solutions are linked at the
+   bottom of the page they belong to, after the exercises, not hidden and
+   not on a separate teacher page. The quiz is ungraded, so it shows its
+   solutions after the student submits. Teaching notes move to
+   `planning/`.
+3. **Which of lessons 1 to 8 survive** beside `web`. Decided 2026-09-04:
+   all eight are rewritten as short pages, so a student who wants the
+   explanation before the exercise has it. Lessons 6 to 8 and guides 1 to
+   5 cover the same ground; the rewrite makes one page per step, not two.
+4. **Templates and examples.** Decided 2026-09-04: fold into the project
+   ideas page. Each idea links the template that fits it; no separate
+   templates page. `portfolio-starter` and `basic` go, since the starter
+   covers them.
+5. **Attribution.** Decided 2026-09-04: `deweydex` everywhere. One
+   account name on every page and link; the front page's footer now links
+   `github.com/deweydex` rather than a personal site.
 6. **A Pages site for `web`**, so the README can show a live example.
 7. **The name.** Decided 2026-09-03: **dewstack**, beside dewlab, dewmini
    and dewmark. Every page, link and document already says dewstack; the
@@ -387,13 +405,46 @@ The source file is not touched.
    home if the halves ever split; `dewpage` or `dewfolio` for the starter,
    though `web` stays, because a student's fork keeps the name and
    `username.github.io/web/` is the better address for a portfolio.
-8. **The interim shelf.** The verbatim copy of `WADB_Tutorials` under
-   `tutorials/` gives the course one address now, and it carries every
-   defect in section 9 under the course's own front page. The
-   alternative is to link out to the `WADB_Tutorials` Pages site until
-   each rewrite lands. The front page and README say plainly that these
-   pages are as they were and do not all fit a phone. Keep the shelf, or
-   link out?
+8. **The interim shelf.** Decided 2026-09-04: the site is not yet sent to
+   anyone, so the copies are not a student-facing problem. They stay as
+   the material to check coverage against, and the deliverable is new
+   pages that meet every criterion in section 11. As each new page lands,
+   the front page links to it and the copy it replaces can go.
+9. **Build and home.** Decided 2026-09-04: dewstack, on a copy of
+   dewlab's build and runtime. `build.py`, the Pyodide engine and worker,
+   `tutorial_tools.py` and the shell are copied in and trimmed; tutorials
+   are markdown with cells, dewlab's shape. One course site. The two
+   projects can drift, and the ledger notes the dewlab commit each copy
+   was taken from so a later sync is possible.
+10. **Page length.** Decided 2026-09-04: shorter than dewlab, 30 to 50
+   sentences, one idea, one live example, one "your turn", ten to fifteen
+   minutes. The thirteen WADB lessons become thirty or so pages, and that
+   is the intended outcome, not a cost.
+11. **The live element on a web page.** Decided 2026-09-04: not a cell. A
+   web tutorial page carries a small site editor with files (an HTML pane,
+   a CSS pane, a JavaScript pane) and a live preview, the way dewmini's
+   Site tab already works (dewlab DECISIONS_LOG 7.121) and the way
+   `WADB_Tutorials/js/code-playground.js` did on four lessons. Exercises
+   are not on the page at all: they are in the student's own fork,
+   published on their own GitHub Pages, in the `web` starter's model of
+   change one thing, save, look. The data track keeps cells, and a cell
+   there is a query. Section 13 has the component.
+12. **Practice.** Decided 2026-09-04: one "your turn" on the page and a
+   separate practice page beside it, solutions at the foot (question 2).
+13. **More database content is coming** (Josh, 2026-09-04): to be added
+   to the sources later today. The data track's plan in section 7 is
+   revised once it is in.
+14. **The outcomes map.** Decided 2026-09-04: later. The same material
+   may serve the Level 6 web development module, and mapping is easy once
+   the pages exist. Until then, coverage is checked against the copies
+   (question 8) and the project briefs.
+15. **The web track's order.** Josh asked for the three trajectories to
+   be compared and a hybrid proposed rather than one picked. Section 14;
+   superseded in part by 16.
+16. **The design.** Decided 2026-09-04: three arcs and two starters, as
+   section 15 lays out. `web` stays the door to web Arc 1; a second
+   forkable starter, working name `site`, is the door to Arc 2, the
+   project's shape. Every arc ends in something a student can show.
 
 ---
 
@@ -497,7 +548,7 @@ Written 2026-09-04, after measuring every source page (`PAGE_BY_PAGE.md`). These
 
 **Two bars, both mechanical.** The plain-language bar is the eight checks in dewlab's `CLAUDE.md`, run over every sentence before a commit; the sentence-length measure in `PAGE_BY_PAGE.md` is the script that catches most of it. The accessibility bar is section 3 of this plan: no serious axe violation, no sideways scroll at 390 pixels, a `main` landmark, a labelled `nav`, 4.5 to 1 contrast. Every page is rendered at 1200 and 390 pixels and looked at before it is pushed. Code blocks scroll inside themselves; nothing on a page has a fixed width in pixels.
 
-**Live examples, one engine per track.** The web track needs an "edit and see" widget: two editors (HTML, CSS) and an iframe whose `srcdoc` is rebuilt on each change. dewmini in dewlab already has this as its Web cell (DECISIONS_LOG 7.116, 7.120); port the pattern, not Pyodide. The data track needs a SQL editor and a result table; the playground's `tutorial.js` is sixty lines that do this with SQL.js. The full-stack track uses both. Whether the data engine is SQL.js or Pyodide's `sqlite3` is question 1 in section 8; everything in this section works with either, and SQL.js is the smaller thing to carry until Python is needed.
+**Live examples, one engine per track.** The web track needs an "edit and see" widget: two editors (HTML, CSS) and an iframe whose `srcdoc` is rebuilt on each change. dewmini in dewlab already has this as its Web cell (DECISIONS_LOG 7.116, 7.120); port the pattern, not Pyodide. The data track needs a SQL editor and a result table; the playground's `tutorial.js` is sixty lines that do this with SQL.js. The full-stack track uses both. The data engine is Pyodide's `sqlite3`, decided in section 8, question 1: dewlab's engine, worker and `tutorial_tools.py` are ported as they are, and a SQL cell on a page is dewmini's SQL cell. The playground's sixty lines of SQL.js stay only until the playground is rewritten.
 
 **The starter's design is the student's.** `web` is navy and blue on purpose: it is the one design a student is meant to change, and exercise 13 changes it. The tutorials never restyle it, never show a re-skinned copy of it, and when they refer to the student's site they show it as it is, in an iframe or a screenshot. The tutorials' own look (the purple gradient, white cards) is fixed and is the course's, not the student's.
 
@@ -513,20 +564,162 @@ Written 2026-09-04, after measuring every source page (`PAGE_BY_PAGE.md`). These
 
 ## 12. The first full-stack tutorial, outlined
 
-Working title: *A page that shows rows from a table*. It is the smallest page that deserves the name full stack: HTML and CSS a student already understands, a database they already queried, and forty lines of JavaScript joining them.
+Working title: *A page that shows rows from a table*. It is the smallest page that deserves the name full stack: HTML and CSS a student already understands, a database they already queried, and a dozen lines of Python and JavaScript joining them.
 
-**Where it sits.** After the starter's exercise 12 (the student has a page with sections and navigation) and after the first two data tutorials (they have made a table and asked it questions). It uses the playground's engine, so nothing new is installed.
+**Where it sits.** After the starter's exercise 12 (the student has a page with sections and navigation) and after the first two data tutorials (they have made a table and asked it questions). It uses the same Pyodide engine as every other page here, so nothing new is installed; the first open of the day takes a few seconds while the engine loads, as dewlab's pages do.
 
 **What the student does, in order.**
 
-1. Open a page that already contains a `products` table in SQL.js, the same three columns as the playground's exercises, and a `<table>` element with a heading row and no body. Press Run. The rows appear. That is the whole idea, seen before it is explained: the page asked the database a question and drew the answer.
-2. Read the twelve lines that did it: run a query, loop over the rows, make a `<tr>` for each. Change the query to `WHERE price < 10`. The table changes.
+1. Open a page whose first cell has already made a `products` table in `sqlite3`, the same three columns as the playground's exercises, and whose web cell holds a `<table>` element with a heading row and no body. Press Run. The rows appear. That is the whole idea, seen before it is explained: the page asked the database a question and drew the answer.
+2. Read the dozen lines that did it: a Python function that runs the query and returns the rows, and the few lines of JavaScript in the web cell that call it (Pyodide exposes a Python function to the page) and make a `<tr>` for each row. Change the query to `WHERE price < 10`. The table changes.
 3. Add a search box. Its value goes into the `WHERE`. Now the visitor asks the question.
 4. Add a small form with two fields. Its submit runs an `INSERT`, then redraws the table. Now the visitor changes the data.
-5. Look back at where the work went: the database starts again on reload, as the playground does. Two buttons, "download my database" and "load a database file", use SQL.js's export and import, and the student now has a file that is theirs. This is the same "where your work is saved" question the front page raises, answered in code.
+5. Look back at where the work went: the database starts again on reload, as the playground does. Two buttons, "download my database" and "load a database file", save and restore the `.db` file through the browser's file system, as dewmini's Files section already does, and the student now has a file that is theirs. This is the same "where your work is saved" question the front page raises, answered in code.
 
 **What it names, at the end.** Three terms: query, result set, and the idea that a page is HTML plus data plus the code between them. That is what "full stack" means here, and the word is given last.
 
 **What it deliberately leaves out.** Servers, accounts, anything that sends data anywhere. A second tutorial can put a chart beside the table using the marks example from the front page; a third can draw the page from an Our World in Data extract. The projects page lists these as combined projects once the first tutorial exists.
 
 **Done when** the page passes both bars in section 11, a student who has done the prerequisites can complete steps 1 to 5 without help, and the front page's full-stack section links to it instead of saying "being written".
+
+---
+
+## 13. The site editor for web pages
+
+Decided in section 8, question 11. What a web authoring tutorial page needs is not a cell but a small site: files a student can see all at once, and the page those files make, updating as they type. Three things already do most of this and are the sources for the component.
+
+**dewmini's Site tab** (dewlab, `compose/dewmini.js`, `openSiteFile()` and the `SITE` view; DECISIONS_LOG 7.121). An `.html` file opens with its same-name `.css` and `.js` beside it: three editors on one side, a sandboxed iframe (`sandbox="allow-scripts"`, no same-origin) on the other, redrawn on every keystroke. The editors are CodeMirror, the same build dewlab vendors. It is the most complete of the three and the one to port; it already runs against a mounted folder, which the tutorial page does not need.
+
+**WADB's code playground** (`tutorials/js/code-playground.js`, used on lessons 01, 09, 10 and 13). An HTML pane and a CSS pane seeded from `data-html` and `data-css` attributes, a preview, a reset, and a `data-solution-html` pair that shows a solution. The seeding-from-attributes and the solution pair are worth keeping; the rest the Site tab does better.
+
+**The playground's interactive demo** (`databases/playground/index.html`, "Interactive Demo"): a CSS textarea applied live to a sample block. The smallest possible version, and a reminder that a demo can be one pane when the idea is one property.
+
+**What the component is.** A block a tutorial's markdown can place, seeded with an HTML, a CSS and, when the page needs it, a JavaScript file, showing the three as tabs or panes beside a live preview at a width the reader can drag (so responsive pages can be tried). Buttons: reset to the tutorial's version, and "download these files", so a student can drop them into their fork. No saving on the page: the student's fork is where work is kept, and the page says so. In the build, a fenced block with a tag (as `python exec` marks a cell) marks a site file, and consecutive site-file blocks with matching base names form one editor.
+
+**Where exercises go instead.** Every web tutorial ends with one "your turn" that is done in the student's fork: open this file, change this, save, refresh, look. The practice page beside it lists more of the same. That is the `web` starter's model, and it is why the tutorials never need to save a student's HTML.
+
+**Done when** one rewritten page (lesson 11's first half, Flexbox) ships with the component, renders at both widths, passes both bars, and a student can drag the preview narrower and watch a row wrap.
+
+---
+
+## 14. The web track's order: three trajectories and a hybrid
+
+Three orders exist for the same material. They differ in where GitHub comes, where CSS starts, and whether layout is taught at all.
+
+**The starter's exercises** (`deweydex/web`, 25 exercises). Fork and publish first (1, 2), so the site is live before anything is learned. Then the home page's HTML, top to bottom: title, heading, a paragraph, emphasis, a section, an image, a link, a contact section, navigation (3 to 12). Then the stylesheet: variables and colour, backgrounds, the box, borders, text, classes (13 to 18). Then layout: the container, a sticky header, the footer (19 to 21). Then states and polish: hover, focus, a media query, a favicon (22 to 25). The trajectory is *one real page, top to bottom, then its stylesheet, top to bottom*. It never teaches Flexbox or Grid, though its stylesheet uses Flexbox in five places and exercise 21 leans on it; the project brief requires both.
+
+**`CONCEPTS.md`** (ten sections). The box; how the browser builds a page; semantic HTML; selectors; specificity; units; Flexbox; responsive design; variables; transitions. The trajectory is *from the smallest idea to the largest, concept before use*. It puts variables ninth, though the starter uses them at exercise 13, and Flexbox seventh, though the starter never asks for it.
+
+**WADB's lessons** (thirteen). HTML basics; semantics; CSS basics; layout (box, display, Flexbox, positioning); responsive design; then GitHub setup, workflow and Pages (6 to 8); then images and links (9, 10); then the three project lessons. The trajectory is *a textbook's*: all of HTML, then all of CSS, then publishing in the middle, then two topics that arrived later. Publishing in the middle is its weakest choice; the starter's first-minute publish is better, and there are no returning students to keep the old order for.
+
+**The hybrid.** A getting-started strand first, before either door, because the starter relies on a GitHub account, an editor and a fork, and today it says "clone it" without saying how (Josh, 2026-09-04: "an overview of everything with steps to get up and running before the practice"). Then the starter's spine, because each tutorial page should be "the explanation behind the exercise you just did", with concept pages placed where the starter first touches the concept, and WADB's project material as a fourth strand after exercise 25. Thirty-six pages, in four strands a student can also read across. The front page gains a "Before you begin" part above the two doors that says the same in five sentences and links strand A.
+
+| # | Page (working title) | Starter exercise | Source |
+|---|---|---|---|
+| A0 | How the pieces fit: editor, GitHub, Pages, browser, this site | before 1 | new; one picture and a paragraph |
+| A1 | A GitHub account | before 1 | guide 01, lesson 06 |
+| A2 | An editor: VS Code, or the editor inside GitHub | before 1 | new; the course site's "Programs to Install" page is empty today |
+| A3 | Your copy of the starter: fork, then clone, download, or edit in the browser | 1 | guide 02, guide 06 (fork section); the starter says "clone" without saying how |
+| A4 | Publish it: GitHub Pages, and why your address looks like that | 2 | guide 05, lesson 08 |
+| A5 | The two loops: save and refresh on your computer; commit and wait on GitHub | 3 | lesson 01 (first third), guide 03, lesson 07 |
+| A6 | Seeing under the page: the inspector | 3 onward | guide 07 (first third) |
+| B1 | A page is files; save, refresh | 3 | lesson 01 (first third) |
+| B2 | The skeleton: head, body, title | 3, 4 | lesson 01 |
+| B3 | Headings, paragraphs, emphasis | 4 to 6 | lesson 01 |
+| B4 | Sections, and the tags that mean something | 7, 8 | lesson 02, CONCEPTS semantic |
+| B5 | Images, paths and alt text | 9 | lesson 09 |
+| B6 | Three kinds of link | 10, 11 | lesson 10 |
+| B7 | Navigation | 12 | lesson 10; a pointer to D1, because the starter's nav is a flex row |
+| B8 | How the browser builds a page | after 12 | CONCEPTS DOM (optional depth) |
+| C1 | A rule, and where it lives | 13 | lesson 03 |
+| C2 | Variables and colour | 13, 14 | CONCEPTS variables, lesson 12 |
+| C3 | The box | 15, 16 | CONCEPTS box, lesson 04 |
+| C4 | Text and units | 17 | CONCEPTS units, lesson 03 |
+| C5 | Selectors and classes | 18 | CONCEPTS selectors, lesson 03 |
+| C6 | When rules conflict | 18 | CONCEPTS specificity (optional depth) |
+| C7 | The container: width and centring | 19 | lesson 04 |
+| C8 | Position, and the sticky header | 20, 21 | lesson 04 |
+| C9 | States: hover and focus | 22, 23 | lesson 10 |
+| C10 | Transitions | 22 | CONCEPTS transitions, lesson 13 |
+| C11 | Media queries | 24 | CONCEPTS responsive, lesson 05 |
+| C12 | Flexible images | 24 | lessons 05, 09 |
+| D1 | Flexbox first steps | after 25 | CONCEPTS Flexbox, lesson 04 |
+| D2 | Flexbox properties | project | lesson 11 (first half) |
+| D3 | Grid areas and minmax | project | lesson 11 (second half) |
+| D4 | A navigation that works on a phone | project | lessons 05, 10 |
+| D5 | Components and a theme switch | project | lesson 12 |
+| D6 | Keyframes and transforms | project | lesson 13 |
+| D7 | Branches and pull requests | team project | guide 04, lesson 07 |
+| D8 | Working with others on GitHub | team project | guide 06 |
+| E | Troubleshooting; quick reference; project ideas with the templates folded in | any | resource pages |
+
+**Where the starter diverges from this track, and the two warnings it needs.** First, the starter reaches the end of exercise 25 with a site that uses Flexbox without ever having named it, and the project brief requires Flexbox and Grid; the starter's closing section (plan, section 5, step 3) should say so and point at D1 to D3. Second, exercise 12's navigation is a flex row, so a student who asks "why does this line up" at B7 needs a pointer forward to D1 rather than an answer on the spot; B7 carries that pointer. Everywhere else the hybrid follows the starter exactly, so a student reading the tutorials in order and doing the exercises in order never meets a page that assumes an exercise they have not done.
+
+**What the hybrid gives up.** CONCEPTS's small-to-large order has a logic of its own, and a student who likes theory first loses it; B8 and C6 are kept as optional depth so that reader has somewhere to go. WADB's all-HTML-then-all-CSS order is gone, and with it the sense that HTML is finished before CSS begins, which the starter's exercises 8 and 11 (adding sections after the stylesheet is in use) already contradict.
+
+Thirty-six pages plus three reference pages, at 30 to 50 sentences each, is the "thirty-something shorter tutorials" outcome.
+
+Josh's reply to this section (2026-09-04): the past structure of the source pages need not be kept; think it through from scratch, and say where an existing thing is upgraded and where something starts fresh. Section 15 does that, and where it differs from the hybrid above, section 15 wins. The table above stays as the inventory of where each source page's material goes. The order of writing them stays as `PAGE_BY_PAGE.md` section 5 has it: reference pages first, then D2 and D3, then the data track, then A1 to A3, then B5 to B7, then the rest.
+
+---
+
+## 15. From scratch: three arcs, two starters, and what to upgrade or begin fresh
+
+If nothing existed and the brief were "adults, first time, nothing installed, two modules assessed by a web project, a database project and a practical exam", this is the course.
+
+### The spine is a thing the student builds, not a syllabus
+
+The starter's one insight is worth the whole design: the student's own artefact grows, and the teaching hangs off its growth. Fork, publish, change one thing, look. Generalised, every track is an artefact that grows in arcs, and each arc ends in something the student can show. The tutorial pages are not a parallel syllabus to read through; each is the explanation behind one step of the artefact, thirty to fifty sentences, with something to try in place and a "your turn" done on the artefact itself.
+
+**The web track, three arcs.**
+
+*Arc 1, your first site.* The `web` starter as it is: a three-page portfolio, twenty-five exercises, live from exercise 2. Beside it, one short concept page per idea the exercises touch, in the order they touch it: the page as files, the skeleton, headings and emphasis, sections and meaning, images and paths, links, navigation, then a rule, variables and colour, the box, text and units, selectors, the container, position, states, transitions, media queries. Sixteen pages. Ends with a published portfolio.
+
+*Arc 2, a site with several pages.* This is the assessed project's shape: five pages, a shared navigation, Flexbox and Grid layouts, responsive, images, a form, and the planning and documentation the brief marks. The brief says the topic must differ from the portfolio, so this arc starts from a second starter, a five-page skeleton with `planning.md` and `readme.md` templates inside it, forked the same way. Beside it: planning a site (audience, site map, wireframes); several pages and one navigation; a Flexbox row of cards; a Grid gallery; a navigation that works on a phone; a form; an images folder and file size; documenting what you built. Eight pages. Ends with the project.
+
+*Arc 3, a site with data.* The full-stack track: the site shows the student's database. Three pages, section 12. Ends with a page that reads, searches and adds rows.
+
+**The data track, two arcs, meeting the third.**
+
+*Arc 1, your first table.* The student's own database, on a topic they choose, kept as a file they download and load (dewmini's Files). Four pages: a table is a list of rows; asking questions of a table; changing what is in it; a second table and a join. The dinosaurs are the worked example on every page; the "your turn" is the student's own table. Cells are queries.
+
+*Arc 2, a database with several tables.* The database project's shape: design before typing (what goes in which table, keys, one-to-many); a real dataset from Our World in Data, loaded, cleaned, queried; questions that need two tables; a chart from a query. Four pages. Ends with the project's database and the queries the practical exam asks for.
+
+**Getting started, before both tracks.** Six pages (section 14, A0 to A6): how the pieces fit; an account; an editor, VS Code installed with GitHub's own editor as the fallback (decided 2026-09-04); your copy of the starter; publishing it and the address; the two loops; the inspector. The data track needs only the first and the last.
+
+**Reference, beside everything.** Troubleshooting as problem-shaped cards; a quick reference in two halves, HTML and CSS, and SQL; project ideas with the templates folded in. Three pages.
+
+Getting started 6, web 16 + 8 + 3, data 4 + 4, reference 3: forty-four short pages. More than thirty-six, and each one shorter, because Arc 2 of both tracks is material none of the sources has and the brief marks.
+
+### Upgrade or fresh, piece by piece
+
+| Piece | Verdict | Why |
+|---|---|---|
+| `web`, the starter | **Upgrade, lightly.** web#1's pass, the assessment file gap, the closing section. Keep every exercise number. | The shape is the design. Its one gap, Flexbox used without being named, is closed by the concept pages, not by more exercises. |
+| A second starter for the project | **Fresh.** A five-page skeleton with the brief's file list, planning and README templates inside, fork-able. Working name `site`. | The brief wants a different topic from the portfolio and marks planning; nothing existing gives a student that starting point. |
+| `CONCEPTS.md` | **Upgrade into the Arc 1 concept pages.** Its ten sections, in the starter's order rather than its own, each with a site editor. | Already the right register and length; only the order and the live element are missing. |
+| WADB lessons 1 to 10 | **Quarry, do not upgrade.** Take the file-and-refresh insight, the paths section, alt text, link states, the box model prose; leave the shape. | Their shape (outcomes, why-it-matters, definitions, then examples) is the reverse of the one we want, and reversing a page is more work than writing it from the concept pages. |
+| WADB lessons 11 to 13 | **Quarry the examples, write Arc 2 fresh.** The holy-grail, dashboard, card and gallery examples become the live editors' seeds. | The examples are good and project-shaped; the prose around them is a reference manual. |
+| WADB GitHub guides | **Upgrade into getting started.** Shorten by half, keep the steps, merge each with its lesson twin. | Procedural pages survive being shortened; nothing about them needs rethinking. |
+| Troubleshooting, quick reference, project ideas | **Upgrade.** Keep the structure, rewrite the prose, add the SQL half and the dewstack-specific problems. | The structures are right; the sentences and the phone layout are wrong. |
+| WADB templates and examples | **Fold** into project ideas (decided). | |
+| The playground | **Quarry and rebuild.** The six command cards and five exercises seed data Arc 1; the page is rebuilt in the shell with Pyodide. | The engine changes, the parts 1 and 2 duplicate the web track, and the page is one long scroll. |
+| The quiz | **Rebuild, keep the tasks.** One column in the shell, the same five tasks, its reference panel into the quick reference, solutions after submission. | The three-panel layout is unusable on a phone and "check my work" was reported broken. |
+| The dinosaur notebook | **Keep the narrative, rebuild as pages.** Its create, insert, select, second table, join sequence is data Arc 1's order. | It needs Jupyter and a pip install; the course has removed installs. |
+| Data Arc 2 and the full-stack arc | **Fresh.** | Nothing in the sources covers design, a real dataset, or a page that shows data. The database content Josh is adding today may change this row. |
+| The site editor | **Port dewmini's Site tab** (section 13). | It exists, is sandboxed, and updates on every keystroke. |
+| The shell and build | **Copy dewlab's** (section 8, question 9). | |
+| Reading settings, course bar | **Done.** | |
+
+### What this changes on the front page
+
+Nothing in the five parts; the parts stay. Inside "Web authoring tutorials" and "Database tutorials", pages are listed by arc rather than by source, and each arc names what a student has at its end. The second starter joins the "Begin" part when it exists, as the door to Arc 2.
+
+### The order of writing, revised
+
+1. The three reference pages (every track, fail on a phone today).
+2. Getting started A0 to A6, because the starter depends on it and the term has begun.
+3. Web Arc 1's sixteen concept pages, in the starter's order, each a small pull request with its site editor.
+4. The second starter and web Arc 2, before the project brief is issued in January.
+5. Data Arc 1 as soon as the build step and Pyodide are in place; the playground and quiz rebuilt as part of it.
+6. Data Arc 2, then the full-stack arc.

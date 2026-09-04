@@ -12,6 +12,23 @@ https://deweydex.github.io/dewstack/. The website has the same parts and
 the same links. It also has a reading settings button: theme, typeface,
 text size, line width and high contrast, saved on your device.
 
+## Before you begin
+
+Three things, in this order. First, a free GitHub account: GitHub is
+where your site's files live and where it is published. Second, a text
+editor. VS Code is free and works on any computer; if you cannot install
+programs, GitHub has an editor built into its website, and every exercise
+works there too. Third, a browser you know how to refresh.
+
+That is how the pieces fit. Your editor changes the files. GitHub keeps
+them and publishes them. Your browser shows the result. The tutorials
+here explain what you see. Nothing else is installed for the web track,
+and nothing at all for the data track.
+
+- Making a GitHub account, step by step:
+  https://deweydex.github.io/dewstack/tutorials/github-guides/01-getting-started.html
+- VS Code: https://code.visualstudio.com/
+
 ## Two ways to begin
 
 You can start with a website, or start with data. Neither assumes the
