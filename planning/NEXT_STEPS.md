@@ -653,6 +653,35 @@ step arrives.
     (DOM manipulation, form validation, `localStorage`) sitting after
     web Arc 2 and before the full-stack arc; the Irish Tax Simulator
     artefact itself stays enrichment either way. Not decided.
+15. **The web track's teaching order, decided 2026-09-05.** Regroup and
+    resequence Arc 1 around four stages — Basic HTML, Basic CSS, merging
+    the two, then modern HTML/CSS (Flexbox, Grid, the rest of Arc 1's C
+    rows) — rather than replacing the arc structure. `portfolio_wad` and
+    `project_wad` stay the artefacts; the existing B and C row pages are
+    material to regroup, not rewrite from nothing. A JavaScript module is
+    added to `modules.yaml`'s `planned:` section, the same mechanism
+    already used for `data` and `full-stack`, marked coming soon. Also
+    wanted, not yet scoped: GitHub tutorials (getting-started's A1, A3 to
+    A5 may already cover most of this — check before writing new ones)
+    and a concrete page on how the internet works and how these
+    technologies fit together, with further-reading resources.
+16. **The data track's themes, decided 2026-09-05.** SQL, pandas,
+    matplotlib, forms, exploring data, and exporting/importing are the
+    content of Data Arc 1 and Arc 2 themselves, not additional pages
+    after them — Josh's reasoning: SQL alone does not cover the Database
+    Methods learning outcomes, and formal database theory (normal forms
+    and the like) belongs to Level 6, not here, so it is deferred rather
+    than added. `everlearning`'s teaching materials (including the exam)
+    and "the flowershow website" both have material covering this ground
+    already — the flowershow link is still needed from Josh before either
+    can be quarried.
+17. **WADB_Tutorials, reframed 2026-09-05.** Rather than a legacy source
+    being slowly superseded, it becomes its own named path — "Previous
+    Web Authoring Path" — offered alongside the redesigned one rather
+    than retired. Lessons 11 to 13 and the SQL quiz (the two pieces the
+    README could not yet call superseded) are being rebuilt as native
+    pages under that name, in parallel with the redesign above, so
+    neither piece of work blocks the other.
 
 ---
 

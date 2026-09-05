@@ -35,9 +35,10 @@ nothing here.
 
 ## Which track should I start with?
 
-Either. Start with a website, or start with data — neither assumes the
-other. If you are in a class, your teacher will say which comes first; if
-you are working on your own, pick whichever interests you more.
+Either. The website track teaches HTML and CSS and ends in a site you
+publish. The data track teaches tables and SQL and ends in a database you
+can query. If you are in a class, your teacher will say which comes
+first; if you are working on your own, pick whichever interests you more.
 
 ## What if I fall behind, or miss a class?
 
