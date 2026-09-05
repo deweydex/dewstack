@@ -71,16 +71,18 @@ or remove them.
 
 ## Your turn
 
-Bring back your own table.
+Your own table is already here, carried over from the last page.
 
-```sql cell=my-table
--- Load the file you downloaded from the last page, then run it.
+```sql cell=my-table persist
+-- If you built a table on an earlier page, it is already loaded above.
+-- If this is your first time here, write a CREATE TABLE and some
+-- INSERT statements of your own, then run them.
 ```
 
 Add two more rows to it with `INSERT`. Then write one `UPDATE` that
 changes a value in a row you choose, and one `DELETE` that removes a row
 you no longer want. Check each one with a `SELECT` before and after, the
-way the boxes above do. When you are done, click Download again.
+way the boxes above do.
 
 ## What you have now
 

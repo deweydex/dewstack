@@ -76,22 +76,22 @@ page, where some statements do change what a table holds.
 
 ## Your turn
 
-Bring back the table you built on the last page. Click Load below, and
-choose the file you downloaded there.
+Your own table, from the last page, is already here.
 
-```sql cell=my-table
--- Load the file you downloaded from the last page, then run it.
+```sql cell=my-table persist
+-- If you built a table on the last page, it is already loaded above.
+-- If this is your first time here, write a CREATE TABLE and some
+-- INSERT statements of your own, then run them.
 ```
 
-Once it runs, write three queries against your own table in the box
-above:
+Write three queries against it in the box above:
 
 - One that names only some of its columns.
 - One with a `WHERE` that keeps only some rows.
 - One with an `ORDER BY`.
 
-Run each in turn, then click Download again to keep your table current
-for the next page.
+Run each in turn. Each run saves what is in the box, so the next page
+opens with whatever you last ran here.
 
 ## What you have now
 

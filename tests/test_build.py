@@ -343,6 +343,29 @@ def test_sql_block_becomes_a_cell(tree):
     assert 'class="dl-sql-load"' in page
 
 
+def test_sql_persist_cell_is_marked_and_labelled(tree):
+    tutorials, out = tree
+    body = "# A page\n\n```sql cell=my-table persist\nselect 1;\n```\n"
+    write_tutorial(tutorials, "page", body)
+    write_order(tutorials, ["page"])
+    run_build(tree)
+    page = (out / "tutorials/mod/page/index.html").read_text(encoding="utf-8")
+    assert 'data-persist="true"' in page
+    assert '<label for="sql-cell-page-0-input">Your table</label>' in page
+    assert "Saved in this browser" in page
+
+
+def test_sql_cell_without_persist_has_no_persist_marker(tree):
+    tutorials, out = tree
+    body = "# A page\n\n```sql cell=students\nselect 1;\n```\n"
+    write_tutorial(tutorials, "page", body)
+    write_order(tutorials, ["page"])
+    run_build(tree)
+    page = (out / "tutorials/mod/page/index.html").read_text(encoding="utf-8")
+    assert "data-persist" not in page
+    assert "Saved in this browser" not in page
+
+
 def test_sql_cells_sharing_a_name_need_not_be_consecutive(tree):
     tutorials, out = tree
     body = (

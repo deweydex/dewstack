@@ -867,6 +867,13 @@ p code, li code, td code {
   resize: vertical;
 }
 
+.dl-sql-persist-note {
+  font-size: 0.78rem;
+  color: var(--dl-muted);
+  font-style: italic;
+  margin: 0.4rem 0 0;
+}
+
 .dl-sql-actions {
   display: flex;
   flex-wrap: wrap;

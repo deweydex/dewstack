@@ -13,7 +13,12 @@
  * One Pyodide boots per page, shared by every cell on it; assets/
  * sql_tools.py keeps one sqlite3 connection per `data-db` name, so cells
  * sharing a name see the same tables and cells with different names never
- * do.
+ * do — but that connection, like the rest of Pyodide, is gone the moment
+ * the page is left. A `data-persist` cell is the exception: its script is
+ * also kept in the browser's own localStorage, keyed by `data-db`, and
+ * restored and rerun automatically the next time a page with a persisted
+ * cell of that name loads. Download and Load still work underneath this,
+ * unchanged, for taking a table out of the browser or bringing one in.
  */
 
 (function () {
@@ -82,12 +87,64 @@
     return booting;
   }
 
+  /* A `data-persist` cell's script lives in the reader's own browser
+   * storage, keyed by its `data-db` name, so it survives a reload of this
+   * page or a visit to a later page sharing that name — the mechanism a
+   * plain cell has no use for, since its table is meant to live only as
+   * long as this one page's Pyodide does. localStorage can throw (private
+   * browsing, a blocked origin, a full quota); every use below is wrapped
+   * so that failure just means this one visit doesn't persist, not that
+   * the cell stops working. */
+  function storageKey(cell) {
+    return `dewstack-sql:${cell.dataset.db}`;
+  }
+
+  function isPersisted(cell) {
+    return cell.dataset.persist === "true";
+  }
+
+  function savePersisted(cell) {
+    if (!isPersisted(cell)) return;
+    try {
+      localStorage.setItem(storageKey(cell), cell.querySelector(".dl-sql-input").value);
+    } catch (err) {
+      /* this visit's table just won't be there on the next */
+    }
+  }
+
+  function clearPersisted(cell) {
+    if (!isPersisted(cell)) return;
+    try {
+      localStorage.removeItem(storageKey(cell));
+    } catch (err) {
+      /* nothing to clear if storage was never reachable */
+    }
+  }
+
+  /* Restores a persisted cell's saved text into its textarea, if there is
+   * any yet. Returns whether it found something, so the caller knows this
+   * cell needs an automatic first run once Python is ready — the restored
+   * table should already be there, not waiting on a click nobody knows to
+   * make. */
+  function restorePersisted(cell) {
+    if (!isPersisted(cell)) return false;
+    try {
+      const saved = localStorage.getItem(storageKey(cell));
+      if (saved === null) return false;
+      cell.querySelector(".dl-sql-input").value = saved;
+      return true;
+    } catch (err) {
+      return false;
+    }
+  }
+
   async function runCell(cell, cells) {
     const input = cell.querySelector(".dl-sql-input");
     const output = cell.querySelector(".dl-sql-output");
     const runButton = cell.querySelector(".dl-sql-run");
     const dbName = cell.dataset.db;
 
+    savePersisted(cell);
     runButton.disabled = true;
     try {
       await ensureBooted(cells);
@@ -104,12 +161,14 @@
     const output = cell.querySelector(".dl-sql-output");
     input.value = original;
     output.innerHTML = "";
+    clearPersisted(cell);
     if (tools) tools.reset(cell.dataset.db);
   }
 
   /* Saves the cell's current text as a .sql file — the same idea as the
-   * site editor's "Download these files" button, for a table built across
-   * several "your turn" prompts that a reader is meant to keep. */
+   * site editor's "Download these files" button, for taking a copy of a
+   * persisted table out of the browser (a different computer, a
+   * submission), or keeping one from a cell with no persistence at all. */
   function downloadCell(cell) {
     const input = cell.querySelector(".dl-sql-input");
     const blob = new Blob([input.value], { type: "text/plain" });
@@ -125,12 +184,20 @@
 
   /* Reads a file straight into the textarea. Loading only fills the box —
    * a reader still clicks Run, the same as if they had typed it, so a
-   * loaded file never runs SQL nobody chose to run. */
+   * loaded file never runs SQL nobody chose to run. A persisted cell's
+   * loaded file becomes its new saved copy, so the next page still sees
+   * whatever was just brought in rather than what was there before. */
   function loadCell(cell, file) {
     const input = cell.querySelector(".dl-sql-input");
-    file.text().then((text) => { input.value = text; });
+    file.text().then((text) => {
+      input.value = text;
+      savePersisted(cell);
+    });
   }
 
+  /* Wires up one cell's buttons and restores its saved text if it is a
+   * persisted cell with something already saved. Returns whether it was
+   * restored, so the caller can give it its automatic first run. */
   function setUp(cell, cells) {
     const input = cell.querySelector(".dl-sql-input");
     const original = input.value;
@@ -145,11 +212,16 @@
       if (file) loadCell(cell, file);
       loadInput.value = "";
     });
+
+    return restorePersisted(cell);
   }
 
   const cells = Array.from(document.querySelectorAll(".dl-sql-cell"));
   if (cells.length) {
-    cells.forEach((cell) => setUp(cell, cells));
-    ensureBooted(cells);
+    const restored = cells.filter((cell) => setUp(cell, cells));
+    const booted = ensureBooted(cells);
+    if (restored.length) {
+      booted.then(() => restored.forEach((cell) => runCell(cell, cells))).catch(() => {});
+    }
   }
 })();

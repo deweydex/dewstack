@@ -293,7 +293,7 @@ SITE_BLOCK = re.compile(r"```(?P<lang>[a-zA-Z]+) site=(?P<name>[a-z0-9-]+)\n(?P<
 SITE_LANGS = {"html": "HTML", "css": "CSS", "js": "JavaScript"}
 SITE_PLACEHOLDER = "<!--SITE-EDITOR:{}-->"
 
-SQL_BLOCK = re.compile(r"```sql cell=(?P<name>[a-z0-9-]+)\n(?P<code>.*?)\n```\n?", re.DOTALL)
+SQL_BLOCK = re.compile(r"```sql cell=(?P<name>[a-z0-9-]+)(?P<persist> persist)?\n(?P<code>.*?)\n```\n?", re.DOTALL)
 SQL_PLACEHOLDER = "<!--SQL-CELL:{}-->"
 
 
@@ -394,12 +394,22 @@ def extract_sql_cells(body: str, path: Path) -> tuple[str, list[dict]]:
     page has been through markdown. Unlike a site editor's `site=` blocks, a
     name can recur anywhere on the page, not just back to back: a table one
     cell creates is exactly what a later cell, after some prose, is meant to
-    keep querying."""
+    keep querying.
+
+    `cell=name persist` marks a cell whose table is meant to outlive the
+    page, not just the session: assets/sql-cell.js keeps its script in the
+    reader's own browser storage, keyed by `name`, and restores and reruns
+    it automatically on a later visit — to this page or any other with a
+    `persist` cell sharing that name. A plain `cell=name`, with no
+    `persist`, only ever lives as long as the page's own Pyodide does."""
     matches = list(SQL_BLOCK.finditer(body))
     if not matches:
         return body, []
 
-    cells = [{"name": match.group("name"), "code": match.group("code")} for match in matches]
+    cells = [
+        {"name": match.group("name"), "code": match.group("code"), "persist": bool(match.group("persist"))}
+        for match in matches
+    ]
 
     new_body = body
     for index, match in reversed(list(enumerate(matches))):
@@ -411,20 +421,31 @@ def render_sql_cell(cell: dict, index: int, tutorial: Tutorial) -> str:
     """One SQL cell: a textarea, Run and Reset, Download and Load, and an
     output area the result table (or an error, or a row count) lands in.
     `data-db` is the named sqlite3 connection assets/sql_tools.py runs this
-    cell's script against; cells sharing a name share a database. Download
-    and Load are the same idea as the site editor's "Download these files"
-    button, applied to a cell whose content is text a reader is meant to
-    keep: a table built across several "your turn" prompts, saved as one
-    `.sql` file and loaded back into a later session, since Pyodide starts
-    fresh on every page load."""
+    cell's script against; cells sharing a name share a database.
+
+    A plain cell forgets everything once the page is left; `data-persist`
+    marks one whose script assets/sql-cell.js also keeps in the reader's
+    browser storage and restores automatically on a later visit, so the
+    label says so rather than leaving it to a script the reader cannot
+    see. Download and Load still work on a persisted cell too — the same
+    idea as the site editor's "Download these files" button, for taking a
+    copy out of the browser or bringing one in from elsewhere."""
     cell_id = f"sql-cell-{tutorial.slug}-{index}"
     field_id = f"{cell_id}-input"
     load_id = f"{cell_id}-load"
+    persist_attr = ' data-persist="true"' if cell["persist"] else ""
+    label = "Your table" if cell["persist"] else "SQL"
+    note = (
+        '<p class="dl-sql-persist-note">Saved in this browser as you go — '
+        "it will be here the next time you open this page.</p>"
+        if cell["persist"] else ""
+    )
     return (
-        f'<div class="dl-sql-cell" id="{cell_id}" data-db="{html.escape(cell["name"])}">'
-        f'<label for="{field_id}">SQL</label>'
+        f'<div class="dl-sql-cell" id="{cell_id}" data-db="{html.escape(cell["name"])}"{persist_attr}>'
+        f'<label for="{field_id}">{label}</label>'
         f'<textarea id="{field_id}" class="dl-sql-input" spellcheck="false" autocapitalize="off">'
         f'{html.escape(cell["code"])}</textarea>'
+        f'{note}'
         f'<div class="dl-sql-actions">'
         f'<button type="button" class="dl-sql-run">Run</button>'
         f'<button type="button" class="dl-sql-reset">Reset</button>'
