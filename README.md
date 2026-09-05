@@ -13,6 +13,16 @@ the longer map. It has every link, including the older lessons and the
 notebook. It is for teachers, and for anyone who wants to see how the
 course is put together.
 
+The tutorials and exercises here are not graded. Only the two projects and
+the exam are, and your teacher covers those in class. That leaves room to
+break things and fix them while you are still learning. Something not
+working is the normal shape of building a website, not a sign you have done
+anything wrong.
+
+[`docs/FOR_STUDENTS.md`](docs/FOR_STUDENTS.md) walks through how a page on
+this site works. The site's own [FAQ](https://deweydex.github.io/dewstack/tutorials/reference/faq/)
+answers the questions people ask most before or during the course.
+
 ## Before you begin
 
 Three things, in this order. First, a free GitHub account: GitHub is
@@ -95,12 +105,18 @@ here, one at a time, and each rewrite will be shorter. Troubleshooting,
 the quick reference and project ideas are already rewritten and live on
 this site.
 
-- The tutorials front page, with all thirteen lessons in order:
+- Getting started, native to this site, replacing the GitHub guides below:
+  <https://deweydex.github.io/dewstack/tutorials/getting-started/how-the-pieces-fit/>
+- The tutorials front page, with all thirteen lessons in order. Lessons 1
+  to 10 are coverage material now that Arc 1's own pages cover the same
+  ground. Lessons 11 to 13 are still the primary path, until Arc 2's pages
+  are checked against them:
   <https://deweydex.github.io/WADB_Tutorials/>
-- Lesson 11, Flexbox and Grid, the first of the three for the project:
-  <https://deweydex.github.io/WADB_Tutorials/lessons/11-flexbox-grid-advanced.html>
-- The GitHub guides, from making an account to publishing a site:
+- The GitHub guides, from making an account to publishing a site — coverage
+  material now that Getting started above exists:
   <https://deweydex.github.io/WADB_Tutorials/github-guides/01-getting-started.html>
+- FAQ, for the questions people ask most before or during the course:
+  <https://deweydex.github.io/dewstack/tutorials/reference/faq/>
 - Troubleshooting, for when something does not work and you cannot see
   why: <https://deweydex.github.io/dewstack/tutorials/reference/troubleshooting/>
 - Quick reference for HTML, CSS and SQL:
@@ -116,10 +132,12 @@ this site.
 - The SQL playground, coverage material now that the four pages above
   exist, not the primary path:
   <https://deweydex.github.io/HTML-CSS-SQL-JS/>
-- The SQL quiz, five tasks on a small shop database:
+- The SQL quiz, five tasks on a small shop database. Not yet rebuilt as a
+  practice page here, so this is still the primary path:
   <https://deweydex.github.io/WADB_Tutorials/tentacular-plushies-quiz-final.html>
 - The SQLite notebook, the same ideas in Python, with a join across two
-  tables. It opens in Google Colab:
+  tables. Coverage material now that the four pages above run the same
+  data as live cells; the notebook still opens in Google Colab:
   <https://colab.research.google.com/github/deweydex/dewstack/blob/main/databases/sqlite_tutorial.ipynb>
 - The playground, teacher version, with solutions and notes:
   <https://deweydex.github.io/HTML-CSS-SQL-JS/teacher.html>
@@ -173,9 +191,9 @@ into a file of your own.
 | **This course**: the front page and the tutorials written here | [deweydex/dewstack](https://github.com/deweydex/dewstack) | [Front page](https://deweydex.github.io/dewstack/) |
 | **portfolio_wad**: the site you fork and make your own | [deweydex/portfolio_wad](https://github.com/deweydex/portfolio_wad) | Your own fork has its own address once you turn on GitHub Pages. Exercise 2 shows how. |
 | **project_wad**: the second starter, for the multi-page project | [deweydex/project_wad](https://github.com/deweydex/project_wad) | Your own fork has its own address, the same way `portfolio_wad`'s does. |
-| **SQLite notebook**: the data track in Python, with dinosaurs for data | `databases/sqlite_tutorial.ipynb` in this repository | [Open in Google Colab](https://colab.research.google.com/github/deweydex/dewstack/blob/main/databases/sqlite_tutorial.ipynb) |
-| **HTML, CSS and SQL**: the SQL playground and its teacher page | [deweydex/HTML-CSS-SQL-JS](https://github.com/deweydex/HTML-CSS-SQL-JS) | [Open the page](https://deweydex.github.io/HTML-CSS-SQL-JS/) |
-| **Learn HTML, CSS, GitHub and more**: the thirteen lessons, the GitHub guides, the templates, the quiz, the reference and troubleshooting | [deweydex/WADB_Tutorials](https://github.com/deweydex/WADB_Tutorials) | [Open the site](https://deweydex.github.io/WADB_Tutorials/) |
+| **SQLite notebook**: the data track in Python, with dinosaurs for data — coverage material, since the same data now runs as live cells in the data track above | `databases/sqlite_tutorial.ipynb` in this repository | [Open in Google Colab](https://colab.research.google.com/github/deweydex/dewstack/blob/main/databases/sqlite_tutorial.ipynb) |
+| **HTML, CSS and SQL**: the SQL playground and its teacher page — coverage material for the student side, since the data track's own pages replace it; the teacher page is still primary | [deweydex/HTML-CSS-SQL-JS](https://github.com/deweydex/HTML-CSS-SQL-JS) | [Open the page](https://deweydex.github.io/HTML-CSS-SQL-JS/) |
+| **Learn HTML, CSS, GitHub and more**: the thirteen lessons, the GitHub guides, the templates, the quiz, the reference and troubleshooting — getting started and the reference pages are rewritten here; the quiz and some lessons are still primary, see "Web authoring tutorials" above | [deweydex/WADB_Tutorials](https://github.com/deweydex/WADB_Tutorials) | [Open the site](https://deweydex.github.io/WADB_Tutorials/) |
 | **dewlab**: a sister project for learning Python and mathematics in the browser | [deweydex/dewlab](https://github.com/deweydex/dewlab) | See its README |
 
 ## For teachers
