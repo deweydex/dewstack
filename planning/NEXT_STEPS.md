@@ -12,21 +12,29 @@ repeats neither. It points.
 
 ## 1. Where things stand
 
-**2026-09-05, student feedback pathway, first slice.** A report link now
-sits at the foot of every page — "Something wrong on this page? Tell
-us." — opening a prefilled GitHub issue on the tutorials' own template,
+**2026-09-05, student feedback pathway, second slice.** The footer's
+report line, "Something wrong on this page? Tell us.", now opens three
+doors rather than one link: "I have a question" (to Discussions, once it
+is switched on), "It gives an error" and "The page is wrong, or I could
+not follow it" (both to a prefilled GitHub issue, `kind` already picked
+on the form). `report_doors_html()` in `build.py` renders it as a plain
+`<details>` — no JavaScript, no runtime change. A question filed as a bug
+report was the wrong container for it and for whoever answers it later;
+this is the fix, worked out from an artifact Josh and Claude built
+together.
+
+**2026-09-05, first slice.** A report link at the foot of every page,
+opening a prefilled GitHub issue on the tutorials' own template,
 `.github/ISSUE_TEMPLATE/report.yml`. `planning/feedback.yaml` is a kill
-switch: `enabled: false` turns the link off everywhere without touching a
-tutorial. `getting-started/a-github-account` gained two sections, on the
-username being public beyond your own pages and on GitHub Education,
-worked out from an artifact Josh and Claude built together covering the
-fuller design. Not built yet, and part of the same plan: the "three
-doors" panel that sorts a report before it is sent, the cell-level report
-button with code capture, and two new tutorials on debugging and on
-reading a repository's issues and pull requests. Manual GitHub-side steps
-still needed, none of them costing anything: switch Discussions on,
-create the `kind:`/`source:`/`pattern` labels, and make a Project across
-this repository and dewlab's.
+switch: `enabled: false` turns the doors off everywhere without touching
+a tutorial. `getting-started/a-github-account` gained two sections, on
+the username being public beyond your own pages and on GitHub Education.
+Not built yet, and part of the same plan: the cell-level report button
+with code capture, and two new tutorials on debugging and on reading a
+repository's issues and pull requests. Manual GitHub-side steps still
+needed, none of them costing anything: switch Discussions on, create the
+`kind:`/`source:`/`pattern` labels, and make a Project across this
+repository and dewlab's.
 
 **Merged into `main`, all on 2026-09-04.** dewadaba#2 (the front page,
 the interim copies, the reading settings, the plan and the page-by-page

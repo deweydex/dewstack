@@ -782,31 +782,64 @@ def feedback_enabled() -> bool:
     return bool(data.get("enabled", True))
 
 
-def report_issue_url(page: str, version: str) -> str:
-    """The prefilled GitHub issue link the footer's report line opens.
+_REPORT_KIND_ERROR = "It gives an error, and I have tried the checks on the Troubleshooting page"
+_REPORT_KIND_WRONG = "The page is wrong, or I could not follow it"
 
-    `page` and `version` only fill in fields on GitHub's own form — nothing
-    is sent until the reader presses GitHub's own Submit, and every field is
-    still theirs to edit or clear first.
+
+def report_issue_url(page: str, version: str, kind: str = "") -> str:
+    """The prefilled GitHub issue link a report door opens.
+
+    `page`, `version` and `kind` only fill in fields on GitHub's own form —
+    nothing is sent until the reader presses GitHub's own Submit, and every
+    field is still theirs to edit or clear first. `kind`, when given, must
+    match one of `.github/ISSUE_TEMPLATE/report.yml`'s dropdown options
+    exactly, or GitHub leaves the dropdown unset rather than failing loudly.
     """
-    query = urllib.parse.urlencode(
-        {"template": "report.yml", "page": page, "version": str(version)}
+    params = {"template": "report.yml", "page": page, "version": str(version)}
+    if kind:
+        params["kind"] = kind
+    return f"{REPO_URL}/issues/new?{urllib.parse.urlencode(params)}"
+
+
+def report_doors_html(page: str, version: str) -> str:
+    """The three-doors disclosure the footer opens: a question goes to
+    Discussions rather than an issue, since a question filed as a bug
+    report is the wrong container for it and for whoever answers it later.
+    A plain `<details>` element — no JavaScript, no runtime change.
+
+    Three links joined by " · ", the same separator the rest of the
+    footer already uses, rather than a `<ul>`/`<li>` list — a bulleted
+    list is the wrong shape for three short links, and this markup reaches
+    every page, so anything counting a page's `<li>` tags would silently
+    break.
+    """
+    error_url = report_issue_url(page, version, _REPORT_KIND_ERROR)
+    wrong_url = report_issue_url(page, version, _REPORT_KIND_WRONG)
+    return (
+        '<details class="dl-report-doors">'
+        "<summary>Something wrong on this page? Tell us.</summary>"
+        "<p>"
+        f'<a href="{REPO_URL}/discussions/new">I have a question</a> · '
+        f'<a href="{error_url}">It gives an error</a> · '
+        f'<a href="{wrong_url}">The page is wrong, or I could not follow it</a>'
+        "</p>"
+        "</details>"
     )
-    return f"{REPO_URL}/issues/new?{query}"
 
 
 def render_footer(root_base: str, page: str = "", version: str = "") -> str:
+    """<details> is flow content, not phrasing content, so the doors
+    disclosure sits after the closed <p> rather than inside it — nesting it
+    inside the paragraph would be invalid HTML a browser silently repairs by
+    closing the <p> early, which is worse than just not nesting it."""
     footer = (
         f'<p>{SITE_NAME} is part of the web authoring and databases course. '
         f'The text and code are free to copy and change under the MIT licence. '
-        f'<a href="{REPO_URL}">The source is on GitHub.</a>'
+        f'<a href="{REPO_URL}">The source is on GitHub.</a></p>'
     )
     if page and feedback_enabled():
-        footer += (
-            f' · <a href="{report_issue_url(page, version)}">'
-            "Something wrong on this page? Tell us.</a>"
-        )
-    return footer + "</p>"
+        footer += report_doors_html(page, version)
+    return footer
 
 
 # -------------------------------------------------------------------- shell

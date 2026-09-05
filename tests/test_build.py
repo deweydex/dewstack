@@ -4,9 +4,11 @@ Every test builds a small tutorials tree in a temporary directory rather
 than the real one, so a test never depends on which tutorials exist today.
 """
 
+import urllib.parse
 from pathlib import Path
 
 import pytest
+import yaml
 
 import build
 from build import BuildError
@@ -472,10 +474,10 @@ def test_page_without_a_sql_block_has_no_cell_script(tree):
 
 
 class TestFeedbackFooter:
-    """The footer's "report something about this page" link. On by
-    default; planning/feedback.yaml is the kill switch."""
+    """The footer's "three doors" report disclosure. On by default;
+    planning/feedback.yaml is the kill switch."""
 
-    def test_report_link_on_a_tutorial_page_by_default(self, tree, monkeypatch):
+    def test_doors_on_a_tutorial_page_by_default(self, tree, monkeypatch):
         monkeypatch.setattr(build, "ROOT", ROOT)
         tutorials, out = tree
         write_tutorial(tutorials, "first", version="2026.09.04.1")
@@ -483,13 +485,20 @@ class TestFeedbackFooter:
         run_build(tree)
 
         page = (out / "tutorials/mod/first/index.html").read_text(encoding="utf-8")
+        assert '<details class="dl-report-doors">' in page
         assert "Something wrong on this page? Tell us." in page
+        assert "I have a question" in page
+        assert "It gives an error" in page
+        assert "The page is wrong, or I could not follow it" in page
+        assert "github.com/deweydex/dewstack/discussions/new" in page
         assert "github.com/deweydex/dewstack/issues/new?" in page
         assert "template=report.yml" in page
         assert "page=mod%2Ffirst" in page
         assert "version=2026.09.04.1" in page
+        assert "kind=It+gives+an+error" in page
+        assert "kind=The+page+is+wrong" in page
 
-    def test_report_link_gone_when_switched_off(self, tree, monkeypatch, tmp_path):
+    def test_doors_gone_when_switched_off(self, tree, monkeypatch, tmp_path):
         monkeypatch.setattr(build, "ROOT", tmp_path)
         (tmp_path / "planning").mkdir(parents=True, exist_ok=True)
         (tmp_path / "planning" / "feedback.yaml").write_text("enabled: false\n")
@@ -500,9 +509,11 @@ class TestFeedbackFooter:
 
         page = (out / "tutorials/mod/first/index.html").read_text(encoding="utf-8")
         assert "Something wrong on this page?" not in page
+        assert "dl-report-doors" not in page
         assert "issues/new" not in page
+        assert "discussions/new" not in page
 
-    def test_report_link_also_appears_on_the_contents_page(self, tree, monkeypatch):
+    def test_doors_also_appear_on_the_contents_page(self, tree, monkeypatch):
         monkeypatch.setattr(build, "ROOT", ROOT)
         tutorials, out = tree
         write_tutorial(tutorials, "first")
@@ -511,6 +522,7 @@ class TestFeedbackFooter:
 
         index = (out / "index.html").read_text(encoding="utf-8")
         assert "Something wrong on this page? Tell us." in index
+        assert "discussions/new" in index
 
     def test_report_issue_url_carries_page_and_version(self):
         url = build.report_issue_url("web/selectors", "2026.09.04.1")
@@ -518,6 +530,23 @@ class TestFeedbackFooter:
         assert "page=web%2Fselectors" in url
         assert "version=2026.09.04.1" in url
         assert "template=report.yml" in url
+        assert "kind=" not in url
+
+    def test_report_issue_url_carries_kind_when_given(self):
+        url = build.report_issue_url("a/b", "1", kind="The page is wrong, or I could not follow it")
+        assert "kind=The+page+is+wrong" in url
+
+    def test_report_doors_html_kinds_match_the_issue_template(self):
+        template = yaml.safe_load(
+            (ROOT / ".github" / "ISSUE_TEMPLATE" / "report.yml").read_text()
+        )
+        options = next(
+            f["attributes"]["options"] for f in template["body"] if f.get("id") == "kind"
+        )
+        html = build.report_doors_html("a/b", "1")
+        assert f"kind={urllib.parse.quote_plus(options[0])}" in html
+        assert f"kind={urllib.parse.quote_plus(options[1])}" in html
+        assert options[2] not in html
 
     def test_feedback_enabled_defaults_true_without_a_config_file(self, tmp_path, monkeypatch):
         monkeypatch.setattr(build, "ROOT", tmp_path)

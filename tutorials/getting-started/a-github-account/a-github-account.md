@@ -4,7 +4,7 @@ slug: a-github-account
 module: getting-started
 module_title: "Getting started"
 series: welcome
-version: 2026.09.05.1
+version: 2026.09.05.2
 ---
 
 # A GitHub account
@@ -56,9 +56,11 @@ username sits beside what you wrote. This course's own tutorials are a
 repository too, so a report you file about a mistake, or a question you
 ask, carries your name the same way.
 
-Most tutorial pages carry a link at the foot, "Something wrong on this
-page? Tell us." It opens GitHub's own form with the page and its
-version already filled in, so you only need to write one sentence.
+Most tutorial pages carry a line at the foot, "Something wrong on this
+page? Tell us." Click it and three doors open: a question, an error, or
+the page being wrong or hard to follow. A question goes to Discussions;
+the other two open GitHub's own form with the page and its version
+already filled in, so you only need to write one sentence.
 [Troubleshooting](tutorial:troubleshooting) has the checks worth trying
 first, for a page that will not run.
 
