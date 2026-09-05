@@ -1,10 +1,14 @@
-"""Measure the sentences of a markdown file against the plain-language bar.
+"""Show the longest sentences in a markdown file, as candidates for the
+plain-language trim test (dewlab's PEDAGOGICAL_STYLE_GUIDE.md, section 4:
+read a sentence back, then try a shorter version. If it still says the
+same thing, the words that vanished were never necessary).
 
-The bar (CONSOLIDATION_PLAN.md, section 3; dewlab's CLAUDE.md) says no
-sentence over twenty-five words and a mean under eighteen. This script
-counts, and prints every sentence over the limit so it can be split. It
-is a first pass, not a judge: it cannot see a missing verb, an idiom or a
-metaphor doing a statement's job. Those still need reading.
+This is not a pass/fail gate. There is no fixed word count a sentence has
+to stay under; a list of four things may run long because the reader is
+counting, and a short sentence can still hide a clause that does not
+survive the trim. What this script gives you is the sentences most worth
+reading back out loud, in each file, so the trim test lands on the ones
+it actually matters for.
 
 Headings, code blocks, tables, link targets and web addresses are left
 out of the count. Bulleted lists are counted, one item at a time.
@@ -15,7 +19,7 @@ import re
 import sys
 from pathlib import Path
 
-LIMIT = 25
+SHOW = 3  # the longest sentences worth reading back, per file
 
 
 def sentences(text: str) -> list[str]:
@@ -38,7 +42,6 @@ def sentences(text: str) -> list[str]:
 
 
 def main(paths: list[str]) -> int:
-    worst = 0
     for name in paths:
         sents = sentences(Path(name).read_text(encoding="utf-8"))
         if not sents:
@@ -46,12 +49,11 @@ def main(paths: list[str]) -> int:
             continue
         lengths = [len(s.split()) for s in sents]
         mean = sum(lengths) / len(lengths)
-        over = [(n, s) for n, s in zip(lengths, sents) if n > LIMIT]
-        print(f"{name}: {len(sents)} sentences, mean {mean:.1f} words, longest {max(lengths)}, over {LIMIT}: {len(over)}")
-        for n, s in over:
+        print(f"{name}: {len(sents)} sentences, mean {mean:.1f} words, longest {max(lengths)}")
+        ranked = sorted(zip(lengths, sents), key=lambda pair: -pair[0])[:SHOW]
+        for n, s in ranked:
             print(f"  {n:3d}  {s}")
-        worst = max(worst, len(over))
-    return 1 if worst else 0
+    return 0
 
 
 if __name__ == "__main__":

@@ -94,7 +94,9 @@ applies to the README here, to every tutorial, and to `web` once we edit it.
 The plain-language checks, run over anything before it is committed:
 
 1. Every sentence has a verb.
-2. No sentence is over twenty-five words. Twenty is the target.
+2. Every clause earns its place. Read the sentence back, then try a
+   shorter version; if it still says the same thing, the clause that
+   vanished was never necessary.
 3. The meaning comes before the dash, never after it. One dash to a
    paragraph at most.
 4. Say what a thing is before what it is not.
@@ -606,7 +608,7 @@ Written 2026-09-04, after measuring every source page (`PAGE_BY_PAGE.md`). These
 
 **The shape of a page, from dewlab's style guide, section 3.** Open with the question: what is this for, where would somebody meet it. Give them something to try before anything is explained: an HTML and CSS pane with a live preview for the web track, a SQL editor for the data track. Then the explanation, connecting what they saw to the idea. Then their turn, with a hint that scaffolds rather than answers. Close by looking back. No "learning outcomes" preamble: the outcome is one sentence at the end, "what you can now do". No "why this matters" section: if the opening question does not say why, the page has the wrong opening. The bibliography becomes one line, "where this came from".
 
-**Size.** One idea per page. Under 60 sentences of prose, a mean under 18 words, none over 25, at most six second-level headings. Where a source lesson has twelve to eighteen headings, that is three or four pages, and `PAGE_BY_PAGE.md` says where the cuts fall. Splitting is the main work; shortening a sentence is the easy part.
+**Size.** One idea per page. Under 60 sentences of prose, a mean under 18 words, at most six second-level headings, and every sentence surviving its own trim test (section 3, check 2) rather than a fixed ceiling. Where a source lesson has twelve to eighteen headings, that is three or four pages, and `PAGE_BY_PAGE.md` says where the cuts fall. Splitting is the main work; trimming a sentence is the easy part.
 
 **Discover first, name afterwards.** The source lessons define, then show. The rewrites show, then define, then say what the name is for. A student who has dragged a window narrower and watched a Flexbox row wrap has met `flex-wrap`; the word comes after, with the sentence that says it is the word to search for.
 

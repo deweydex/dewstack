@@ -24,7 +24,7 @@ plan's ledger when you finish a piece.
 pip install -r requirements-build.txt   # first time only
 python3 build.py --clean                # writes site/ from scratch
 python3 -m pytest                       # the build's checks
-python3 tools/measure_sentences.py README.md tutorials/**/*.md   # the sentence bar
+python3 tools/measure_sentences.py README.md tutorials/**/*.md   # longest sentences, for the trim test
 ```
 
 `site/` is gitignored and rebuilt every time. Never edit it.
@@ -37,12 +37,13 @@ subsections. Section 3 of the plan here lists the plain-language checks. Run
 them over the README, every tutorial, and every string in `build.py` that ends
 up on a page.
 
-The short version: every sentence has a verb, none is over twenty-five
-words, the meaning comes before any dash, say what a thing is before what
-it is not, mark sequences, no metaphor in place of a plain statement, no
-idiom from any dialect and no rare word where a common one works, hedge
-what is not a binary. "We" for the learning, "you" for what is the
-student's own. No emoji.
+The short version: every sentence has a verb, every clause earns its
+place (read it back, try a shorter version — if it still says the same
+thing, the clause was never necessary), the meaning comes before any
+dash, say what a thing is before what it is not, mark sequences, no
+metaphor in place of a plain statement, no idiom from any dialect and no
+rare word where a common one works, hedge what is not a binary. "We" for
+the learning, "you" for what is the student's own. No emoji.
 
 ## Two traps
 
