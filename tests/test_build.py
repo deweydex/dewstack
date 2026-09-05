@@ -407,6 +407,46 @@ def test_sql_check_alone_still_pulls_in_sql_cell_js(tree):
     assert 'class="dl-sql-cell"' not in page
 
 
+def test_py_block_becomes_a_cell(tree):
+    tutorials, out = tree
+    body = "# A page\n\n```py cell=explore\n1 + 1\n```\n"
+    write_tutorial(tutorials, "page", body)
+    write_order(tutorials, ["page"])
+    run_build(tree)
+    page = (out / "tutorials/mod/page/index.html").read_text(encoding="utf-8")
+    assert 'class="dl-py-cell"' in page
+    assert 'data-name="explore"' in page
+    assert "1 + 1" in page
+    assert "sql-cell.js" in page
+    assert '<label for="py-cell-page-0-input">Python</label>' in page
+    assert 'window.DEWSTACK_SQL_PACKAGES = ["matplotlib", "pandas", "sqlite3"];' in page
+
+
+def test_py_cell_has_no_download_or_load(tree):
+    # Unlike a SQL cell, a Python cell's own variables have nothing to
+    # save as a file, so it gets Run and Reset only.
+    tutorials, out = tree
+    body = "# A page\n\n```py cell=explore\n1 + 1\n```\n"
+    write_tutorial(tutorials, "page", body)
+    write_order(tutorials, ["page"])
+    run_build(tree)
+    page = (out / "tutorials/mod/page/index.html").read_text(encoding="utf-8")
+    assert 'class="dl-py-download"' not in page
+    assert 'class="dl-py-load"' not in page
+
+
+def test_page_with_only_sql_cells_does_not_declare_pandas(tree):
+    # A page with no py cell should keep the lean sqlite3-only package
+    # list, unaffected by the new cell type's existence.
+    tutorials, out = tree
+    body = "# A page\n\n```sql cell=students\nselect 1;\n```\n"
+    write_tutorial(tutorials, "page", body)
+    write_order(tutorials, ["page"])
+    run_build(tree)
+    page = (out / "tutorials/mod/page/index.html").read_text(encoding="utf-8")
+    assert 'window.DEWSTACK_SQL_PACKAGES = ["sqlite3"];' in page
+
+
 def test_sql_cells_sharing_a_name_need_not_be_consecutive(tree):
     tutorials, out = tree
     body = (

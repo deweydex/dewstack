@@ -299,6 +299,9 @@ SQL_PLACEHOLDER = "<!--SQL-CELL:{}-->"
 SQL_CHECK_BLOCK = re.compile(r"```sql-check db=(?P<db>[a-z0-9-]+) task=(?P<task>[a-z0-9_]+)\n```\n?")
 SQL_CHECK_PLACEHOLDER = "<!--SQL-CHECK:{}-->"
 
+PY_BLOCK = re.compile(r"```py cell=(?P<name>[a-z0-9-]+)\n(?P<code>.*?)\n```\n?", re.DOTALL)
+PY_PLACEHOLDER = "<!--PY-CELL:{}-->"
+
 
 def extract_site_editors(body: str, path: Path) -> tuple[str, list[dict]]:
     """Pulls `site=` fenced blocks out of the markdown source, leaving a
@@ -495,6 +498,49 @@ def render_sql_check(check: dict, index: int, tutorial: Tutorial) -> str:
     )
 
 
+def extract_py_cells(body: str, path: Path) -> tuple[str, list[dict]]:
+    """Pulls `py cell=` fenced blocks out of the markdown source, the same
+    way `extract_sql_cells()` does. Each cell keeps its own namespace in
+    assets/python_tools.py, named the same way a SQL cell's `data-db`
+    names a connection, so a later cell sharing a name sees the earlier
+    one's variables and imports."""
+    matches = list(PY_BLOCK.finditer(body))
+    if not matches:
+        return body, []
+
+    cells = [{"name": match.group("name"), "code": match.group("code")} for match in matches]
+
+    new_body = body
+    for index, match in reversed(list(enumerate(matches))):
+        new_body = new_body[:match.start()] + f"\n\n{PY_PLACEHOLDER.format(index)}\n\n" + new_body[match.end():]
+    return new_body, cells
+
+
+def render_py_cell(cell: dict, index: int, tutorial: Tutorial) -> str:
+    """One Python cell: a textarea, Run and Reset, and an output area a
+    DataFrame, a matplotlib figure, printed text, or an error lands in.
+    `data-name` is the namespace assets/python_tools.py runs this cell's
+    code against; cells sharing a name share variables, the same way SQL
+    cells sharing `data-db` share tables. `read_sql(db_name, query)` is
+    already in scope, so a cell can pull a SQL cell's own table in as a
+    DataFrame without importing anything first."""
+    cell_id = f"py-cell-{tutorial.slug}-{index}"
+    field_id = f"{cell_id}-input"
+    return (
+        f'<div class="dl-py-cell" id="{cell_id}" data-name="{html.escape(cell["name"])}">'
+        f'<label for="{field_id}">Python</label>'
+        f'<textarea id="{field_id}" class="dl-py-input" spellcheck="false" autocapitalize="off">'
+        f'{html.escape(cell["code"])}</textarea>'
+        f'<div class="dl-py-actions">'
+        f'<button type="button" class="dl-py-run">Run</button>'
+        f'<button type="button" class="dl-py-reset">Reset</button>'
+        f'<span class="dl-py-status" role="status"></span>'
+        f"</div>"
+        f'<div class="dl-py-output" aria-live="polite"></div>'
+        f"</div>"
+    )
+
+
 def render_body(tutorial: Tutorial, by_slug: dict[str, Tutorial]) -> tuple[str, str, bool, list[str]]:
     """The tutorial's HTML, its table of contents, whether it needs the site
     editor's script, and the Pyodide packages it needs (empty if none).
@@ -502,15 +548,21 @@ def render_body(tutorial: Tutorial, by_slug: dict[str, Tutorial]) -> tuple[str, 
     One Pyodide engine serves every page, but not every page pays for the
     same download: the packages a page needs are exactly the ones its own
     fenced blocks ask for, gathered here as each block type is found. A
-    SQL cell or check needs `sqlite3` alone; a future Python/pandas cell
-    type would add its own packages to the same set, and a page with
-    neither still costs nothing extra."""
+    SQL cell or check needs `sqlite3` alone; a `py cell=` block adds
+    `pandas` and `matplotlib`, and also needs `sqlite3` even with no SQL
+    cell in sight, since its `read_sql()` helper can reach into a
+    `sql_tools.py` connection that some other page's persisted cell
+    already created."""
     source, editors = extract_site_editors(tutorial.body, tutorial.path)
     source, sql_cells = extract_sql_cells(source, tutorial.path)
     source, sql_checks = extract_sql_checks(source, tutorial.path)
+    source, py_cells = extract_py_cells(source, tutorial.path)
     required_packages: set[str] = set()
-    if sql_cells or sql_checks:
+    if sql_cells or sql_checks or py_cells:
         required_packages.add("sqlite3")
+    if py_cells:
+        required_packages.add("pandas")
+        required_packages.add("matplotlib")
     md = make_markdown()
     rendered = md.convert(source)
     # tabindex="0" so a static code block that ends up wider than the reading
@@ -525,6 +577,8 @@ def render_body(tutorial: Tutorial, by_slug: dict[str, Tutorial]) -> tuple[str, 
         rendered = rendered.replace(SQL_PLACEHOLDER.format(index), render_sql_cell(cell, index, tutorial))
     for index, check in enumerate(sql_checks):
         rendered = rendered.replace(SQL_CHECK_PLACEHOLDER.format(index), render_sql_check(check, index, tutorial))
+    for index, cell in enumerate(py_cells):
+        rendered = rendered.replace(PY_PLACEHOLDER.format(index), render_py_cell(cell, index, tutorial))
     return rendered, render_toc(md.toc_tokens), bool(editors), sorted(required_packages)
 
 

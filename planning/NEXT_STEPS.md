@@ -630,6 +630,37 @@ title says what the page does rather than naming a theme:
    exist, so this page shows the shape and points at plan section 12 for
    where it becomes real.
 
+**The Python/pandas cell engine, built 2026-09-05**, ahead of page 4
+actually needing it — the OWID dataset for page 2 is still blocked on
+Josh (this sandbox's egress proxy has no route to
+`ourworldindata.org`, confirmed both via `curl` and `WebFetch`), but the
+engine itself does not depend on which dataset eventually loads. A
+fenced `` ```py cell=name `` block becomes a `.dl-py-cell`, the same way
+`` ```sql cell=name `` becomes a `.dl-sql-cell`; `assets/python_tools.py`
+is `sql_tools.py`'s sibling, ported in shape from dewlab's
+`tutorial_tools.py` (its `_render_value()`/`_figure_html()`/
+`_table_html()`, and its streaming sink that merges consecutive
+`print()`s of the same kind into one block rather than one per write).
+`read_sql(db_name, query)` is already in a cell's namespace, and calls
+`sql_tools.get_connection()` — the one new public function on that
+side — so a page can build a table in a `sql cell=` block and chart it
+in a `py cell=` block below without an import, sharing the one Pyodide
+both cell types now boot together. `build.py`'s `render_body()` adds
+`pandas` and `matplotlib` to a page's declared packages exactly when it
+has a `py cell=` block, on top of the `sqlite3` a Python cell also
+needs for `read_sql()` to reach a connection. Verified live: a self-hosted
+Pyodide (`tools/fetch_pyodide.py --packages sqlite3 pandas matplotlib`,
+since the CDN default is blocked here too) served alongside a scratch
+page mixing both cell types — the SQL cell built a table, the Python
+cell read it back with `read_sql()`, printed a row count, and rendered
+a matplotlib chart as its last expression, with no console errors and
+no double-rendered figure. `python -m pytest -q`: 78 tests (28 new, all
+of `python_tools.py`'s CPython-testable logic — `run_python()` itself
+needs Pyodide's `eval_code_async`, so it is left to that live check, the
+same split dewlab draws around its own `run_cell()`); CI now installs
+`pandas`/`matplotlib` alongside `requirements-build.txt`, matching
+dewlab's own `unit` job.
+
 ### Ongoing, every step
 
 - When a rewritten page lands, the front page links it and the ledger in

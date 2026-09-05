@@ -406,6 +406,7 @@ The source file is not touched.
 | Lessons 1 to 8 | `WADB_Tutorials/lessons/` | decision pending | not started |
 | Templates and examples | `WADB_Tutorials/templates/`, `examples/` | decision pending | not started |
 | Data Arc 2, page 1 of 6 (designing a table before you build it) | fresh, per `NEXT_STEPS.md` step 8's page-by-page breakdown | `tutorials/data/`, module `data`, new series `several-tables` | done 2026-09-05; no code cell, a planning page in `planning-a-site`'s idiom; the "your turn" has the reader choose the arc's own project topic on paper, to build on the following pages |
+| Python/pandas cell engine (`` ```py cell=name `` blocks) | dewlab's `tutorial_tools.py`, ported in shape (its rendering and streaming logic only, none of its widget/check machinery) | `assets/python_tools.py`, `assets/sql-cell.js`, `build.py`, `assets/site.css` | done 2026-09-05; `NEXT_STEPS.md` step 8's engine note; built ahead of Data Arc 2 page 4 actually needing it, since page 2's real dataset is still blocked on Josh; verified live against a self-hosted Pyodide with `sqlite3`/`pandas`/`matplotlib` |
 
 ---
 

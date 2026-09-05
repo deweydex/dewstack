@@ -3,12 +3,15 @@
 A trimmed relative of dewlab's `tutorial_tools.py` (`_run_sql_cell()`):
 a dewstack SQL cell never runs arbitrary Python, only SQL, so this needs
 none of that file's cell-execution, traceback, or widget machinery —
-just enough to turn SQL text into an HTML table. No pandas: a plain
-sqlite3 cursor's columns and rows are enough for a table. A page whose
-only fenced blocks are SQL cells and checks loads only `sqlite3`
-alongside core Pyodide (build.py works out which packages a page needs
-from what is actually on it; see `render_body()`) — this file staying
-pandas-free is what keeps that true.
+just enough to turn SQL text into an HTML table. No pandas here: a
+plain sqlite3 cursor's columns and rows are enough for a table, and a
+page whose only fenced blocks are SQL cells and checks loads only
+`sqlite3` alongside core Pyodide (build.py works out which packages a
+page needs from what is actually on it; see `render_body()`) — this
+file staying pandas-free is what keeps that true. `get_connection()`
+is the one door out: `python_tools.py`'s `read_sql()` calls it to pull
+one of these tables into a DataFrame, on a page that also uses a
+Python cell.
 
 Loaded once per page (assets/sql-cell.js's boot()); every `.dl-sql-cell`
 on that page keeps its own named connection here, so two cells sharing a
@@ -33,6 +36,13 @@ def _connection(db_name: str) -> sqlite3.Connection:
     if db_name not in _connections:
         _connections[db_name] = sqlite3.connect(":memory:")
     return _connections[db_name]
+
+
+def get_connection(db_name: str) -> sqlite3.Connection:
+    """The public form of `_connection()`, for `python_tools.py`'s
+    `read_sql()` — a Python cell reaching into a SQL cell's own table,
+    creating the connection fresh if that table has not been built yet."""
+    return _connection(db_name)
 
 
 def reset(db_name: str) -> None:
