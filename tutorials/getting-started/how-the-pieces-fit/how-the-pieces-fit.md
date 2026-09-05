@@ -9,61 +9,60 @@ version: 2026.09.04.1
 
 # How the pieces fit
 
-Before the first exercise, it helps to see the whole shape of the
-course: what you install, what GitHub does, and where your work lives.
-Nothing here needs you to do anything yet. The pages after this one walk
-through each piece in turn.
+Welcome. This page introduces the tools we use to make a website. You
+can read it first, then try the steps on the pages that follow.
 
-## The five pieces
+If you want to begin with data, [a table is a list of
+rows](tutorial:a-table-is-a-list-of-rows) has an example you can run.
+The data exercises work in your browser without a GitHub account.
 
-**An editor** is where you write. VS Code is the usual choice, and it is
-free. If you cannot install anything, GitHub has an editor built into its
-own website, and every exercise in this course works there too.
+## The tools for a website
 
-**GitHub** is where your files live once you save them there, and where
-other people can see them. Think of it as a filing cabinet with a
-complete history. Every change you save is kept, and any earlier one is
-still there to find.
+**An editor** is a program for changing text files. We use it to write
+code. VS Code is one option. GitHub also has an editor on its website,
+so you can work without installing a program.
 
-**GitHub Pages** turns the files sitting in a GitHub repository into a
-website anyone can visit. You do not upload anything separately. Once it
-is switched on for a repository, it publishes whatever is there.
+**GitHub** keeps a project's files in a place called a *repository*. It
+also records changes you save there, so you can look at earlier versions.
+Other people can see files in a public repository.
 
-**Your browser** is where you see the result: a file open directly from
-your computer, or a page already published on the web.
+**GitHub Pages** publishes a website from files in a GitHub repository.
+Once publishing is set up, updates to your files appear at your site's
+web address.
 
-**This site** is where the explanations live. Each tutorial is the
-reasoning behind one step of building your own site or your own database.
+**Your browser** shows a web page. It can open a file on your computer or
+a website that has been published online.
 
-## Two loops, not one
+**This site** has explanations and examples. We can try an idea here,
+then use it in a website or database of our own.
 
-When we build something here, we move between two loops. Telling them
-apart early saves confusion later.
+## From a change to a published page
 
-The first is local: we change a file in the editor, save it, and
-refresh the browser to see the change. Nothing leaves your computer at
-this stage.
+If you use an editor on your computer, there are two stages.
 
-The second involves GitHub: we commit our changes and push them, then
-wait a short while for GitHub to publish the update. This is the loop
-that makes your work visible to anyone else, including whoever is marking
-it.
+First, you change a file and save it on your computer. Refreshing the
+browser loads the file again, so you can see the result.
 
-[The two loops](tutorial:the-two-loops) covers both in more detail, once
-you have an account and a copy of the starter to try them on.
+Then you send your changes to GitHub. Git calls recording a set of
+changes a *commit*. Sending those recorded changes to GitHub is called a
+*push*. After GitHub publishes the update, other people can see it on
+your website.
 
-## What is on every page of this site
+If you use GitHub's browser editor, you save a commit directly on
+GitHub. [The two loops](tutorial:the-two-loops) explains both ways of
+working, with steps to try once your site is ready.
 
-A bar at the top of every page stays in view as you scroll. The word
-**dewstack** on the left takes you back to the front page. The
-**Settings** button on the right opens a panel for theme, typeface, text
-size and line width. Your choices are saved in this browser, so they
-follow you from page to page here, but not to a different browser or
-device.
+## Reading and trying examples
 
-Under that bar, links take you to the previous and next page in a series.
-The same links appear again at the end of the page. Some pages show code
-in a box, like this one:
+The bar at the top stays in view as you scroll. **dewstack** takes you
+back to the front page. **Settings** lets you change the colours, font,
+text size, and line width. Your choices are saved in this browser.
+
+Links near the top and bottom take you to the previous or next page in
+a series. A series is a group of tutorials in teaching order. You can
+return to an earlier page whenever it helps.
+
+Some code boxes are examples to read, like this one:
 
 ```sql
 SELECT name, price
@@ -71,13 +70,16 @@ FROM products
 WHERE price < 20;
 ```
 
-For now those boxes only show code to read. Pages where you can change
-the code and run it are planned for later in the data track.
+We will explore SQL in the data tutorials. You do not need to understand
+this example yet. On those pages, code boxes with a **Run** button let
+you change code and see its result. Some website tutorials also have an
+editor with a preview that changes as you type.
 
 ## Where to go next
 
-If you are starting with a website, the next page is
-[a GitHub account](tutorial:a-github-account). If you are starting with
-data, you still need an account, but the rest of this series is about
-publishing a website specifically. Once you have an account, you can
-skip ahead to [the inspector](tutorial:the-inspector).
+For a website, [a GitHub account](tutorial:a-github-account) explains the
+next step. For data, you can begin with [a table is a list of
+rows](tutorial:a-table-is-a-list-of-rows).
+
+If something is unclear, you can return to this page or ask your teacher.
+It is fine to learn these tools one at a time.
