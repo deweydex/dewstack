@@ -595,14 +595,40 @@ SQL-and-design half; pandas and matplotlib are the natural home for
 exploring-data-and-charting, and forms and export/import likely want a
 page or two of their own beyond that original four. Formal database
 theory (normal forms and the like) is explicitly not part of this arc —
-deferred to Level 6, per item 16. Needs its own page-by-page breakdown
-before anyone starts writing it; not done yet, and this paragraph is not
-that breakdown. The packages note just above is the infrastructure this
-arc's pandas/matplotlib pages will lean on: whatever Python/pandas cell
-type they end up using just needs to declare its own packages the same
-way a SQL cell declares `sqlite3`, and only pages using it pay for the
-download. Then the three full-stack pages, with plan section 12 as the
-outline of the first.
+deferred to Level 6, per item 16. The packages note just above is the
+infrastructure this arc's pandas/matplotlib pages will lean on: whatever
+Python/pandas cell type they end up using just needs to declare its own
+packages the same way a SQL cell declares `sqlite3`, and only pages using
+it pay for the download. Then the three full-stack pages, with plan
+section 12 as the outline of the first.
+
+**The page-by-page breakdown, decided 2026-09-05.** Six pages, not the
+original four — more pages is fine where each one stays short, and each
+title says what the page does rather than naming a theme:
+
+1. *Designing a table before you build it.* Unchanged from step 1's
+   shape: columns, keys, one table or two, no code yet.
+2. *Loading a real dataset.* The Our World in Data set (open question 8;
+   population and life expectancy by country is the front-runner) comes
+   in as a CSV and becomes a SQL table. Where "loaded, cleaned, queried"
+   starts.
+3. *Joining two real tables.* The same join Arc 1's last page taught, on
+   data that is actually messy: missing years, country names that do not
+   line up.
+4. *Charting a query's result.* Pandas and matplotlib arrive together
+   here, not as their own intro page: a `SELECT` result becomes a
+   DataFrame becomes a bar or line chart. This is the page the new
+   Python/pandas cell type has to exist for.
+5. *Exporting a query to a file.* A query's result leaves the browser as
+   a CSV — the export half of "exporting/importing", and the one thing
+   dewlab's own tutorials never had to solve, since dewstack's data lives
+   only in the browser.
+6. *A form that writes a row.* Not a new forms tutorial: it links to the
+   web track's own form page and shows the query that submitting it would
+   run. Josh's call (2026-09-05): the full wiring — a form whose submit
+   actually inserts a row — is more interesting once the full-stack pages
+   exist, so this page shows the shape and points at plan section 12 for
+   where it becomes real.
 
 ### Ongoing, every step
 
@@ -640,12 +666,14 @@ step arrives.
    is the one to check: a CDN or self-hosted under `assets/vendor/`.
    Self-hosting is a large commit and no surprises; a CDN is small and a
    dependency. Whichever dewlab does is the default.
-6. **The student's database file.** Data Arc 1 says the student's own
-   table is kept as a file they download and load. Where between visits:
-   the browser's storage, a file on their machine, or their fork? The
-   "Where your work is saved" section of the README has to say. The
-   `web` model, work lives in your fork, argues for a file the student
-   commits to a repository of their own.
+6. **The student's database file.** Decided 2026-09-05: the browser's own
+   storage. A `persist` SQL cell saves its script to `localStorage` and
+   restores and re-runs it on the next visit, so the table is already
+   there rather than something to download and load back in; Download
+   stays as a secondary way to take a copy out of the browser. Settled by
+   `NEXT_STEPS.md` step 7's persistence note, not by the `web` model's
+   file-in-a-fork — there is no repository of the student's own on the
+   data track to commit it to.
 7. **A Pages site for `web`** (plan question 6, still open). It would let
    the starter's README show a live example. Not needed for the tutorial
    to work.
