@@ -415,3 +415,62 @@ def test_page_without_a_sql_block_has_no_cell_script(tree):
     run_build(tree)
     page = (out / "tutorials/mod/plain/index.html").read_text(encoding="utf-8")
     assert "sql-cell.js" not in page
+
+
+class TestFeedbackFooter:
+    """The footer's "report something about this page" link. On by
+    default; planning/feedback.yaml is the kill switch."""
+
+    def test_report_link_on_a_tutorial_page_by_default(self, tree, monkeypatch):
+        monkeypatch.setattr(build, "ROOT", ROOT)
+        tutorials, out = tree
+        write_tutorial(tutorials, "first", version="2026.09.04.1")
+        write_order(tutorials, ["first"])
+        run_build(tree)
+
+        page = (out / "tutorials/mod/first/index.html").read_text(encoding="utf-8")
+        assert "Something wrong on this page? Tell us." in page
+        assert "github.com/deweydex/dewstack/issues/new?" in page
+        assert "template=report.yml" in page
+        assert "page=mod%2Ffirst" in page
+        assert "version=2026.09.04.1" in page
+
+    def test_report_link_gone_when_switched_off(self, tree, monkeypatch, tmp_path):
+        monkeypatch.setattr(build, "ROOT", tmp_path)
+        (tmp_path / "planning").mkdir(parents=True, exist_ok=True)
+        (tmp_path / "planning" / "feedback.yaml").write_text("enabled: false\n")
+        tutorials, out = tree
+        write_tutorial(tutorials, "first")
+        write_order(tutorials, ["first"])
+        run_build(tree)
+
+        page = (out / "tutorials/mod/first/index.html").read_text(encoding="utf-8")
+        assert "Something wrong on this page?" not in page
+        assert "issues/new" not in page
+
+    def test_report_link_also_appears_on_the_contents_page(self, tree, monkeypatch):
+        monkeypatch.setattr(build, "ROOT", ROOT)
+        tutorials, out = tree
+        write_tutorial(tutorials, "first")
+        write_order(tutorials, ["first"])
+        run_build(tree)
+
+        index = (out / "index.html").read_text(encoding="utf-8")
+        assert "Something wrong on this page? Tell us." in index
+
+    def test_report_issue_url_carries_page_and_version(self):
+        url = build.report_issue_url("web/selectors", "2026.09.04.1")
+        assert url.startswith("https://github.com/deweydex/dewstack/issues/new?")
+        assert "page=web%2Fselectors" in url
+        assert "version=2026.09.04.1" in url
+        assert "template=report.yml" in url
+
+    def test_feedback_enabled_defaults_true_without_a_config_file(self, tmp_path, monkeypatch):
+        monkeypatch.setattr(build, "ROOT", tmp_path)
+        assert build.feedback_enabled() is True
+
+    def test_feedback_enabled_reads_the_config_file(self, tmp_path, monkeypatch):
+        monkeypatch.setattr(build, "ROOT", tmp_path)
+        (tmp_path / "planning").mkdir(parents=True, exist_ok=True)
+        (tmp_path / "planning" / "feedback.yaml").write_text("enabled: false\n")
+        assert build.feedback_enabled() is False

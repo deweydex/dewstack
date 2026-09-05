@@ -4,7 +4,7 @@ slug: a-github-account
 module: getting-started
 module_title: "Getting started"
 series: welcome
-version: 2026.09.04.1
+version: 2026.09.05.1
 ---
 
 # A GitHub account
@@ -48,6 +48,36 @@ After you submit the form, GitHub sends a verification email. Follow its
 link to confirm your address, and your account is ready. GitHub may also
 ask a few questions about your experience and interests. These only
 shape the suggestions it shows you, not what you are able to do.
+
+## Where your username shows up again
+
+Post anywhere on GitHub, including someone else's repository, and your
+username sits beside what you wrote. This course's own tutorials are a
+repository too, so a report you file about a mistake, or a question you
+ask, carries your name the same way.
+
+Most tutorial pages carry a link at the foot, "Something wrong on this
+page? Tell us." It opens GitHub's own form with the page and its
+version already filled in, so you only need to write one sentence.
+[Troubleshooting](tutorial:troubleshooting) has the checks worth trying
+first, for a page that will not run.
+
+## GitHub Education
+
+GitHub gives students access to paid tools at no cost, through what it
+calls the Student Developer Pack. It normally includes a paid plan on
+your own account, GitHub Copilot (an assistant that suggests code as you
+type), and offers from other companies, including a free domain name for
+a year.
+
+Applying means telling GitHub you are a student and then proving it,
+usually with a college email address or a photograph of your student
+card. Whether this course's own award qualifies is not settled here:
+GitHub decides on each application itself, and its rules can change.
+Apply and find out, and if a college email address does not work, try
+the student card instead.
+
+Find the pack at [education.github.com/pack](https://education.github.com/pack).
 
 ## What you have now
 

@@ -4,7 +4,7 @@ slug: faq
 module: reference
 module_title: "Reference"
 series: shelf
-version: 2026.09.05.1
+version: 2026.09.05.2
 ---
 
 # FAQ
@@ -69,3 +69,7 @@ somewhere of your own.
 [Troubleshooting](tutorial:troubleshooting) groups the problems people
 meet most often: a blank page, styles that will not apply, GitHub not
 taking a push. Each one comes with the checks that usually find it.
+
+If none of them explain it, most pages carry a link at the foot,
+"Something wrong on this page? Tell us." It opens a GitHub issue with the
+page and its version already filled in.

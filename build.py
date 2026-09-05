@@ -42,6 +42,7 @@ import json
 import re
 import shutil
 import sys
+import urllib.parse
 from dataclasses import dataclass, field
 from pathlib import Path
 
@@ -698,12 +699,50 @@ def render_contents(tutorials: list[Tutorial], module_order: list[str], series: 
 
 
 
-def render_footer(root_base: str) -> str:
-    return (
+FEEDBACK_CONFIG_FILE = "feedback.yaml"
+
+
+def feedback_enabled() -> bool:
+    """Whether the "report something about this page" link appears anywhere
+    on the site, read fresh from `planning/feedback.yaml` on every call.
+
+    Missing the file, or the file missing `enabled:`, both mean on. The
+    switch exists to turn the link off in a hurry — one line, editable from
+    GitHub's own web editor, no code to find — not to make on the fussy
+    path.
+    """
+    path = ROOT / "planning" / FEEDBACK_CONFIG_FILE
+    if not path.is_file():
+        return True
+    data = yaml.safe_load(path.read_text()) or {}
+    return bool(data.get("enabled", True))
+
+
+def report_issue_url(page: str, version: str) -> str:
+    """The prefilled GitHub issue link the footer's report line opens.
+
+    `page` and `version` only fill in fields on GitHub's own form — nothing
+    is sent until the reader presses GitHub's own Submit, and every field is
+    still theirs to edit or clear first.
+    """
+    query = urllib.parse.urlencode(
+        {"template": "report.yml", "page": page, "version": str(version)}
+    )
+    return f"{REPO_URL}/issues/new?{query}"
+
+
+def render_footer(root_base: str, page: str = "", version: str = "") -> str:
+    footer = (
         f'<p>{SITE_NAME} is part of the web authoring and databases course. '
         f'The text and code are free to copy and change under the MIT licence. '
-        f'<a href="{REPO_URL}">The source is on GitHub.</a></p>'
+        f'<a href="{REPO_URL}">The source is on GitHub.</a>'
     )
+    if page and feedback_enabled():
+        footer += (
+            f' · <a href="{report_issue_url(page, version)}">'
+            "Something wrong on this page? Tell us.</a>"
+        )
+    return footer + "</p>"
 
 
 # -------------------------------------------------------------------- shell
@@ -733,7 +772,8 @@ def asset_url(root_base: str, name: str, assets_dir: Path) -> str:
 
 
 def page_values(*, title: str, root_base: str, crumbs: str, nav: str, toc: str, body: str,
-                page_script: str, meta: str, assets_dir: Path) -> dict[str, str]:
+                page_script: str, meta: str, assets_dir: Path,
+                page: str = "", version: str = "") -> dict[str, str]:
     return {
         "TITLE": html.escape(title),
         "ROOT_BASE": root_base,
@@ -744,7 +784,7 @@ def page_values(*, title: str, root_base: str, crumbs: str, nav: str, toc: str, 
         "NAV_PREV_NEXT": nav,
         "TOC": toc,
         "BODY": body,
-        "FOOTER": render_footer(root_base),
+        "FOOTER": render_footer(root_base, page, version),
         "PAGE_SCRIPT": page_script,
         "META": meta,
     }
@@ -822,6 +862,7 @@ def write_tutorial(tutorial: Tutorial, members: list[Tutorial], series_title: st
     page = fill_shell(shell, page_values(
         title=tutorial.title, root_base=root_base, crumbs=crumbs, nav=nav, toc=toc,
         body=body, page_script=page_script, meta=meta, assets_dir=assets_dir,
+        page=f"{tutorial.module}/{tutorial.slug}", version=tutorial.version,
     ), str(tutorial.path))
 
     target_dir = out_dir / tutorial.rel_dir
@@ -846,6 +887,7 @@ def write_contents(tutorials: list[Tutorial], module_order: list[str], series: d
     page = fill_shell(shell, page_values(
         title=title, root_base="", crumbs="", nav="", toc="", body=body,
         page_script=f'<script src="{search_url}"></script>', meta="", assets_dir=assets_dir,
+        page="index", version="1",
     ), "contents page")
     target = out_dir / "index.html"
     target.write_text(page, encoding="utf-8")
