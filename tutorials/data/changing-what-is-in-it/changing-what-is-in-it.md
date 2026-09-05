@@ -1,5 +1,5 @@
 ---
-title: "Changing what is in it"
+title: "Updating and deleting rows"
 slug: changing-what-is-in-it
 module: data
 module_title: "Data"
@@ -7,7 +7,7 @@ series: first-database
 version: 2026.09.05.1
 ---
 
-# Changing what is in it
+# Updating and deleting rows
 
 `INSERT` adds a row. Two more statements change the rows already there:
 `UPDATE` changes values in existing rows, and `DELETE` removes rows
