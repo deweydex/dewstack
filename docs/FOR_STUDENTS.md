@@ -13,10 +13,11 @@ one is sent anywhere you have not put it yourself.
 
 ## The two tracks
 
-There are two ways to begin, and neither assumes the other: start with a
-website, or start with data. If you are in a class, your teacher will say
-which comes first. If you are working on your own, pick the one that
-interests you more.
+There are two ways to begin. Start with a website, and learn HTML and CSS
+while you build one. Start with data, and learn tables and SQL while you
+build one. If you are in a class, your teacher will say which comes
+first. If you are working on your own, pick the one that interests you
+more.
 
 The front page's two doors take you to the first page of each. Getting
 started comes before both, and only its first page and its last are needed

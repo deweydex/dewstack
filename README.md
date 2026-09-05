@@ -43,9 +43,11 @@ The data track only needs the first of these pages and the last.
 
 ## Two ways to begin
 
-You can start with a website, or start with data. Neither assumes the
-other. If you are in a class, your teacher will say which comes first. If
-you are working on your own, pick the one that interests you more.
+You can start with a website, or start with data. The website path teaches
+HTML and CSS, and ends in a personal site you publish. The data path
+teaches tables and SQL, and ends in a database you can query. If you are
+in a class, your teacher will say which comes first. If you are working
+on your own, pick the one that interests you more.
 
 ### Start with a website
 
