@@ -1,35 +1,44 @@
-/* The data track's SQL cell: a fenced ```sql cell=name``` block build.py
- * turns into a `.dl-sql-cell`, running real SQLite through Pyodide in the
- * reader's own browser tab. No server, no database anywhere but here.
+/* The data track's cell engine: a fenced ```sql cell=name``` block
+ * build.py turns into a `.dl-sql-cell`, and a fenced ```py cell=name```
+ * block into a `.dl-py-cell`, both running real Python (SQLite for one,
+ * pandas and matplotlib for the other) through Pyodide in the reader's
+ * own browser tab. No server, no database anywhere but here.
  *
  * Ported in shape from dewlab's assets/pyodide-engine.js (its main-thread
- * path, not the Worker one — a SQL query on a student-sized table finishes
- * fast enough that the page staying responsive during a runaway query is
- * not a problem worth a whole postMessage protocol to solve) and its
- * tutorial_tools.py, trimmed hard: dewstack's cells only ever run SQL, so
- * none of that file's cell-execution, traceback, or widget machinery
- * comes with it. assets/sql_tools.py is the trimmed Python half.
+ * path, not the Worker one — a query or a chart on a student-sized
+ * table finishes fast enough that the page staying responsive during a
+ * runaway one is not a problem worth a whole postMessage protocol to
+ * solve) and its tutorial_tools.py, trimmed hard: dewstack's cells have
+ * no widgets and no notebook-wide state, so none of that file's
+ * check()/widget machinery comes with it. assets/sql_tools.py and
+ * assets/python_tools.py are the two trimmed Python halves, one per
+ * cell kind.
  *
  * One Pyodide, one engine, everywhere — decided 2026-09-05, so a page
- * that eventually needs pandas and matplotlib (Data Arc 2) and a page
- * that only ever needs sqlite3 (Data Arc 1) still share the same code
- * path, rather than two engines to keep in step. What actually
- * downloads is not one fixed bundle, though: build.py already knows,
- * at build time, exactly which fenced blocks are on a page, so it
- * writes that page's own real package list into `window.
- * DEWSTACK_SQL_PACKAGES` — sqlite3 alone for a page with only SQL
- * cells, more once a Python/pandas cell type exists and a page uses
- * one. No page pays for a package its own content never imports.
+ * that needs pandas and matplotlib (Data Arc 2) and a page that only
+ * ever needs sqlite3 (Data Arc 1) still share the same code path,
+ * rather than two engines to keep in step, and a page mixing both cell
+ * kinds (a query charted in the next cell down) shares one Pyodide
+ * between them rather than running two. What actually downloads is not
+ * one fixed bundle, though: build.py already knows, at build time,
+ * exactly which fenced blocks are on a page, so it writes that page's
+ * own real package list into `window.DEWSTACK_SQL_PACKAGES` — sqlite3
+ * alone for a page with only SQL cells, sqlite3 plus pandas and
+ * matplotlib once a page has a Python cell. No page pays for a package
+ * its own content never imports; python_tools.py is only fetched and
+ * imported at all when the page has at least one `.dl-py-cell`.
  *
  * One Pyodide boots per page, shared by every cell on it; assets/
- * sql_tools.py keeps one sqlite3 connection per `data-db` name, so cells
- * sharing a name see the same tables and cells with different names never
- * do — but that connection, like the rest of Pyodide, is gone the moment
- * the page is left. A `data-persist` cell is the exception: its script is
- * also kept in the browser's own localStorage, keyed by `data-db`, and
- * restored and rerun automatically the next time a page with a persisted
- * cell of that name loads. Download and Load still work underneath this,
- * unchanged, for taking a table out of the browser or bringing one in.
+ * sql_tools.py keeps one sqlite3 connection per `data-db` name and
+ * assets/python_tools.py keeps one namespace per `data-name`, so cells
+ * sharing a name see the same tables or variables and cells with
+ * different names never do — but that state, like the rest of Pyodide,
+ * is gone the moment the page is left. A `data-persist` SQL cell is the
+ * exception: its script is also kept in the browser's own localStorage,
+ * keyed by `data-db`, and restored and rerun automatically the next
+ * time a page with a persisted cell of that name loads. Download and
+ * Load still work underneath this, unchanged, for taking a table out of
+ * the browser or bringing one in.
  *
  * A fenced ```sql-check db=... task=...``` block becomes a `.dl-sql-check`
  * button instead: clicking it calls the named `check_*` function in
@@ -66,16 +75,36 @@
 
   let booting = null; // the one boot() Promise every cell shares
   let tools = null; // the imported sql_tools Python module, once ready
+  let pyTools = null; // the imported python_tools Python module, once ready (only if the page has a py cell)
 
-  function setStatus(cells, text) {
-    cells.forEach((cell) => {
-      const status = cell.querySelector(".dl-sql-status");
-      if (status) status.textContent = text;
+  function statusElements(cells, pyCells) {
+    const sqlStatus = cells.map((cell) => cell.querySelector(".dl-sql-status"));
+    const pyStatus = pyCells.map((cell) => cell.querySelector(".dl-py-status"));
+    return sqlStatus.concat(pyStatus).filter(Boolean);
+  }
+
+  function setStatus(statuses, text) {
+    statuses.forEach((status) => {
+      status.textContent = text;
     });
   }
 
-  async function boot(cells) {
-    setStatus(cells, "Starting Python…");
+  /* Fetches one Python module's source and writes it into Pyodide's own
+   * filesystem so `pyimport()` can find it — the same two steps for
+   * sql_tools.py and, when the page has a py cell, python_tools.py. */
+  async function loadModule(pyodide, filename) {
+    const url = OWN_SCRIPT_URL ? new URL(filename, OWN_SCRIPT_URL).href : filename;
+    const source = await fetch(url).then((r) => {
+      if (!r.ok) throw new Error(`${filename}: HTTP ${r.status}`);
+      return r.text();
+    });
+    pyodide.FS.writeFile(`/home/pyodide/${filename}`, source, { encoding: "utf8" });
+    return pyodide.pyimport(filename.replace(/\.py$/, ""));
+  }
+
+  async function boot(cells, pyCells) {
+    const statuses = statusElements(cells, pyCells);
+    setStatus(statuses, "Starting Python…");
     const base = pyodideBase();
     const { loadPyodide } = await import(/* webpackIgnore: true */ base + "pyodide.mjs");
     const pyodide = await loadPyodide({ indexURL: base });
@@ -83,26 +112,21 @@
     /* build.py writes this page's own real package list — just what its
      * fenced blocks actually need, no more. Falls back to sqlite3 alone
      * if the variable is somehow missing, since every page using this
-     * script has at least one SQL cell or check. */
+     * script has at least one SQL cell, check, or Python cell. */
     const packages = window.DEWSTACK_SQL_PACKAGES || ["sqlite3"];
-    setStatus(cells, `Loading ${packages.join(", ")}…`);
+    setStatus(statuses, `Loading ${packages.join(", ")}…`);
     await pyodide.loadPackage(packages);
 
-    setStatus(cells, "Preparing the SQL cell…");
-    const toolsUrl = OWN_SCRIPT_URL ? new URL("sql_tools.py", OWN_SCRIPT_URL).href : "sql_tools.py";
-    const source = await fetch(toolsUrl).then((r) => {
-      if (!r.ok) throw new Error(`sql_tools.py: HTTP ${r.status}`);
-      return r.text();
-    });
-    pyodide.FS.writeFile("/home/pyodide/sql_tools.py", source, { encoding: "utf8" });
-    tools = pyodide.pyimport("sql_tools");
+    setStatus(statuses, "Preparing the cell…");
+    tools = await loadModule(pyodide, "sql_tools.py");
+    if (pyCells.length) pyTools = await loadModule(pyodide, "python_tools.py");
 
-    setStatus(cells, "");
+    setStatus(statuses, "");
   }
 
-  function ensureBooted(cells) {
-    if (!booting) booting = boot(cells).catch((err) => {
-      setStatus(cells, "Python didn't start. Reloading the page usually fixes this.");
+  function ensureBooted(cells, pyCells) {
+    if (!booting) booting = boot(cells, pyCells).catch((err) => {
+      setStatus(statusElements(cells, pyCells), "Python didn't start. Reloading the page usually fixes this.");
       booting = null; // a later click can try again rather than staying stuck
       throw err;
     });
@@ -160,7 +184,7 @@
     }
   }
 
-  async function runCell(cell, cells) {
+  async function runCell(cell, cells, pyCells) {
     const input = cell.querySelector(".dl-sql-input");
     const output = cell.querySelector(".dl-sql-output");
     const runButton = cell.querySelector(".dl-sql-run");
@@ -169,7 +193,7 @@
     savePersisted(cell);
     runButton.disabled = true;
     try {
-      await ensureBooted(cells);
+      await ensureBooted(cells, pyCells);
       output.innerHTML = tools.run_sql(dbName, input.value);
     } catch (err) {
       output.innerHTML = `<p class="dl-sql-error">${String(err)}</p>`;
@@ -220,12 +244,12 @@
   /* Wires up one cell's buttons and restores its saved text if it is a
    * persisted cell with something already saved. Returns whether it was
    * restored, so the caller can give it its automatic first run. */
-  function setUp(cell, cells) {
+  function setUp(cell, cells, pyCells) {
     const input = cell.querySelector(".dl-sql-input");
     const original = input.value;
     const loadInput = cell.querySelector(".dl-sql-load-input");
 
-    cell.querySelector(".dl-sql-run").addEventListener("click", () => runCell(cell, cells));
+    cell.querySelector(".dl-sql-run").addEventListener("click", () => runCell(cell, cells, pyCells));
     cell.querySelector(".dl-sql-reset").addEventListener("click", () => resetCell(cell, original));
     cell.querySelector(".dl-sql-download").addEventListener("click", () => downloadCell(cell));
     cell.querySelector(".dl-sql-load").addEventListener("click", () => loadInput.click());
@@ -241,7 +265,7 @@
   /* One self-check button: calls the named check_* function in
    * sql_tools.py against the named connection and shows what it says.
    * Instant, and never sent anywhere — a check, not a grade. */
-  function setUpCheck(check, cells) {
+  function setUpCheck(check, cells, pyCells) {
     const button = check.querySelector(".dl-sql-check-run");
     const output = check.querySelector(".dl-sql-check-output");
     const dbName = check.dataset.db;
@@ -250,7 +274,7 @@
     button.addEventListener("click", async () => {
       button.disabled = true;
       try {
-        await ensureBooted(cells);
+        await ensureBooted(cells, pyCells);
         const fn = tools[task];
         output.innerHTML = fn
           ? fn(dbName)
@@ -263,14 +287,52 @@
     });
   }
 
+  /* A Python cell's own Run: calls python_tools.py's run_python() with
+   * this cell's namespace name and current text, and drops whatever
+   * HTML comes back straight into the output area — python_tools.py has
+   * already turned any DataFrame, figure, print, or error into HTML. */
+  async function runPyCell(cell, cells, pyCells) {
+    const input = cell.querySelector(".dl-py-input");
+    const output = cell.querySelector(".dl-py-output");
+    const runButton = cell.querySelector(".dl-py-run");
+    const name = cell.dataset.name;
+
+    runButton.disabled = true;
+    try {
+      await ensureBooted(cells, pyCells);
+      output.innerHTML = await pyTools.run_python(name, input.value);
+    } catch (err) {
+      output.innerHTML = `<p class="dl-sql-error">${String(err)}</p>`;
+    } finally {
+      runButton.disabled = false;
+    }
+  }
+
+  function resetPyCell(cell, original) {
+    const input = cell.querySelector(".dl-py-input");
+    const output = cell.querySelector(".dl-py-output");
+    input.value = original;
+    output.innerHTML = "";
+    if (pyTools) pyTools.reset(cell.dataset.name);
+  }
+
+  function setUpPy(cell, cells, pyCells) {
+    const input = cell.querySelector(".dl-py-input");
+    const original = input.value;
+    cell.querySelector(".dl-py-run").addEventListener("click", () => runPyCell(cell, cells, pyCells));
+    cell.querySelector(".dl-py-reset").addEventListener("click", () => resetPyCell(cell, original));
+  }
+
   const cells = Array.from(document.querySelectorAll(".dl-sql-cell"));
   const checks = Array.from(document.querySelectorAll(".dl-sql-check"));
-  if (cells.length || checks.length) {
-    const restored = cells.filter((cell) => setUp(cell, cells));
-    checks.forEach((check) => setUpCheck(check, cells));
-    const booted = ensureBooted(cells);
+  const pyCells = Array.from(document.querySelectorAll(".dl-py-cell"));
+  if (cells.length || checks.length || pyCells.length) {
+    const restored = cells.filter((cell) => setUp(cell, cells, pyCells));
+    checks.forEach((check) => setUpCheck(check, cells, pyCells));
+    pyCells.forEach((cell) => setUpPy(cell, cells, pyCells));
+    const booted = ensureBooted(cells, pyCells);
     if (restored.length) {
-      booted.then(() => restored.forEach((cell) => runCell(cell, cells))).catch(() => {});
+      booted.then(() => restored.forEach((cell) => runCell(cell, cells, pyCells))).catch(() => {});
     }
   }
 })();

@@ -841,10 +841,13 @@ p code, li code, td code {
 }
 .dl-site-actions button:hover { color: var(--dl-orange-text); border-color: var(--dl-orange); }
 
-/* The data track's SQL cell: a textarea, a Run/Reset pair, and an output
-   area, sharing .dl-site-input's look so the two cell types read as one
-   family. */
-.dl-sql-cell {
+/* The data track's cell types: a textarea, a Run/Reset pair, and an
+   output area, sharing .dl-site-input's look so every cell type on the
+   site reads as one family. .dl-sql-cell runs SQL; .dl-py-cell runs
+   Python, sharing every rule below except its own actions have no
+   Download/Load pair (a Python cell's own variables have nothing to
+   save as a file the way a SQL cell's table does). */
+.dl-sql-cell, .dl-py-cell {
   margin: 1.5rem 0;
   padding: 1rem;
   border: 1px solid var(--dl-cell-border);
@@ -852,7 +855,7 @@ p code, li code, td code {
   background: var(--dl-cell-bg);
 }
 
-.dl-sql-cell label {
+.dl-sql-cell label, .dl-py-cell label {
   display: block;
   margin-bottom: 0.3rem;
   font-family: var(--dl-mono);
@@ -860,7 +863,7 @@ p code, li code, td code {
   color: var(--dl-muted);
 }
 
-.dl-sql-input {
+.dl-sql-input, .dl-py-input {
   display: block;
   width: 100%;
   min-height: 5rem;
@@ -883,14 +886,14 @@ p code, li code, td code {
   margin: 0.4rem 0 0;
 }
 
-.dl-sql-actions {
+.dl-sql-actions, .dl-py-actions {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   gap: 0.5rem;
   margin-top: 0.6rem;
 }
-.dl-sql-actions button {
+.dl-sql-actions button, .dl-py-actions button {
   font-family: var(--dl-mono);
   font-size: 0.78rem;
   padding: 0.4rem 0.75rem;
@@ -900,15 +903,15 @@ p code, li code, td code {
   color: var(--dl-fg);
   cursor: pointer;
 }
-.dl-sql-actions button:hover { color: var(--dl-orange-text); border-color: var(--dl-orange); }
-.dl-sql-actions button:disabled { opacity: 0.6; cursor: default; }
+.dl-sql-actions button:hover, .dl-py-actions button:hover { color: var(--dl-orange-text); border-color: var(--dl-orange); }
+.dl-sql-actions button:disabled, .dl-py-actions button:disabled { opacity: 0.6; cursor: default; }
 
-.dl-sql-status { font-size: 0.78rem; color: var(--dl-muted); }
+.dl-sql-status, .dl-py-status { font-size: 0.78rem; color: var(--dl-muted); }
 
-.dl-sql-output:not(:empty) { margin-top: 0.85rem; }
+.dl-sql-output:not(:empty), .dl-py-output:not(:empty) { margin-top: 0.85rem; }
 .dl-sql-result { overflow-x: auto; }
 .dl-sql-note { font-size: 0.85rem; color: var(--dl-muted); margin-top: 0.4rem; }
-.dl-sql-error {
+.dl-sql-error, .dl-error {
   font-family: var(--dl-mono);
   font-size: 0.85rem;
   font-weight: bold;
@@ -916,6 +919,36 @@ p code, li code, td code {
   border-left: 3px solid var(--dl-orange);
   padding-left: 0.6rem;
 }
+
+/* A Python cell's own output kinds, ported in shape from dewlab's
+   tutorial-style.css: printed text plain, a bare value's repr in navy so
+   it reads as "the answer" rather than more prose, a figure as a PNG
+   that scales to the column, and a DataFrame as a scrolling table. */
+.dl-stdout { color: var(--dl-fg); font-family: var(--dl-mono); font-size: 0.85rem; }
+.dl-repr { color: var(--dl-navy); font-family: var(--dl-mono); font-size: 0.85rem; }
+:root[data-theme="dark"] .dl-repr { color: var(--dl-heading); }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .dl-repr { color: var(--dl-heading); }
+}
+
+.dl-figure { margin: 0.4rem 0; }
+.dl-figure img { max-width: 100%; height: auto; display: block; border-radius: 3px; }
+
+.dl-table-wrap { overflow-x: auto; margin: 0.2rem 0 0.6rem; }
+.dl-table-wrap table {
+  border-collapse: collapse;
+  font-size: 0.8rem;
+  font-family: var(--dl-mono);
+}
+.dl-table-wrap th, .dl-table-wrap td {
+  border: 1px solid var(--dl-cell-border);
+  padding: 0.22rem 0.55rem;
+  text-align: right;
+  white-space: nowrap;
+}
+.dl-table-wrap thead th { background: var(--dl-cell-bg); color: var(--dl-heading); font-weight: 600; }
+.dl-table-wrap tbody th { background: var(--dl-cell-bg); color: var(--dl-muted); font-weight: 400; }
+.dl-table-note { color: var(--dl-muted); font-size: 0.76rem; margin-top: 0.2rem; }
 
 .dl-sql-check {
   margin: 1rem 0;
