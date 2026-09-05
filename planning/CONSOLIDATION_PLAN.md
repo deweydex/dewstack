@@ -89,9 +89,9 @@ breaks the way students refer to it. Both are decided once and left alone.
 ## 3. The bar every student-facing word has to clear
 
 The style guide is `planning/PEDAGOGICAL_STYLE_GUIDE.md` in `dewlab`,
-section 4, including its "Plain language" subsection. It applies to the
-README here, to every tutorial, and to `web` once we edit it. The eight
-checks, run over anything before it is committed:
+section 4, including its "Plain language" and "Vocabulary" subsections. It
+applies to the README here, to every tutorial, and to `web` once we edit it.
+The plain-language checks, run over anything before it is committed:
 
 1. Every sentence has a verb.
 2. No sentence is over twenty-five words. Twenty is the target.
@@ -102,6 +102,8 @@ checks, run over anything before it is committed:
 6. A metaphor follows a plain statement. It never replaces one.
 7. No idiom that assumes Irish or British English.
 8. Hedge what is not a binary.
+9. No idiom from any dialect, and no rare word where a common one works —
+   pitched at a reader with about two thousand English words.
 
 Two more that are easy to get wrong. Use "we" for the learning and "you"
 for what is the student's own. Explore first, then the principle, then the
@@ -150,7 +152,7 @@ which section 5 keeps.
 `HTML-CSS-SQL-JS` and `dewlab` are assumed and have not been fetched from
 this environment. A link that does not resolve is a bug, not a note.
 
-**Done when** the eight checks pass, every link resolves, the old name
+**Done when** the plain-language checks pass, every link resolves, the old name
 "databaseL5" is gone, and Josh has read it.
 
 *2026-09-03, evening.* The README has the three stages as drafted, plus the
@@ -172,7 +174,7 @@ right and stays. The work is on the sentences and on the code files'
 accessibility.
 
 **Step 1. Audit before editing.** Render the three files at desktop and
-phone widths, run axe, and read the README against the eight checks. Record
+phone widths, run axe, and read the README against the plain-language checks. Record
 what is found in the ledger before changing anything.
 
 *Done 2026-09-03. What the audit found:*
@@ -244,7 +246,7 @@ PR and goes in on top of #1 once #1 has merged.
 only. Editing it needs it attached with push access, and its own branch and
 pull request.
 
-**Done when** the audit findings are closed, the eight checks pass on both
+**Done when** the audit findings are closed, the plain-language checks pass on both
 markdown files, and a fresh fork renders cleanly at both widths.
 
 ---
@@ -348,7 +350,7 @@ and a prompt, not course material.
 **For every piece that moves:**
 
 1. Copy the source into `tutorials/`, converting HTML to markdown.
-2. The plain-language pass, against the eight checks.
+2. The plain-language pass, against the plain-language checks.
 3. A glossary file, with the `tutorial-glossary` skill.
 4. If it has code cells, the `cell-code-review` skill.
 5. Screenshots at both widths and an axe run.
@@ -607,7 +609,7 @@ Written 2026-09-04, after measuring every source page (`PAGE_BY_PAGE.md`). These
 
 **Discover first, name afterwards.** The source lessons define, then show. The rewrites show, then define, then say what the name is for. A student who has dragged a window narrower and watched a Flexbox row wrap has met `flex-wrap`; the word comes after, with the sentence that says it is the word to search for.
 
-**Two bars, both mechanical.** The plain-language bar is the eight checks in dewlab's `CLAUDE.md`, run over every sentence before a commit; the sentence-length measure in `PAGE_BY_PAGE.md` is the script that catches most of it. The accessibility bar is section 3 of this plan: no serious axe violation, no sideways scroll at 390 pixels, a `main` landmark, a labelled `nav`, 4.5 to 1 contrast. Every page is rendered at 1200 and 390 pixels and looked at before it is pushed. Code blocks scroll inside themselves; nothing on a page has a fixed width in pixels.
+**Two bars, both mechanical.** The plain-language bar is the plain-language checks in dewlab's `CLAUDE.md`, run over every sentence before a commit; the sentence-length measure in `PAGE_BY_PAGE.md` is the script that catches most of it. The accessibility bar is section 3 of this plan: no serious axe violation, no sideways scroll at 390 pixels, a `main` landmark, a labelled `nav`, 4.5 to 1 contrast. Every page is rendered at 1200 and 390 pixels and looked at before it is pushed. Code blocks scroll inside themselves; nothing on a page has a fixed width in pixels.
 
 **Live examples, one engine per track.** The web track needs an "edit and see" widget: two editors (HTML, CSS) and an iframe whose `srcdoc` is rebuilt on each change. dewmini in dewlab already has this as its Web cell (DECISIONS_LOG 7.116, 7.120); port the pattern, not Pyodide. The data track needs a SQL editor and a result table; the playground's `tutorial.js` is sixty lines that do this with SQL.js. The full-stack track uses both. The data engine is Pyodide's `sqlite3`, decided in section 8, question 1: dewlab's engine, worker and `tutorial_tools.py` are ported as they are, and a SQL cell on a page is dewmini's SQL cell. The playground's sixty lines of SQL.js stay only until the playground is rewritten.
 
