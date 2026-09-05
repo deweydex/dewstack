@@ -20,9 +20,10 @@ page](tutorial:troubleshooting) and your teacher are both there to help.
 
 Open a page, and start.
 
-- **There are two ways to begin, and neither assumes the other.** Start
-  with a website, or start with data. If you are in a class, your teacher
-  will say which comes first.
+- **Start with a website, or start with data.** The website path teaches
+  HTML and CSS, and ends in a site you publish. The data path teaches
+  tables and SQL, and ends in a database you can query. If you are in a
+  class, your teacher will say which comes first.
 - **Each page is short and ends with something to do.** On the web pages,
   you do it on your own site. On the data pages, you do it on your own
   table.
