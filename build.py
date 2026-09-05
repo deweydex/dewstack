@@ -293,6 +293,9 @@ SITE_BLOCK = re.compile(r"```(?P<lang>[a-zA-Z]+) site=(?P<name>[a-z0-9-]+)\n(?P<
 SITE_LANGS = {"html": "HTML", "css": "CSS", "js": "JavaScript"}
 SITE_PLACEHOLDER = "<!--SITE-EDITOR:{}-->"
 
+SQL_BLOCK = re.compile(r"```sql cell=(?P<name>[a-z0-9-]+)\n(?P<code>.*?)\n```\n?", re.DOTALL)
+SQL_PLACEHOLDER = "<!--SQL-CELL:{}-->"
+
 
 def extract_site_editors(body: str, path: Path) -> tuple[str, list[dict]]:
     """Pulls `site=` fenced blocks out of the markdown source, leaving a
@@ -385,10 +388,61 @@ def render_site_editor(editor: dict, index: int, tutorial: Tutorial) -> str:
     )
 
 
-def render_body(tutorial: Tutorial, by_slug: dict[str, Tutorial]) -> tuple[str, str, bool]:
-    """The tutorial's HTML, its table of contents, and whether it needs the
-    site editor's script."""
+def extract_sql_cells(body: str, path: Path) -> tuple[str, list[dict]]:
+    """Pulls `sql cell=` fenced blocks out of the markdown source, leaving a
+    placeholder that `render_sql_cell()` fills back in once the rest of the
+    page has been through markdown. Unlike a site editor's `site=` blocks, a
+    name can recur anywhere on the page, not just back to back: a table one
+    cell creates is exactly what a later cell, after some prose, is meant to
+    keep querying."""
+    matches = list(SQL_BLOCK.finditer(body))
+    if not matches:
+        return body, []
+
+    cells = [{"name": match.group("name"), "code": match.group("code")} for match in matches]
+
+    new_body = body
+    for index, match in reversed(list(enumerate(matches))):
+        new_body = new_body[:match.start()] + f"\n\n{SQL_PLACEHOLDER.format(index)}\n\n" + new_body[match.end():]
+    return new_body, cells
+
+
+def render_sql_cell(cell: dict, index: int, tutorial: Tutorial) -> str:
+    """One SQL cell: a textarea, Run and Reset, Download and Load, and an
+    output area the result table (or an error, or a row count) lands in.
+    `data-db` is the named sqlite3 connection assets/sql_tools.py runs this
+    cell's script against; cells sharing a name share a database. Download
+    and Load are the same idea as the site editor's "Download these files"
+    button, applied to a cell whose content is text a reader is meant to
+    keep: a table built across several "your turn" prompts, saved as one
+    `.sql` file and loaded back into a later session, since Pyodide starts
+    fresh on every page load."""
+    cell_id = f"sql-cell-{tutorial.slug}-{index}"
+    field_id = f"{cell_id}-input"
+    load_id = f"{cell_id}-load"
+    return (
+        f'<div class="dl-sql-cell" id="{cell_id}" data-db="{html.escape(cell["name"])}">'
+        f'<label for="{field_id}">SQL</label>'
+        f'<textarea id="{field_id}" class="dl-sql-input" spellcheck="false" autocapitalize="off">'
+        f'{html.escape(cell["code"])}</textarea>'
+        f'<div class="dl-sql-actions">'
+        f'<button type="button" class="dl-sql-run">Run</button>'
+        f'<button type="button" class="dl-sql-reset">Reset</button>'
+        f'<button type="button" class="dl-sql-download">Download</button>'
+        f'<button type="button" class="dl-sql-load">Load</button>'
+        f'<input type="file" id="{load_id}" class="dl-sql-load-input" accept=".sql,.txt" hidden>'
+        f'<span class="dl-sql-status" role="status"></span>'
+        f"</div>"
+        f'<div class="dl-sql-output" aria-live="polite"></div>'
+        f"</div>"
+    )
+
+
+def render_body(tutorial: Tutorial, by_slug: dict[str, Tutorial]) -> tuple[str, str, bool, bool]:
+    """The tutorial's HTML, its table of contents, whether it needs the site
+    editor's script, and whether it needs the SQL cell's."""
     source, editors = extract_site_editors(tutorial.body, tutorial.path)
+    source, sql_cells = extract_sql_cells(source, tutorial.path)
     md = make_markdown()
     rendered = md.convert(source)
     # tabindex="0" so a static code block that ends up wider than the reading
@@ -399,7 +453,9 @@ def render_body(tutorial: Tutorial, by_slug: dict[str, Tutorial]) -> tuple[str, 
     check_images(rendered, tutorial)
     for index, editor in enumerate(editors):
         rendered = rendered.replace(SITE_PLACEHOLDER.format(index), render_site_editor(editor, index, tutorial))
-    return rendered, render_toc(md.toc_tokens), bool(editors)
+    for index, cell in enumerate(sql_cells):
+        rendered = rendered.replace(SQL_PLACEHOLDER.format(index), render_sql_cell(cell, index, tutorial))
+    return rendered, render_toc(md.toc_tokens), bool(editors), bool(sql_cells)
 
 
 def render_toc(tokens: list[dict]) -> str:
@@ -688,7 +744,7 @@ def copy_assets(assets_dir: Path, target: Path) -> None:
 def write_tutorial(tutorial: Tutorial, members: list[Tutorial], series_title: str, shell: str,
                    out_dir: Path, assets_dir: Path, by_slug: dict[str, Tutorial]) -> Path:
     root_base = "../" * len(tutorial.rel_dir.parts)
-    body, toc, has_site_editor = render_body(tutorial, by_slug)
+    body, toc, has_site_editor, has_sql_cell = render_body(tutorial, by_slug)
     ordered_live = [m for m in members if m.is_live] if tutorial.is_live else members
     nav = render_nav(tutorial, ordered_live, f"{root_base}index.html")
     crumbs = f"{html.escape(tutorial.module_title)} · {html.escape(series_title)}"
@@ -697,10 +753,12 @@ def write_tutorial(tutorial: Tutorial, members: list[Tutorial], series_title: st
         f'<meta name="tutorial-module" content="{html.escape(tutorial.module)}">\n'
         f'<meta name="tutorial-version" content="{html.escape(tutorial.version)}">'
     )
-    page_script = ""
+    scripts = []
     if has_site_editor:
-        editor_url = asset_url(root_base, "site-editor.js", assets_dir)
-        page_script = f'<script src="{editor_url}"></script>'
+        scripts.append(f'<script src="{asset_url(root_base, "site-editor.js", assets_dir)}"></script>')
+    if has_sql_cell:
+        scripts.append(f'<script src="{asset_url(root_base, "sql-cell.js", assets_dir)}"></script>')
+    page_script = "\n".join(scripts)
     page = fill_shell(shell, page_values(
         title=tutorial.title, root_base=root_base, crumbs=crumbs, nav=nav, toc=toc,
         body=body, page_script=page_script, meta=meta, assets_dir=assets_dir,

@@ -15,9 +15,6 @@ order:
 # before all of it is written. A module in `order` with neither pages nor an
 # entry here stops the build, because it is probably a typo.
 planned:
-  data:
-    title: "Data"
-    note: "Being written. The first page is *A table is a list of rows*."
   full-stack:
     title: "Full stack"
     note: "Being written. The first page shows a web page that reads rows from a table and draws them."

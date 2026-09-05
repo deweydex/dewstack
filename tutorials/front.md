@@ -6,10 +6,9 @@ doors:
     text: "You make your own copy of a small site, publish it, and change one thing at a time. Seven short pages come first. They get your account, your editor and your copy ready."
     ends: "A personal website with its own address."
   - title: "Start with data"
-    href: https://deweydex.github.io/HTML-CSS-SQL-JS/#sql-section
-    text: "You make a table, put rows in it, and ask it questions in a language called SQL. The first pages are being written. Until they arrive, this door opens on the older playground."
-    ends: "A table you built and queried in your browser."
-    interim: true
+    href: tutorial:a-table-is-a-list-of-rows
+    text: "You make a table, put rows in it, and ask it questions in a language called SQL. Four short pages take you from a first table to a second one, joined to it."
+    ends: "A table you built and queried in your browser, kept as a file of your own."
 ---
 dewstack is a set of tutorials for the web authoring and databases course.
 Everything runs in your browser. There is nothing to install, and this site
