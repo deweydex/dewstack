@@ -13,3 +13,8 @@ __pycache__/
 
 # Editors and operating systems.
 .DS_Store
+
+# Git worktrees the harness creates for background agents (each one is a
+# .git pointer file, not real content — the actual work lands as commits on
+# its own branch instead).
+/.claude/worktrees/
