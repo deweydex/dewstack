@@ -12,6 +12,19 @@ repeats neither. It points.
 
 ## 1. Where things stand
 
+**2026-09-05, student feedback pathway, fifth slice.** Two more
+workflows, both calling small stdlib-only scripts in `tools/`:
+`label-report` fires the moment a report issue opens and applies a
+`page: <slug>`/`kind: <error|unclear|question>` label, creating either
+the first time it is needed, so nobody has to make these labels by hand
+in GitHub's settings. `report-patterns` runs weekly and opens or updates
+one `pattern` issue per page with three or more open reports in the last
+fortnight — the per-cell half of the same threshold has nothing to match
+yet, since this repository's report form carries no `Cell` field, but the
+logic is already there for the day a cell-level report button exists
+here too. Both scripts are tested in `tests/test_report_patterns.py`,
+paired with the identical pair in `deweydex/dewlab`.
+
 **2026-09-05, student feedback pathway, fourth slice.**
 `.claude/skills/triage-report/SKILL.md`, so working the report inbox has
 a written order rather than being reinvented each session: read before

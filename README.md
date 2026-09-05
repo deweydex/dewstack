@@ -210,7 +210,12 @@ is the student-facing version of this; [`.claude/skills/triage-report/SKILL.md`]
 is the order to work an issue in once it arrives, kept as a written skill
 rather than something to reinvent each time. `planning/feedback.yaml` is
 the switch: `enabled: false` turns the doors off everywhere, without
-touching a tutorial, if reports need to pause for any reason.
+touching a tutorial, if reports need to pause for any reason. Two more
+workflows run against a report once it exists: `label-report` applies a
+`page:`/`kind:` label the moment one opens, creating either the first
+time it is needed; `report-patterns` runs weekly and opens or updates a
+`pattern` issue for any page with three or more open reports in the last
+fortnight (`tools/report_patterns.py`).
 
 The planning notes are in [`planning/`](planning/).
 [`planning/CONSOLIDATION_PLAN.md`](planning/CONSOLIDATION_PLAN.md) says how
