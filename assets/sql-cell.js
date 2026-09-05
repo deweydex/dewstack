@@ -19,6 +19,12 @@
  * restored and rerun automatically the next time a page with a persisted
  * cell of that name loads. Download and Load still work underneath this,
  * unchanged, for taking a table out of the browser or bringing one in.
+ *
+ * A fenced ```sql-check db=... task=...``` block becomes a `.dl-sql-check`
+ * button instead: clicking it calls the named `check_*` function in
+ * sql_tools.py against `db`'s connection and shows what it says. A quiz's
+ * self-check, not a grade — instant, and nothing here sends the result
+ * anywhere.
  */
 
 (function () {
@@ -216,9 +222,36 @@
     return restorePersisted(cell);
   }
 
+  /* One self-check button: calls the named check_* function in
+   * sql_tools.py against the named connection and shows what it says.
+   * Instant, and never sent anywhere — a check, not a grade. */
+  function setUpCheck(check, cells) {
+    const button = check.querySelector(".dl-sql-check-run");
+    const output = check.querySelector(".dl-sql-check-output");
+    const dbName = check.dataset.db;
+    const task = check.dataset.task;
+
+    button.addEventListener("click", async () => {
+      button.disabled = true;
+      try {
+        await ensureBooted(cells);
+        const fn = tools[task];
+        output.innerHTML = fn
+          ? fn(dbName)
+          : `<p class="dl-sql-error">No such check: ${task}</p>`;
+      } catch (err) {
+        output.innerHTML = `<p class="dl-sql-error">${String(err)}</p>`;
+      } finally {
+        button.disabled = false;
+      }
+    });
+  }
+
   const cells = Array.from(document.querySelectorAll(".dl-sql-cell"));
-  if (cells.length) {
+  const checks = Array.from(document.querySelectorAll(".dl-sql-check"));
+  if (cells.length || checks.length) {
     const restored = cells.filter((cell) => setUp(cell, cells));
+    checks.forEach((check) => setUpCheck(check, cells));
     const booted = ensureBooted(cells);
     if (restored.length) {
       booted.then(() => restored.forEach((cell) => runCell(cell, cells))).catch(() => {});

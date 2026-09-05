@@ -93,3 +93,82 @@ def test_a_comment_only_script_says_nothing_to_run():
 def test_a_trailing_comment_does_not_break_a_real_statement():
     html = sql_tools.run_sql("db", "select 1 as n; -- trailing note")
     assert "<td>1</td>" in html
+
+
+# --- the tentacular-plushies quiz's self-check --------------------------
+
+def test_products_table_check_fails_before_the_table_exists():
+    html = sql_tools.check_products_table("quiz")
+    assert "dl-check-fail" in html
+    assert "no products table" in html.lower()
+
+
+def test_products_table_check_passes_with_every_required_column():
+    sql_tools.run_sql("quiz", """
+        CREATE TABLE products (
+            id INTEGER PRIMARY KEY,
+            product_name TEXT,
+            category TEXT,
+            price REAL,
+            stock_quantity INTEGER
+        );
+    """)
+    html = sql_tools.check_products_table("quiz")
+    assert "dl-check-pass" in html
+
+
+def test_products_table_check_names_a_missing_column():
+    sql_tools.run_sql("quiz", "CREATE TABLE products (id INTEGER, product_name TEXT);")
+    html = sql_tools.check_products_table("quiz")
+    assert "dl-check-fail" in html
+    assert "category" in html
+
+
+def test_transactions_table_check_passes_with_every_required_column():
+    sql_tools.run_sql("quiz", """
+        CREATE TABLE transactions (
+            id INTEGER PRIMARY KEY,
+            product_id INTEGER,
+            customer_name TEXT,
+            quantity INTEGER
+        );
+    """)
+    html = sql_tools.check_transactions_table("quiz")
+    assert "dl-check-pass" in html
+
+
+def test_products_rows_check_needs_four_rows_and_three_categories():
+    sql_tools.run_sql("quiz", """
+        CREATE TABLE products (id INTEGER, product_name TEXT, category TEXT, price REAL, stock_quantity INTEGER);
+        INSERT INTO products VALUES (1, 'Squishy', 'Octopus', 20, 10), (2, 'Wiggly', 'Squid', 25, 10);
+    """)
+    html = sql_tools.check_products_rows("quiz")
+    assert "dl-check-fail" in html
+
+    sql_tools.run_sql("quiz", """
+        INSERT INTO products VALUES (3, 'Roundy', 'Cuttlefish', 30, 10), (4, 'Spiraly', 'Nautilus', 35, 10);
+    """)
+    html = sql_tools.check_products_rows("quiz")
+    assert "dl-check-pass" in html
+
+
+def test_transactions_rows_check_needs_three_rows():
+    sql_tools.run_sql("quiz", "CREATE TABLE transactions (id INTEGER, product_id INTEGER, customer_name TEXT, quantity INTEGER);")
+    assert "dl-check-fail" in sql_tools.check_transactions_rows("quiz")
+    sql_tools.run_sql("quiz", "INSERT INTO transactions VALUES (1, 1, 'A', 1), (2, 1, 'B', 2), (3, 1, 'C', 1);")
+    assert "dl-check-pass" in sql_tools.check_transactions_rows("quiz")
+
+
+def test_quiz_queries_check_needs_a_product_over_30_and_under_15_stock():
+    sql_tools.run_sql("quiz", """
+        CREATE TABLE products (id INTEGER, product_name TEXT, category TEXT, price REAL, stock_quantity INTEGER);
+        CREATE TABLE transactions (id INTEGER, product_id INTEGER, customer_name TEXT, quantity INTEGER);
+        INSERT INTO products VALUES (1, 'Squishy', 'Octopus', 20, 40);
+    """)
+    html = sql_tools.check_quiz_queries("quiz")
+    assert "dl-check-fail" in html
+    assert "price over 30" in html.lower() or "stock_quantity under 15" in html.lower()
+
+    sql_tools.run_sql("quiz", "INSERT INTO products VALUES (2, 'Wiggly', 'Squid', 40, 5);")
+    html = sql_tools.check_quiz_queries("quiz")
+    assert "dl-check-pass" in html

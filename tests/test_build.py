@@ -366,6 +366,33 @@ def test_sql_cell_without_persist_has_no_persist_marker(tree):
     assert "Saved in this browser" not in page
 
 
+def test_sql_check_block_becomes_a_button(tree):
+    tutorials, out = tree
+    body = "# A page\n\n```sql-check db=quiz task=check_products_table\n```\n"
+    write_tutorial(tutorials, "page", body)
+    write_order(tutorials, ["page"])
+    run_build(tree)
+    page = (out / "tutorials/mod/page/index.html").read_text(encoding="utf-8")
+    assert 'class="dl-sql-check"' in page
+    assert 'data-db="quiz"' in page
+    assert 'data-task="check_products_table"' in page
+    assert 'class="dl-sql-check-run"' in page
+    assert "sql-cell.js" in page
+
+
+def test_sql_check_alone_still_pulls_in_sql_cell_js(tree):
+    # A page with only a check block and no ```sql cell= block should
+    # still get sql-cell.js, since the check button needs it too.
+    tutorials, out = tree
+    body = "# A page\n\n```sql-check db=quiz task=check_products_table\n```\n"
+    write_tutorial(tutorials, "page", body)
+    write_order(tutorials, ["page"])
+    run_build(tree)
+    page = (out / "tutorials/mod/page/index.html").read_text(encoding="utf-8")
+    assert "sql-cell.js" in page
+    assert 'class="dl-sql-cell"' not in page
+
+
 def test_sql_cells_sharing_a_name_need_not_be_consecutive(tree):
     tutorials, out = tree
     body = (
