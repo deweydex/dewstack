@@ -18,16 +18,17 @@ Getting stuck sometimes is a normal part of learning to build things, not a
 sign you are doing it wrong. When that happens, [the troubleshooting
 page](tutorial:troubleshooting) and your teacher are both there to help.
 
-Open a page, and start.
+Pick a page and start. Every one of them is short, and none of them is
+graded.
 
 - **Start with a website, or start with data.** The website path teaches
   HTML and CSS, and ends in a site you publish. The data path teaches
   tables and SQL, and ends in a database you can query. If you are in a
   class, your teacher will say which comes first. If you are working on
-  your own, pick whichever interests you more.
-- **Each page is short and ends with something to do.** On the web pages,
-  you do it on your own site. On the data pages, you do it on your own
-  table.
+  your own, pick the one that interests you more.
+- **Each page is short and ends with something to try.** On the web
+  pages, you try it on your own site. On the data pages, you try it on
+  your own table.
 - **Your work stays with you.** Your site lives in your own GitHub
   account. Your queries live in your browser. Nothing you type here is
   sent anywhere, and nothing is scored.

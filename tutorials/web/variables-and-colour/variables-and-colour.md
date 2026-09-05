@@ -41,16 +41,16 @@ rules, and it is easy to miss one.
 
 ## Your turn
 
-Open your fork's `styles.css` and find the `:root` section near the top.
-Find `--primary-color` and `--accent-color`, and change them to colours
-you like. Save and refresh: the header, the hero section, the footer and
-the buttons all change at once, because they all read the same two
+Let's open your fork's `styles.css` and find the `:root` section near
+the top. Try changing `--primary-color` and `--accent-color` to colours
+you like. Save and refresh: the header, the hero section, the footer
+and the buttons all change at once, because they all read the same two
 variables.
 
 The starter's default colours were chosen so that text stays readable: a
 contrast checker, such as the one at
 [webaim.org](https://webaim.org/resources/contrastchecker/), confirms
-this. Check whether your own choices still pass.
+this. Try checking whether your own choices still pass.
 
 ## What you have now
 

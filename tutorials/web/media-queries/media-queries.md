@@ -36,10 +36,10 @@ width rather than below it.
 
 ## Your turn
 
-Open your browser's developer tools and switch to its device or
-responsive mode, then resize to a narrow width, like a phone's. Open your
-fork and find the `@media (max-width: 768px)` block at the bottom of
-`styles.css`. Add a second breakpoint for very small screens:
+Let's open your browser's developer tools and switch to its device or
+responsive mode, then resize to a narrow width, like a phone's. Now open
+your fork and find the `@media (max-width: 768px)` block at the bottom
+of `styles.css`. Try adding a second breakpoint for very small screens:
 
 ```css
 @media (max-width: 480px) {
@@ -53,8 +53,8 @@ fork and find the `@media (max-width: 768px)` block at the bottom of
 }
 ```
 
-Change `max-width: 480px` to `max-width: 800px` and notice when the
-smaller heading starts to apply. Then try `min-width` in place of
+Try changing `max-width: 480px` to `max-width: 800px` and notice when
+the smaller heading starts to apply. Then try `min-width` in place of
 `max-width`, and the rule applies above that width instead of below it.
 
 ## What you have now

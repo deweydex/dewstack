@@ -61,11 +61,11 @@ does not have to trace back through the CSS to find out.
 
 ## Your turn
 
-Add a third button to the HTML above, with a class of
+Let's try adding a third button to the HTML above, with a class of
 `button button--success`. Give `.button--success` its own rule that sets
 `--button-color` to a green of your choosing, the same way
-`.button--danger` does. Run it and check that the new button picks up its
-own colour without any change to `.button`'s own rule.
+`.button--danger` does. Run it and check that the new button picks up
+its own colour without any change to `.button`'s own rule.
 
 ## What you have now
 

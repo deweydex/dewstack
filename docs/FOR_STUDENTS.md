@@ -1,7 +1,7 @@
 # Using dewstack
 
 dewstack is a set of short reading pages for the web authoring and databases
-course. Each page explains one step. Most end with something to do on your own
+course. Each page explains one step. Most end with something to try on your own
 site, or on a table you built in the SQL playground.
 
 You do not need to install anything to read a page here. The web track's

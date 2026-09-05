@@ -70,8 +70,8 @@ somewhere of your own.
 meet most often: a blank page, styles that will not apply, GitHub not
 taking a push. Each one comes with the checks that usually find it.
 
-If none of them explain it, most pages carry a line at the foot,
-"Something wrong on this page? Tell us." Click it and choose the door
+If none of them explain it, most pages carry a line at the bottom,
+"Something wrong on this page? Tell us." Click it and choose the option
 that fits: an error, or the page being wrong or hard to follow. Either
 one opens a GitHub issue with the page and its version already filled
 in.

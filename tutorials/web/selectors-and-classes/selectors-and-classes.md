@@ -38,8 +38,8 @@ why the paragraph outside the highlighted box stays untouched.
 
 ## Your turn
 
-Open your fork and find the skills section you added earlier. Add this to
-`styles.css`, near the bottom, before any `@media` rules:
+Let's open your fork and find the skills section you added earlier. Try
+adding this to `styles.css`, near the bottom, before any `@media` rules:
 
 ```css
 .skills-section {
@@ -52,9 +52,9 @@ Open your fork and find the skills section you added earlier. Add this to
 ```
 
 Save and refresh. The border shows up only on cards inside the skills
-section, because `.skills-section .card` is a descendant selector.
-Change it to plain `.card` for a moment and see which other cards on the
-page pick up the same border.
+section, because `.skills-section .card` is a descendant selector. Try
+changing it to plain `.card` for a moment and see which other cards on
+the page pick up the same border.
 
 ## What you have now
 

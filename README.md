@@ -1,5 +1,8 @@
 # Web authoring and databases
 
+> **Looking for the course?** Start here:
+> <https://deweydex.github.io/dewstack/>
+
 This is the home page for the web authoring and database course. It says
 what the course covers, where each part lives, and where to begin.
 

@@ -37,14 +37,14 @@ reasoning behind one step of building your own site or your own database.
 
 ## Two loops, not one
 
-Building something here means moving between two loops, and telling them
+When we build something here, we move between two loops. Telling them
 apart early saves confusion later.
 
-The first is local: you change a file in your editor, save it, and
+The first is local: we change a file in the editor, save it, and
 refresh the browser to see the change. Nothing leaves your computer at
 this stage.
 
-The second involves GitHub: you commit your changes and push them, then
+The second involves GitHub: we commit our changes and push them, then
 wait a short while for GitHub to publish the update. This is the loop
 that makes your work visible to anyone else, including whoever is marking
 it.

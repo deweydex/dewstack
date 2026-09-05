@@ -36,10 +36,10 @@ an image's width and its height is its **aspect ratio**.
 
 ## Your turn
 
-Open your fork and find wherever you added an image earlier. Check that
-it already has these two properties, either on the image itself or
-through a rule that reaches it. Narrow your browser to a phone width to
-confirm it never spills past the edge of the page.
+Let's open your fork and find wherever you added an image earlier. Check
+that it already has these two properties, either on the image itself or
+through a rule that reaches it. Try narrowing your browser to a phone
+width to confirm it never goes past the edge of the page.
 
 ## What you have now
 

@@ -15,7 +15,7 @@ several. Splitting the two into separate tables avoids repeating a
 dinosaur's name, diet and length once per fossil site. A `JOIN` is how a
 query brings the two tables back together.
 
-Build the dinosaurs table again, then a second table for fossil sites.
+Let's build the dinosaurs table again, then a second table for fossil sites.
 
 ```sql cell=dinosaurs
 CREATE TABLE dinosaurs (
@@ -89,15 +89,16 @@ Your own table is already here, carried over from the earlier pages.
 -- INSERT statements of your own, then run them.
 ```
 
-In the same box, below what is already there, add a `CREATE TABLE` for a
-second table that relates to it. If your table lists films, a second
-table might hold one row per actor, with a column naming which film's
-`id` they belong to. If your table lists books, it might hold one row
-per author. Give the second table's linking column the same kind of
-values as the first table's `id` column. Insert a few rows, then write a
-`JOIN` that brings a row from each table together. Run it here, in this
-one box. This is the last page of the arc, but the table stays saved in
-your browser. Download is still there if you want a copy of your own.
+In the same box, below what is already there, try adding a `CREATE
+TABLE` for a second table that relates to it. If your table lists films,
+a second table might hold one row per actor, with a column naming which
+film's `id` they belong to. If your table lists books, it might hold one
+row per author. Give the second table's linking column the same kind of
+values as the first table's `id` column. Insert a few rows, then try
+writing a `JOIN` that brings a row from each table together. Run it
+here, in this one box. This is the last page of the series, but the
+table stays saved in your browser. Download is still there if you want a
+copy of your own.
 
 ## What you have now
 

@@ -79,10 +79,11 @@ Your own table is already here, carried over from the last page.
 -- INSERT statements of your own, then run them.
 ```
 
-Add two more rows to it with `INSERT`. Then write one `UPDATE` that
-changes a value in a row you choose, and one `DELETE` that removes a row
-you no longer want. Check each one with a `SELECT` before and after, the
-way the boxes above do.
+Try adding two more rows to it with `INSERT`. Then write one `UPDATE`
+that changes a value in a row you choose, and one `DELETE` that removes
+a row you no longer want. Check each one with a `SELECT` before and
+after, the way the boxes above do. If something goes wrong, Reset
+brings everything back.
 
 ## What you have now
 
