@@ -567,10 +567,21 @@ fix.
 
 ### Step 8. Data Arc 2, then the full-stack arc
 
-Data Arc 2 is fresh: design before typing; a real dataset from Our World
-in Data, loaded, cleaned, queried; questions that need two tables; a
-chart from a query. Revised by step 1. Then the three full-stack pages,
-with plan section 12 as the outline of the first.
+Revised by item 16 (2026-09-05), on top of step 1's earlier revision:
+this is where the data track's six themes actually land. SQL is done
+(Arc 1, step 7); this arc adds pandas, matplotlib, forms, exploring
+data, and exporting/importing as its real content, not as pages tacked
+on afterward. The shape step 1 already settled — design before typing;
+a real dataset from Our World in Data, loaded, cleaned, queried;
+questions that need two tables; a chart from a query — still covers the
+SQL-and-design half; pandas and matplotlib are the natural home for
+exploring-data-and-charting, and forms and export/import likely want a
+page or two of their own beyond that original four. Formal database
+theory (normal forms and the like) is explicitly not part of this arc —
+deferred to Level 6, per item 16. Needs its own page-by-page breakdown
+before anyone starts writing it; not done yet, and this paragraph is not
+that breakdown. Then the three full-stack pages, with plan section 12
+as the outline of the first.
 
 ### Ongoing, every step
 
