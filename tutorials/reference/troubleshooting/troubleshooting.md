@@ -9,183 +9,209 @@ version: 2026.09.04.1
 
 # Troubleshooting
 
-Something not working is the normal shape of building a website, not a
-sign you have done anything wrong. This page groups the problems a
-student meets most often, each with the checks that usually find it.
+Sometimes code gives a result we did not expect. This page offers checks
+we can try to find the cause. You can begin with the description closest
+to what you see, or ask your teacher to look with you.
+
+Changing one thing at a time can help us see which change makes a
+difference. If you want to keep the current version, you can save a copy
+before trying a change.
 
 ## A page or a style doesn't look right
 
 ### The page is blank
 
-A blank page usually means the browser could not make sense of the file.
+A useful first check is the address in the browser. Is it the file you
+have been editing? A different file may explain why your text is missing.
 
-- Open the file in a text editor and check it starts with `<!DOCTYPE html>`,
-  and that `<html>`, `<head>` and `<body>` are all there.
-- Check that content sits between the opening and closing `<body>` tags,
-  not outside them.
-- Check the browser's address bar. If it shows a folder listing or a
-  different file than the one you edited, open the right file.
+In the editor, you can look for the text you expected to see. Page
+content belongs inside `<body>`, between its opening and closing tags:
+
+```html
+<body>
+  <p>This text appears on the page.</p>
+</body>
+```
+
+If your file has similar content, saving it and refreshing the browser
+may help. [The skeleton](tutorial:the-skeleton) shows the parts of an
+HTML page if you want an example to compare.
 
 ### The CSS isn't doing anything
 
-The usual cause is the browser not finding the stylesheet.
+The browser may be unable to find your stylesheet, the file containing
+CSS rules. These checks can help:
 
-- Check the `href` in the `<link>` tag matches the CSS file's name and
-  location exactly, including the folder if there is one.
-- Check the `<link>` tag sits inside `<head>`, not `<body>`.
-- Look for a missing semicolon or an unclosed `{` in the CSS file. One
-  mistake near the top can stop everything below it from working.
+- Does the `href` in the `<link>` tag match the CSS file's name and folder?
+- Is that `<link>` tag inside `<head>`?
+- Does the file contain the rule you expected to apply?
+
+[A rule and where it lives](tutorial:a-rule-and-where-it-lives) shows
+how an HTML page links to CSS.
 
 ### Only some of the styles apply
 
-When one rule works and another does not, two rules are usually
-disagreeing about the same element.
+A *selector* names the elements a CSS rule applies to. A rule for `.card`
+applies to an element with `class="card"`. Comparing the selector with
+your HTML is one place to begin.
 
-- Check the selector matches the element, class or id you meant. A rule
-  for `.card` does nothing to an element with no `class="card"`.
-- Two rules can both match one element. The more specific selector wins,
-  so a class usually beats a plain tag name.
-- Check every value has its unit. `font-size: 16;` does nothing;
-  `font-size: 16px;` works.
+More than one rule can apply to an element. A more specific selector,
+such as a class name, usually takes priority over a tag name. The
+[inspector](tutorial:the-inspector) can show which rules the browser uses.
+
+A value may also need a unit. For example, `font-size: 16px;` sets the
+text size in pixels. `font-size: 16;` is not a valid size.
 
 ### An image won't show
 
-- Check the `src` matches the image's file name and location exactly,
-  including capital letters. `Photo.jpg` and `photo.jpg` are different
-  files on many systems.
-- Check the file extension matches what is actually saved, such as
-  `.jpg` against a file really saved as `.png`.
-- The `alt` text still shows if the image itself fails to load. If you
-  see the alt text where the picture should be, the path is wrong, not
-  the file.
+The `src` in an image tag tells the browser where to find the image.
+You can compare it with the file's name and folder, including capital
+letters and the ending, such as `.jpg` or `.png`.
+
+On many systems, `Photo.jpg` and `photo.jpg` are different names. If the
+names match, the file may be missing, damaged, or unavailable to the
+browser. The text in `alt` can appear when an image cannot load; it does
+not tell us which of these caused the problem.
 
 ### My file won't open in the browser
 
-This is usually a file extension problem rather than anything wrong with
-the page itself.
+An HTML file usually has a name ending in `.html`. You can check whether
+your editor saved it with another ending, such as `.txt`.
 
-- Check the file ends in `.html`, not `.txt` or `.doc`. A browser only
-  recognises a page by its extension.
-- If it opens in a text editor instead of a browser, right-click it,
-  choose "Open with", and pick your browser instead.
-- You can always open a file from inside the browser itself: press
-  `Ctrl+O` (Windows) or `Cmd+O` (Mac), then find the file. This works
-  regardless of which program your computer normally opens it with.
+If the file opens in an editor, the **Open with** option in your file
+manager lets you choose a browser. You can also open a file from the
+browser with `Ctrl+O` on Windows or `Cmd+O` on a Mac.
 
 ## My code has a mistake I can't find
 
-A page can look almost right and still hide one small error. These are
-the three that cause most of the trouble.
-
 ### An unclosed tag
 
-Every opening HTML tag needs a closing one, or the browser misreads
-everything that follows it.
+Many HTML elements use an opening and closing tag. A missing closing
+tag can change how the browser groups the content that follows.
 
 ```html
-<!-- Correct -->
-<p>This paragraph ends where it should.</p>
-
-<!-- Incorrect: the closing tag is missing -->
-<p>This paragraph never ends, so everything after it
+<p>This paragraph has an opening and a closing tag.</p>
 ```
 
-Work through the file from the top, and check that each tag you opened
-has a matching one closed in the right place. `<img>` and `<br>` are the
-exception: they never need a closing tag.
+You can compare your tags with the example. Some elements, including
+`<img>` and `<br>`, do not use closing tags. [The
+skeleton](tutorial:the-skeleton) has a complete page to compare with yours.
 
 ### An unclosed brace in CSS
 
-A missing `}` breaks every rule that comes after it, not just the one it
-belongs to.
+Braces group a rule's declarations, which say how an element should look.
+A missing `}` can affect the rules that follow it.
 
 ```css
-/* Correct */
 p {
     color: blue;
 }
-
-/* Incorrect: the closing brace is missing */
-p {
-    color: blue;
 ```
 
-Most code editors highlight the brace that matches the one your cursor
-is on. Use that to check each `{` has a `}` where you expect it.
+Many editors highlight the matching brace when the cursor is beside
+`{` or `}`. This can help us find where a rule begins and ends.
 
 ### A missing semicolon
 
-In CSS, a property without its semicolon can take the next line down
-with it.
+A semicolon separates one CSS declaration from the next. Without it,
+the browser may read two lines as one invalid value.
 
 ```css
-/* Correct */
+/* Each declaration ends with a semicolon. */
 p {
     color: blue;
     font-size: 16px;
 }
 
-/* Incorrect: font-size is silently ignored */
+/* The missing semicolon joins the two declarations. */
 p {
     color: blue
     font-size: 16px;
 }
 ```
 
+In the second example, neither the colour nor the size is applied by
+this rule. Adding the missing semicolon lets the browser read both.
+
 ## Nothing changed after I edited something
 
 ### The page still shows the old version
 
-- Check the file is saved. Editors often show a dot or a mark on the tab
-  when a change is unsaved.
-- Refresh the browser. If that does not work, force a hard refresh:
-  `Ctrl+F5` on Windows, `Cmd+Shift+R` on a Mac. Browsers keep a copy of a
-  page to load it faster next time, and a hard refresh clears that copy.
-- Check you are editing the file the browser has open, not a second copy
-  saved somewhere else with a similar name.
+We can check the steps between editing a file and seeing its result:
+
+1. Is the file saved? Some editors show a dot on the tab for unsaved changes.
+2. Has the browser loaded it again? Refresh loads the page again.
+3. Is the browser showing the file you edited? Two copies can have similar names.
+
+Browsers sometimes keep an older copy of a page. A *hard refresh* asks
+for a fresh copy. You can try `Ctrl+F5` on Windows or `Cmd+Shift+R` on a Mac.
 
 ### GitHub Pages still shows the old version
 
-Publishing takes a minute or two after you push, so the delay itself is
-normal. Check these once that time has passed.
+Publishing can take a few minutes. If the old version stays visible,
+these questions may help:
 
-- Confirm the change was committed and pushed, not only saved on your own
-  computer. Saving a file never sends it to GitHub by itself.
-- Confirm the push went to the branch GitHub Pages publishes from, which
-  is usually `main`.
-- Force a hard refresh once the wait has passed. The old page may be
-  cached in your own browser rather than still live on GitHub.
+- Are the changes on GitHub? Saving a file on your computer does not send it there.
+- Are they on the branch used for publishing? A branch is a version of the project;
+  the publishing branch is often called `main`.
+- Does a hard refresh show the new version?
+
+[The two loops](tutorial:the-two-loops) explains saving and publishing.
+Your teacher can help you check the publishing settings if you are unsure.
 
 ## GitHub won't take my changes
 
-- A push needs you to be signed in. Check you are authenticated, either
-  with a personal access token over HTTPS or with an SSH key.
-- `git add`, `git commit` and `git push` are three separate steps.
-  Skipping any one of them means the file never reaches GitHub, even if
-  the other two ran without an error.
-- GitHub can reject a push with a message about the remote having
-  changes you don't have. Something else changed the repository since
-  your last pull, so pull first, then push again.
+GitHub needs to recognise your account before it accepts changes. If
+there is a sign-in message, signing in through your editor may help.
+
+An error message may say that GitHub has changes your computer does not
+have yet. You can keep the message and ask your teacher to look with
+you before combining the two versions. [The two
+loops](tutorial:the-two-loops) explains the usual steps for sending work
+to GitHub.
+
+The message, the action you tried, and the result are useful details to
+share. You do not need to understand the message before asking for help.
 
 ## This site itself
 
 ### The Settings panel doesn't do anything
 
-The **Settings** button is at the top right of every page. It opens a
-panel for theme, typeface, text size and line width. If a choice does not
-seem to apply, close the panel and reopen it, since some changes only
-show once the panel closes. Your choices are saved in this browser, so
-they will not follow you to a different browser or a different device.
+The **Settings** button opens choices for colours, font, text size, and
+line width. Changes should appear while the panel is open.
+
+If the panel does not open, or a choice has no effect, you can tell your
+teacher. The report link at the bottom of the page is another option.
+The name of the setting and your browser are useful details to include.
+
+Settings are saved in this browser. A different browser or device will
+have its own settings.
 
 ### The search box finds nothing
 
-**Search the tutorials** is on the front page. It matches a tutorial's
-title and the terms that tutorial introduces, not every word in its
-prose. A word used only once inside a paragraph can come back empty. Try
-the name of the topic instead: "flexbox" rather than a sentence about it.
+**Search the tutorials** is on the front page. It searches page titles
+and the terms each page introduces. It does not search every sentence.
+You could try a topic name, such as "flexbox" or "images".
+
+### My SQL work is missing
+
+A box labelled **Your table** saves its SQL text when you use **Run** or
+**Load**. Typing alone does not save it. Other SQL boxes do not keep
+changes between visits.
+
+Are you using the same browser and device? Was browser data cleared, or
+was **Reset** used? These can explain why saved work is missing. Browser
+settings or full storage can also prevent saving.
+
+If you downloaded a `.sql` file, **Load** puts its text back in the box.
+**Run** then runs that text. The [FAQ](tutorial:faq) explains saving and
+resetting in more detail.
 
 ## Still stuck
 
-Go back to the tutorial the problem came from and read the step again.
-Coming back to a problem after a short break often makes the fix obvious
-in a way it wasn't a few minutes before.
+You can ask your teacher to look at the problem with you. The page name,
+the step you tried, and what happened are useful places to begin.
+
+You can also return to an earlier example or take a break. A problem may
+need more time or another explanation. If the instructions on this site
+are unclear, the report link below lets you tell us which part needs help.

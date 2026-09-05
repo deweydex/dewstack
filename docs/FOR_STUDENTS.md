@@ -1,84 +1,116 @@
 # Using dewstack
 
-dewstack is a set of short reading pages for the web authoring and databases
-course. Each page explains one step. Most end with something to do on your own
-site, or on a table you built in the SQL playground.
+Welcome to dewstack. Here we learn to build websites and work with data.
+Each tutorial explains an idea and offers something to try.
 
-You do not need to install anything to read a page here. The web track's
-own exercises happen in your own copy of a starter repository on GitHub, and
-the data track's playground runs in your browser. Nothing you do in either
-one is sent anywhere you have not put it yourself.
+You can read the pages without an account or anything to install.
 
----
+## Where you can begin
 
-## The two tracks
+The [front page](https://deweydex.github.io/dewstack/) offers two paths.
 
-There are two ways to begin. Start with a website, and learn HTML and CSS
-while you build one. Start with data, and learn tables and SQL while you
-build one. If you are in a class, your teacher will say which comes
-first. If you are working on your own, pick the one that interests you
-more.
+- **Explore websites** begins with the tools for making a website. You
+  use a free GitHub account to keep and publish your website files.
+  GitHub also has an editor that works in your browser.
+- **Explore data** begins with a table. We use SQL, a language for working
+  with data, to ask questions about it. These exercises run in your
+  browser and do not need an account.
 
-The front page's two doors take you to the first page of each. Getting
-started comes before both, and only its first page and its last are needed
-for the data track.
+If you are learning in class, your teacher can help you find where to
+begin. If you are learning on your own, you can choose either path.
 
----
+## Trying an example
 
-## Settings
+Some pages have code boxes you can change. In a SQL box, **Run** runs the
+code and shows the result below. You could change one part of an example
+and run it again. What changes in the result?
 
-Every page has a **Settings** button in the bar at the top. It opens a panel
-for theme, typeface, text size and line width. These choices are saved in
-the browser you are using. They follow you from page to page here, but not
-to a different browser or a different computer.
-
----
+Some web pages have an editor with a preview of the website. Changes in
+that editor update the preview. Other code boxes are examples to read.
 
 ## Finding your way around
 
-Under the top bar, links take you to the previous and next page in a
-series. The same links appear again at the end of the page. **Search the
-tutorials**, on the front page, matches a page's title and the terms it
-introduces. It does not match every word in its prose, so the name of a
-topic finds more than a sentence about it does.
+Links near the top and bottom of a tutorial take you to the previous or
+next page. You can return to an earlier explanation whenever it helps.
 
----
+**Search the tutorials** is on the front page. It searches page titles
+and the terms each page introduces. It does not search every sentence.
+A topic name, such as "images", is a useful search to try.
 
 ## Where your work is saved
 
-If you started with a website, your work lives in your own GitHub
-repository, the one you made a copy of at the start. You can get back to
-it from any computer by signing in to GitHub. Every change you have saved
-is kept, with its full history.
+### Your website
 
-In the SQL playground, the database starts again each time the page is
-reloaded, and nothing you type there is sent anywhere. If you write a query
-you want to keep, copy it somewhere of your own before you close the tab.
+A *repository* is a place on GitHub that holds a project's files and
+records changes to them. Your website uses your own copy of a repository.
+You can return to files saved there by signing in to GitHub.
 
----
+If you edit files on your computer, saving them there does not send them
+to GitHub. [The two loops](https://deweydex.github.io/dewstack/tutorials/getting-started/the-two-loops/)
+explains how to save changes and publish them.
 
-## If Something Stops Making Sense
+The small website editors inside tutorials do not save changes between
+visits. **Download these files** gives you a copy to keep before you leave.
 
-This happens to everyone building something for the first time, and it is
-not a sign you have done anything wrong. A few real places can help,
-instead of guessing.
+### Your SQL work
 
-You can search the tutorials for the topic by name, rather than a sentence
-about it. You can go back to an earlier page in the same series. The getting-started
-pages, in particular, are what later pages assume you already have. Or, if
-something is broken rather than unclear,
+A SQL box labelled **Your table** saves its text in this browser when you
+use **Run** or **Load**. Typing alone does not save it. A later page with
+the same **Your table** box loads the saved text and runs it again.
+
+This saved copy stays in this browser on this device. Clearing browser
+data removes it. Saving may also be unavailable if browser storage is
+blocked or full. **Download** gives you a `.sql` file containing the text
+in the box. You can keep this file or move it to another computer.
+**Load** puts a file's text into the box; **Run** then runs it.
+
+Other SQL boxes, and the older playground linked from the README, do not
+save your changes between visits. You can download the SQL text where a
+**Download** button is available, or copy it into a file of your own.
+
+### Starting a SQL example again
+
+**Reset** puts the original code back in the box and clears that box's
+database and result. In **Your table**, it also removes the saved SQL
+text. If you want to keep your current text, **Download** makes a copy
+before you reset. Reset is one option when you want to try an example again.
+
+## Making the page comfortable to read
+
+The **Settings** button is in the bar at the top. You can change the
+colours, font, text size, and line width. Changes appear as you make them.
+Your choices are saved in this browser for your next visit. They do not
+move to a different browser or computer.
+
+## If an explanation becomes unclear
+
+Some ideas need more time or another example.
+
+If a word is unfamiliar, you can search for it on the front page. If a
+step is unclear, an earlier page may explain it in more detail.
+
+If something does not work,
 [troubleshooting](https://deweydex.github.io/dewstack/tutorials/reference/troubleshooting/)
-groups the problems people meet most often, with the checks that usually
-find them.
+has checks you can try. You can also show your teacher where you got
+stuck. You do not need to know the cause before asking for help.
 
-None of this is a detour. Going back a step is a normal way forward here,
-not a setback.
+You can pause here and return later. The saving information above can
+help you keep anything you want to return to.
 
----
+## Using hints and answers
 
-## Something wrong?
+Some practice activities have hints and answers you can open. You can
+begin with your own idea, open a hint, or read an answer. After reading
+an answer, you could try the activity again with the answer closed.
 
-If a page has a mistake in it, or something on the site does not work,
-please tell your teacher. You can also open an issue on
-[the repository on GitHub](https://github.com/deweydex/dewstack/issues).
-You do not need to be certain it is a mistake first.
+If your result is different, we can compare the steps. Where do they
+first change? This may help us decide what to try next.
+
+## Questions and mistakes on the site
+
+If a page is confusing or something does not work, you can tell your
+teacher. You can also report it through
+[GitHub](https://github.com/deweydex/dewstack/issues), using a free account.
+A report is a message about what happened. The page title and the part
+that was unclear are useful details. You do not need to be certain the
+page has a mistake before asking about it.

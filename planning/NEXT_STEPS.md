@@ -12,6 +12,12 @@ repeats neither. It points.
 
 ## 1. Where things stand
 
+**2026-09-05, learner language review.** The front page, README, student
+guide, introduction, FAQ, and troubleshooting have a coordinated language
+pass prepared for review. Account and saving instructions were checked
+against the runtime. `LEARNER_LANGUAGE_REVIEW.md` records the approach,
+validation, and remaining tutorial batches.
+
 **2026-09-05, student feedback pathway, third slice.**
 `getting-started/issues-and-pull-requests`, a new page between
 `a-github-account` and `an-editor`: what this repository's own file
