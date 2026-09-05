@@ -87,7 +87,7 @@ do not move to a different browser or computer.
 
 Some ideas need more time or another example.
 
-If a word is unfamiliar, try searching for it on the front page. If a
+If a word is unfamiliar, you can search for it on the front page. If a
 step is unclear, an earlier page may explain it in more detail.
 
 If something does not work,
@@ -101,7 +101,7 @@ Going back a step is a normal way forward here, not a setback.
 
 Some practice activities have hints and answers you can open. You can
 begin with your own idea, open a hint, or read an answer. After reading
-an answer, try the activity again with the answer closed.
+an answer, you can try the activity again with the answer closed.
 
 If your result is different from the expected one, we can compare the
 steps. Where do they first change? That often helps us decide what to

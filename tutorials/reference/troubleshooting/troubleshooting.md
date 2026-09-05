@@ -223,9 +223,9 @@ sentence about it.
 
 ## Still stuck
 
-Go back to the tutorial the problem came from and read the step again.
-You can also ask your teacher to look at the problem with you. The page
+You can ask your teacher to look at the problem with you. The page
 name, the step you tried, and what happened are useful details to share.
+You can also return to the tutorial and read the step again.
 
 If the instructions on this site are unclear, the report link at the
 bottom of most pages lets you tell us which part needs help.

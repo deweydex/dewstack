@@ -36,7 +36,7 @@ the exam are, and your teacher covers the dates and the briefs for those
 in class. Breaking something and fixing it while you are still learning
 costs nothing here.
 
-## Which path should I start with?
+## Which path can I start with?
 
 Either. In the website path, we learn HTML for a page's structure and
 CSS for its appearance. In the data path, we learn to make tables and
@@ -49,7 +49,7 @@ more.
 ## What if I miss a class or need more time?
 
 Each page is short and stands mostly on its own. You can return to a
-page and work through an example again. Some ideas need another
+page and work through an example again. Some ideas may need another
 explanation or more practice.
 
 The search box on the front page can help you find a topic by name.

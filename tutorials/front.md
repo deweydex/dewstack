@@ -4,7 +4,7 @@ doors:
   - title: "Explore websites"
     href: tutorial:how-the-pieces-fit
     text: "We begin with the tools for making a website. Then you make your own copy of a small site, publish it, and change one thing at a time."
-    ends: "A personal website with its own address."
+    ends: "You finish with a personal website and its own address."
   - title: "Explore data"
     href: tutorial:a-table-is-a-list-of-rows
     text: "We begin with a table of data. Then we use SQL, a language for working with data, to ask questions about it."
@@ -35,8 +35,8 @@ are learning on your own, either path is open to you.
 
 Sometimes we get a result we did not expect. That is how we learn what a
 change does. If you feel stuck, [the troubleshooting
-page](tutorial:troubleshooting) has suggestions, and your teacher can
-help too.
+page](tutorial:troubleshooting) has suggestions. You can also ask your
+teacher for help, or pause and return later.
 
 The tutorials and exercises are not graded. The college grades the two
 projects and the exam, and your teacher explains those tasks in class.
