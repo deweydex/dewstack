@@ -83,8 +83,8 @@ you type is sent anywhere.
 Start here: <https://deweydex.github.io/dewstack/tutorials/data/a-table-is-a-list-of-rows/>
 
 Four short pages take you from a first table to a second one, joined to
-it. Each page ends with a table of your own, kept as a file you download
-and load back in on the next page.
+it. Each page ends with a table of your own, saved automatically in
+your browser and waiting for you on the next page.
 
 ## Web authoring tutorials
 
@@ -178,11 +178,11 @@ repository. You can return to it from any computer by signing in to
 GitHub.
 
 On the data pages, the database starts again each time the page is
-reloaded. Each page has a Download button that saves your table as a
-file, and a Load button that reads one back in. Your table follows you
-from page to page this way, even though the database itself does not.
-In the older playground, there is no such button; copy a query you want to keep
-into a file of your own.
+reloaded, but your own table does not. A cell labelled "Your table"
+saves what you run in this browser, and is there again automatically on
+the next page. Download and Load are still there if you want a copy on
+a different computer or to hand in. In the older playground, there is
+no such saving; copy a query you want to keep into a file of your own.
 
 ## All the links
 

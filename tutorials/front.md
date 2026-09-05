@@ -8,7 +8,7 @@ doors:
   - title: "Start with data"
     href: tutorial:a-table-is-a-list-of-rows
     text: "You make a table, put rows in it, and ask it questions in a language called SQL. Four short pages take you from a first table to a second one, joined to it."
-    ends: "A table you built and queried in your browser, kept as a file of your own."
+    ends: "A table you built and queried in your browser, saved there automatically as you go."
 ---
 dewstack is a set of tutorials for the web authoring and databases course.
 Everything runs in your browser. There is nothing to install, and this site

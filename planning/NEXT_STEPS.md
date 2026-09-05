@@ -455,11 +455,12 @@ The fourth page's join is new rather than ported from the notebook: the
 notebook itself never joins its two tables, only `UNION`s them, so a
 `sightings` table with a `dinosaur_id` foreign key was written instead,
 to teach the join the title actually names. Each page's "your turn"
-builds the reader's own table, downloaded at the end of one page and
-loaded back in at the start of the next, the mechanism the Download/Load
-addition above exists for. `modules.yaml`'s `data` entry moved out of
-`planned`; `front.md`'s "Start with data" door and the README's own data
-section now point here instead of the old external playground.
+builds the reader's own table, carried from page to page automatically
+(superseded below — this originally meant Download at the end of one
+page and Load at the start of the next). `modules.yaml`'s `data` entry
+moved out of `planned`; `front.md`'s "Start with data" door and the
+README's own data section now point here instead of the old external
+playground.
 
 Verified live the same way as the runtime: every real demo cell across
 all four pages, run in order in a real browser against a real, trimmed,
@@ -471,6 +472,37 @@ touched parts of `README.md`: every sentence at or under 25 words.
 
 Item 4, the playground's SQL section and the quiz rebuilt as practice
 pages, is not started.
+
+**Persistence, superseding the Download/Load framing above, 2026-09-05:**
+raised in conversation — a reader who forgets to click Load, or picks
+the wrong file, loses the thread of "your table" across the arc, and the
+same problem would only get worse in a scored quiz. Since every
+dewstack page shares one browser origin, `localStorage` already carries
+state from page to page with no file dialog needed, so a `persist` flag
+on a `` ```sql cell=name `` block now does that automatically:
+`assets/sql-cell.js` saves the cell's script to `localStorage` on every
+Run (and on Load), and restores and reruns it on its own the next time a
+`persist` cell with that name loads — the reader does nothing extra, and
+a page with no persisted table falls through to a plain placeholder
+comment (`sql_tools.py`'s comment-stripping already renders that as
+"Nothing to run" rather than a confusing error). `build.py` renders a
+persisted cell's label as "Your table" instead of "SQL", plus a short
+note under the box, so the behaviour is named rather than left to a
+script the reader cannot see. Reset now clears the saved copy too, not
+just the in-page connection. Download and Load are unchanged underneath
+this and still work — taking a copy out of the browser, or bringing one
+in from elsewhere — just no longer the thing continuity depends on.
+
+All four Data Arc 1 "your turn" cells now carry `persist`, with their
+prose rewritten to match ("your table is already here" rather than
+"click Load"). Verified live: built a table on page 1 in a real browser
+against a real Pyodide, navigated to page 2, and watched it restore and
+rerun with no click and the same rows, zero console errors; Reset
+confirmed to clear `localStorage`, not just the textarea; Download and a
+subsequent Load both confirmed to still work, with Load's file becoming
+the new saved copy. `python -m pytest -q`: 37 tests. axe-core: 0
+violations, no sideways scroll, on all four pages at 1200 and 390
+pixels.
 
 ### Step 8. Data Arc 2, then the full-stack arc
 

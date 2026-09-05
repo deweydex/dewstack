@@ -81,21 +81,23 @@ along.
 
 ## Your turn
 
-Bring back your own table.
+Your own table is already here, carried over from the earlier pages.
 
-```sql cell=my-table
--- Load the file you downloaded from the last page, then run it.
+```sql cell=my-table persist
+-- If you built a table on an earlier page, it is already loaded above.
+-- If this is your first time here, write a CREATE TABLE and some
+-- INSERT statements of your own, then run them.
 ```
 
-In the same box, below what you loaded, add a `CREATE TABLE` for a second
-table that relates to it. If your table lists films, a second table
-might hold one row per actor, with a column naming which film's `id` they
-belong to. If your table lists books, it might hold one row per author.
-Give the second table's linking column the same kind of values as the
-first table's `id` column. Insert a few rows, then write a `JOIN` that
-brings a row from each table together. One box, one script, one file:
-click Download when you are done, and a single Load next time rebuilds
-both tables at once.
+In the same box, below what is already there, add a `CREATE TABLE` for a
+second table that relates to it. If your table lists films, a second
+table might hold one row per actor, with a column naming which film's
+`id` they belong to. If your table lists books, it might hold one row
+per author. Give the second table's linking column the same kind of
+values as the first table's `id` column. Insert a few rows, then write a
+`JOIN` that brings a row from each table together. Run it here, in this
+one box. This is the last page of the arc, but the table stays saved in
+your browser. Download is still there if you want a copy of your own.
 
 ## What you have now
 

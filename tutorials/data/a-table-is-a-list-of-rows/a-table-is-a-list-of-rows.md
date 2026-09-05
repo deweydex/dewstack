@@ -77,14 +77,15 @@ Then build a table of your own, about something you know well: books, a
 football squad, a music collection. Give it at least three columns and
 four rows.
 
-```sql cell=my-table
+```sql cell=my-table persist
 -- Write your own CREATE TABLE and INSERT statements here, then run them.
 ```
 
 Write your `CREATE TABLE` and `INSERT` statements in place of the comment
-above, then run the box. Once it works, click Download and keep the file
-somewhere you can find it. The next page starts from the same table, and
-Load is how you bring it back.
+above, then run the box. This one is labelled "Your table", not "SQL". It
+saves what you run here in this browser, so your table is already there
+when you open the next page. Download still works if you want a copy of
+your own, on a different computer or to hand in.
 
 ## What you have now
 
