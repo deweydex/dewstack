@@ -31,7 +31,7 @@ will be able to do at the end of it, and links to where the work happens.
 
 | Stage | Where the work happens | What the student ends up with |
 |---|---|---|
-| 1. Build a site | [`deweydex/web`](https://github.com/deweydex/web), forked by the student | A personal site with a real address, published on GitHub Pages. From nothing to a portfolio. |
+| 1. Build a site | [`deweydex/portfolio_wad`](https://github.com/deweydex/portfolio_wad), forked or templated by the student | A personal site with a real address, published on GitHub Pages. From nothing to a portfolio. |
 | 2. Work with data | Tutorials in this repository (section 5) | A database they built and queried in the browser, and the words to talk about it. |
 | 3. Put the two together | Tutorials in this repository, later | A page that shows data from a database. Scope still open (section 8). |
 
@@ -48,11 +48,11 @@ hand-written HTML.
 
 | Repository | Fate |
 |---|---|
-| `web` | Stays. Linked from the README as stage 1. The one tutorial we edit now (section 4). |
+| `portfolio_wad` (renamed from `web`) | Stays. Linked from the README as stage 1. The one tutorial we edit now (section 4). |
 | `HTML-CSS-SQL-JS` | Stays untouched until its SQL section and teacher notes have moved here. Then archived. Meanwhile a verbatim copy sits at `databases/playground/` here, so the course has one address. |
 | `WADB_Tutorials` | Stays untouched until its content has moved here, piece by piece. Then archived. Its Pages site stays live throughout. Meanwhile a verbatim copy sits at `tutorials/` here as an interim shelf; it inherits every defect in section 9 and is replaced page by page as section 7 proceeds. |
 | `dewlab` | Stays. The source of the shell, settings and search we port. Not edited from here. |
-| `portfoliotest` | Personal. Left alone. |
+| `project_wad` (renamed from `portfoliotest`) | No longer personal or left alone: this is the second starter, section 15's Arc 2 door. Its old README (Josh's own, a photograph and a résumé link) is replaced by the five-page skeleton, kept in git history rather than deleted. |
 | `aiml-web-authoring`, `webauthoringdemo` | Already removed. |
 
 ---
@@ -489,6 +489,21 @@ The source file is not touched.
    modules shown as a heading and one line. `tutorials/front.md` holds the
    opening and the doors; `modules.yaml` holds the planned modules and
    the one-line notes. This revises the first paragraph of section 1.
+18. **The two starters' real names.** Decided 2026-09-05, by Josh: `web`
+   renamed to `portfolio_wad`; the second starter, working name `site` in
+   section 15, is `project_wad`. `_wad` is Web Authoring and Development,
+   the two Level 5/6 modules likely to use these starters, though only
+   Web Authoring assesses against them today (see question 14). The pair
+   names what each ends in, a portfolio and a project, rather than reusing
+   near-synonyms (`web`, `site`) that would not tell the two apart on a
+   student's own GitHub profile. Both are GitHub template repositories, at
+   Josh's choice: this leaves the ordinary **Fork** button in place while
+   adding **Use this template**, which gives a copy with no visible link
+   back to the course repository and no shared history, suiting a
+   portfolio a student may carry past the course under a plainer name.
+   This revises section 1's table; the dated ledger entries in section 7
+   and in `PAGE_BY_PAGE.md` keep the old name, since they record what was
+   true at the time.
 
 ---
 
