@@ -22,9 +22,9 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "tools"))
 import label_report  # noqa: E402
 import report_patterns  # noqa: E402
 
-# This repository's own report.yml has no Cell/code/output/browser fields
-# yet (no cell-level report button exists here), so a real issue body is
-# shorter than dewlab's — the parser has to work the same either way.
+# A page-level report, filed by hand rather than from a cell's own report
+# icon — no Cell, code, output or browser field, which is a normal shape
+# for this repository's report.yml as much as a cell-level one is.
 ISSUE_BODY = """### What kind of thing is this?
 
 The page is wrong, or I could not follow it
@@ -42,6 +42,41 @@ web/selectors
 The example selector does not match the element the text says it should.
 """
 
+# A report filed from a SQL or Python cell's own report icon, carrying the
+# Cell, code and output fields build.py's cell_report_markup() adds.
+CELL_ISSUE_BODY = """### What kind of thing is this?
+
+It gives an error, and I have tried the checks on the Troubleshooting page
+
+### Page
+
+data/first-queries
+
+### Version
+
+2026.09.05.1
+
+### Cell
+
+sql-cell-first-queries-totals
+
+### The cell's code
+
+SELECT * FROM not_a_real_table
+
+### What the cell showed
+
+OperationalError: no such table: not_a_real_table
+
+### Browser
+
+Firefox 142, Windows
+
+### What happened
+
+Fails as soon as I press run, before I change anything.
+"""
+
 
 class TestParseFields:
     def test_reads_every_field_by_its_label(self):
@@ -53,8 +88,13 @@ class TestParseFields:
     def test_empty_body_gives_no_fields(self):
         assert report_patterns.parse_fields("") == {}
 
-    def test_a_body_with_no_cell_field_gives_no_cell(self):
+    def test_a_page_level_report_gives_no_cell(self):
         assert "Cell" not in report_patterns.parse_fields(ISSUE_BODY)
+
+    def test_a_cell_level_report_gives_the_cell_id(self):
+        fields = report_patterns.parse_fields(CELL_ISSUE_BODY)
+        assert fields["Cell"] == "sql-cell-first-queries-totals"
+        assert "not_a_real_table" in fields["What the cell showed"]
 
     def test_label_report_uses_the_same_parser(self):
         # Both scripts read the same rendered body; a change to one parser
@@ -97,12 +137,16 @@ class TestWorthAPattern:
     def test_three_reports_on_one_page_is_a_pattern(self):
         assert report_patterns.worth_a_pattern([issue(1), issue(2), issue(3)])
 
-    def test_two_reports_with_no_cell_field_never_trip_the_cell_threshold(self):
-        # This repository's report form carries no Cell field, so every
-        # gathered issue's "cell" is always "" — only the page-level
-        # threshold can fire here, and this is the test that would catch
-        # it quietly firing on two unrelated reports instead.
+    def test_two_reports_with_no_cell_never_trip_the_cell_threshold(self):
         assert not report_patterns.worth_a_pattern([issue(1), issue(2)])
+
+    def test_two_reports_on_the_same_cell_is_a_pattern_even_with_few_reports(self):
+        assert report_patterns.worth_a_pattern(
+            [issue(1, cell="sql-cell-first-queries-totals"), issue(2, cell="sql-cell-first-queries-totals")]
+        )
+
+    def test_two_reports_on_different_cells_is_not_a_pattern(self):
+        assert not report_patterns.worth_a_pattern([issue(1, cell="cell-a"), issue(2, cell="cell-b")])
 
 
 class TestPatternBody:
@@ -115,3 +159,17 @@ class TestPatternBody:
         body = report_patterns.pattern_body("web/selectors", [issue(1), issue(2), issue(3)])
         assert "Not tied to one cell" in body
         assert "#1, #2, #3" in body
+
+    def test_groups_by_cell_and_flags_the_one_at_threshold(self):
+        body = report_patterns.pattern_body(
+            "data/first-queries",
+            [
+                issue(1, cell="sql-cell-first-queries-totals"),
+                issue(2, cell="sql-cell-first-queries-totals"),
+                issue(3),
+            ],
+        )
+        assert "#1, #2" in body
+        assert "at or over the per-cell threshold" in body
+        assert "#3" in body
+        assert "Not tied to one cell" in body

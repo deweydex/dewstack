@@ -767,6 +767,46 @@ p code, li code, td code {
 .dl-report-doors a { color: var(--dl-link); }
 .dl-report-doors a:hover { color: var(--dl-fg); }
 
+/* A SQL or Python cell's own report toggle (build.py's
+   cell_report_markup()) — a small circular icon rather than a fourth
+   text button crowding the actions row, so this overrides that row's own
+   blanket "every button gets this padding and border" rule below rather
+   than inheriting it. Its panel reuses .dl-report-doors above for the
+   link styling, plus this cell-scoped variant for the padding/border a
+   block sitting inside a cell needs — the footer has no cell border to
+   sit against. */
+.dl-sql-actions .dl-report-icon, .dl-py-actions .dl-report-icon {
+  width: 1.6rem;
+  height: 1.6rem;
+  padding: 0;
+  border-radius: 50%;
+  border: 1px solid var(--dl-cell-border);
+  background: none;
+  color: var(--dl-muted);
+  font-size: 0.78rem;
+  line-height: 1;
+  cursor: pointer;
+}
+.dl-sql-actions .dl-report-icon:hover, .dl-py-actions .dl-report-icon:hover {
+  color: var(--dl-orange-text);
+  border-color: var(--dl-orange);
+}
+.dl-report-icon[aria-expanded="true"] {
+  background: var(--dl-orange);
+  border-color: var(--dl-orange);
+  color: #fff;
+}
+.dl-cell-report-doors {
+  margin-top: 0.6rem;
+  padding: 0.6rem 0.75rem;
+  border: 1px solid var(--dl-cell-border);
+  border-radius: 4px;
+  background: var(--dl-panel-bg);
+  font-size: 0.82rem;
+}
+.dl-cell-report-doors[hidden] { display: none; }
+.dl-cell-report-doors.dl-report-doors p { margin: 0; }
+
 /* ------------------------------------------------------------- site editor */
 
 /* The web track's live example: an HTML/CSS/JS pane the reader can type

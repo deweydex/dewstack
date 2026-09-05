@@ -45,6 +45,20 @@ the issue tracker itself still work exactly as before.
 
 ---
 
+## An even quicker way: from a SQL or Python cell
+
+Every SQL and Python cell has a small circle among its own buttons, next
+to Reset. Click it, and the same three doors open, this time already
+knowing which cell you were on. Choose "It gives an error," and your
+code exactly as you have it, and whatever the cell last showed, are both
+included in the report. You do not need to copy either one yourself.
+
+A very long cell or a very long error is cut short rather than left out,
+so the link stays short enough for GitHub's own form to open. Paste the
+rest yourself if the missing part matters.
+
+---
+
 ## Three kinds of problem
 
 It helps to know which one you are looking at, because what is useful to

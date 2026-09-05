@@ -41,7 +41,10 @@ this file is dewstack's own, since dewstack's content, cell types, and
   [Troubleshooting](tutorials/reference/troubleshooting/troubleshooting.md)
   already covers the common shapes of "it does not work" for both cell
   types — check whether the report is one of those before assuming it is
-  new.
+  new. A report filed from a SQL or Python cell's own report icon carries
+  `cell`, `code` and `output` fields — the cell as the student had it and
+  whatever it last showed — so read those before asking the student to
+  reproduce anything.
 - **"The page is wrong, or I could not follow it"** — a factual mistake
   (a wrong query result, a broken link, a stale reference to the old
   `sources/` material) or a plain-language problem. These need different

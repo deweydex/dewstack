@@ -11,11 +11,10 @@ they share a root cause — to whoever picks it up
 (`.claude/skills/triage-report/SKILL.md`'s own "Working a pattern issue"
 section). Paired with the identical script in deweydex/dewlab.
 
-The per-cell threshold has nothing to match yet, since this repository's
-report form does not carry a `Cell` field the way dewlab's does — only
-the page-level threshold can fire here for now. It stays in, rather than
-being stripped out, so nothing has to change here the day a cell-level
-report button exists for this site's own SQL and site-editor cells.
+The per-cell threshold matches reports carrying a `Cell` field — filed
+either from a SQL or Python cell's own report icon, or by hand against a
+site-editor block. A report with no `Cell` field only ever counts toward
+the page-level threshold.
 
 Idempotent by page: a hidden `<!-- pattern-key: <page> -->` marker in the
 issue body is how a second run finds the issue it already opened for a
