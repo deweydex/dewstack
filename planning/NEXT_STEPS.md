@@ -584,13 +584,25 @@ their own declared list; `python -m pytest -q`: 47 tests (1 new).
 
 ### Step 8. Data Arc 2, then the full-stack arc
 
-Data Arc 2 is fresh: design before typing; a real dataset from Our World
-in Data, loaded, cleaned, queried; questions that need two tables; a
-chart from a query. Revised by step 1 and by question 16 (pandas and
-matplotlib, not SQL alone — see the packages note just above, which this
-step's pages will need to actually declare once a Python/pandas cell
-type exists to declare them). Then the three full-stack pages, with plan
-section 12 as the outline of the first.
+Revised by item 16 (2026-09-05), on top of step 1's earlier revision:
+this is where the data track's six themes actually land. SQL is done
+(Arc 1, step 7); this arc adds pandas, matplotlib, forms, exploring
+data, and exporting/importing as its real content, not as pages tacked
+on afterward. The shape step 1 already settled — design before typing;
+a real dataset from Our World in Data, loaded, cleaned, queried;
+questions that need two tables; a chart from a query — still covers the
+SQL-and-design half; pandas and matplotlib are the natural home for
+exploring-data-and-charting, and forms and export/import likely want a
+page or two of their own beyond that original four. Formal database
+theory (normal forms and the like) is explicitly not part of this arc —
+deferred to Level 6, per item 16. Needs its own page-by-page breakdown
+before anyone starts writing it; not done yet, and this paragraph is not
+that breakdown. The packages note just above is the infrastructure this
+arc's pandas/matplotlib pages will lean on: whatever Python/pandas cell
+type they end up using just needs to declare its own packages the same
+way a SQL cell declares `sqlite3`, and only pages using it pay for the
+download. Then the three full-stack pages, with plan section 12 as the
+outline of the first.
 
 ### Ongoing, every step
 
@@ -698,10 +710,13 @@ step arrives.
 17. **WADB_Tutorials, reframed 2026-09-05.** Rather than a legacy source
     being slowly superseded, it becomes its own named path — "Previous
     Web Authoring Path" — offered alongside the redesigned one rather
-    than retired. Lessons 11 to 13 and the SQL quiz (the two pieces the
-    README could not yet call superseded) are being rebuilt as native
-    pages under that name, in parallel with the redesign above, so
-    neither piece of work blocks the other.
+    than retired. Lessons 11 to 13 (Flexbox/Grid, component design, CSS
+    animation) are rebuilt as native pages under that name. The SQL quiz
+    was rebuilt too, independently and at nearly the same time, as the
+    data track's own official practice page (step 7 item 4, below) —
+    the two efforts collided, and the copy under this module was removed
+    once that became clear, rather than keeping two quizzes teaching the
+    same five tasks.
 
 ---
 
