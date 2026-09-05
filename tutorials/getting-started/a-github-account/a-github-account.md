@@ -4,7 +4,7 @@ slug: a-github-account
 module: getting-started
 module_title: "Getting started"
 series: welcome
-version: 2026.09.05.2
+version: 2026.09.05.3
 ---
 
 # A GitHub account
@@ -84,5 +84,6 @@ Find the pack at [education.github.com/pack](https://education.github.com/pack).
 ## What you have now
 
 A GitHub account, and a place your work can live once you start putting
-files into it. The next page, [an editor](tutorial:an-editor), covers
-what you write those files with.
+files into it. The next page, [issues and pull
+requests](tutorial:issues-and-pull-requests), covers two more things
+this account lets you do.
