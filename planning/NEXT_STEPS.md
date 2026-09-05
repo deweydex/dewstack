@@ -57,7 +57,7 @@ module descriptor for later. See step 0, item 5.
 | `sources/teaching-materials/` | The web authoring and database subset of everlearning's `Teaching materials/` folder: the Database Methods notebook sequence and live project brief, the Web Authoring briefs and templates, Break and Make a Website, exam material, and the Level 6 module descriptor. Coverage material, not published. Assessed in `PAGE_BY_PAGE.md` section 6. |
 | `databases/sqlite_tutorial.ipynb` | The dinosaur notebook, opened from the README in Colab. |
 | `tools/add_course_bar.py` | Puts the course bar on the copies. Its links are moot now that the copies are unpublished. Keep or delete; see the questions. |
-| `tools/measure_sentences.py` | Counts sentences in a markdown file and lists the ones over twenty-five words. The first pass of the plain-language bar. |
+| `tools/measure_sentences.py` | Counts sentences in a markdown file and shows the longest few per file, as candidates for the trim test (plan section 3, check 2). Not a pass/fail gate. |
 | `planning/` | The plan, the page-by-page assessment, this, and `LEVEL6_COVERAGE.md` (a coverage map against the Level 6 module descriptor, nothing scheduled from it yet). |
 | `.github/workflows/` | `tests.yml` on every pull request; `deploy.yml` on every push to `main`. |
 
