@@ -341,6 +341,20 @@ def test_sql_block_becomes_a_cell(tree):
     assert '<label for="sql-cell-page-0-input">SQL</label>' in page
     assert 'class="dl-sql-download"' in page
     assert 'class="dl-sql-load"' in page
+    assert 'window.DEWSTACK_SQL_PACKAGES = ["sqlite3"];' in page
+
+
+def test_page_with_only_a_check_block_still_declares_sqlite3(tree):
+    # A page can have a sql-check block with no sql cell at all (the check
+    # runs against a connection some other page built); it still needs
+    # sqlite3, so the package list should not come back empty.
+    tutorials, out = tree
+    body = "# A page\n\n```sql-check db=quiz task=check_products_table\n```\n"
+    write_tutorial(tutorials, "page", body)
+    write_order(tutorials, ["page"])
+    run_build(tree)
+    page = (out / "tutorials/mod/page/index.html").read_text(encoding="utf-8")
+    assert 'window.DEWSTACK_SQL_PACKAGES = ["sqlite3"];' in page
 
 
 def test_sql_persist_cell_is_marked_and_labelled(tree):

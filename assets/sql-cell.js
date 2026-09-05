@@ -10,6 +10,17 @@
  * none of that file's cell-execution, traceback, or widget machinery
  * comes with it. assets/sql_tools.py is the trimmed Python half.
  *
+ * One Pyodide, one engine, everywhere — decided 2026-09-05, so a page
+ * that eventually needs pandas and matplotlib (Data Arc 2) and a page
+ * that only ever needs sqlite3 (Data Arc 1) still share the same code
+ * path, rather than two engines to keep in step. What actually
+ * downloads is not one fixed bundle, though: build.py already knows,
+ * at build time, exactly which fenced blocks are on a page, so it
+ * writes that page's own real package list into `window.
+ * DEWSTACK_SQL_PACKAGES` — sqlite3 alone for a page with only SQL
+ * cells, more once a Python/pandas cell type exists and a page uses
+ * one. No page pays for a package its own content never imports.
+ *
  * One Pyodide boots per page, shared by every cell on it; assets/
  * sql_tools.py keeps one sqlite3 connection per `data-db` name, so cells
  * sharing a name see the same tables and cells with different names never
@@ -69,8 +80,13 @@
     const { loadPyodide } = await import(/* webpackIgnore: true */ base + "pyodide.mjs");
     const pyodide = await loadPyodide({ indexURL: base });
 
-    setStatus(cells, "Loading sqlite3…");
-    await pyodide.loadPackage(["sqlite3"]);
+    /* build.py writes this page's own real package list — just what its
+     * fenced blocks actually need, no more. Falls back to sqlite3 alone
+     * if the variable is somehow missing, since every page using this
+     * script has at least one SQL cell or check. */
+    const packages = window.DEWSTACK_SQL_PACKAGES || ["sqlite3"];
+    setStatus(cells, `Loading ${packages.join(", ")}…`);
+    await pyodide.loadPackage(packages);
 
     setStatus(cells, "Preparing the SQL cell…");
     const toolsUrl = OWN_SCRIPT_URL ? new URL("sql_tools.py", OWN_SCRIPT_URL).href : "sql_tools.py";

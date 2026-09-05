@@ -565,12 +565,32 @@ tests already counted above). axe-core: 0 violations, no sideways
 scroll, on both new pages at 1200 and 390 pixels, after the contrast
 fix.
 
+**One Pyodide engine, packages loaded per page, decided 2026-09-05.**
+Ahead of step 8: question 16 confirmed Data Arc 2 needs pandas and
+matplotlib, not SQL alone (`PAGE_BY_PAGE.md`'s reading of the live
+project brief and the pandas notebook sequence already said as much).
+The question this raised — one shared Pyodide config for every page, or
+a leaner one for Arc 1's SQL-only pages and a heavier one only where
+pandas is used — is answered by not choosing: `build.py`'s
+`render_body()` now gathers the exact packages a page's own fenced
+blocks need (a SQL cell or check still means `sqlite3` alone) and writes
+that page's real list into `window.DEWSTACK_SQL_PACKAGES`;
+`assets/sql-cell.js` loads exactly that list, nothing assumed. One
+engine, one code path, and a page that has not yet used pandas does not
+pay to download it. `tools/fetch_pyodide.py`'s own `--packages` default
+stays `sqlite3` until a page actually declares more. Verified live: the
+existing SQL cell and check pages still boot and run correctly reading
+their own declared list; `python -m pytest -q`: 47 tests (1 new).
+
 ### Step 8. Data Arc 2, then the full-stack arc
 
 Data Arc 2 is fresh: design before typing; a real dataset from Our World
 in Data, loaded, cleaned, queried; questions that need two tables; a
-chart from a query. Revised by step 1. Then the three full-stack pages,
-with plan section 12 as the outline of the first.
+chart from a query. Revised by step 1 and by question 16 (pandas and
+matplotlib, not SQL alone — see the packages note just above, which this
+step's pages will need to actually declare once a Python/pandas cell
+type exists to declare them). Then the three full-stack pages, with plan
+section 12 as the outline of the first.
 
 ### Ongoing, every step
 
