@@ -318,18 +318,24 @@ templates in `sources/teaching-materials/`), verified with Playwright and
 axe: 0 violations, no overflow at 1200 or 390 pixels, every page linking
 to every other, Flexbox and Grid both confirmed live.
 
-D1 to D4 of the eight Arc 2 pages done 2026-09-05, in a new series `several-pages`:
+All eight Arc 2 pages done 2026-09-05, in a new series `several-pages`:
 `planning-a-site` (audience, site map, wireframe, sent to `project_wad`'s
 `planning.md`), `pages-and-navigation` (`aria-current`, consistent
 navigation, demonstrated live by moving the marker between two links and
 watching the bold weight follow it), `cards-in-a-row` (the three numbers
 behind `flex`: grow, shrink, basis), `a-grid-gallery`
 (`repeat(auto-fit, minmax())`, demonstrated by narrowing the preview and
-watching the tiles reflow from two rows to four with no media query).
-Each page's "your turn" sends the student to the matching real code
-already sitting in `project_wad`, not to new code. D5 to D8 (navigation
-on a phone, a form, images and file size, documenting what you built)
-are next.
+watching the tiles reflow from two rows to four with no media query),
+`navigation-on-a-phone` (`flex-direction: column` inside a media query,
+demonstrated the same way), `a-form` (`<label for>`, demonstrated by
+clicking a label's text and watching focus land on its input),
+`images-and-file-size` (an `images/` folder, JPEG/PNG/SVG, resizing
+before adding a photo — no site editor, since file size is not a
+live-preview concept), `documenting-what-you-built` (`readme.md` and
+`maintenance.md`, closing the arc that `planning-a-site` opened). Each
+page's "your turn" sends the student to the matching real code already
+sitting in `project_wad`, not to new code written for the tutorial.
+Step 6 is done; step 7 (Pyodide, the SQL cell, data Arc 1) is next.
 
 ### Step 7. Pyodide, the SQL cell, and data Arc 1
 
