@@ -471,7 +471,7 @@ pages and the front page, at 1200 and 390 pixels. `python -m pytest -q`:
 touched parts of `README.md`: every sentence at or under 25 words.
 
 Item 4, the playground's SQL section and the quiz rebuilt as practice
-pages, is not started.
+pages, is done — see the note after the persistence entry below.
 
 **Persistence, superseding the Download/Load framing above, 2026-09-05:**
 raised in conversation — a reader who forgets to click Load, or picks
@@ -503,6 +503,67 @@ subsequent Load both confirmed to still work, with Load's file becoming
 the new saved copy. `python -m pytest -q`: 37 tests. axe-core: 0
 violations, no sideways scroll, on all four pages at 1200 and 390
 pixels.
+
+**Item 4, done 2026-09-05:** module `data`, new series `practice` —
+`sql-practice` and `the-tentacular-plushies-quiz`. A real conflict
+surfaced first: this item's own wording calls the quiz "scored", but
+`README.md` already promises "the tutorials and exercises here are not
+graded." Rereading the original `WADB_Tutorials` quiz settled it: its
+own "Check My Work" button was always an instant, private self-check —
+closer to dewlab's `check()` (instant feedback, records nothing) than
+to a grade — so that is what got built, worded carefully as a check,
+never a score.
+
+`sql-practice`: the playground's five exercises, against the same
+students/courses seed data the playground itself used (deliberately not
+the dinosaurs Arc 1 already used, so the exercises test transfer rather
+than memory of one example). A hint per exercise (`<details
+class="dl-hint">`), full solutions collected in one `## Solutions`
+section at the foot, per this item's own wording — not interleaved
+per-exercise the way dewlab's own `-practice.md` convention does it.
+
+`the-tentacular-plushies-quiz`: five tasks building a small shop
+database, one persisted `cell=quiz` box for the reader's own SQL, and a
+new `` ```sql-check db=... task=... `` block type (`build.py`,
+`assets/sql-cell.js`) rendering a "Check my work" button per task.
+Clicking one calls a `check_*` function in `assets/sql_tools.py`
+(`check_products_table`, `check_transactions_table`,
+`check_products_rows`, `check_transactions_rows`, `check_quiz_queries`)
+against the quiz's own connection and shows one line: what is missing,
+or that the task's requirements are met. Task 5's check doesn't inspect
+the reader's actual queries — there is more than one correct `SELECT` —
+only whether the underlying data could answer them (a product over 30,
+a product under 15 in stock).
+
+A real, pre-existing accessibility gap turned up building this: axe-core
+found `var(--dl-orange)` fails WCAG AA contrast as small text on the
+light background (about 3.45:1, needs 4.5:1) — caught because
+`.dl-hint`'s summary is always visible, unlike a conditionally-shown
+error a normal crawl might never render. `.dl-hint`'s summary text
+dropped the orange (kept it only as the left border) and `.dl-sql-error`
+switched from orange text to `--dl-fg` text with an orange border. The
+same pattern turned out to be pervasive and pre-existing across the rest
+of `site.css` — every hover state that coloured its text orange, plus
+`.dl-search-match`'s static highlight — so it was fixed properly rather
+than piecemeal: a new theme-aware `--dl-orange-text` token (light
+`#b04f1a`, dark `#d4692a`, mirroring `--dl-link-default`'s own existing
+split for the identical reason) now backs every one of those nine rules,
+leaving `--dl-orange` itself for borders, backgrounds and focus outlines,
+which already passed the lower 3:1 non-text threshold. Verified live by
+hovering each real element (the Settings toggle, a page's table of
+contents, a door on the front page, the site editor's and SQL cell's own
+buttons, the quiz's Check my work button) and running axe-core in both
+themes at both widths — 0 contrast violations throughout.
+
+Verified live: every check button confirmed to fail before the matching
+SQL is run and pass after, across all five tasks, in a real browser
+against a real Pyodide; the practice page's hints and solutions open and
+close; zero console errors throughout. `python -m pytest -q`: 46 tests
+(12 new: 7 for the `check_*` functions in `tests/test_sql_tools.py`, 2
+for the `sql-check` block in `tests/test_build.py`, plus the persist
+tests already counted above). axe-core: 0 violations, no sideways
+scroll, on both new pages at 1200 and 390 pixels, after the contrast
+fix.
 
 ### Step 8. Data Arc 2, then the full-stack arc
 

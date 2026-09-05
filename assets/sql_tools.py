@@ -10,6 +10,12 @@ it keeps the Pyodide download to core-plus-sqlite3 alone.
 Loaded once per page (assets/sql-cell.js's boot()); every `.dl-sql-cell`
 on that page keeps its own named connection here, so two cells sharing a
 `db` name see the same tables and rows, and two different names never do.
+
+The `check_*` functions below are the tentacular-plushies quiz's
+self-check: each looks at a named connection's tables and returns one
+line saying whether a task's requirements are met. They are a check, not
+a grade — instant, run only when a reader clicks a button, and nothing
+here records who ran one or what it found.
 """
 
 from __future__ import annotations
@@ -84,6 +90,101 @@ def run_sql(db_name: str, script: str, max_rows: int = 50) -> str:
         return result
     except sqlite3.Error as exc:
         return f'<p class="dl-sql-error">{html.escape(str(exc))}</p>'
+
+
+def _table_columns(conn: sqlite3.Connection, table: str) -> set[str] | None:
+    """The column names of `table`, or `None` if it does not exist yet.
+    `table` is always one of this file's own hardcoded names, never text
+    a reader typed, so building it into a query here is safe."""
+    try:
+        cursor = conn.execute(f"SELECT * FROM {table} LIMIT 0")
+    except sqlite3.Error:
+        return None
+    return {description[0] for description in cursor.description}
+
+
+def _check_html(ok: bool, message: str) -> str:
+    """One line of self-check feedback: instant, and never sent
+    anywhere. A check like this tells a reader whether a task's
+    requirements are met; it is not a grade, and nothing here records
+    who ran it or what the result was."""
+    css_class = "dl-check-pass" if ok else "dl-check-fail"
+    icon = "✓" if ok else "✗"
+    return f'<p class="{css_class}">{icon} {html.escape(message)}</p>'
+
+
+def check_products_table(db_name: str) -> str:
+    """Task 1: does `products` exist, with the columns the task asks
+    for?"""
+    columns = _table_columns(_connection(db_name), "products")
+    if columns is None:
+        return _check_html(False, "There is no products table yet.")
+    required = {"id", "product_name", "category", "price", "stock_quantity"}
+    missing = required - columns
+    if missing:
+        return _check_html(False, f"products is missing: {', '.join(sorted(missing))}.")
+    return _check_html(True, "products exists, with all the required columns.")
+
+
+def check_transactions_table(db_name: str) -> str:
+    """Task 2: does `transactions` exist, with the columns the task
+    asks for? (The foreign key itself isn't checked: sqlite3 only
+    enforces one if it was asked to, and this task is about the column
+    being there, ready to hold a product's id.)"""
+    columns = _table_columns(_connection(db_name), "transactions")
+    if columns is None:
+        return _check_html(False, "There is no transactions table yet.")
+    required = {"id", "product_id", "customer_name", "quantity"}
+    missing = required - columns
+    if missing:
+        return _check_html(False, f"transactions is missing: {', '.join(sorted(missing))}.")
+    return _check_html(True, "transactions exists, with all the required columns.")
+
+
+def check_products_rows(db_name: str) -> str:
+    """Task 3: at least four products, across at least three
+    categories."""
+    conn = _connection(db_name)
+    if _table_columns(conn, "products") is None:
+        return _check_html(False, "products needs to exist before this check means anything.")
+    rows = conn.execute("SELECT category FROM products").fetchall()
+    categories = {row[0] for row in rows}
+    if len(rows) < 4:
+        return _check_html(False, f"products has {len(rows)} row(s); the task asks for at least four.")
+    if len(categories) < 3:
+        return _check_html(False, f"products uses {len(categories)} category or categories; the task asks for at least three.")
+    return _check_html(True, f"products has {len(rows)} rows across {len(categories)} categories.")
+
+
+def check_transactions_rows(db_name: str) -> str:
+    """Task 4: at least three transactions."""
+    conn = _connection(db_name)
+    if _table_columns(conn, "transactions") is None:
+        return _check_html(False, "transactions needs to exist before this check means anything.")
+    count = conn.execute("SELECT COUNT(*) FROM transactions").fetchone()[0]
+    if count < 3:
+        return _check_html(False, f"transactions has {count} row(s); the task asks for at least three.")
+    return _check_html(True, f"transactions has {count} rows.")
+
+
+def check_quiz_queries(db_name: str) -> str:
+    """Task 5: the three required queries would each have something to
+    return. Not a check of the queries themselves — there's no one
+    right way to write a SELECT — but of whether the data underneath
+    them can produce a real answer."""
+    conn = _connection(db_name)
+    if _table_columns(conn, "products") is None or _table_columns(conn, "transactions") is None:
+        return _check_html(False, "Both tables are needed before this check means anything.")
+    over_30 = conn.execute("SELECT COUNT(*) FROM products WHERE price > 30").fetchone()[0]
+    under_15 = conn.execute("SELECT COUNT(*) FROM products WHERE stock_quantity < 15").fetchone()[0]
+    problems = []
+    if over_30 == 0:
+        problems.append("no product has a price over 30, so the first query would return nothing")
+    if under_15 == 0:
+        problems.append("no product has a stock_quantity under 15, so the second query would return nothing")
+    if problems:
+        return _check_html(False, "; ".join(problems).capitalize() + ".")
+    return _check_html(True, "Both conditions have at least one matching product.")
 
 
 def _table_html(columns: list[str], rows: list[tuple], max_rows: int, more: bool) -> str:

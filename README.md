@@ -129,11 +129,15 @@ this site.
 - The data track's four pages, native to this site, where the data track
   now begins:
   <https://deweydex.github.io/dewstack/tutorials/data/a-table-is-a-list-of-rows/>
-- The SQL playground, coverage material now that the four pages above
-  exist, not the primary path:
-  <https://deweydex.github.io/HTML-CSS-SQL-JS/>
-- The SQL quiz, five tasks on a small shop database. Not yet rebuilt as a
-  practice page here, so this is still the primary path:
+- SQL practice, five exercises with hints and solutions, native to this
+  site:
+  <https://deweydex.github.io/dewstack/tutorials/data/sql-practice/>
+- The Tentacular Plushies quiz, five tasks on a small shop database, with
+  an instant self-check per task, native to this site:
+  <https://deweydex.github.io/dewstack/tutorials/data/the-tentacular-plushies-quiz/>
+- The SQL playground and the original quiz, coverage material now that
+  the pages above exist, not the primary path:
+  <https://deweydex.github.io/HTML-CSS-SQL-JS/> and
   <https://deweydex.github.io/WADB_Tutorials/tentacular-plushies-quiz-final.html>
 - The SQLite notebook, the same ideas in Python, with a join across two
   tables. Coverage material now that the four pages above run the same
@@ -145,10 +149,8 @@ this site.
 More database tutorials are being written. They will appear on the
 course website as they are ready, in this order:
 
-1. The playground's SQL section and the quiz's five tasks, rebuilt as
-   practice pages beside the four above, with solutions.
-2. Designing a database before typing.
-3. A real dataset, loaded, queried and charted.
+1. Designing a database before typing.
+2. A real dataset, loaded, queried and charted.
 
 ## Full stack: putting the two together
 

@@ -296,6 +296,9 @@ SITE_PLACEHOLDER = "<!--SITE-EDITOR:{}-->"
 SQL_BLOCK = re.compile(r"```sql cell=(?P<name>[a-z0-9-]+)(?P<persist> persist)?\n(?P<code>.*?)\n```\n?", re.DOTALL)
 SQL_PLACEHOLDER = "<!--SQL-CELL:{}-->"
 
+SQL_CHECK_BLOCK = re.compile(r"```sql-check db=(?P<db>[a-z0-9-]+) task=(?P<task>[a-z0-9_]+)\n```\n?")
+SQL_CHECK_PLACEHOLDER = "<!--SQL-CHECK:{}-->"
+
 
 def extract_site_editors(body: str, path: Path) -> tuple[str, list[dict]]:
     """Pulls `site=` fenced blocks out of the markdown source, leaving a
@@ -459,11 +462,45 @@ def render_sql_cell(cell: dict, index: int, tutorial: Tutorial) -> str:
     )
 
 
+def extract_sql_checks(body: str, path: Path) -> tuple[str, list[dict]]:
+    """Pulls `sql-check db=... task=...` fenced blocks out of the markdown
+    source, the same way `extract_sql_cells()` does. A check block carries
+    no code of its own — `task` names a `check_*` function in
+    assets/sql_tools.py, run against `db`'s connection when a reader
+    clicks the button assets/sql-cell.js renders in its place."""
+    matches = list(SQL_CHECK_BLOCK.finditer(body))
+    if not matches:
+        return body, []
+
+    checks = [{"db": match.group("db"), "task": match.group("task")} for match in matches]
+
+    new_body = body
+    for index, match in reversed(list(enumerate(matches))):
+        new_body = new_body[:match.start()] + f"\n\n{SQL_CHECK_PLACEHOLDER.format(index)}\n\n" + new_body[match.end():]
+    return new_body, checks
+
+
+def render_sql_check(check: dict, index: int, tutorial: Tutorial) -> str:
+    """One self-check button: click it, and assets/sql-cell.js calls the
+    named `check_*` function against `data-db`'s connection and shows
+    what it says. Instant, and never sent anywhere — a check, not a
+    grade."""
+    check_id = f"sql-check-{tutorial.slug}-{index}"
+    return (
+        f'<div class="dl-sql-check" id="{check_id}" '
+        f'data-db="{html.escape(check["db"])}" data-task="{html.escape(check["task"])}">'
+        f'<button type="button" class="dl-sql-check-run">Check my work</button>'
+        f'<div class="dl-sql-check-output" aria-live="polite"></div>'
+        f"</div>"
+    )
+
+
 def render_body(tutorial: Tutorial, by_slug: dict[str, Tutorial]) -> tuple[str, str, bool, bool]:
     """The tutorial's HTML, its table of contents, whether it needs the site
     editor's script, and whether it needs the SQL cell's."""
     source, editors = extract_site_editors(tutorial.body, tutorial.path)
     source, sql_cells = extract_sql_cells(source, tutorial.path)
+    source, sql_checks = extract_sql_checks(source, tutorial.path)
     md = make_markdown()
     rendered = md.convert(source)
     # tabindex="0" so a static code block that ends up wider than the reading
@@ -476,7 +513,9 @@ def render_body(tutorial: Tutorial, by_slug: dict[str, Tutorial]) -> tuple[str, 
         rendered = rendered.replace(SITE_PLACEHOLDER.format(index), render_site_editor(editor, index, tutorial))
     for index, cell in enumerate(sql_cells):
         rendered = rendered.replace(SQL_PLACEHOLDER.format(index), render_sql_cell(cell, index, tutorial))
-    return rendered, render_toc(md.toc_tokens), bool(editors), bool(sql_cells)
+    for index, check in enumerate(sql_checks):
+        rendered = rendered.replace(SQL_CHECK_PLACEHOLDER.format(index), render_sql_check(check, index, tutorial))
+    return rendered, render_toc(md.toc_tokens), bool(editors), bool(sql_cells or sql_checks)
 
 
 def render_toc(tokens: list[dict]) -> str:
