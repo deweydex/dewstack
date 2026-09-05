@@ -310,8 +310,26 @@ free to rename their own copy now or later.
 
 `project_wad` was Josh's own `portfoliotest` repository, renamed rather
 than created empty; its original README (a photograph and a résumé link)
-is still there in git history and will be replaced, not deleted, once
-the five-page skeleton is built.
+was in git history, not deleted, and is now replaced by the five-page
+skeleton (`index.html`, `about.html`, `gallery.html`, `contact.html`,
+`resources.html`, `styles.css`, and `planning.md`/`readme.md`/
+`maintenance.md`, written fresh rather than reusing the ML-specific
+templates in `sources/teaching-materials/`), verified with Playwright and
+axe: 0 violations, no overflow at 1200 or 390 pixels, every page linking
+to every other, Flexbox and Grid both confirmed live.
+
+D1 to D4 of the eight Arc 2 pages done 2026-09-05, in a new series `several-pages`:
+`planning-a-site` (audience, site map, wireframe, sent to `project_wad`'s
+`planning.md`), `pages-and-navigation` (`aria-current`, consistent
+navigation, demonstrated live by moving the marker between two links and
+watching the bold weight follow it), `cards-in-a-row` (the three numbers
+behind `flex`: grow, shrink, basis), `a-grid-gallery`
+(`repeat(auto-fit, minmax())`, demonstrated by narrowing the preview and
+watching the tiles reflow from two rows to four with no media query).
+Each page's "your turn" sends the student to the matching real code
+already sitting in `project_wad`, not to new code. D5 to D8 (navigation
+on a phone, a form, images and file size, documenting what you built)
+are next.
 
 ### Step 7. Pyodide, the SQL cell, and data Arc 1
 
