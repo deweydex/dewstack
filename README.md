@@ -13,6 +13,16 @@ the longer map. It has every link, including the older lessons and the
 notebook. It is for teachers, and for anyone who wants to see how the
 course is put together.
 
+The tutorials and exercises here are not graded. Only the two projects and
+the exam are, and your teacher covers those in class. That leaves room to
+break things and fix them while you are still learning. Something not
+working is the normal shape of building a website, not a sign you have done
+anything wrong.
+
+[`docs/FOR_STUDENTS.md`](docs/FOR_STUDENTS.md) walks through how a page on
+this site works. The site's own [FAQ](https://deweydex.github.io/dewstack/tutorials/reference/faq/)
+answers the questions people ask most before or during the course.
+
 ## Before you begin
 
 Three things, in this order. First, a free GitHub account: GitHub is
@@ -101,6 +111,8 @@ this site.
   <https://deweydex.github.io/WADB_Tutorials/lessons/11-flexbox-grid-advanced.html>
 - The GitHub guides, from making an account to publishing a site:
   <https://deweydex.github.io/WADB_Tutorials/github-guides/01-getting-started.html>
+- FAQ, for the questions people ask most before or during the course:
+  <https://deweydex.github.io/dewstack/tutorials/reference/faq/>
 - Troubleshooting, for when something does not work and you cannot see
   why: <https://deweydex.github.io/dewstack/tutorials/reference/troubleshooting/>
 - Quick reference for HTML, CSS and SQL:
