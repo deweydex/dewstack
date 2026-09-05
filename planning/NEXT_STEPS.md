@@ -735,16 +735,39 @@ step arrives.
     and "the flowershow website" both have material covering this ground
     already — the flowershow link is still needed from Josh before either
     can be quarried.
-17. **WADB_Tutorials, reframed 2026-09-05.** Rather than a legacy source
-    being slowly superseded, it becomes its own named path — "Previous
+17. **WADB_Tutorials, reframed 2026-09-05, then the reframing itself
+    reversed the same day.** First move: rather than a legacy source
+    being slowly superseded, it became its own named path — "Previous
     Web Authoring Path" — offered alongside the redesigned one rather
     than retired. Lessons 11 to 13 (Flexbox/Grid, component design, CSS
-    animation) are rebuilt as native pages under that name. The SQL quiz
-    was rebuilt too, independently and at nearly the same time, as the
-    data track's own official practice page (step 7 item 4, below) —
-    the two efforts collided, and the copy under this module was removed
-    once that became clear, rather than keeping two quizzes teaching the
-    same five tasks.
+    animation) were rebuilt as native pages under that name. The SQL
+    quiz was rebuilt too, independently and at nearly the same time, as
+    the data track's own official practice page (step 7 item 4, below)
+    — the two efforts collided, and the copy under the new module was
+    removed once that became clear, rather than keeping two quizzes
+    teaching the same five tasks. That left the module holding only the
+    three layout/animation pages. Second move, once item 15's four
+    web-authoring stages were decided: those three pages are exactly
+    "modern HTML/CSS" by any reading, so they moved again, into `web`'s
+    `first-site` series proper, right after `flexbox-first-steps`. With
+    nothing left in it, Previous Web Authoring Path was retired rather
+    than kept as an empty shell — `modules.yaml`'s entry and note, the
+    front page's mention, and the module's own folder are all gone. The
+    net effect: WADB_Tutorials' content is now fully absorbed into the
+    redesign, and the "keep it as a separate path" idea did not survive
+    contact with the four-stage plan — worth knowing if the same idea
+    comes up again for the parts of WADB_Tutorials still not superseded
+    (lessons 11 to 13's own originals stay live at their old address
+    regardless, per the ground rules).
+18. **The several-pages series does not need a name in the four-stage
+    scheme, decided 2026-09-05.** `planning-a-site`, `pages-and-navigation`,
+    `a-form`, `images-and-file-size`, `documenting-what-you-built` are not
+    part of teaching HTML and CSS from basic to modern — they are Web Arc
+    2's own already-established role, applying the language to a real
+    multi-page site via the second starter, `project_wad`. Item 15's four
+    stages describe Arc 1; Arc 2 stays Arc 2, under its own existing name
+    (step 6), rather than being folded in or given a fifth stage name it
+    was never asked to have.
 
 ---
 

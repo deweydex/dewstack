@@ -22,3 +22,6 @@ order:
   - media-queries
   - flexible-images
   - flexbox-first-steps
+  - named-grid-areas
+  - css-variables-and-bem
+  - keyframes-and-the-checkbox-hack
