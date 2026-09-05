@@ -756,6 +756,17 @@ p code, li code, td code {
 .dl-footer a { color: inherit; }
 .dl-footer a:hover { color: var(--dl-fg); }
 
+/* The "three doors" report disclosure. A plain <details> — clicking the
+ * summary reveals the list below it in normal flow, pushing the rest of
+ * the footer down rather than floating a dropdown that could sit over the
+ * page below it or trap a touch reader who cannot hover to dismiss it. */
+.dl-report-doors summary { cursor: pointer; color: inherit; }
+.dl-report-doors summary:hover,
+.dl-report-doors[open] summary { color: var(--dl-fg); }
+.dl-report-doors p { margin: 0.6rem 0 0; }
+.dl-report-doors a { color: var(--dl-link); }
+.dl-report-doors a:hover { color: var(--dl-fg); }
+
 /* ------------------------------------------------------------- site editor */
 
 /* The web track's live example: an HTML/CSS/JS pane the reader can type

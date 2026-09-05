@@ -4,7 +4,7 @@ slug: faq
 module: reference
 module_title: "Reference"
 series: shelf
-version: 2026.09.05.2
+version: 2026.09.05.3
 ---
 
 # FAQ
@@ -70,6 +70,8 @@ somewhere of your own.
 meet most often: a blank page, styles that will not apply, GitHub not
 taking a push. Each one comes with the checks that usually find it.
 
-If none of them explain it, most pages carry a link at the foot,
-"Something wrong on this page? Tell us." It opens a GitHub issue with the
-page and its version already filled in.
+If none of them explain it, most pages carry a line at the foot,
+"Something wrong on this page? Tell us." Click it and choose the door
+that fits: an error, or the page being wrong or hard to follow. Either
+one opens a GitHub issue with the page and its version already filled
+in.
