@@ -12,6 +12,26 @@ repeats neither. It points.
 
 ## 1. Where things stand
 
+**2026-09-05, student feedback pathway, fourth slice.**
+`.claude/skills/triage-report/SKILL.md`, so working the report inbox has
+a written order rather than being reinvented each session: read before
+acting, re-sort the student's guessed `kind`, dedupe, and the two hard
+stops — a database or web-standards question is Josh's call, and
+nothing closes without a person having looked. Paired with the same
+skill in `deweydex/dewlab`, adapted for this repository's own content and
+conventions (a slug is a contract, not a cell id; `sources/` is never
+emptied by deletion).
+
+Also `.github/workflows/auto-disable-feedback.yml`, a direct request:
+the report doors stay on, but turn themselves off on Tuesday,
+2026-09-08, without anyone needing to remember to. A genuine one-shot —
+cron's day-of-month/month fields carry the date, not a recurring weekday
+— and its last step deletes its own workflow file in the same commit
+that flips `planning/feedback.yaml`, so nothing is left behind to
+misfire on the same date next year. A manual run of the same workflow
+(`workflow_dispatch`) turns the doors off early, on purpose, rather than
+rehearsing it safely.
+
 **2026-09-05, student feedback pathway, third slice.**
 `getting-started/issues-and-pull-requests`, a new page between
 `a-github-account` and `an-editor`: what this repository's own file

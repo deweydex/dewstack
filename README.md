@@ -202,6 +202,16 @@ no such saving; copy a query you want to keep into a file of your own.
 
 ## For teachers
 
+**How a student's report reaches you.** Most pages carry a line at the
+foot, "Something wrong on this page? Tell us." It opens three doors: a
+question goes to GitHub Discussions, an error or a page that is wrong or
+hard to follow both open a prefilled GitHub issue. [`docs/REPORTING_A_PROBLEM.md`](docs/REPORTING_A_PROBLEM.md)
+is the student-facing version of this; [`.claude/skills/triage-report/SKILL.md`](.claude/skills/triage-report/SKILL.md)
+is the order to work an issue in once it arrives, kept as a written skill
+rather than something to reinvent each time. `planning/feedback.yaml` is
+the switch: `enabled: false` turns the doors off everywhere, without
+touching a tutorial, if reports need to pause for any reason.
+
 The planning notes are in [`planning/`](planning/).
 [`planning/CONSOLIDATION_PLAN.md`](planning/CONSOLIDATION_PLAN.md) says how
 the materials are being brought together here, in what order, and what has

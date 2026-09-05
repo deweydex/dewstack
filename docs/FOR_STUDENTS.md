@@ -79,6 +79,10 @@ not a setback.
 ## Something wrong?
 
 If a page has a mistake in it, or something on the site does not work,
-please tell your teacher. You can also open an issue on
-[the repository on GitHub](https://github.com/deweydex/dewstack/issues).
-You do not need to be certain it is a mistake first.
+please tell us. You do not need to be certain it is a mistake first. Most
+pages carry a line at the foot for exactly this, "Something wrong on this
+page? Tell us." Click it and pick the one that fits: a question, an
+error, or something wrong or hard to follow.
+[`REPORTING_A_PROBLEM.md`](REPORTING_A_PROBLEM.md) covers the rest: where
+to report something without that line handy, and what is helpful to
+include. You are always welcome to tell your teacher too.
