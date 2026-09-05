@@ -15,7 +15,8 @@ pick one that matches what you have already done.
 
 ## After you fork the starter
 
-Once your own copy of [`web`](https://github.com/deweydex/web) is
+Once your own copy of
+[`portfolio_wad`](https://github.com/deweydex/portfolio_wad) is
 published, you can build any of these in an afternoon, using only HTML:
 headings, paragraphs, lists and links.
 

@@ -283,6 +283,36 @@ pages (D rows in section 14, reshaped as section 15 says), quarrying
 lessons 11 to 13's examples for the editors' seeds. The front page's
 "Begin" part gains the second starter as the door to Arc 2.
 
+In progress, 2026-09-05. Question 2 resolved, by Josh: `web` renamed to
+`portfolio_wad`, and the second starter is `project_wad` rather than
+working-name `site`. `_wad` names both for Web Authoring and Development,
+the two modules likely to use these starters, though only Web Authoring
+carries an assessment against them today. Both names are meant to be
+readable on a student's own GitHub profile and to say clearly which is
+which; `portfolio_wad` and `project_wad` name the artefact each ends in
+(a personal portfolio; the assessed multi-page project) rather than
+repeating "web" and "site," near-synonyms that would not distinguish the
+two on sight. `web`'s rename left every file and its history intact;
+GitHub redirects the old address. Every reference to `deweydex/web`
+across dewstack is updated to `deweydex/portfolio_wad`; the historical
+ledger entries in section 7 and `PAGE_BY_PAGE.md` keep the old name,
+since they describe what was true at the time, the same way `dewadaba`
+stays in earlier entries after that rename.
+
+Both repositories are GitHub template repositories, at Josh's choice,
+confirmed as the right call: a template repo still shows the ordinary
+**Fork** button, so nothing already written about forking breaks, and
+**Use this template** additionally gives a copy with no visible link back
+and no shared history, which suits a portfolio a student may want to
+carry past the course under a plainer name. `your-copy-of-the-starter.md`
+now teaches both ways of copying `portfolio_wad` and says a student is
+free to rename their own copy now or later.
+
+`project_wad` was Josh's own `portfoliotest` repository, renamed rather
+than created empty; its original README (a photograph and a résumé link)
+is still there in git history and will be replaced, not deleted, once
+the five-page skeleton is built.
+
 ### Step 7. Pyodide, the SQL cell, and data Arc 1
 
 1. Copy dewlab's `pyodide-engine.js`, its worker and `tutorial_tools.py`
@@ -324,13 +354,11 @@ step arrives.
 1. **Hello page or A0?** Decided 2026-09-04, per the recommendation:
    folded into one page. `how-the-pieces-fit` covers the course and the
    shell together; the `hello` slug is retired.
-2. **The second starter's name and shape** (blocks step 6). Working name
-   `site`. A fork, as `web` is, or a GitHub template repository, which
-   gives a clean history and a "Use this template" button? A template is
-   the better fit for a project whose topic must differ from the
-   portfolio, and the getting-started page A3 can show both. The name
-   should keep the student's address readable: `username.github.io/site/`
-   is fine, `dewfolio` is not.
+2. **The second starter's name and shape.** Decided 2026-09-05, by Josh:
+   `project_wad`, alongside `web` renamed to `portfolio_wad`. Both are
+   GitHub template repositories, so both the **Fork** button and
+   **Use this template** are open to a student; getting-started page A3
+   covers both. See step 6's note for the naming reasoning.
 3. **Module and series slugs.** Settled for `reference` (module
    `reference`, series `shelf`) with step 2. Still open: `getting-started`
    (exists), `web` with series `first-site`, `several-pages`,

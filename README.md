@@ -43,11 +43,12 @@ You start with nothing and finish with a personal website at its own
 address on the internet. Along the way we learn how HTML gives a page its
 structure and how CSS gives it its look.
 
-The work happens in your own copy of the **web** repository. First you make
-a copy of it, which GitHub calls a fork. Then you change its files, one
-exercise at a time. Then GitHub publishes your changes at your own address.
+The work happens in your own copy of the **portfolio_wad** repository.
+First you make a copy of it, which GitHub calls a fork. Then you change
+its files, one exercise at a time. Then GitHub publishes your changes at
+your own address.
 
-Start here: <https://github.com/deweydex/web>
+Start here: <https://github.com/deweydex/portfolio_wad>
 
 The instructions are in that repository's README. There are twenty-five
 short exercises. Each one asks you to change something and look at what
@@ -162,7 +163,8 @@ your own.
 | What it is | Repository | Published site |
 |---|---|---|
 | **This course**: the front page and the tutorials written here | [deweydex/dewstack](https://github.com/deweydex/dewstack) | [Front page](https://deweydex.github.io/dewstack/) |
-| **web**: the site you fork and make your own | [deweydex/web](https://github.com/deweydex/web) | Your own fork has its own address once you turn on GitHub Pages. Exercise 2 shows how. |
+| **portfolio_wad**: the site you fork and make your own | [deweydex/portfolio_wad](https://github.com/deweydex/portfolio_wad) | Your own fork has its own address once you turn on GitHub Pages. Exercise 2 shows how. |
+| **project_wad**: the second starter, for the multi-page project | [deweydex/project_wad](https://github.com/deweydex/project_wad) | Your own fork has its own address, the same way `portfolio_wad`'s does. |
 | **SQLite notebook**: the data track in Python, with dinosaurs for data | `databases/sqlite_tutorial.ipynb` in this repository | [Open in Google Colab](https://colab.research.google.com/github/deweydex/dewstack/blob/main/databases/sqlite_tutorial.ipynb) |
 | **HTML, CSS and SQL**: the SQL playground and its teacher page | [deweydex/HTML-CSS-SQL-JS](https://github.com/deweydex/HTML-CSS-SQL-JS) | [Open the page](https://deweydex.github.io/HTML-CSS-SQL-JS/) |
 | **Learn HTML, CSS, GitHub and more**: the thirteen lessons, the GitHub guides, the templates, the quiz, the reference and troubleshooting | [deweydex/WADB_Tutorials](https://github.com/deweydex/WADB_Tutorials) | [Open the site](https://deweydex.github.io/WADB_Tutorials/) |

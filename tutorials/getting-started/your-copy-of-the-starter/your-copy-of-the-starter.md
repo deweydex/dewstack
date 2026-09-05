@@ -9,26 +9,38 @@ version: 2026.09.04.1
 
 # Your copy of the starter
 
-The web track begins with [`web`](https://github.com/deweydex/web), a
-small three-page site you edit rather than build from nothing. Before any
+The web track begins with
+[`portfolio_wad`](https://github.com/deweydex/portfolio_wad), a small
+three-page site you edit rather than build from nothing. Before any
 exercise, you need your own copy of it.
 
-## Forking: your own copy, linked to the original
+## Two ways to get a copy
 
-A fork is GitHub's name for copying someone else's repository into your
-own account. Open the `web` repository and press the **Fork** button,
-usually near the top right of the page. GitHub creates a copy under your
-own username, with every file and its whole history intact.
+**Use the template**, GitHub's green **Use this template** button near
+the top of the repository. This gives you a brand new repository, named
+whatever you choose, with no visible link back to `portfolio_wad`. It
+becomes your own from the first commit, which suits a site you may want
+to keep and show people after the course.
 
-Your fork behaves like any other repository from this point on. Changes
-you make there never affect the original, and updates to the original
-never appear in your fork unless you ask for them. For this course, that
-is exactly what you want: a copy that is entirely yours to change.
+**Fork it**, the **Fork** button beside it. A fork also copies every
+file into your own account, but it stays visibly connected to the
+original and keeps its history. Choose this if you might want to pull in
+a later fix from `portfolio_wad` itself.
+
+Either way, you end up with your own repository, free to rename now or
+later. A name like `portfolio_wad` says which class it is for; something
+plainer suits a site you plan to keep once the course ends.
+
+Your copy behaves like any other repository from this point on. Changes
+you make there never affect `portfolio_wad`, and any later change to
+`portfolio_wad` never appears in your copy unless you ask for it. For
+this course, that is exactly what you want: something entirely yours to
+change.
 
 ## Three ways to open it
 
-Once you have a fork, there are three ways to start editing it, and none
-is more correct than the others.
+Once you have your copy, there are three ways to start editing it, and
+none is more correct than the others.
 
 **Clone it**, if you have Git installed and know your way around a
 terminal. This downloads the repository to your computer, so you edit
