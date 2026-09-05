@@ -12,6 +12,22 @@ repeats neither. It points.
 
 ## 1. Where things stand
 
+**2026-09-05, student feedback pathway, third slice.**
+`getting-started/issues-and-pull-requests`, a new page between
+`a-github-account` and `an-editor`: what this repository's own file
+listing holds, an issue as the report the three doors already file (real
+open issues linked, not invented ones), and a real merged pull request
+(#35) as what a proposed change actually looks like. The debugging half
+of this plan turned out differently on dewlab's side: the tutorial was
+going to teach reading a traceback, but `when-it-goes-wrong.md` in
+`mit-pdp-maths-prog-integration` already does, fully, so dewlab folded a
+short "what to try first" section into `first-steps.md` instead of
+writing a page that would have duplicated it. Both new/changed tutorials
+are dewlab#153 (the cell-level report icon) and dewlab#154 (the
+first-steps.md section) — see that repository's own `DECISIONS_LOG.md`
+Phase 8 for the fuller account. This closes out the plan's two new
+tutorials, in a different shape than first scoped.
+
 **2026-09-05, student feedback pathway, second slice.** The footer's
 report line, "Something wrong on this page? Tell us.", now opens three
 doors rather than one link: "I have a question" (to Discussions, once it
