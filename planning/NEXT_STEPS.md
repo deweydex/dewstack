@@ -12,6 +12,22 @@ repeats neither. It points.
 
 ## 1. Where things stand
 
+**2026-09-05, student feedback pathway, first slice.** A report link now
+sits at the foot of every page — "Something wrong on this page? Tell
+us." — opening a prefilled GitHub issue on the tutorials' own template,
+`.github/ISSUE_TEMPLATE/report.yml`. `planning/feedback.yaml` is a kill
+switch: `enabled: false` turns the link off everywhere without touching a
+tutorial. `getting-started/a-github-account` gained two sections, on the
+username being public beyond your own pages and on GitHub Education,
+worked out from an artifact Josh and Claude built together covering the
+fuller design. Not built yet, and part of the same plan: the "three
+doors" panel that sorts a report before it is sent, the cell-level report
+button with code capture, and two new tutorials on debugging and on
+reading a repository's issues and pull requests. Manual GitHub-side steps
+still needed, none of them costing anything: switch Discussions on,
+create the `kind:`/`source:`/`pattern` labels, and make a Project across
+this repository and dewlab's.
+
 **Merged into `main`, all on 2026-09-04.** dewadaba#2 (the front page,
 the interim copies, the reading settings, the plan and the page-by-page
 assessment), dewadaba#3 (the build step, dewlab's shell and settings
