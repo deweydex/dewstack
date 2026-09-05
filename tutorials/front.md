@@ -13,7 +13,13 @@ doors:
 ---
 dewstack is a set of tutorials for the web authoring and databases course.
 Everything runs in your browser. There is nothing to install, and this site
-needs no account. Open a page and start.
+needs no account.
+
+Getting stuck sometimes is a normal part of learning to build things, not a
+sign you are doing it wrong. When that happens, [the troubleshooting
+page](tutorial:troubleshooting) and your teacher are both there to help.
+
+Open a page, and start.
 
 - **There are two ways to begin, and neither assumes the other.** Start
   with a website, or start with data. If you are in a class, your teacher

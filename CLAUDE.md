@@ -32,15 +32,17 @@ python3 tools/measure_sentences.py README.md tutorials/**/*.md   # the sentence 
 ## Before you write a word a student will read
 
 The rules are dewlab's, in `planning/PEDAGOGICAL_STYLE_GUIDE.md` of
-`deweydex/dewlab`, section 4 and its "Plain language" subsection. Section
-3 of the plan here lists the eight checks. Run them over the README, every
-tutorial, and every string in `build.py` that ends up on a page.
+`deweydex/dewlab`, section 4 and its "Plain language" and "Vocabulary"
+subsections. Section 3 of the plan here lists the plain-language checks. Run
+them over the README, every tutorial, and every string in `build.py` that ends
+up on a page.
 
 The short version: every sentence has a verb, none is over twenty-five
 words, the meaning comes before any dash, say what a thing is before what
 it is not, mark sequences, no metaphor in place of a plain statement, no
-Irish or British idiom, hedge what is not a binary. "We" for the learning,
-"you" for what is the student's own. No emoji.
+idiom from any dialect and no rare word where a common one works, hedge
+what is not a binary. "We" for the learning, "you" for what is the
+student's own. No emoji.
 
 ## Two traps
 

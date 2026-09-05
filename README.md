@@ -43,10 +43,13 @@ You start with nothing and finish with a personal website at its own
 address on the internet. Along the way we learn how HTML gives a page its
 structure and how CSS gives it its look.
 
-The work happens in your own copy of the **portfolio_wad** repository.
-First you make a copy of it, which GitHub calls a fork. Then you change
-its files, one exercise at a time. Then GitHub publishes your changes at
-your own address.
+You do the work in your own copy of the **portfolio_wad** repository. GitHub
+calls a copy like this a fork. First, you make your fork. Then, you change one
+file at a time and look at what happens.
+
+If something breaks or looks wrong, that is a normal part of the exercise.
+You can undo a change, or ask your teacher. Nothing you do here can affect
+anyone else's site. Then GitHub publishes your changes at your own address.
 
 Start here: <https://github.com/deweydex/portfolio_wad>
 
