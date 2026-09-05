@@ -4,8 +4,11 @@ A trimmed relative of dewlab's `tutorial_tools.py` (`_run_sql_cell()`):
 a dewstack SQL cell never runs arbitrary Python, only SQL, so this needs
 none of that file's cell-execution, traceback, or widget machinery —
 just enough to turn SQL text into an HTML table. No pandas: a plain
-sqlite3 cursor's columns and rows are enough for a table, and dropping
-it keeps the Pyodide download to core-plus-sqlite3 alone.
+sqlite3 cursor's columns and rows are enough for a table. A page whose
+only fenced blocks are SQL cells and checks loads only `sqlite3`
+alongside core Pyodide (build.py works out which packages a page needs
+from what is actually on it; see `render_body()`) — this file staying
+pandas-free is what keeps that true.
 
 Loaded once per page (assets/sql-cell.js's boot()); every `.dl-sql-cell`
 on that page keeps its own named connection here, so two cells sharing a

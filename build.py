@@ -495,12 +495,22 @@ def render_sql_check(check: dict, index: int, tutorial: Tutorial) -> str:
     )
 
 
-def render_body(tutorial: Tutorial, by_slug: dict[str, Tutorial]) -> tuple[str, str, bool, bool]:
+def render_body(tutorial: Tutorial, by_slug: dict[str, Tutorial]) -> tuple[str, str, bool, list[str]]:
     """The tutorial's HTML, its table of contents, whether it needs the site
-    editor's script, and whether it needs the SQL cell's."""
+    editor's script, and the Pyodide packages it needs (empty if none).
+
+    One Pyodide engine serves every page, but not every page pays for the
+    same download: the packages a page needs are exactly the ones its own
+    fenced blocks ask for, gathered here as each block type is found. A
+    SQL cell or check needs `sqlite3` alone; a future Python/pandas cell
+    type would add its own packages to the same set, and a page with
+    neither still costs nothing extra."""
     source, editors = extract_site_editors(tutorial.body, tutorial.path)
     source, sql_cells = extract_sql_cells(source, tutorial.path)
     source, sql_checks = extract_sql_checks(source, tutorial.path)
+    required_packages: set[str] = set()
+    if sql_cells or sql_checks:
+        required_packages.add("sqlite3")
     md = make_markdown()
     rendered = md.convert(source)
     # tabindex="0" so a static code block that ends up wider than the reading
@@ -515,7 +525,7 @@ def render_body(tutorial: Tutorial, by_slug: dict[str, Tutorial]) -> tuple[str, 
         rendered = rendered.replace(SQL_PLACEHOLDER.format(index), render_sql_cell(cell, index, tutorial))
     for index, check in enumerate(sql_checks):
         rendered = rendered.replace(SQL_CHECK_PLACEHOLDER.format(index), render_sql_check(check, index, tutorial))
-    return rendered, render_toc(md.toc_tokens), bool(editors), bool(sql_cells or sql_checks)
+    return rendered, render_toc(md.toc_tokens), bool(editors), sorted(required_packages)
 
 
 def render_toc(tokens: list[dict]) -> str:
@@ -804,7 +814,7 @@ def copy_assets(assets_dir: Path, target: Path) -> None:
 def write_tutorial(tutorial: Tutorial, members: list[Tutorial], series_title: str, shell: str,
                    out_dir: Path, assets_dir: Path, by_slug: dict[str, Tutorial]) -> Path:
     root_base = "../" * len(tutorial.rel_dir.parts)
-    body, toc, has_site_editor, has_sql_cell = render_body(tutorial, by_slug)
+    body, toc, has_site_editor, sql_packages = render_body(tutorial, by_slug)
     ordered_live = [m for m in members if m.is_live] if tutorial.is_live else members
     nav = render_nav(tutorial, ordered_live, f"{root_base}index.html")
     crumbs = f"{html.escape(tutorial.module_title)} · {html.escape(series_title)}"
@@ -816,7 +826,11 @@ def write_tutorial(tutorial: Tutorial, members: list[Tutorial], series_title: st
     scripts = []
     if has_site_editor:
         scripts.append(f'<script src="{asset_url(root_base, "site-editor.js", assets_dir)}"></script>')
-    if has_sql_cell:
+    if sql_packages:
+        # This page's own real package list, not a fixed site-wide bundle:
+        # a page with only SQL cells loads sqlite3 alone, never pandas or
+        # matplotlib it has no cell that uses.
+        scripts.append(f'<script>window.DEWSTACK_SQL_PACKAGES = {json.dumps(sql_packages)};</script>')
         scripts.append(f'<script src="{asset_url(root_base, "sql-cell.js", assets_dir)}"></script>')
     page_script = "\n".join(scripts)
     page = fill_shell(shell, page_values(

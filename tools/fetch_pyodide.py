@@ -2,10 +2,19 @@
 """Download a trimmed, self-hosted Pyodide into assets/vendor/pyodide/.
 
 Adapted from dewlab's dev/fetch_pyodide.py (DECISIONS_LOG.md-equivalent:
-NEXT_STEPS.md step 7, question 5), trimmed further: dewstack's SQL cell
-never runs arbitrary Python, so the default package list here is just
-`sqlite3`, not dewlab's numpy/pandas/matplotlib/jedi baseline. That is
-about 13 MB against dewlab's roughly 32 MB.
+NEXT_STEPS.md step 7, question 5). One Pyodide engine serves every page
+(decided 2026-09-05), but not every page loads the same packages: each
+page's own fenced blocks decide what it needs at build time (build.py's
+render_body()), and assets/sql-cell.js only ever asks Pyodide for that
+page's own list. `--packages` below is what to keep in the self-hosted
+copy, so it has to cover every package any page on the site actually
+declares — today that is `sqlite3` alone (about 13 MB), since only Data
+Arc 1's SQL cells and the practice quiz exist; once a page uses pandas
+or matplotlib (Data Arc 2), the packages it declares need to be listed
+here too, or a self-hosted copy will be missing what that page asks for.
+`--packages` has no default beyond `sqlite3` for exactly that reason: it
+should be as small as the pages actually built need, not dewlab's full
+numpy/pandas/matplotlib/jedi baseline (~32 MB) kept just in case.
 
 The default is the CDN in assets/sql-cell.js (matching dewlab's own
 default). This script exists for the same reason dewlab's does: the
