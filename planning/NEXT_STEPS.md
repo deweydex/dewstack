@@ -354,6 +354,78 @@ Step 6 is done; step 7 (Pyodide, the SQL cell, data Arc 1) is next.
    practice pages beside these, solutions at the foot (decision 2), the
    quiz's after submission.
 
+**The runtime is done, 2026-09-05; the four pages are next.** Item 1
+above is not what actually happened, and the difference is worth
+recording rather than papering over.
+
+`pyodide-engine.js` and `pyodide-worker.js` (dewlab commit `811cc4d`)
+turned out to be dewmini's own infrastructure more than Pyodide's: a
+Worker thread with a genuine Stop button, Jedi-backed hover docs and
+autocomplete, a whole mounted-filesystem layer (native folder, OPFS,
+IDBFS) — none of it something a single, independent SQL cell on a
+reading page needs, and copying it wholesale would have meant carrying
+dead code paths dewstack's UI never exposes a way to reach. `run_query()`
+and `_run_sql_cell()` in `tutorial_tools.py` turned out to depend on
+dewmini's own cell-identity system (`_require_cell()`, needing an active
+`_CellContext` a full notebook sets up) and on pandas, for
+`_table_html()`'s `DataFrame.to_html()` — pandas that Data Arc 1 was
+already decided (step 1) not to need.
+
+So this ported in shape, the same choice already made for the site
+editor rather than dewmini's Site tab: `assets/sql-cell.js` is a new,
+much smaller file, quarrying dewlab's main-thread boot sequence (no
+Worker at all — a SQL query on a student-sized table finishes fast
+enough that this is a real simplification, not a corner cut) —
+`loadPyodide()`, `pyodide.loadPackage()`, writing the tools module into
+Pyodide's FS and `pyimport`-ing it, the same shape line for line.
+`assets/sql_tools.py` is a new, much smaller module, not a port of
+`tutorial_tools.py` at all: one function, `run_sql(db_name, script)`,
+building an HTML table directly from a `sqlite3` cursor's columns and
+rows, no pandas, no cell context, catching `sqlite3.Error` itself and
+rendering it as a message rather than a traceback (nothing here runs a
+reader's own Python, so a traceback pointing at this file's own code
+would only confuse). One connection per `data-db` name, kept at module
+level, so cells sharing a name see the same tables and cells with
+different names never do; a Reset button drops the named connection so a
+`CREATE TABLE` run twice does not just fail.
+
+`build.py`: a fenced `` ```sql cell=name `` block becomes a `.dl-sql-cell`
+— a labelled textarea, Run and Reset, a status line, and an output area.
+Unlike a site editor's `site=` blocks, a name is allowed to recur
+anywhere on the page, not just back to back: a table one cell creates is
+exactly what a later cell, after some prose, is meant to keep querying.
+
+**Question 5, decided:** a CDN by default (`cdn.jsdelivr.net`, the same
+one dewlab defaults to), overridable per page via
+`window.DEWSTACK_PYODIDE_BASE` before `sql-cell.js` runs. `tools/
+fetch_pyodide.py`, adapted from dewlab's `dev/fetch_pyodide.py`, is the
+self-hosting escape hatch, trimmed to dewstack's real need: `--packages
+sqlite3` alone (dewlab's own default pulls in numpy/pandas/matplotlib/
+jedi for dewmini's wider needs) brings the download to about 13 MB
+against dewlab's roughly 32 MB. `assets/vendor/pyodide/` is gitignored,
+the same as dewlab's equivalent, and not populated by default.
+
+**Verified live**, not just built: this sandbox's own egress proxy
+blocks `cdn.jsdelivr.net` outright, so verification used
+`tools/fetch_pyodide.py`'s own logic to fetch a real, trimmed,
+sqlite3-only Pyodide and serve it locally, with
+`window.DEWSTACK_PYODIDE_BASE` pointed at it. A real `CREATE TABLE` /
+`INSERT` / `SELECT` script ran through actual Pyodide and rendered a
+real table with the actual inserted rows; a second run without Reset
+failed with "table … already exists", rendered as a message rather than
+a crash, with zero page or console errors; Reset restored the textarea
+and dropped the table; a run after Reset worked cleanly again. `python -m
+pytest -q`: 33 tests, 9 of them a new `tests/test_sql_tools.py` exercising
+`run_sql()` directly under plain CPython, since it imports nothing
+browser-only. Playwright and axe at 1200 and 390 pixels: 0 violations (a
+first pass had one — the textarea had no `<label>` — fixed before this
+was recorded), no sideways scroll.
+
+**Done when**, satisfied: a real SQL script runs through real Pyodide
+and renders a real table, Reset genuinely clears the named database, and
+a page with no SQL cell carries none of this weight (no script tag, no
+Pyodide download).
+
 ### Step 8. Data Arc 2, then the full-stack arc
 
 Data Arc 2 is fresh: design before typing; a real dataset from Our World

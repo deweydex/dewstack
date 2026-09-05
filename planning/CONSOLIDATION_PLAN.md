@@ -387,8 +387,9 @@ The source file is not touched.
 | Handover: where things stand, the order of work, open questions | this plan, sections 8, 14, 15 | `planning/NEXT_STEPS.md` | done 2026-09-04; the document a session opens first |
 | More database content from Josh | `everlearning`'s `Teaching materials/` | `sources/teaching-materials/` | arrived and copied 2026-09-04; assessed in `PAGE_BY_PAGE.md` section 6 |
 | Level 6 (`Web Development 6N1277`) coverage assessment | module descriptor Josh attached, 2026-09-04 | `planning/LEVEL6_COVERAGE.md` | done 2026-09-04; a coverage map, not new pages — nothing scheduled |
-| SQL tutorial | `HTML-CSS-SQL-JS/index.html` | `tutorials/databases/` | not started |
-| SQL practice page | `HTML-CSS-SQL-JS/index.html` | `tutorials/databases/` | not started |
+| SQL cell runtime: Pyodide boot, `run_sql()`, the `` ```sql cell=name `` block | dewlab's `pyodide-engine.js`/`pyodide-worker.js`/`tutorial_tools.py`, ported in shape rather than copied (`NEXT_STEPS.md` step 7's decision record) | `assets/sql-cell.js`, `assets/sql_tools.py`, `assets/site.css`, `build.py`, `tools/fetch_pyodide.py` | done 2026-09-05; `NEXT_STEPS.md` step 7, runtime only; verified live against a real, trimmed, self-hosted Pyodide, since this sandbox's egress proxy blocks the CDN `sql-cell.js` defaults to |
+| SQL tutorial | `HTML-CSS-SQL-JS/index.html` | `tutorials/data/` | not started; the runtime above is ready for it |
+| SQL practice page | `HTML-CSS-SQL-JS/index.html` | `tutorials/data/` | not started |
 | Teaching notes | `HTML-CSS-SQL-JS/teacher.html` | `planning/` | not started |
 | Plushies quiz | `WADB_Tutorials/tentacular-plushies-quiz-final.html` | `tutorials/databases/` | not started |
 | Quick reference | `WADB_Tutorials/reference.html`, the plushies quiz's reference panel, `uu_reference.md` | `tutorials/reference/quick-reference/` | done 2026-09-04, in two halves (HTML/CSS, then SQL) rather than the three originally planned; two-column tables, no cards |

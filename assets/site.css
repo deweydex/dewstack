@@ -832,6 +832,73 @@ p code, li code, td code {
 }
 .dl-site-actions button:hover { color: var(--dl-orange); border-color: var(--dl-orange); }
 
+/* The data track's SQL cell: a textarea, a Run/Reset pair, and an output
+   area, sharing .dl-site-input's look so the two cell types read as one
+   family. */
+.dl-sql-cell {
+  margin: 1.5rem 0;
+  padding: 1rem;
+  border: 1px solid var(--dl-cell-border);
+  border-radius: 8px;
+  background: var(--dl-cell-bg);
+}
+
+.dl-sql-cell label {
+  display: block;
+  margin-bottom: 0.3rem;
+  font-family: var(--dl-mono);
+  font-size: 0.78rem;
+  color: var(--dl-muted);
+}
+
+.dl-sql-input {
+  display: block;
+  width: 100%;
+  min-height: 5rem;
+  padding: 0.6rem 0.7rem;
+  box-sizing: border-box;
+  font-family: var(--dl-mono);
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: var(--dl-fg);
+  background: var(--dl-output-bg);
+  border: 1px solid var(--dl-cell-border);
+  border-radius: 4px;
+  resize: vertical;
+}
+
+.dl-sql-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.6rem;
+}
+.dl-sql-actions button {
+  font-family: var(--dl-mono);
+  font-size: 0.78rem;
+  padding: 0.4rem 0.75rem;
+  border: 1px solid var(--dl-cell-border);
+  border-radius: 4px;
+  background: none;
+  color: var(--dl-fg);
+  cursor: pointer;
+}
+.dl-sql-actions button:hover { color: var(--dl-orange); border-color: var(--dl-orange); }
+.dl-sql-actions button:disabled { opacity: 0.6; cursor: default; }
+
+.dl-sql-status { font-size: 0.78rem; color: var(--dl-muted); }
+
+.dl-sql-output:not(:empty) { margin-top: 0.85rem; }
+.dl-sql-result { overflow-x: auto; }
+.dl-sql-note { font-size: 0.85rem; color: var(--dl-muted); margin-top: 0.4rem; }
+.dl-sql-error {
+  font-family: var(--dl-mono);
+  font-size: 0.85rem;
+  font-weight: bold;
+  color: var(--dl-orange);
+}
+
 /* ------------------------------------------------------------------ print */
 
 @media print {

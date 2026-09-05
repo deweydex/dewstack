@@ -1,6 +1,11 @@
 # Build output. Generated fresh on push and deployed to Pages, never committed.
 /site/
 
+# A self-hosted Pyodide, the escape hatch tools/fetch_pyodide.py populates
+# if the CDN assets/sql-cell.js defaults to turns out to be blocked. Not
+# committed, the same as dewlab's own equivalent.
+/assets/vendor/pyodide/
+
 # Python bytecode.
 __pycache__/
 *.py[cod]

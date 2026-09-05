@@ -325,3 +325,41 @@ def test_front_page_without_front_md_is_the_list(tree):
     page = (out / "index.html").read_text(encoding="utf-8")
     assert "<h1>Tutorials</h1>" in page
     assert '<h2 class="dl-module-heading">Module mod</h2>' in page
+
+
+def test_sql_block_becomes_a_cell(tree):
+    tutorials, out = tree
+    body = "# A page\n\n```sql cell=students\nselect 1;\n```\n"
+    write_tutorial(tutorials, "page", body)
+    write_order(tutorials, ["page"])
+    run_build(tree)
+    page = (out / "tutorials/mod/page/index.html").read_text(encoding="utf-8")
+    assert 'class="dl-sql-cell"' in page
+    assert 'data-db="students"' in page
+    assert "select 1;" in page
+    assert "sql-cell.js" in page
+    assert '<label for="sql-cell-page-0-input">SQL</label>' in page
+
+
+def test_sql_cells_sharing_a_name_need_not_be_consecutive(tree):
+    tutorials, out = tree
+    body = (
+        "# A page\n\n"
+        "```sql cell=students\ncreate table t(id);\n```\n\n"
+        "Some prose in between, unlike a site editor's blocks.\n\n"
+        "```sql cell=students\nselect * from t;\n```\n"
+    )
+    write_tutorial(tutorials, "page", body)
+    write_order(tutorials, ["page"])
+    run_build(tree)  # would raise for a site= block; a sql cell allows this
+    page = (out / "tutorials/mod/page/index.html").read_text(encoding="utf-8")
+    assert page.count('data-db="students"') == 2
+
+
+def test_page_without_a_sql_block_has_no_cell_script(tree):
+    tutorials, out = tree
+    write_tutorial(tutorials, "plain")
+    write_order(tutorials, ["plain"])
+    run_build(tree)
+    page = (out / "tutorials/mod/plain/index.html").read_text(encoding="utf-8")
+    assert "sql-cell.js" not in page
