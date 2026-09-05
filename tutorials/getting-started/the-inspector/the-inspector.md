@@ -1,5 +1,5 @@
 ---
-title: "Seeing under the page"
+title: "The browser inspector"
 slug: the-inspector
 module: getting-started
 module_title: "Getting started"
@@ -7,7 +7,7 @@ series: welcome
 version: 2026.09.04.1
 ---
 
-# Seeing under the page
+# The browser inspector
 
 Every browser has a tool that shows you the HTML and CSS actually
 running a page, on your own site or anyone else's. It is called the
