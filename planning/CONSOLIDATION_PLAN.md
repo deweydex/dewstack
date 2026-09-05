@@ -405,6 +405,7 @@ The source file is not touched.
 | Lessons 9 to 13 | `WADB_Tutorials/lessons/` | `tutorials/` | not started |
 | Lessons 1 to 8 | `WADB_Tutorials/lessons/` | decision pending | not started |
 | Templates and examples | `WADB_Tutorials/templates/`, `examples/` | decision pending | not started |
+| Data Arc 2, page 1 of 6 (designing a table before you build it) | fresh, per `NEXT_STEPS.md` step 8's page-by-page breakdown | `tutorials/data/`, module `data`, new series `several-tables` | done 2026-09-05; no code cell, a planning page in `planning-a-site`'s idiom; the "your turn" has the reader choose the arc's own project topic on paper, to build on the following pages |
 
 ---
 
