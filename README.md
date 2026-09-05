@@ -67,12 +67,11 @@ is useful far beyond this course.
 The database runs inside your browser. Nothing is installed, and nothing
 you type is sent anywhere.
 
-Start here: <https://deweydex.github.io/HTML-CSS-SQL-JS/>
+Start here: <https://deweydex.github.io/dewstack/tutorials/data/a-table-is-a-list-of-rows/>
 
-The playground has short refreshers on HTML and CSS, then SQL. You type a
-query, run it, and see the result. At the end you can make a table, put
-rows in it, and ask it questions with SELECT, WHERE and ORDER BY. That
-takes an hour or so.
+Four short pages take you from a first table to a second one, joined to
+it. Each page ends with a table of your own, kept as a file you download
+and load back in on the next page.
 
 ## Web authoring tutorials
 
@@ -108,7 +107,11 @@ this site.
 
 ## Database tutorials
 
-- The SQL playground, where the data track begins:
+- The data track's four pages, native to this site, where the data track
+  now begins:
+  <https://deweydex.github.io/dewstack/tutorials/data/a-table-is-a-list-of-rows/>
+- The SQL playground, coverage material now that the four pages above
+  exist, not the primary path:
   <https://deweydex.github.io/HTML-CSS-SQL-JS/>
 - The SQL quiz, five tasks on a small shop database:
   <https://deweydex.github.io/WADB_Tutorials/tentacular-plushies-quiz-final.html>
@@ -121,11 +124,10 @@ this site.
 More database tutorials are being written. They will appear on the
 course website as they are ready, in this order:
 
-1. A table is a list of rows.
-2. Asking questions of a table.
-3. Two tables and a join.
-4. Designing a database before typing.
-5. A real dataset, loaded, queried and charted.
+1. The playground's SQL section and the quiz's five tasks, rebuilt as
+   practice pages beside the four above, with solutions.
+2. Designing a database before typing.
+3. A real dataset, loaded, queried and charted.
 
 ## Full stack: putting the two together
 
@@ -154,9 +156,12 @@ If you started with a website, your work lives in your own GitHub
 repository. You can return to it from any computer by signing in to
 GitHub.
 
-In the playground, the database starts again each time the page is
-reloaded. If you write a query you want to keep, copy it into a file of
-your own.
+On the data pages, the database starts again each time the page is
+reloaded. Each page has a Download button that saves your table as a
+file, and a Load button that reads one back in. Your table follows you
+from page to page this way, even though the database itself does not.
+In the older playground, there is no such button; copy a query you want to keep
+into a file of your own.
 
 ## All the links
 

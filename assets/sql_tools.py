@@ -38,13 +38,22 @@ def reset(db_name: str) -> None:
         conn.close()
 
 
+def _strip_comments(script: str) -> str:
+    """Drops a `--` line comment from each line first, so a cell holding
+    only an instructional comment — a placeholder before a reader's own
+    code, or exercise text copied in above it — runs as nothing rather
+    than as literal text sqlite3 cannot execute."""
+    return "\n".join(line.split("--", 1)[0] for line in script.splitlines())
+
+
 def run_sql(db_name: str, script: str, max_rows: int = 50) -> str:
     """Runs a SQL script against the named connection and returns HTML.
 
-    Splits on a bare `;`, the same as dewlab's `_run_sql_cell()` and for
-    the same reason: a script, not one statement, is the normal shape of
-    a SQL cell (`CREATE TABLE` here, `INSERT` there, `SELECT` at the
-    end). Every statement but the last just runs; the last statement's
+    Drops `--` comments, then splits on a bare `;`, the same as dewlab's
+    `_run_sql_cell()` and for the same reason: a script, not one
+    statement, is the normal shape of a SQL cell (`CREATE TABLE` here,
+    `INSERT` there, `SELECT` at the end). Every statement but the last
+    just runs; the last statement's
     result is what renders, as a table if it returned rows, otherwise as
     a count of rows affected. Every statement commits, so a `CREATE
     TABLE`/`INSERT` a reader runs is still there on the next run.
@@ -55,7 +64,7 @@ def run_sql(db_name: str, script: str, max_rows: int = 50) -> str:
     would only confuse.
     """
     conn = _connection(db_name)
-    statements = [s.strip() for s in script.split(";") if s.strip()]
+    statements = [s.strip() for s in _strip_comments(script).split(";") if s.strip()]
     if not statements:
         return '<p class="dl-sql-note">Nothing to run.</p>'
 

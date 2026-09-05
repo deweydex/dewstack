@@ -83,3 +83,13 @@ def test_reset_drops_the_table():
 def test_a_blank_script_says_so_without_touching_sqlite():
     html = sql_tools.run_sql("db", "   ;  ;  ")
     assert "Nothing to run" in html
+
+
+def test_a_comment_only_script_says_nothing_to_run():
+    html = sql_tools.run_sql("db", "-- Load your file, then run it.")
+    assert "Nothing to run" in html
+
+
+def test_a_trailing_comment_does_not_break_a_real_statement():
+    html = sql_tools.run_sql("db", "select 1 as n; -- trailing note")
+    assert "<td>1</td>" in html

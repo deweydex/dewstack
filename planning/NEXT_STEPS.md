@@ -335,7 +335,8 @@ live-preview concept), `documenting-what-you-built` (`readme.md` and
 `maintenance.md`, closing the arc that `planning-a-site` opened). Each
 page's "your turn" sends the student to the matching real code already
 sitting in `project_wad`, not to new code written for the tutorial.
-Step 6 is done; step 7 (Pyodide, the SQL cell, data Arc 1) is next.
+Step 6 is done; step 7 (Pyodide, the SQL cell, data Arc 1) is done bar
+its practice pages (item 4).
 
 ### Step 7. Pyodide, the SQL cell, and data Arc 1
 
@@ -442,6 +443,34 @@ location, the same way `sql_tools.py`'s URL already was. Verified live
 again after the fix: Run, Download (the downloaded file's text matched
 the textarea), and Load (a loaded file's text ran correctly after Run)
 all worked with zero console errors.
+
+**Item 3, the four pages, done 2026-09-05:** module `data`, series
+`first-database` — *a table is a list of rows*, *asking questions of a
+table*, *changing what is in it*, *a second table and a join*. The
+dinosaur notebook's own six-dinosaur seed runs as the demo table on
+every page, rebuilt fresh each time since a page's Pyodide, and the
+tables it holds, do not survive a reload; the running dinosaur example
+is what "recurs non-consecutively" (question 2's own feature) is for.
+The fourth page's join is new rather than ported from the notebook: the
+notebook itself never joins its two tables, only `UNION`s them, so a
+`sightings` table with a `dinosaur_id` foreign key was written instead,
+to teach the join the title actually names. Each page's "your turn"
+builds the reader's own table, downloaded at the end of one page and
+loaded back in at the start of the next, the mechanism the Download/Load
+addition above exists for. `modules.yaml`'s `data` entry moved out of
+`planned`; `front.md`'s "Start with data" door and the README's own data
+section now point here instead of the old external playground.
+
+Verified live the same way as the runtime: every real demo cell across
+all four pages, run in order in a real browser against a real, trimmed,
+locally-served Pyodide, rendered the expected rows with zero console
+errors; axe-core found 0 violations and no sideways scroll on all four
+pages and the front page, at 1200 and 390 pixels. `python -m pytest -q`:
+35 tests. `tools/measure_sentences.py` over the four pages and the
+touched parts of `README.md`: every sentence at or under 25 words.
+
+Item 4, the playground's SQL section and the quiz rebuilt as practice
+pages, is not started.
 
 ### Step 8. Data Arc 2, then the full-stack arc
 
