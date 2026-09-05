@@ -678,10 +678,13 @@ step arrives.
 17. **WADB_Tutorials, reframed 2026-09-05.** Rather than a legacy source
     being slowly superseded, it becomes its own named path — "Previous
     Web Authoring Path" — offered alongside the redesigned one rather
-    than retired. Lessons 11 to 13 and the SQL quiz (the two pieces the
-    README could not yet call superseded) are being rebuilt as native
-    pages under that name, in parallel with the redesign above, so
-    neither piece of work blocks the other.
+    than retired. Lessons 11 to 13 (Flexbox/Grid, component design, CSS
+    animation) are rebuilt as native pages under that name. The SQL quiz
+    was rebuilt too, independently and at nearly the same time, as the
+    data track's own official practice page (step 7 item 4, below) —
+    the two efforts collided, and the copy under this module was removed
+    once that became clear, rather than keeping two quizzes teaching the
+    same five tasks.
 
 ---
 
