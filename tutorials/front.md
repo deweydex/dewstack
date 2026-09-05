@@ -36,9 +36,7 @@ Open a page, and start.
   you from page to page.
 - **The list below is grouped by track.** Getting started comes first.
   Then come the web track, the data track, and the pages where the two
-  meet. Previous Web Authoring Path is the course as it was taught before
-  this redesign, kept as a path of its own. The reference pages at the
-  end are for looking things up.
+  meet. The reference pages at the end are for looking things up.
 
 The college sets the projects and the exam, and we go through each brief
 in class. Teachers, and anyone curious about how this site is made, will

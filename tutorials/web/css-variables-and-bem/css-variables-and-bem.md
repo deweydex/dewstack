@@ -1,9 +1,9 @@
 ---
 title: "CSS variables and BEM names"
 slug: css-variables-and-bem
-module: previous-web-authoring-path
-module_title: "Previous Web Authoring Path"
-series: advanced-layout
+module: web
+module_title: "Web authoring"
+series: first-site
 version: 2026.09.05.1
 ---
 

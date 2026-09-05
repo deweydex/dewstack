@@ -8,7 +8,6 @@ order:
   - web
   - data
   - full-stack
-  - previous-web-authoring-path
   - reference
 
 # Modules listed above that have no pages yet. Each gets its heading and one
@@ -23,4 +22,3 @@ planned:
 # One line of markdown shown under a module's list of pages.
 notes:
   web: "The older lessons are still at [their original address](https://deweydex.github.io/WADB_Tutorials/) until each one is rewritten here."
-  previous-web-authoring-path: "This is the course as it was taught before the redesign above, kept here as a path of its own rather than retired. It teaches the same ground its own way, and you can read it without having done any of the tracks above."
