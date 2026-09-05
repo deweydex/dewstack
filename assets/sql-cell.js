@@ -21,21 +21,26 @@
 
   const PYODIDE_VERSION = "0.28.3";
 
-  /* A CDN by default, the same one dewlab defaults to. A page can override
-   * this before this script runs, the same way dewlab's DEWLAB_PYODIDE_BASE
-   * does, to point at a self-hosted copy instead (assets/vendor/pyodide/,
-   * populated by dev/fetch_pyodide.py --packages sqlite3). */
-  function pyodideBase() {
-    return (
-      window.DEWSTACK_PYODIDE_BASE ||
-      `https://cdn.jsdelivr.net/pyodide/v${PYODIDE_VERSION}/full/`
-    );
-  }
-
   /* Captured now, synchronously: document.currentScript is only set while
    * this script is first executing, not once boot() below is running as a
    * later microtask after an await. */
   const OWN_SCRIPT_URL = document.currentScript ? document.currentScript.src : null;
+
+  /* A CDN by default, the same one dewlab defaults to. A page can override
+   * this before this script runs, the same way dewlab's DEWLAB_PYODIDE_BASE
+   * does, to point at a self-hosted copy instead — a path relative to this
+   * script's own folder, e.g. "./vendor/pyodide/" (populated by tools/
+   * fetch_pyodide.py). Resolved to an absolute URL here, against this
+   * script's own location the same way sql_tools.py's URL is below: Pyodide
+   * re-resolves indexURL itself once it's running, against the page rather
+   * than the script, so a relative value has to be made absolute before it
+   * gets there, or the two resolutions disagree. */
+  function pyodideBase() {
+    const configured =
+      window.DEWSTACK_PYODIDE_BASE ||
+      `https://cdn.jsdelivr.net/pyodide/v${PYODIDE_VERSION}/full/`;
+    return OWN_SCRIPT_URL ? new URL(configured, OWN_SCRIPT_URL).href : configured;
+  }
 
   let booting = null; // the one boot() Promise every cell shares
   let tools = null; // the imported sql_tools Python module, once ready
@@ -102,12 +107,44 @@
     if (tools) tools.reset(cell.dataset.db);
   }
 
+  /* Saves the cell's current text as a .sql file — the same idea as the
+   * site editor's "Download these files" button, for a table built across
+   * several "your turn" prompts that a reader is meant to keep. */
+  function downloadCell(cell) {
+    const input = cell.querySelector(".dl-sql-input");
+    const blob = new Blob([input.value], { type: "text/plain" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = `${cell.dataset.db}.sql`;
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    URL.revokeObjectURL(url);
+  }
+
+  /* Reads a file straight into the textarea. Loading only fills the box —
+   * a reader still clicks Run, the same as if they had typed it, so a
+   * loaded file never runs SQL nobody chose to run. */
+  function loadCell(cell, file) {
+    const input = cell.querySelector(".dl-sql-input");
+    file.text().then((text) => { input.value = text; });
+  }
+
   function setUp(cell, cells) {
     const input = cell.querySelector(".dl-sql-input");
     const original = input.value;
+    const loadInput = cell.querySelector(".dl-sql-load-input");
 
     cell.querySelector(".dl-sql-run").addEventListener("click", () => runCell(cell, cells));
     cell.querySelector(".dl-sql-reset").addEventListener("click", () => resetCell(cell, original));
+    cell.querySelector(".dl-sql-download").addEventListener("click", () => downloadCell(cell));
+    cell.querySelector(".dl-sql-load").addEventListener("click", () => loadInput.click());
+    loadInput.addEventListener("change", () => {
+      const file = loadInput.files[0];
+      if (file) loadCell(cell, file);
+      loadInput.value = "";
+    });
   }
 
   const cells = Array.from(document.querySelectorAll(".dl-sql-cell"));

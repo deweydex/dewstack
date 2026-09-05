@@ -408,12 +408,18 @@ def extract_sql_cells(body: str, path: Path) -> tuple[str, list[dict]]:
 
 
 def render_sql_cell(cell: dict, index: int, tutorial: Tutorial) -> str:
-    """One SQL cell: a textarea, Run and Reset, and an output area the
-    result table (or an error, or a row count) lands in. `data-db` is the
-    named sqlite3 connection assets/sql_tools.py runs this cell's script
-    against; cells sharing a name share a database."""
+    """One SQL cell: a textarea, Run and Reset, Download and Load, and an
+    output area the result table (or an error, or a row count) lands in.
+    `data-db` is the named sqlite3 connection assets/sql_tools.py runs this
+    cell's script against; cells sharing a name share a database. Download
+    and Load are the same idea as the site editor's "Download these files"
+    button, applied to a cell whose content is text a reader is meant to
+    keep: a table built across several "your turn" prompts, saved as one
+    `.sql` file and loaded back into a later session, since Pyodide starts
+    fresh on every page load."""
     cell_id = f"sql-cell-{tutorial.slug}-{index}"
     field_id = f"{cell_id}-input"
+    load_id = f"{cell_id}-load"
     return (
         f'<div class="dl-sql-cell" id="{cell_id}" data-db="{html.escape(cell["name"])}">'
         f'<label for="{field_id}">SQL</label>'
@@ -422,6 +428,9 @@ def render_sql_cell(cell: dict, index: int, tutorial: Tutorial) -> str:
         f'<div class="dl-sql-actions">'
         f'<button type="button" class="dl-sql-run">Run</button>'
         f'<button type="button" class="dl-sql-reset">Reset</button>'
+        f'<button type="button" class="dl-sql-download">Download</button>'
+        f'<button type="button" class="dl-sql-load">Load</button>'
+        f'<input type="file" id="{load_id}" class="dl-sql-load-input" accept=".sql,.txt" hidden>'
         f'<span class="dl-sql-status" role="status"></span>'
         f"</div>"
         f'<div class="dl-sql-output" aria-live="polite"></div>'

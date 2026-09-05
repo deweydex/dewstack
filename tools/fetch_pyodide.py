@@ -11,7 +11,10 @@ The default is the CDN in assets/sql-cell.js (matching dewlab's own
 default). This script exists for the same reason dewlab's does: the
 escape hatch if a school network turns out to block the CDN. Point a
 page at the result with `window.DEWSTACK_PYODIDE_BASE =
-"../assets/vendor/pyodide/"` before sql-cell.js runs.
+"./vendor/pyodide/"` before sql-cell.js runs — relative to sql-cell.js's
+own folder (assets/), the same as sql_tools.py's own path, not to the
+page: Pyodide re-resolves this value itself once it is running, so
+sql-cell.js turns it into an absolute URL before that can happen.
 
     python3 tools/fetch_pyodide.py
 """

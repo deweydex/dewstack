@@ -426,6 +426,23 @@ and renders a real table, Reset genuinely clears the named database, and
 a page with no SQL cell carries none of this weight (no script tag, no
 Pyodide download).
 
+**Download and Load, added after the runtime above:** item 3's "kept as
+a file they download and load" needed a mechanism, so every `.dl-sql-cell`
+now also carries Download and Load buttons, the same idea as the site
+editor's "Download these files" — Download saves the cell's current text
+as `<db-name>.sql`; Load reads a chosen file straight into the textarea,
+still waiting on Run before anything executes. Building this surfaced a
+real bug, not a test artifact: `import()`'s relative specifier resolves
+against `sql-cell.js`'s own URL, but Pyodide re-resolves `indexURL`
+itself once running, against the page — so a relative
+`DEWSTACK_PYODIDE_BASE` reached two different base URLs depending which
+half of the boot sequence used it. Fixed by resolving it to an absolute
+URL in `pyodideBase()` before either use, against `sql-cell.js`'s own
+location, the same way `sql_tools.py`'s URL already was. Verified live
+again after the fix: Run, Download (the downloaded file's text matched
+the textarea), and Load (a loaded file's text ran correctly after Run)
+all worked with zero console errors.
+
 ### Step 8. Data Arc 2, then the full-stack arc
 
 Data Arc 2 is fresh: design before typing; a real dataset from Our World

@@ -339,6 +339,8 @@ def test_sql_block_becomes_a_cell(tree):
     assert "select 1;" in page
     assert "sql-cell.js" in page
     assert '<label for="sql-cell-page-0-input">SQL</label>' in page
+    assert 'class="dl-sql-download"' in page
+    assert 'class="dl-sql-load"' in page
 
 
 def test_sql_cells_sharing_a_name_need_not_be_consecutive(tree):
