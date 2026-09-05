@@ -750,13 +750,13 @@ The starter's one insight is worth the whole design: the student's own artefact 
 
 *Arc 1, your first table.* The student's own database, on a topic they choose, kept as a file they download and load (dewmini's Files). Four pages: a table is a list of rows; asking questions of a table; changing what is in it; a second table and a join. The dinosaurs are the worked example on every page; the "your turn" is the student's own table. Cells are queries.
 
-*Arc 2, a database with several tables.* The database project's shape: design before typing (what goes in which table, keys, one-to-many); a real dataset from Our World in Data, loaded, cleaned, queried; questions that need two tables; a chart from a query. Four pages. Ends with the project's database and the queries the practical exam asks for.
+*Arc 2, a database with several tables.* The database project's shape, revised by `NEXT_STEPS.md` step 8's page-by-page breakdown (2026-09-05): designing a table before you build it (what goes in which table, keys, one-to-many); loading a real dataset, from Our World in Data; joining two real tables; charting a query's result, where pandas and matplotlib arrive; exporting a query to a file; a form that writes a row, linked to the web track's own form page rather than rebuilt here. Six pages. Ends with the project's database and the queries the practical exam asks for.
 
 **Getting started, before both tracks.** Six pages (section 14, A0 to A6): how the pieces fit; an account; an editor, VS Code installed with GitHub's own editor as the fallback (decided 2026-09-04); your copy of the starter; publishing it and the address; the two loops; the inspector. The data track needs only the first and the last.
 
 **Reference, beside everything.** Troubleshooting as problem-shaped cards; a quick reference in two halves, HTML and CSS, and SQL; project ideas with the templates folded in. Three pages.
 
-Getting started 6, web 16 + 8 + 3, data 4 + 4, reference 3: forty-four short pages. More than thirty-six, and each one shorter, because Arc 2 of both tracks is material none of the sources has and the brief marks.
+Getting started 6, web 16 + 8 + 3, data 4 + 6, reference 3: forty-six short pages. More than thirty-six, and each one shorter, because Arc 2 of both tracks is material none of the sources has and the brief marks.
 
 ### Upgrade or fresh, piece by piece
 
