@@ -12,21 +12,24 @@ repeats neither. It points.
 
 ## 1. Where things stand
 
-**2026-09-06, a documentation and code-comments plan, Phase A now done.**
-`planning/DOCS_AND_COMMENTS_PLAN.md` is new: Josh asked that every file
-in both repositories read as something a teacher or a student could
-follow, dewlab having already run this exact initiative once (its own
-`planning/DOCS_AND_COMMENTS_PASS.md`, closed out complete) while
+**2026-09-06, a documentation and code-comments plan, Phases A through C
+now done.** `planning/DOCS_AND_COMMENTS_PLAN.md` is new: Josh asked that
+every file in both repositories read as something a teacher or a student
+could follow, dewlab having already run this exact initiative once (its
+own `planning/DOCS_AND_COMMENTS_PASS.md`, closed out complete) while
 dewstack had never had it. `ARCHITECTURE.md` and `CONTRIBUTING.md` now
 exist — the build, the runtime's three cell kinds and the site editor,
 the feedback pipeline, and the standing "keep documentation current"
-rule — and `CLAUDE.md` points at both. `DECISIONS_LOG.md` stays an open
-question, flagged for Josh rather than decided, since the reasoning
-dewstack already keeps in this file and in `CONSOLIDATION_PLAN.md` might
-already do that job. Phases B through F (this session's newest code, the
-shared runtime, everything else, a tutorial-cell-code-review skill, a
-whole-repo language pass) have not started — read the plan before
-picking either up. One real bug turned up while scoping Phase A and is
+rule — and `CLAUDE.md` points at both (`DECISIONS_LOG.md` stays an open
+question, flagged for Josh rather than decided). Six `docs/<name>-explained.md`
+files now exist too, covering this session's newest runtime code
+(`sql_tools.py`, `python_tools.py`, `sql-cell.js`) and the shared runtime
+underneath the whole site (`build.py`, `site-editor.js`, `workspace.js`)
+— every one of the six read closely enough to write its walkthrough, and
+every one already had accurate docstrings, no stale comments found.
+Phases D through F (everything else, a tutorial-cell-code-review skill,
+a whole-repo language pass) have not started — read the plan before
+picking one up. One real bug turned up while scoping Phase A and is
 recorded there for Phase D to fix: `tools/fetch_pyodide.py`'s
 `--packages` default is still `sqlite3` alone, stale now that Data Arc 2
 needs `pandas`/`matplotlib` too.
