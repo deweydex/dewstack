@@ -204,13 +204,35 @@ needs one before this half of the work can start:
       does** — a rename is only ever a rename, matching dewlab's own hard
       rule; a tutorial's `slug` and a block's own `name` are both
       contracts, neither this skill's to touch.
-- [ ] Run it across every tutorial, module by module (`getting-started`,
-      `web`, `data`, `full-stack`, `reference`), tracked in this file's
-      own ledger below as each module clears. Not started — the skill's
-      own "Tracking coverage" section names this same gap and points
-      back here. A real undertaking on its own (dozens of tutorials
-      across five modules), worth picking up as its own dedicated pass
-      rather than folded into whichever session next touches this plan.
+- [~] Run it across every tutorial, module by module, tracked in this
+      file's own ledger below as each module clears.
+      - [x] `full-stack` (1 tutorial) — clean. `read`/`search` app cells
+            already use semantic names throughout (`draw`, `rows`,
+            `filter`), `root`/`dlQuery` correctly left untouched, the
+            parameterized-query pattern correctly left alone as
+            deliberately taught.
+      - [x] `data` (12 tutorials, 11 with runnable blocks) — clean
+            throughout: table/column/variable names were already
+            semantic (`dinosaurs`, `sightings`, `income_share`,
+            `country_regions`), stub cells correctly skipped, the
+            deliberate `'USA'`/`'United States'` join mismatch in
+            `joining-two-real-tables` correctly left alone as the
+            lesson itself. One real bug found and fixed, of the kind
+            this pass exists to catch, not a naming one: 
+            `a-form-that-writes-a-row` both linked to
+            `tutorial:a-form` as an existing page and described it, one
+            sentence later, as something that still needed to exist
+            before the wiring it describes could happen — the web
+            track's `a-form` tutorial had shipped since that sentence
+            was written. Fixed.
+      - [x] `getting-started` (8 tutorials), `reference` (4 tutorials) —
+            no runnable blocks in either module; the two illustrative
+            fences that exist (`how-the-pieces-fit`'s SQL example,
+            `troubleshooting`'s correct/incorrect HTML and CSS pairs)
+            are deliberately minimal UI examples, not real teaching
+            code, and need no naming review.
+      - [ ] `web` (30 tutorials, 27 with runnable blocks) — not started;
+            by far the largest module, worth its own session.
 
 ### Phase F — the whole-repo language pass
 
@@ -254,5 +276,5 @@ Update this table as phases clear, the same way
 | B — this session's new code | done, 2026-09-06 |
 | C — the shared runtime | done, 2026-09-06 |
 | D — the rest | done, 2026-09-06 (`tools/fetch_pyodide.py`'s `BASELINE` bug fixed along the way) |
-| E — cell-code-review skill + tutorials | skill written 2026-09-06; running it across tutorials not started |
+| E — cell-code-review skill + tutorials | skill written 2026-09-06; `full-stack`/`data`/`getting-started`/`reference` cleared same day; `web` (30 tutorials) not started |
 | F — whole-repo language pass | done, 2026-09-06 (one real staleness fix in `README.md`) |
