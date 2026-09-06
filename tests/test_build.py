@@ -307,6 +307,43 @@ def test_page_without_a_site_block_has_no_editor_script(tree):
     assert "site-editor.js" not in page
 
 
+def test_site_editor_with_a_js_pane_has_run_and_an_open_console(tree):
+    """JavaScript runs on Run, not on every keystroke, so the pane carries
+    the button; and the console is open from the start so a reader sees
+    where output will go before they need it."""
+    tutorials, out = tree
+    body = (
+        "# A page\n\n"
+        "```html site=card\n<p id=\"x\">Hi</p>\n```\n"
+        "```js site=card\nconsole.log('hi');\n```\n"
+    )
+    write_tutorial(tutorials, "page", body)
+    write_order(tutorials, ["page"])
+    run_build(tree)
+    page = (out / "tutorials/mod/page/index.html").read_text(encoding="utf-8")
+    assert 'class="dl-site-run"' in page
+    assert '<div class="dl-site-console">' in page
+    assert 'class="dl-site-console-output"' in page
+
+
+def test_site_editor_without_a_js_pane_hides_the_console_and_has_no_run(tree):
+    """An HTML/CSS editor has nothing to run. Its console still exists,
+    hidden, because an inline script in the HTML pane can still log or
+    throw, and site-editor.js shows it the moment something arrives."""
+    tutorials, out = tree
+    body = (
+        "# A page\n\n"
+        "```html site=card\n<p>Hi</p>\n```\n"
+        "```css site=card\np { color: red; }\n```\n"
+    )
+    write_tutorial(tutorials, "page", body)
+    write_order(tutorials, ["page"])
+    run_build(tree)
+    page = (out / "tutorials/mod/page/index.html").read_text(encoding="utf-8")
+    assert 'class="dl-site-run"' not in page
+    assert '<div class="dl-site-console" hidden>' in page
+
+
 def test_site_editor_preview_keeps_links_inside_itself():
     """A srcdoc iframe without a base tag resolves a relative address, a
     same-page link included, against the parent page's own address rather

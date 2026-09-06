@@ -353,24 +353,41 @@ def extract_site_editors(body: str, path: Path) -> tuple[str, list[dict]]:
 
 def render_site_editor(editor: dict, index: int, tutorial: Tutorial) -> str:
     """One editor: a pane per file the block supplied, a sandboxed preview,
-    a width control so a reader can watch a responsive layout wrap, and
-    reset/download buttons. No saving here: the student's own fork is
-    where changes are kept (plan, section 13)."""
+    a width control so a reader can watch a responsive layout wrap, a
+    console under the preview, and reset/download buttons. No saving here:
+    the student's own fork is where changes are kept (plan, section 13).
+
+    HTML and CSS are live: the preview redraws as the reader types. A
+    JavaScript pane is not. It carries a Run button in its header, and the
+    preview keeps the last script that was run until the next press, so a
+    program runs when the reader asks and not on every keystroke
+    (planning/CONSOLE_AND_WORKSPACE.md, decided 2026-09-06). The console
+    is open from the start on an editor with a JavaScript pane, so a
+    reader sees where output will go before they need it, and hidden on
+    an HTML/CSS-only editor until something arrives (an inline script
+    can still log or throw). assets/site-editor.js owns both."""
     files = editor["files"]
     editor_id = f"site-editor-{tutorial.slug}-{editor['name']}"
+    has_js = "js" in files
 
     panes = []
     for lang, label in SITE_LANGS.items():
         if lang not in files:
             continue
         field_id = f"{editor_id}-{lang}"
+        run_button = (
+            '<button type="button" class="dl-site-run" '
+            'title="Run this script (Ctrl+Enter or Cmd+Enter in the pane)">Run</button>'
+            if lang == "js" else ""
+        )
         panes.append(
             f'<div class="dl-site-pane">'
-            f'<label for="{field_id}">{label}</label>'
+            f'<div class="dl-site-pane-head"><label for="{field_id}">{label}</label>{run_button}</div>'
             f'<textarea id="{field_id}" class="dl-site-input" data-lang="{lang}" '
             f'spellcheck="false" autocapitalize="off">{html.escape(files[lang])}</textarea>'
             f"</div>"
         )
+    console_hidden = "" if has_js else " hidden"
 
     return (
         f'<div class="dl-site-editor" id="{editor_id}" data-site-name="{html.escape(editor["name"])}">'
@@ -386,6 +403,10 @@ def render_site_editor(editor: dict, index: int, tutorial: Tutorial) -> str:
         f'<div class="dl-site-frame-wrap">'
         f'<iframe class="dl-site-frame" sandbox="allow-scripts" title="Live preview"></iframe>'
         f"</div>"
+        f"</div>"
+        f'<div class="dl-site-console"{console_hidden}>'
+        f'<div class="dl-site-console-head">Console</div>'
+        f'<div class="dl-site-console-output" aria-live="polite"></div>'
         f"</div>"
         f'<div class="dl-site-actions">'
         f'<button type="button" class="dl-site-reset">Reset</button>'

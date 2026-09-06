@@ -669,6 +669,8 @@ Decided in section 8, question 11. What a web authoring tutorial page needs is n
 
 **Done when** one rewritten page (lesson 11's first half, Flexbox) ships with the component, renders at both widths, passes both bars, and a student can drag the preview narrower and watch a row wrap.
 
+**Added 2026-09-06: a console, and Run for JavaScript.** The component gained a console under the preview and a Run button on the JavaScript pane; HTML and CSS stay live, JavaScript runs when asked. `planning/CONSOLE_AND_WORKSPACE.md` is the design, and it also plans the dewstack workspace, a page of the site's own where the same component keeps several named sites in the browser.
+
 ---
 
 ## 14. The web track's order: three trajectories and a hybrid

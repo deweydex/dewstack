@@ -824,13 +824,34 @@ p code, li code, td code {
 
 .dl-site-panes { display: flex; flex-direction: column; gap: 0.85rem; }
 
+.dl-site-pane-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-bottom: 0.3rem;
+}
 .dl-site-pane label {
   display: block;
-  margin-bottom: 0.3rem;
   font-family: var(--dl-mono);
   font-size: 0.78rem;
   color: var(--dl-muted);
 }
+/* The JavaScript pane's own Run, in its header rather than the actions
+   row at the bottom: it belongs beside the text it runs. Same face as the
+   other buttons, in the brand orange so it reads as the one that does
+   something. */
+.dl-site-run {
+  font-family: var(--dl-mono);
+  font-size: 0.78rem;
+  padding: 0.25rem 0.7rem;
+  border: 1px solid var(--dl-orange);
+  border-radius: 4px;
+  background: none;
+  color: var(--dl-orange-text);
+  cursor: pointer;
+}
+.dl-site-run:hover { background: var(--dl-orange); color: #fff; }
 
 .dl-site-input {
   display: block;
@@ -877,6 +898,66 @@ p code, li code, td code {
   height: 16rem;
   border: none;
   background: #fff;
+}
+
+/* The console under the preview: what the reader's script printed, and
+   every error it raised, with the pane and line the error came from. An
+   author rule setting display would beat the browser's own [hidden], so
+   the hidden state is spelled out (the same trap dewlab's log records at
+   7.121). */
+.dl-site-console {
+  margin-top: 0.85rem;
+  border: 1px solid var(--dl-cell-border);
+  border-radius: 4px;
+  background: var(--dl-output-bg);
+}
+.dl-site-console[hidden] { display: none; }
+.dl-site-console-head {
+  padding: 0.3rem 0.7rem;
+  font-family: var(--dl-mono);
+  font-size: 0.78rem;
+  color: var(--dl-muted);
+  border-bottom: 1px solid var(--dl-cell-border);
+}
+.dl-site-console-output {
+  min-height: 1.6rem;
+  max-height: 14rem;
+  overflow: auto;
+  padding: 0.4rem 0.7rem;
+  font-family: var(--dl-mono);
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: var(--dl-fg);
+}
+.dl-site-console-line { white-space: pre-wrap; word-break: break-word; }
+.dl-site-console-warn { color: var(--dl-orange-text); }
+.dl-site-console-error {
+  font-weight: bold;
+  border-left: 3px solid var(--dl-orange);
+  padding-left: 0.6rem;
+  margin: 0.2rem 0;
+}
+.dl-site-console-goto {
+  margin-left: 0.6rem;
+  font: inherit;
+  font-weight: normal;
+  font-size: 0.78rem;
+  padding: 0 0.4rem;
+  border: 1px solid var(--dl-cell-border);
+  border-radius: 4px;
+  background: none;
+  color: var(--dl-fg);
+  cursor: pointer;
+}
+.dl-site-console-goto:hover { color: var(--dl-orange-text); border-color: var(--dl-orange); }
+/* The plain-language second line under an error: reading type, not code,
+   so it looks like the page talking rather than the browser. */
+.dl-site-console-hint {
+  font-family: var(--dl-font-family);
+  font-size: 0.9rem;
+  color: var(--dl-fg);
+  padding-left: 0.6rem;
+  margin-bottom: 0.4rem;
 }
 
 .dl-site-actions { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.85rem; }

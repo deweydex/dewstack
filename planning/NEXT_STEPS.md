@@ -313,6 +313,25 @@ wrap across three rows at 30%, with no page-level sideways scroll at
 Done when D1, Flexbox first steps, ships with it and a reader can drag
 the preview narrower and watch a row wrap.
 
+**Console and Run, added 2026-09-06** (`planning/CONSOLE_AND_WORKSPACE.md`,
+step 1 of its section 8). A JavaScript pane now carries a Run button in
+its header and runs only on Run or Ctrl/Cmd+Enter; HTML and CSS stay
+live, and the preview keeps the last-run script while they change. A
+console under the preview shows `console.log` output and every uncaught
+error with the pane and line it came from, a Go to line button that
+puts the caret there, and a plain-language second line for the four
+errors a first term meets most (`FRIENDLY` in `assets/site-editor.js`,
+data rather than code). The console is open from the start on an editor
+with a JavaScript pane and hidden on an HTML/CSS-only one until
+something arrives. `</script` typed into the pane no longer ends the
+script element early. Fourteen Playwright tests in
+`tests/e2e/test_site_console.py`, with their own fixture and no Pyodide,
+cover the line arithmetic for a runtime error, a syntax error and an
+error inside a click handler, the Run model, Reset, Go to line, and the
+hidden console opening for an inline script. The markdown contract is
+unchanged; no tutorial had a `js site=` block on the day this shipped,
+so nothing a student sees today has moved.
+
 ### Step 5. Web Arc 1, sixteen concept pages
 
 In the starter's order, each page the explanation behind the exercise a
@@ -909,9 +928,16 @@ step arrives.
     "Open in the workspace" button on tutorial-page editors as the
     bridge. The console is the thing that unblocks the JavaScript
     track: today a script that throws just stops the preview changing.
-    Its section 9 lists the calls left to Josh, the largest being
-    whether the workspace page gets CodeMirror. Not built yet; the
-    design's section 8 is the order of work.
+    Decided 2026-09-06, all four of its section 9 calls: CodeMirror on
+    the workspace page only, with textareas staying on tutorial pages;
+    "port in shape" stays the only rule between the repositories, no
+    twinned files; the console opens whenever an editor has a
+    JavaScript pane; and the page is called the dewstack workspace.
+    Josh's own addition, which replaced the design's debounce: a Run
+    button for JavaScript, so a program runs when asked and a student
+    takes time with their code, while HTML and CSS stay live. Step 1
+    (the console and Run on tutorial pages) shipped the same day; see
+    Step 6 above. The design's section 8 is the order of the rest.
 
 ---
 

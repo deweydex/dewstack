@@ -193,15 +193,25 @@ before they need it; present but collapsed to its label on an editor
 with only HTML and CSS, and opened automatically the moment anything
 arrives (an inline script in the HTML pane can still log or throw).
 
-Each re-render clears it. That follows from the preview being redrawn
-on every keystroke: the console shows what the current document did,
-not a history. With that comes a real nuisance. Half-typed JavaScript
-is a syntax error on most keystrokes, and a console that flashes red
-between every character teaches a student to ignore it. The remedy is
-a short debounce on the render itself, around a quarter of a second of
-quiet before the preview and console update. CSS and HTML would take
-the same debounce for simplicity; nobody notices a quarter second on a
-colour change, and one path is easier to keep right than two.
+Each re-render clears it: the console shows what the current document
+did, not a history.
+
+**Revised 2026-09-06, on Josh's question: why not a Run button?** The
+first draft of this section proposed a quarter-second debounce, because
+half-typed JavaScript is a syntax error on most keystrokes and a console
+that flashes red between every character teaches a student to ignore
+it. The debounce was a patch over the wrong model. HTML and CSS are
+states, and the lesson is watching the box change colour under your
+hand, so they stay live. JavaScript is a program, and a program runs
+when asked. So the JavaScript pane does nothing on a keystroke; a Run
+button in its header, and Ctrl or Cmd plus Enter inside it, apply the
+pane and run, the same shape as dewlab's Python cells. Until the next
+Run the preview keeps the last script that ran, so retyping a colour
+does not silently re-run a half-edited program. Run clears the console
+and shows what this run did. With Run in place nothing that can fail is
+evaluated on a keystroke, and the debounce is gone. Josh's reason for
+asking is also a pedagogical one worth keeping: a student who presses
+Run has read their own code once before asking the machine to.
 
 ### 4.3 What an entry looks like
 
@@ -253,11 +263,14 @@ that nobody reads the console as the whole answer to "why does my page
 look wrong".
 
 **Decided here:** the relay mechanism, the offset arithmetic, escape
-`</` in the script, the two-line error entry, the data-driven friendly
-map, clear on re-render, a render debounce. **For Josh:** the debounce
-length; whether the console opens by default on a JavaScript pane
-(recommended) or only on first output; the wording of the three
-friendly lines.
+`</script` in the script, the two-line error entry, the data-driven
+friendly map, clear on re-render. **Decided by Josh, 2026-09-06:** Run
+for JavaScript, live for HTML and CSS (no debounce); the console open
+whenever there is a JavaScript pane. **Built the same day**, step 1 of
+section 8, with a fourth friendly line (`x is not a function`) added
+from the first pass over what students type. The console on an
+HTML/CSS-only editor is hidden rather than collapsed to a label, so the
+pages that exist today look exactly as they did.
 
 ---
 
@@ -323,10 +336,9 @@ Not shared or published. No links to a site, no gallery. The fork and
 GitHub Pages already publish; the workspace does not compete with them.
 
 **Decided here:** a dewstack-native page, not a link to dewmini; the
-three additions; the bridge button. **For Josh:** the page's name. The
-working word in this document is "the workspace", and it is a placeholder
-rather than a proposal; dewmini's name is his, and this one should be
-too.
+three additions; the bridge button. **Decided by Josh, 2026-09-06:** the
+page is called the dewstack workspace, plain, and reads as "the
+workspace" in prose.
 
 ---
 
@@ -371,10 +383,12 @@ under its preview, built from the same relay. That is section 8's last
 step, not its first, because dewstack is where the JavaScript track is
 blocked.
 
-**Decided here:** same shape on both sites; the relay and the friendly
-map as twinned files with a difference test; the console ported back
-into dewmini's Site view. **For Josh:** whether the twinning is wanted
-at all, or whether "port in shape" should stay the only rule.
+**Decided here:** same shape on both sites; the console ported back
+into dewmini's Site view. **Decided by Josh, 2026-09-06:** no twinned
+files. "Port in shape, not code" stays the only rule between the
+repositories, as it has been for every other shared surface; the relay
+and the friendly map are written once here and ported by hand to
+dewmini, and the banner on each names the other.
 
 ---
 
@@ -414,8 +428,8 @@ where it was made, gives the workspace a real editor where one is
 wanted, and the adapter it needs is the same adapter 3 would need
 later.
 
-**Decided here:** nothing; this is the biggest cost item and the call
-is Josh's. **For Josh:** which of the three.
+**Decided by Josh, 2026-09-06:** option 2, CodeMirror on the workspace
+page only. Tutorial pages keep textareas.
 
 ---
 
@@ -452,22 +466,17 @@ block on a page today works unchanged after them.
 
 ---
 
-## 9. Open calls, collected
+## 9. Open calls, collected — all decided 2026-09-06
 
-1. Section 7: textareas everywhere, CodeMirror on the workspace, or
-   CodeMirror everywhere on first focus. Recommended: the workspace
-   only, for now.
-2. Section 5: the workspace page's name.
-3. Section 6: twin the relay and the friendly map across the two
-   repositories with a difference test, or keep "port in shape" as the
-   only rule. Recommended: twin them.
-4. Section 4.2: console open by default on a JavaScript pane
-   (recommended) or only once something arrives; the render debounce
-   length (a quarter of a second proposed).
-5. Section 4.3: the wording of the three friendly lines, which are
-   student-facing and go through the plain-language checks like any
-   other sentence.
+1. Section 7: **CodeMirror on the workspace page only.** Tutorial pages
+   keep textareas.
+2. Section 5: **the dewstack workspace.**
+3. Section 6: **no twinning.** Port in shape stays the only rule.
+4. Section 4.2: **a Run button for JavaScript, live HTML and CSS, no
+   debounce**; the console **open whenever there is a JavaScript pane.**
+   Josh's own reframing of the question, recorded in 4.2.
+5. Section 4.3: the friendly lines shipped with step 1 in
+   `assets/site-editor.js`'s `FRIENDLY` table, four of them, for review
+   there rather than here.
 
-Nothing in step 1 waits on any of these except the friendly wording,
-and a first version can ship with the browser's own message alone and
-add the second line when the words are agreed.
+Step 1 is built. Steps 2 to 5 follow in section 8's order.
