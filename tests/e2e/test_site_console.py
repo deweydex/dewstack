@@ -26,7 +26,10 @@ from pathlib import Path
 import pytest
 from conftest import DEWSTACK, _QuietHandler, _QuietServer, b as build_module
 
-from playwright.sync_api import expect
+# Skipped, not failed, where Playwright is absent: CI's unit job installs
+# no browser, the same as for the SQL and Python cells' tests.
+_playwright = pytest.importorskip("playwright.sync_api", reason="playwright is not installed")
+expect = _playwright.expect
 
 FIXTURE = Path(__file__).resolve().parent / "fixture" / "site-console.md"
 MODULE = "fixtures"
