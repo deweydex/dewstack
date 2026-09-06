@@ -249,7 +249,38 @@ three doors.
 
 ---
 
-## 5. Two build systems, on purpose
+## 5. Settings and search
+
+Two smaller pieces every page shares, neither substantial enough for its
+own `docs/*-explained.md` (`planning/DOCS_AND_COMMENTS_PLAN.md`'s own
+Phase D makes this same size judgement, file by file, the way dewlab's
+does):
+
+**`assets/settings.js`** owns the reading-preferences panel — theme,
+font, text size, reading-column width, link colour, header style,
+contrast — and the settings sidebar's own open/closed mechanics. State
+is one small object in `localStorage` under `dewstack:texture`; a small
+inline script in `assets/shell.html` applies it before first paint (so a
+returning reader never sees a flash of the default look), and this file
+wires the panel's controls to stay in step with it afterward. Ported in
+shape from dewlab's own `tutorial-runtime.js` (`initTexture`,
+`initSettingsPanel`), cut down to what a reading site needs — no Python,
+no cells, no manifest.
+
+**`assets/search.js`** is the contents page's client-side search,
+carried over from dewlab's own file as-is. It does nothing on a page
+without a `#dl-search` element, and reads `assets/search-index.json`,
+which `build.py`'s `write_search_index()` writes on every build: one row
+per live tutorial, with its title, module, series, and the terms its own
+glossary file says it introduces. Matching is deliberately simple —
+lower-case every word, strip common suffixes, apply a small synonym
+table, then score each tutorial by how many of the query's words it
+shares, weighted by field (title counts more than a matched term, which
+counts more than a module or series name).
+
+---
+
+## 6. Two build systems, on purpose
 
 - **`vendor-src/`** exists purely to produce `assets/vendor/`. It is never
   run in CI's main `tests` job and never run by a writer building
@@ -269,7 +300,7 @@ project.
 
 ---
 
-## 6. Tests: what each suite actually checks
+## 7. Tests: what each suite actually checks
 
 ```
 python3 -m pytest                the fast ones, no browser

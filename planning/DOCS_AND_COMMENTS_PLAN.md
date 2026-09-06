@@ -123,17 +123,14 @@ until these exist.
       and `planning/NEXT_STEPS.md` in the meantime, not at a
       `DECISIONS_LOG.md` that does not exist.
 
-**Found while scoping Phase A, filed here for Phase D rather than fixed
-now:** `tools/fetch_pyodide.py`'s own docstring already names the exact
-condition that has since happened — "once a page uses pandas or
-matplotlib (Data Arc 2), the packages it declares need to be listed here
-too" — but `BASELINE`, the `--packages` flag's default, is still
-`["sqlite3"]` alone. Data Arc 2 shipped in the same session that wrote
-this plan. A self-hosted copy built with no `--packages` flag would now
-be missing `pandas`/`matplotlib` for those pages; `tests/e2e/conftest.py`
-already documents the workaround (`--packages sqlite3 pandas matplotlib`)
-rather than relying on the stale default. Real drift, not a scoping gap —
-fix `BASELINE` and its docstring together when Phase D reaches this file.
+**Found while scoping Phase A, fixed in Phase D:** `tools/fetch_pyodide.py`'s
+own docstring already named the exact condition that had since happened —
+"once a page uses pandas or matplotlib (Data Arc 2), the packages it
+declares need to be listed here too" — but `BASELINE`, the `--packages`
+flag's default, was still `["sqlite3"]` alone. Data Arc 2 shipped in the
+same session that wrote this plan. Fixed 2026-09-06, alongside
+`docs/tools-explained.md`: `BASELINE` now lists all three packages the
+site's pages can actually declare.
 
 ### Phase B — this session's own new code, freshest and easiest to verify
 
@@ -173,16 +170,19 @@ fix `BASELINE` and its docstring together when Phase D reaches this file.
 
 ### Phase D — the rest
 
-- [ ] `assets/settings.js` (234 lines), `assets/search.js` (213 lines) —
-      smaller, already reasonably commented per the spot check above;
-      confirm rather than assume, and decide file by file whether each
-      earns its own explanation file or a paragraph in `ARCHITECTURE.md`
-      is enough (dewlab makes this same size judgement — not every file
-      gets a dedicated doc).
-- [ ] `tools/*.py` (`label_report.py`, `report_patterns.py`,
+- [x] `assets/settings.js` (234 lines), `assets/search.js` (213 lines) —
+      read in full, 2026-09-06: both already accurate, no stale comments.
+      Judged not substantial enough for a dedicated explanation file each
+      — given a paragraph in `ARCHITECTURE.md` §5 instead, the size
+      judgement dewlab makes too.
+- [x] `tools/*.py` (`label_report.py`, `report_patterns.py`,
       `fetch_pyodide.py`, `add_course_bar.py`, `measure_sentences.py`) —
-      one shared `docs/tools-explained.md`, the way dewlab covers its
-      own `dev/*.py` scripts as one file rather than five.
+      one shared `docs/tools-explained.md`, written 2026-09-06, the way
+      dewlab covers its own `dev/*.py` scripts as one file rather than
+      five. This is where the `fetch_pyodide.py` bug flagged in Phase A
+      actually got fixed: `BASELINE` now lists `sqlite3`, `pandas`,
+      `matplotlib` (was `sqlite3` alone), and its docstring and
+      `--packages` help text updated to match.
 
 ### Phase E — the tutorial-cell-code-review skill, then the tutorials
 
@@ -226,6 +226,6 @@ Update this table as phases clear, the same way
 | A — the map and the rule | `ARCHITECTURE.md`/`CONTRIBUTING.md`/`CLAUDE.md` done, 2026-09-06; `DECISIONS_LOG.md` still Josh's call |
 | B — this session's new code | done, 2026-09-06 |
 | C — the shared runtime | done, 2026-09-06 |
-| D — the rest | not started (a real bug already found: `tools/fetch_pyodide.py`'s `BASELINE`, see above) |
+| D — the rest | done, 2026-09-06 (`tools/fetch_pyodide.py`'s `BASELINE` bug fixed along the way) |
 | E — cell-code-review skill + tutorials | not started |
 | F — whole-repo language pass | not started |

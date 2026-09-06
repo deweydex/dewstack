@@ -8,13 +8,16 @@ page's own fenced blocks decide what it needs at build time (build.py's
 render_body()), and assets/sql-cell.js only ever asks Pyodide for that
 page's own list. `--packages` below is what to keep in the self-hosted
 copy, so it has to cover every package any page on the site actually
-declares — today that is `sqlite3` alone (about 13 MB), since only Data
-Arc 1's SQL cells and the practice quiz exist; once a page uses pandas
-or matplotlib (Data Arc 2), the packages it declares need to be listed
-here too, or a self-hosted copy will be missing what that page asks for.
-`--packages` has no default beyond `sqlite3` for exactly that reason: it
-should be as small as the pages actually built need, not dewlab's full
-numpy/pandas/matplotlib/jedi baseline (~32 MB) kept just in case.
+declares — `sqlite3` for a SQL cell, check, or app cell, plus `pandas`
+and `matplotlib` once a page has a Python cell (Data Arc 2, shipped
+2026-09-06 — `BASELINE` below covers all three so a self-hosted copy
+never falls behind what the site's own pages ask for; keep this in step
+with `render_body()`'s own package list if a fourth kind is ever added).
+`--packages` is overridable rather than fixed for the same reason
+dewlab's own script is: a maintainer building a self-hosted copy for
+only part of the site (a school network testing the data track alone,
+say) should be able to ask for less than the full baseline, not dewlab's
+full numpy/pandas/matplotlib/jedi baseline (~32 MB) kept just in case.
 
 The default is the CDN in assets/sql-cell.js (matching dewlab's own
 default). This script exists for the same reason dewlab's does: the
@@ -43,7 +46,7 @@ RELEASE = (
     "https://github.com/pyodide/pyodide/releases/download/"
     "{v}/pyodide-{v}.tar.bz2"
 )
-BASELINE = ["sqlite3"]
+BASELINE = ["sqlite3", "pandas", "matplotlib"]
 CORE = [
     "pyodide.js",
     "pyodide.mjs",
@@ -75,7 +78,7 @@ def main() -> None:
     parser.add_argument("--version", default=PYODIDE_VERSION)
     parser.add_argument(
         "--packages", nargs="*", default=BASELINE,
-        help="packages to keep, with their dependencies (default: sqlite3 alone)",
+        help="packages to keep, with their dependencies (default: sqlite3, pandas, matplotlib)",
     )
     parser.add_argument(
         "--out", type=Path,
