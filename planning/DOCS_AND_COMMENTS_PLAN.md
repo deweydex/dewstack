@@ -87,22 +87,29 @@ such skill exists here yet.
 Nothing below this can cite "see ARCHITECTURE.md" or "per CONTRIBUTING.md"
 until these exist.
 
-- [ ] `ARCHITECTURE.md` — the shape of dewlab's own, adapted: the build
-      (`build.py`, markdown in, static site out), the runtime (Pyodide,
-      one engine, three cell kinds — SQL, Python, full-stack `app=` —
-      plus the site editor and the workspace), the feedback pipeline
+- [x] `ARCHITECTURE.md` — written 2026-09-06: the build (`build.py`,
+      markdown in, static site out, the four `extract_*`/`render_*` block
+      pairs), the runtime (one Pyodide engine, three cell kinds — SQL,
+      Python, full-stack `app=` — plus the site editor and its sandboxed
+      preview, and the standalone workspace), the feedback pipeline
       (report doors, `tools/label_report.py`, `tools/report_patterns.py`),
-      and a "where to start, by what you're changing" table at the
-      foot, the way dewlab's closes.
-- [ ] `CONTRIBUTING.md` — running things, the plain-language checks
-      (already listed in `CLAUDE.md`, worth centralising here instead),
-      the student feedback pipeline section (`README.md`'s "For
-      teachers" currently carries this alone), and dewlab's "Keep
-      documentation and comments current" section verbatim in spirit,
-      naming dewstack's own files.
-- [ ] `CLAUDE.md` — once `CONTRIBUTING.md` exists, point at it and
-      `ARCHITECTURE.md` the way dewlab's own `CLAUDE.md` does, and add
-      the one-line standing rule there too.
+      and a "where to start, by what you're changing" table at the foot,
+      the way dewlab's closes. Includes the full-stack cell's own
+      architecture decision (no iframe, over a `postMessage` bridge or an
+      `allow-same-origin` hole), read back against
+      `planning/CONSOLIDATION_PLAN.md`'s own "Built 2026-09-06" entry to
+      check it matches what actually shipped.
+- [x] `CONTRIBUTING.md` — written 2026-09-06: getting set up, running the
+      tests (including the e2e prerequisites), what runs in CI, the
+      student feedback pipeline section (`README.md`'s "For teachers"
+      still carries the student-facing version; this is the
+      contributor-facing one), dewlab's "Keep documentation and comments
+      current" section adapted in spirit naming dewstack's own files, and
+      the two traps from `CLAUDE.md` repeated here since a contributor
+      reads this file, not necessarily that one.
+- [x] `CLAUDE.md` — updated 2026-09-06 to point at `ARCHITECTURE.md` and
+      `CONTRIBUTING.md`, with a "Where the rest lives" table and the
+      one-line standing rule, matching dewlab's own `CLAUDE.md` shape.
 - [ ] `DECISIONS_LOG.md` — dewstack has been recording engineering
       reasoning all along, just inside `planning/CONSOLIDATION_PLAN.md`'s
       per-item entries and `planning/NEXT_STEPS.md`'s dated "Where
@@ -111,7 +118,22 @@ until these exist.
       `DECISIONS_LOG.md` from that existing material, or to decide the
       two planning documents already do this job and a separate log
       would just be a second place to keep in sync, is Josh's call —
-      flagged here rather than decided.
+      flagged here rather than decided. `ARCHITECTURE.md` and
+      `CONTRIBUTING.md` both point at `planning/CONSOLIDATION_PLAN.md`
+      and `planning/NEXT_STEPS.md` in the meantime, not at a
+      `DECISIONS_LOG.md` that does not exist.
+
+**Found while scoping Phase A, filed here for Phase D rather than fixed
+now:** `tools/fetch_pyodide.py`'s own docstring already names the exact
+condition that has since happened — "once a page uses pandas or
+matplotlib (Data Arc 2), the packages it declares need to be listed here
+too" — but `BASELINE`, the `--packages` flag's default, is still
+`["sqlite3"]` alone. Data Arc 2 shipped in the same session that wrote
+this plan. A self-hosted copy built with no `--packages` flag would now
+be missing `pandas`/`matplotlib` for those pages; `tests/e2e/conftest.py`
+already documents the workaround (`--packages sqlite3 pandas matplotlib`)
+rather than relying on the stale default. Real drift, not a scoping gap —
+fix `BASELINE` and its docstring together when Phase D reaches this file.
 
 ### Phase B — this session's own new code, freshest and easiest to verify
 
@@ -186,15 +208,15 @@ plan — but confirm rather than assume, the same way Phase D does for
 
 ## Ledger
 
-Nothing started yet. Update this table as phases clear, the same way
+Update this table as phases clear, the same way
 `planning/PLAIN_LANGUAGE_PASS.md` (dewlab) and `planning/NEXT_STEPS.md`
 (here) already track progress elsewhere in these two repositories.
 
 | Phase | Status |
 |---|---|
-| A — the map and the rule | not started |
+| A — the map and the rule | `ARCHITECTURE.md`/`CONTRIBUTING.md`/`CLAUDE.md` done, 2026-09-06; `DECISIONS_LOG.md` still Josh's call |
 | B — this session's new code | not started |
 | C — the shared runtime | not started |
-| D — the rest | not started |
+| D — the rest | not started (a real bug already found: `tools/fetch_pyodide.py`'s `BASELINE`, see above) |
 | E — cell-code-review skill + tutorials | not started |
 | F — whole-repo language pass | not started |
