@@ -78,6 +78,6 @@ reader notices all of it before they notice anything else about the page.
 
 The [troubleshooting](tutorial:troubleshooting) page covers the problems
 that come up most. The [quick reference](tutorial:quick-reference) holds
-syntax you have seen before and can't quite remember. Trying something
+syntax you have seen before and cannot quite remember. Trying something
 and watching it fail is usually the fastest way through the project, not
 a detour from it.

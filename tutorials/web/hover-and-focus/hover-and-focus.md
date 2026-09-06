@@ -54,8 +54,8 @@ one is a real loss even though it changes nothing for a mouse user.
 
 ## Your turn
 
-Open your fork and find the `.card` rule in `styles.css`. Add a hover
-effect:
+Let's open your fork and find the `.card` rule in `styles.css`. Try
+adding a hover effect:
 
 ```css
 .card {
@@ -67,10 +67,10 @@ effect:
 }
 ```
 
-Then find `a:focus`. Press Tab repeatedly on your page and watch the
-outline move between links. The very first press lands on a hidden "Skip
-to main content" link. Look for `.skip-link` in the CSS to see how it
-stays hidden until it has focus.
+Then find `a:focus`. Try pressing Tab repeatedly on your page and watch
+the outline move between links. The very first press lands on a hidden
+"Skip to main content" link. Look for `.skip-link` in the CSS to see
+how it stays hidden until it has focus.
 
 ## What you have now
 

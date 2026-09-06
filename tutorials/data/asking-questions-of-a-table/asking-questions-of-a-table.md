@@ -84,14 +84,14 @@ Your own table, from the last page, is already here.
 -- INSERT statements of your own, then run them.
 ```
 
-Write three queries against it in the box above:
+Try writing three queries against it in the box above:
 
 - One that names only some of its columns.
 - One with a `WHERE` that keeps only some rows.
 - One with an `ORDER BY`.
 
-Run each in turn. Each run saves what is in the box, so the next page
-opens with whatever you last ran here.
+Run each in turn and see what comes back. Each run saves what is in the
+box, so the next page opens with whatever you last ran here.
 
 ## What you have now
 

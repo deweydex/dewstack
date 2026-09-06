@@ -46,18 +46,19 @@ the query side of this, with `sightings.dinosaur_id`.
 
 ## Your turn
 
-Pick a topic for a database with at least two related tables — a
+Let's pick a topic for a database with at least two related tables — a
 library's books and its borrowers, a gym's classes and its members, a
 shop's products and its sales, or a topic of your own. On paper, or in
-a text file next to your notes, answer three questions for each table:
+a text file next to your notes, try answering three questions for each
+table:
 
 - What is one row? (One book. One borrower. One sale.)
 - What columns does that row need, and what kind of value goes in each?
 - Which column, if any, points at a row in another table?
 
 Do this before the next page opens a real dataset and asks the same
-three questions of it. The database you design here is the one the
-rest of this arc builds, one page at a time.
+three questions of it. The database you design here is the one the rest
+of this series builds, one page at a time.
 
 ## What you have now
 

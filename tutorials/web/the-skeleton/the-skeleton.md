@@ -24,9 +24,10 @@ would show up in the browser tab instead, not in the preview here.
 
 ## Why this happens
 
-Every HTML page splits into two parts. The **head** holds information
-about the page: its `<title>`, and other details a visitor does not see
-directly. The **body** holds everything a visitor actually sees: headings,
+Every HTML page splits into two parts. Let's see why the title
+disappeared from the preview. The **head** holds information about the
+page: its `<title>`, and other details a visitor does not see directly.
+The **body** holds everything a visitor actually sees: headings,
 paragraphs, images, and the rest.
 
 `<title>` lives in the head, which is why its text goes to the browser tab
@@ -35,14 +36,15 @@ other visible content.
 
 ## Your turn
 
-Open `index.html` in your fork again. Find the `<h1>` element inside the
-hero section. It currently says "Welcome to My Portfolio". Change it to
-something that represents you, then save and refresh.
+Let's open `index.html` in your fork again. Inside the hero section
+there is an `<h1>` element — it currently says "Welcome to My
+Portfolio". Try changing it to something that represents you, then save
+and refresh.
 
-Compare the two changes you have now made. The title, in the head, changed
+Now compare the two changes we have made. The title, in the head, changed
 your browser tab. The heading, in the body, changed the page itself. Try
-making them identical for a moment, then make them different again, and
-notice which feels right for your site.
+making them identical for a moment, then different again, and notice
+which feels right for your site.
 
 ## What you have now
 

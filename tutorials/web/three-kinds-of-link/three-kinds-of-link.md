@@ -36,11 +36,11 @@ at all, unlike the other two.
 
 ## Your turn
 
-Open your fork and find the button in the about-preview section, the `<a>`
-tag with `class="btn"`. It should already link to `about.html`. Click it
-and confirm you land on the About page.
+Let's open your fork and find the button in the about-preview section,
+the `<a>` tag with `class="btn"`. It should already link to
+`about.html`. Try clicking it to confirm you land on the About page.
 
-Then, before the closing `</main>` tag, add a contact section:
+Then, before the closing `</main>` tag, let's add a contact section:
 
 ```html
 <section id="contact" class="section contact-section">
@@ -52,8 +52,9 @@ Then, before the closing `</main>` tag, add a contact section:
 </section>
 ```
 
-Replace the email address with your own, or leave it as a placeholder.
-Click the link and see your browser try to open an email application.
+Replace the email address with your own, or leave the example as it is
+for now. Try clicking the link and see your browser try to open an email
+application.
 
 ## What you have now
 

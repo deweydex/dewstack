@@ -72,12 +72,11 @@ your own account, GitHub Copilot (an assistant that suggests code as you
 type), and offers from other companies, including a free domain name for
 a year.
 
-Applying means telling GitHub you are a student and then proving it,
-usually with a college email address or a photograph of your student
-card. Whether this course's own award qualifies is not settled here:
-GitHub decides on each application itself, and its rules can change.
-Apply and find out, and if a college email address does not work, try
-the student card instead.
+To apply, you tell GitHub you are a student and then prove it, usually
+with a college email address or a photograph of your student card. We
+cannot say whether this course's own award qualifies. GitHub decides on
+each application, and its rules can change. Try applying, and if a
+college email address does not work, try the student card instead.
 
 Find the pack at [education.github.com/pack](https://education.github.com/pack).
 

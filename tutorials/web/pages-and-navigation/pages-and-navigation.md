@@ -41,11 +41,12 @@ around one page already knows where everything is on the next.
 
 ## Your turn
 
-Open your fork of `project_wad` and compare the `<nav>` in all five HTML
-files. The links should be identical and in the same order everywhere,
-and only the current page's link should carry `aria-current="page"`. If
-you renamed any file while planning your site map, update every file's
-navigation to match — the same small edit, five times, not once.
+Let's open your fork of `project_wad` and compare the `<nav>` in all
+five HTML files. The links should be identical and in the same order
+everywhere, and only the current page's link should carry
+`aria-current="page"`. If you renamed any file while planning your site
+map, try updating every file's navigation to match — the same small
+edit, five times, not once.
 
 ## What you have now
 

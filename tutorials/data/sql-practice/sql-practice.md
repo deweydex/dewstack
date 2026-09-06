@@ -11,7 +11,7 @@ version: 2026.09.05.1
 
 Five short exercises, against a shared table of students and a shared
 table of courses. None of this is graded; the hints and the solutions
-at the foot are there to use freely. Getting one wrong and reading why
+at the bottom are there to use freely. Getting one wrong and reading why
 is worth more than skipping the hint to avoid it.
 
 Run this first, to build both tables.
@@ -51,7 +51,7 @@ INSERT INTO courses (name, instructor, credits) VALUES
 
 ## Exercise 1: naming columns
 
-Select only the `name` and `age` columns from `students`.
+Try selecting only the `name` and `age` columns from `students`.
 
 ```sql cell=practice
 -- Write your query here.
@@ -65,7 +65,7 @@ Name the columns you want, separated by commas, in place of `*`.
 
 ## Exercise 2: WHERE
 
-Find every student whose `grade` is less than 75.
+Try finding every student whose `grade` is less than 75.
 
 ```sql cell=practice
 -- Write your query here.
@@ -79,7 +79,7 @@ Find every student whose `grade` is less than 75.
 
 ## Exercise 3: INSERT
 
-Add yourself to `students`, with any age and grade you like.
+Try adding yourself to `students`, with any age and grade you like.
 
 ```sql cell=practice
 -- Write your query here.
@@ -93,7 +93,7 @@ Add yourself to `students`, with any age and grade you like.
 
 ## Exercise 4: ORDER BY
 
-Show every student, sorted by `name` in alphabetical order.
+Try showing every student, sorted by `name` in alphabetical order.
 
 ```sql cell=practice
 -- Write your query here.
@@ -108,7 +108,7 @@ same thing.
 
 ## Exercise 5: COUNT
 
-How many courses are in `courses`?
+How many courses are in `courses`? Try writing a query that counts them.
 
 ```sql cell=practice
 -- Write your query here.

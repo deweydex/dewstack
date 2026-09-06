@@ -9,8 +9,8 @@ version: 2026.09.04.1
 
 # A rule, and where it lives
 
-Change one line below and both paragraphs change colour, not just one.
-Neither paragraph mentions colour at all.
+Try changing one line below and both paragraphs change colour, not just
+one. Neither paragraph mentions colour at all.
 
 ```html site=rule
 <p>First paragraph.</p>
@@ -45,10 +45,10 @@ One stylesheet can style many pages at once, which is why `index.html` and
 
 ## Your turn
 
-Open your fork and find that `<link>` tag in the `<head>` of both
-`index.html` and `about.html`. Then open `styles.css` itself and scroll
-through it. It has many comments explaining what each section does; browse
-them when you are curious.
+Let's open your fork and find that `<link>` tag in the `<head>` of both
+`index.html` and `about.html`. Then try opening `styles.css` itself and
+scrolling through it. It has many comments explaining what each section
+does; browse them when you are curious.
 
 ## What you have now
 

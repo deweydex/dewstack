@@ -35,8 +35,8 @@ place of the image whenever it fails to load, as it just did above.
 
 ## Your turn
 
-Open your fork and find the about-preview section, or the skills section
-you added earlier. Add an image:
+Let's open your fork and find the about-preview section, or the skills
+section you added earlier. Try adding an image:
 
 ```html
 <figure class="profile-image">
@@ -45,9 +45,9 @@ you added earlier. Add an image:
 </figure>
 ```
 
-The `picsum.photos` address gives you a random placeholder image; write
-your own description in `alt` rather than leaving the placeholder text.
-Try leaving `alt` empty (`alt=""`), then try removing it completely. Both
+The `picsum.photos` address gives you a random stand-in image; write
+your own description in `alt` rather than leaving the example text. Then
+try leaving `alt` empty (`alt=""`), and try removing it completely. Both
 look the same on the page, but a screen reader treats them differently.
 
 ## What you have now

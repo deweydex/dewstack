@@ -9,9 +9,9 @@ version: 2026.09.05.1
 
 # Cards in a row
 
-Change `flex: 1 1 200px` below to `flex: 0 0 200px`. The three cards stop
-sharing the leftover width evenly; instead each one stays exactly 200
-pixels, with a gap of empty space beside them.
+Try changing `flex: 1 1 200px` below to `flex: 0 0 200px`. The three
+cards stop sharing the leftover width evenly; instead each one stays
+exactly 200 pixels, with a gap of empty space beside them.
 
 ```html site=cards
 <div class="row">
@@ -34,8 +34,8 @@ pixels, with a gap of empty space beside them.
 
 ## Why this happens
 
-`flex` is shorthand for three numbers: **flex-grow**, **flex-shrink**,
-and **flex-basis**, in that order.
+`flex` combines three numbers into one line: **flex-grow**,
+**flex-shrink**, and **flex-basis**, in that order.
 
 **flex-basis** is a card's starting size, 200 pixels here, before any
 growing or shrinking happens.
@@ -51,11 +51,11 @@ rather than too much. `1` lets a card shrink below its basis to fit;
 
 ## Your turn
 
-Open your fork of `project_wad` and find the `.card` rule in `styles.css`.
-It already uses `flex: 1 1 200px` on the card row from your planning
-page. Try `flex: 0 0 200px` and watch the gap appear. Then try
-`flex: 2 1 200px` on just one card, and watch it claim twice the leftover
-space of the other two.
+Let's open your fork of `project_wad` and find the `.card` rule in
+`styles.css`. It already uses `flex: 1 1 200px` on the card row from
+your planning page. Try `flex: 0 0 200px` and watch the gap appear.
+Then try `flex: 2 1 200px` on just one card, and watch it take twice
+the leftover space of the other two.
 
 ## What you have now
 

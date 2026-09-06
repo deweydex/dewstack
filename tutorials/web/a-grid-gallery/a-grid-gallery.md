@@ -51,7 +51,7 @@ sharing any wider space evenly once every column has that much. Together,
 
 ## Your turn
 
-Open your fork of `project_wad` and find the `.gallery` rule in
+Let's open your fork of `project_wad` and find the `.gallery` rule in
 `styles.css`. It already uses this pattern. Try changing `120px` to
 `300px`, then check your gallery page at a phone width. Fewer, wider
 columns fit, and at a narrow enough width, just one.

@@ -85,11 +85,11 @@ rather than letting the existing items grow to fill them.
 
 ## Your turn
 
-Add a third column to the wide layout above, for a right-hand sidebar.
-First give the new area a name in the media query's map. Then add an
-element for it in the HTML, and give that element a matching
-`grid-area`. Drag the slider wide again once you are done, to see the
-new column appear.
+Let's try adding a third column to the wide layout above, for a
+right-hand sidebar. First, give the new area a name in the media query's
+map. Then add an element for it in the HTML, and give that element a
+matching `grid-area`. Drag the slider wide again once you are done, to
+see the new column appear.
 
 ## What you have now
 
