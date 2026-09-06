@@ -62,10 +62,10 @@ switches between them. Each site is saved in this browser, on this
 device, as you type. Clearing browser data removes it, and saving is
 unavailable if browser storage is blocked or full.
 
-**Open in the workspace**, under any website editor in a tutorial, copies
-that editor's three boxes into a new site here, so you can keep changing
-an example after you leave the page. **Load files** puts a `.html`,
-`.css` or `.js` file from your computer into the matching box. **Download these files** gives you the three files
+**Open in the workspace** sits under every website editor in a tutorial.
+It copies that editor's three boxes into a new site here, so you can keep
+changing an example after you leave the page. **Load files** puts a
+`.html`, `.css` or `.js` file from your computer into the matching box. **Download these files** gives you the three files
 back, named after the site. Your own website still lives in your GitHub
 repository. The workspace is for trying things; your repository is for
 keeping them.
