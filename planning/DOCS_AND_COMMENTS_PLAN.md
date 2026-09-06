@@ -137,18 +137,23 @@ fix `BASELINE` and its docstring together when Phase D reaches this file.
 
 ### Phase B — this session's own new code, freshest and easiest to verify
 
-- [ ] `assets/sql_tools.py` (241 lines) — `query_rows()`, `run_sql()`,
-      the `check_*` quiz functions. `docs/sql-tools-explained.md`.
-- [ ] `assets/python_tools.py` (321 lines) — `read_sql()`, `load_csv()`,
+- [x] `assets/sql_tools.py` (241 lines) — `query_rows()`, `run_sql()`,
+      the `check_*` quiz functions. `docs/sql-tools-explained.md`, written
+      2026-09-06. No stale comments found; every function already had an
+      accurate docstring.
+- [x] `assets/python_tools.py` (321 lines) — `read_sql()`, `load_csv()`,
       `download_csv()`, the rendering/streaming machinery ported from
-      dewlab. `docs/python-tools-explained.md`.
-- [ ] `assets/sql-cell.js` (522 lines) — three cell kinds' worth of
+      dewlab. `docs/python-tools-explained.md`, written 2026-09-06. Same
+      finding: already accurate.
+- [x] `assets/sql-cell.js` (522 lines) — three cell kinds' worth of
       boot/run/reset wiring, the `dlQuery` bridge, persistence.
-      `docs/sql-cell-js-explained.md`.
-- [ ] `build.py`'s own cell-block sections specifically (`extract_sql_cells`,
+      `docs/sql-cell-js-explained.md`, written 2026-09-06. Same finding.
+- [x] `build.py`'s own cell-block sections specifically (`extract_sql_cells`,
       `extract_py_cells`, `extract_app_cells`, and the three `render_*_cell`
-      functions) — checked against Phase C's full pass over the rest of
-      the file, not held for it, since this is the part just written.
+      functions) — read closely against what they actually do; every
+      docstring already matches. Left for Phase C's own
+      `docs/build-explained.md` to cover in place, as planned, rather than
+      given a section of its own here.
 
 ### Phase C — the shared runtime the rest of the site leans on
 
@@ -215,7 +220,7 @@ Update this table as phases clear, the same way
 | Phase | Status |
 |---|---|
 | A — the map and the rule | `ARCHITECTURE.md`/`CONTRIBUTING.md`/`CLAUDE.md` done, 2026-09-06; `DECISIONS_LOG.md` still Josh's call |
-| B — this session's new code | not started |
+| B — this session's new code | done, 2026-09-06 |
 | C — the shared runtime | not started |
 | D — the rest | not started (a real bug already found: `tools/fetch_pyodide.py`'s `BASELINE`, see above) |
 | E — cell-code-review skill + tutorials | not started |
