@@ -19,9 +19,6 @@ planned:
   javascript:
     title: "JavaScript"
     note: "Coming soon. These pages will teach the language that makes a page respond to a click, after the web track's HTML and CSS."
-  full-stack:
-    title: "Full stack"
-    note: "Being written. The first page shows a web page that reads rows from a table and draws them."
 
 # One line of markdown shown under a module's list of pages.
 notes:

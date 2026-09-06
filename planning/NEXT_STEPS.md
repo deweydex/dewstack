@@ -12,6 +12,62 @@ repeats neither. It points.
 
 ## 1. Where things stand
 
+**2026-09-06, the full-stack arc's first page, closing out step 8's
+second half — steps 1 to 3 of section 12's outline.** Before any of it
+could be built, section 12's own outline needed a real gap closed:
+"Pyodide exposes a Python function to the page" assumes a web cell's
+JavaScript can reach this page's Pyodide, but the site editor's preview
+(section 13) is deliberately sandboxed with no route back to anything
+else on the page — exactly the channel this needs. Three ways through
+it went to Josh — bridge the sandbox with `postMessage`, open a real
+hole in it with `allow-same-origin`, or give this cell type no iframe
+at all — and his call was the third, for a teaching reason as much as
+an architectural one: every other "cell reaches another" example on
+this site (`read_sql()`, `download_csv()`) is already direct, and
+`postMessage` would be the one place a student meets indirection with
+no story reason for it.
+
+`build.py` gained a third cell kind, `app=name` (consecutive
+`html`/`css`/`js` blocks, grouped the way `site=` blocks are, rendered
+straight into the page — no separate document to sandbox in the first
+place). `assets/sql_tools.py`'s new `query_rows(db_name, sql, params)`
+is the Python half of the bridge; `assets/sql-cell.js` exposes it as
+`window.dlQuery` only on a page that actually has an app cell.
+`params` was added once the search-box step was actually being
+written: pasting a visitor's typed text into SQL text directly is a
+real anti-pattern worth not teaching even once, and a `?` placeholder
+is the natural, real fix to name at exactly that moment — the
+tutorial's own closing terms are query, result set, full stack, and
+placeholder.
+
+Step 4 (a form's `INSERT`) is deliberately not in this page — Data Arc
+2's own `a-form-that-writes-a-row` already promised that wiring as "a
+full-stack page still being written," so it becomes page two rather
+than being pre-empted here. Step 5 (Download/Load for the whole
+database) is superseded before being built, the same way Data Arc 1's
+own version was: `persist` is the pattern this site actually converged
+on for "where your work is saved."
+
+Verified live against a real self-hosted Pyodide through Playwright: a
+query edited from `WHERE price < 10` to `WHERE price > 10` and rerun
+changed which rows drew; a search box's placeholder-bound query matched
+"bag" against "Tote bag" and nothing else; resetting one app cell
+cleared only its own preview, confirmed by a second, unrelated app cell
+still reading the same shared table correctly afterward — this caught a
+real bug (an app cell's Reset must not call `sql_tools.reset()`, since
+it owns no connection of its own the way a SQL or Python cell does; an
+earlier draft did, and would have silently dropped a table other cells
+on the page still needed); a bad SQL query and a bad JavaScript
+reference each rendered in the cell's own error box with zero page or
+console errors, catching a second real bug on the way (the error box
+had no `id`, so `document.getElementById()` returned null and the
+handler meant to show an error crashed trying to write to it instead).
+`python3 -m pytest -q`: 169 tests (10 new in `tests/test_build.py`, 6
+in `tests/test_sql_tools.py`, 4 new e2e in
+`tests/e2e/test_full_stack_cell.py`). `python3 build.py --clean`: 57
+pages. `modules.yaml`'s `full-stack` entry is out of `planned:` now
+that it has a real page; `README.md`'s "Full stack" section links it.
+
 **2026-09-06, Data Arc 2, pages 2 to 6, closing out step 8's first half.**
 The dataset question (open question 8, below) is resolved differently
 than expected: rather than the population/life-expectancy placeholder,
@@ -842,6 +898,14 @@ needs Pyodide's `eval_code_async`, so it is left to that live check, the
 same split dewlab draws around its own `run_cell()`); CI now installs
 `pandas`/`matplotlib` alongside `requirements-build.txt`, matching
 dewlab's own `unit` job.
+
+**The full-stack arc's first page, built 2026-09-06** — see "Where
+things stand" above for the full account, and `CONSOLIDATION_PLAN.md`
+section 12 for the architecture decision behind it (a new cell type,
+not the site editor's sandboxed one) and what it changes about the
+outline there. `tutorials/full-stack/putting-it-together.order.yaml` is
+the arc's own series; `modules.yaml`'s `full-stack` entry is out of
+`planned:` now that it has a real page.
 
 ### Ongoing, every step
 

@@ -59,6 +59,50 @@ def test_a_non_select_reports_rows_affected_not_a_table():
     assert "3 rows affected" in html
 
 
+class TestQueryRows:
+    """query_rows() is the bridge a full-stack page's own JavaScript
+    calls as dlQuery() (assets/sql-cell.js) — a plain list of dicts,
+    not the HTML run_sql() renders, since the reader's own JavaScript
+    decides what the page does with a result."""
+
+    def test_returns_a_list_of_dicts_keyed_by_column_name(self):
+        sql_tools.run_sql("shop", "create table products(name text, price real); "
+                                   "insert into products values ('Mug', 8.5), ('Notebook', 3.0);")
+        rows = sql_tools.query_rows("shop", "select name, price from products order by name")
+        assert rows == [{"name": "Mug", "price": 8.5}, {"name": "Notebook", "price": 3.0}]
+
+    def test_an_empty_result_is_an_empty_list(self):
+        sql_tools.run_sql("shop", "create table products(name text);")
+        assert sql_tools.query_rows("shop", "select name from products") == []
+
+    def test_placeholders_are_filled_in_by_params_not_pasted_into_the_query(self):
+        sql_tools.run_sql("shop", "create table products(name text); "
+                                   "insert into products values ('Tote bag'), ('Mug');")
+        rows = sql_tools.query_rows("shop", "select name from products where name like ?", ["%bag%"])
+        assert rows == [{"name": "Tote bag"}]
+
+    def test_a_value_containing_a_quote_is_still_just_one_value(self):
+        # The whole point of a placeholder: a value with a quote in it
+        # cannot break out of the query or change what it does, the way
+        # pasting it into the SQL text directly would risk.
+        sql_tools.run_sql("shop", "create table products(name text); "
+                                   "insert into products values ('O''Brien''s Bakery');")
+        rows = sql_tools.query_rows("shop", "select name from products where name = ?", ["O'Brien's Bakery"])
+        assert rows == [{"name": "O'Brien's Bakery"}]
+
+    def test_a_bad_query_raises_rather_than_returning_something_wrong(self):
+        with pytest.raises(sql_tools.sqlite3.Error):
+            sql_tools.query_rows("nothing-yet", "select * from not_a_real_table")
+
+    def test_reaches_a_table_a_run_sql_cell_already_built(self):
+        # The same connection a `sql cell=` block on the same page uses —
+        # this is the whole reason a full-stack page's app cell and its
+        # SQL cell share a page rather than needing anything passed
+        # between them.
+        sql_tools.run_sql("products", "create table products(name text); insert into products values ('Mug');")
+        assert sql_tools.query_rows("products", "select name from products") == [{"name": "Mug"}]
+
+
 def test_a_sql_error_renders_as_a_message_not_a_crash():
     html = sql_tools.run_sql("db", "select * from a_table_that_does_not_exist;")
     assert "dl-sql-error" in html
