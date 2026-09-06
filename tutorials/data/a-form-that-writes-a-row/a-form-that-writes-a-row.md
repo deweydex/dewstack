@@ -17,9 +17,10 @@ a form, and pressing submit is what turns their answers into a row.
 [A form](tutorial:a-form) covers the HTML side of this: a label, an
 input, a button, and what makes a form usable rather than merely
 present. This page stays on the database side: the query a submission
-like that would run, without wiring the two together yet. That wiring
-is a later, full-stack page, once the web track's own form page exists
-to build on.
+like that would run, without wiring the two together yet. That wiring —
+reading a form's own fields and writing what they held into a table —
+is a later, full-stack page; the two pieces it would join already
+exist, only the page that joins them does not yet.
 
 ## The row a submission would add
 
