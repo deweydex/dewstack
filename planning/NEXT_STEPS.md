@@ -12,6 +12,67 @@ repeats neither. It points.
 
 ## 1. Where things stand
 
+**2026-09-05, student feedback pathway, sixth slice.** The cell-level
+report icon dewlab already had (fourth slice) now exists here too, on
+both the SQL cell and the Python cell built in step 7 and step 8's
+Python/pandas engine: a small circle among a cell's own buttons opens the
+same three doors, already carrying the cell's id, its current code, and
+whatever it last showed, so a student reporting "it gives an error" from
+a cell never has to copy either by hand. `build.py`'s
+`cell_report_markup()` builds the icon and the panel's static shell for
+both cell types; `assets/sql-cell.js`'s `updateCellReportLinks()` fills
+in the live code and output at the moment the panel opens, ported in
+shape from dewlab's `tutorial-runtime.js` equivalent. `.github/
+ISSUE_TEMPLATE/report.yml` gained the matching `cell`, `code`, `output`
+and `browser` fields, so `report_patterns.py`'s per-cell threshold — until
+now dormant here, since no report ever carried a `Cell` field — can
+actually fire.
+
+Needed a real browser test harness this repository did not have yet:
+`tests/e2e/conftest.py`, ported from dewlab's own, builds a small fixture
+tutorial (`tests/e2e/fixture/rendering-tour.md`, one SQL cell and one
+Python cell) with `build.py` and serves it against a self-hosted Pyodide
+(`tools/fetch_pyodide.py --packages sqlite3 pandas matplotlib --out
+tests/e2e/pyodide`), so `tests/e2e/test_cell_report.py`'s eight tests
+open the panel, edit a cell live, run it, and check the report links
+carry the edited code and the real output — not what a click no browser
+ever making would only assume. `tests/test_build.py` gained a
+`TestCellReportPanel` class covering the icon and panel markup itself,
+switched on and off by `planning/feedback.yaml`.
+
+**2026-09-05, student feedback pathway, fifth slice.** Two more
+workflows, both calling small stdlib-only scripts in `tools/`:
+`label-report` fires the moment a report issue opens and applies a
+`page: <slug>`/`kind: <error|unclear|question>` label, creating either
+the first time it is needed, so nobody has to make these labels by hand
+in GitHub's settings. `report-patterns` runs weekly and opens or updates
+one `pattern` issue per page with three or more open reports in the last
+fortnight — the per-cell half of the same threshold had nothing to match
+yet at the time, since this repository's report form carried no `Cell`
+field; the sixth slice above is what gave it one. Both scripts are tested
+in `tests/test_report_patterns.py`, paired with the identical pair in
+`deweydex/dewlab`.
+
+**2026-09-05, student feedback pathway, fourth slice.**
+`.claude/skills/triage-report/SKILL.md`, so working the report inbox has
+a written order rather than being reinvented each session: read before
+acting, re-sort the student's guessed `kind`, dedupe, and the two hard
+stops — a database or web-standards question is Josh's call, and
+nothing closes without a person having looked. Paired with the same
+skill in `deweydex/dewlab`, adapted for this repository's own content and
+conventions (a slug is a contract, not a cell id; `sources/` is never
+emptied by deletion).
+
+Also `.github/workflows/auto-disable-feedback.yml`, a direct request:
+the report doors stay on, but turn themselves off on Tuesday,
+2026-09-08, without anyone needing to remember to. A genuine one-shot —
+cron's day-of-month/month fields carry the date, not a recurring weekday
+— and its last step deletes its own workflow file in the same commit
+that flips `planning/feedback.yaml`, so nothing is left behind to
+misfire on the same date next year. A manual run of the same workflow
+(`workflow_dispatch`) turns the doors off early, on purpose, rather than
+rehearsing it safely.
+
 **2026-09-05, student feedback pathway, third slice.**
 `getting-started/issues-and-pull-requests`, a new page between
 `a-github-account` and `an-editor`: what this repository's own file

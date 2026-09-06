@@ -6,6 +6,11 @@
 # committed, the same as dewlab's own equivalent.
 /assets/vendor/pyodide/
 
+# The e2e suite's own local Pyodide, fetched the same way with
+# `python3 tools/fetch_pyodide.py --packages sqlite3 pandas matplotlib
+# --out tests/e2e/pyodide`. ~30 MB, the same reasoning as the one above.
+/tests/e2e/pyodide/
+
 # Python bytecode.
 __pycache__/
 *.py[cod]

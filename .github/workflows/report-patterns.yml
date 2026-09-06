@@ -1,0 +1,30 @@
+# Weekly: groups open reports by page (and by cell, once this repository's
+# own report form gains a Cell field) and opens or updates one `pattern`
+# issue for a page that crosses a threshold within the last fortnight. See
+# tools/report_patterns.py and .claude/skills/triage-report/SKILL.md for
+# what to do with a pattern issue once one opens. Paired with the
+# identical workflow in deweydex/dewlab.
+name: report-patterns
+
+on:
+  schedule:
+    - cron: "0 8 * * 1"
+  workflow_dispatch:
+
+permissions:
+  issues: write
+
+jobs:
+  detect:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - run: python3 tools/report_patterns.py
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          GITHUB_REPOSITORY: ${{ github.repository }}

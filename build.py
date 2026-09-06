@@ -447,6 +447,7 @@ def render_sql_cell(cell: dict, index: int, tutorial: Tutorial) -> str:
         "it will be here the next time you open this page.</p>"
         if cell["persist"] else ""
     )
+    report_icon, report_box = cell_report_markup(tutorial, cell_id)
     return (
         f'<div class="dl-sql-cell" id="{cell_id}" data-db="{html.escape(cell["name"])}"{persist_attr}>'
         f'<label for="{field_id}">{label}</label>'
@@ -459,9 +460,11 @@ def render_sql_cell(cell: dict, index: int, tutorial: Tutorial) -> str:
         f'<button type="button" class="dl-sql-download">Download</button>'
         f'<button type="button" class="dl-sql-load">Load</button>'
         f'<input type="file" id="{load_id}" class="dl-sql-load-input" accept=".sql,.txt" hidden>'
+        f'{report_icon}'
         f'<span class="dl-sql-status" role="status"></span>'
         f"</div>"
         f'<div class="dl-sql-output" aria-live="polite"></div>'
+        f'{report_box}'
         f"</div>"
     )
 
@@ -527,6 +530,7 @@ def render_py_cell(cell: dict, index: int, tutorial: Tutorial) -> str:
     DataFrame without importing anything first."""
     cell_id = f"py-cell-{tutorial.slug}-{index}"
     field_id = f"{cell_id}-input"
+    report_icon, report_box = cell_report_markup(tutorial, cell_id)
     return (
         f'<div class="dl-py-cell" id="{cell_id}" data-name="{html.escape(cell["name"])}">'
         f'<label for="{field_id}">Python</label>'
@@ -535,9 +539,11 @@ def render_py_cell(cell: dict, index: int, tutorial: Tutorial) -> str:
         f'<div class="dl-py-actions">'
         f'<button type="button" class="dl-py-run">Run</button>'
         f'<button type="button" class="dl-py-reset">Reset</button>'
+        f'{report_icon}'
         f'<span class="dl-py-status" role="status"></span>'
         f"</div>"
         f'<div class="dl-py-output" aria-live="polite"></div>'
+        f'{report_box}'
         f"</div>"
     )
 
@@ -786,45 +792,82 @@ _REPORT_KIND_ERROR = "It gives an error, and I have tried the checks on the Trou
 _REPORT_KIND_WRONG = "The page is wrong, or I could not follow it"
 
 
-def report_issue_url(page: str, version: str, kind: str = "") -> str:
+def report_issue_url(page: str, version: str, kind: str = "", cell: str = "") -> str:
     """The prefilled GitHub issue link a report door opens.
 
-    `page`, `version` and `kind` only fill in fields on GitHub's own form —
-    nothing is sent until the reader presses GitHub's own Submit, and every
-    field is still theirs to edit or clear first. `kind`, when given, must
-    match one of `.github/ISSUE_TEMPLATE/report.yml`'s dropdown options
-    exactly, or GitHub leaves the dropdown unset rather than failing loudly.
+    `page`, `version`, `kind` and `cell` only fill in fields on GitHub's
+    own form — nothing is sent until the reader presses GitHub's own
+    Submit, and every field is still theirs to edit or clear first. `kind`,
+    when given, must match one of `.github/ISSUE_TEMPLATE/report.yml`'s
+    dropdown options exactly, or GitHub leaves the dropdown unset rather
+    than failing loudly.
     """
     params = {"template": "report.yml", "page": page, "version": str(version)}
     if kind:
         params["kind"] = kind
+    if cell:
+        params["cell"] = cell
     return f"{REPO_URL}/issues/new?{urllib.parse.urlencode(params)}"
 
 
-def report_doors_html(page: str, version: str) -> str:
-    """The three-doors disclosure the footer opens: a question goes to
-    Discussions rather than an issue, since a question filed as a bug
-    report is the wrong container for it and for whoever answers it later.
-    A plain `<details>` element — no JavaScript, no runtime change.
+def report_doors_links(page: str, version: str, cell: str = "") -> str:
+    """The three doors themselves: a question goes to Discussions rather
+    than an issue, since a question filed as a bug report is the wrong
+    container for it and for whoever answers it later; the other two open
+    the issue form with `kind` already picked. Shared by the footer
+    (`report_doors_html()`, no `cell`) and a SQL or Python cell's own
+    report panel (`cell_report_markup()`, `cell` set to that cell's id).
 
-    Three links joined by " · ", the same separator the rest of the
-    footer already uses, rather than a `<ul>`/`<li>` list — a bulleted
-    list is the wrong shape for three short links, and this markup reaches
-    every page, so anything counting a page's `<li>` tags would silently
-    break.
+    Three links joined by " · " rather than a `<ul>`/`<li>` list — a
+    bulleted list is the wrong shape for three short links, and this
+    markup reaches every page, so anything counting a page's `<li>` tags
+    would silently break.
     """
-    error_url = report_issue_url(page, version, _REPORT_KIND_ERROR)
-    wrong_url = report_issue_url(page, version, _REPORT_KIND_WRONG)
+    error_url = report_issue_url(page, version, _REPORT_KIND_ERROR, cell)
+    wrong_url = report_issue_url(page, version, _REPORT_KIND_WRONG, cell)
+    return (
+        "<p>"
+        f'<a href="{REPO_URL}/discussions/new">I have a question</a> · '
+        f'<a class="dl-report-issue-link" href="{error_url}">It gives an error</a> · '
+        f'<a class="dl-report-issue-link" href="{wrong_url}">The page is wrong, or I could not follow it</a>'
+        "</p>"
+    )
+
+
+def report_doors_html(page: str, version: str) -> str:
+    """The footer's three-doors disclosure. A plain `<details>` element —
+    no JavaScript, no runtime change."""
     return (
         '<details class="dl-report-doors">'
         "<summary>Something wrong on this page? Tell us.</summary>"
-        "<p>"
-        f'<a href="{REPO_URL}/discussions/new">I have a question</a> · '
-        f'<a href="{error_url}">It gives an error</a> · '
-        f'<a href="{wrong_url}">The page is wrong, or I could not follow it</a>'
-        "</p>"
+        + report_doors_links(page, version) +
         "</details>"
     )
+
+
+def cell_report_markup(tutorial: Tutorial, cell_id: str) -> tuple[str, str]:
+    """The report icon and its (initially hidden) panel for one SQL or
+    Python cell — the icon toggles the panel, `assets/sql-cell.js`'s own
+    `updateCellReportLinks()` fills in that cell's current code and last
+    output the moment it opens, the same division of labour dewlab's
+    equivalent cell-level report icon uses. Empty strings, for both
+    return values, when `feedback_enabled()` says the doors are off.
+    """
+    if not feedback_enabled():
+        return "", ""
+    page = f"{tutorial.module}/{tutorial.slug}"
+    icon = (
+        f'<button type="button" class="dl-report-icon" aria-expanded="false" '
+        f'aria-controls="dl-report-{cell_id}" '
+        f'aria-label="Report a problem with this cell" '
+        f'title="Report a problem with this cell">&#9873;</button>'
+    )
+    box = (
+        f'<div class="dl-report-doors dl-cell-report-doors" id="dl-report-{cell_id}" hidden>'
+        f"{report_doors_links(page, tutorial.version, cell=cell_id)}"
+        "</div>"
+    )
+    return icon, box
 
 
 def render_footer(root_base: str, page: str = "", version: str = "") -> str:

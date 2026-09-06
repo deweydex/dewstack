@@ -1,0 +1,28 @@
+# Labels a report the moment it opens, by page and by kind, since GitHub's
+# own issue-form `labels:` key can only apply fixed text — it cannot know
+# in advance which page or which kind a given report will name. Both
+# labels are created the first time they are needed rather than by hand.
+# Paired with the identical workflow in deweydex/dewlab.
+name: label-report
+
+on:
+  issues:
+    types: [opened]
+
+permissions:
+  issues: write
+
+jobs:
+  label:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - run: python3 tools/label_report.py "${{ github.event.issue.number }}"
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          GITHUB_REPOSITORY: ${{ github.repository }}

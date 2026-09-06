@@ -241,6 +241,53 @@
     });
   }
 
+  /* Kept well under any server's practical URL-length limit (commonly
+   * ~8000 characters) — code and output are the only two fields on a
+   * cell's report link that can run long, so they are the only two this
+   * ever has to shorten. */
+  const REPORT_CODE_LIMIT = 2500;
+  const REPORT_OUTPUT_LIMIT = 1500;
+
+  function truncateForReport(text, limit) {
+    if (text.length <= limit) return text;
+    return `${text.slice(0, limit)}\n… (cut off here — paste the rest yourself if it matters)`;
+  }
+
+  /* Fills in the two fields build.py's cell_report_markup() could not:
+   * this cell's code exactly as the reader has it right now, and
+   * whatever its output area is currently showing (an error included —
+   * runCell()/runPyCell() both write an error straight into that same
+   * area, same as any other result). Called once, right as the panel
+   * opens, not kept in sync on every keystroke. */
+  function updateCellReportLinks(box, code, outputText) {
+    const truncatedCode = truncateForReport(code, REPORT_CODE_LIMIT);
+    const truncatedOutput = truncateForReport(outputText.trim(), REPORT_OUTPUT_LIMIT);
+    const browser = navigator.userAgent;
+    box.querySelectorAll(".dl-report-issue-link").forEach((link) => {
+      const url = new URL(link.href);
+      url.searchParams.set("code", truncatedCode);
+      if (truncatedOutput) url.searchParams.set("output", truncatedOutput);
+      url.searchParams.set("browser", browser);
+      link.href = url.toString();
+    });
+  }
+
+  /* Wires a cell's own report icon — the same open/close-a-panel-below
+   * shape build.py's cell_report_markup() comment describes, shared by
+   * both a SQL cell and a Python cell since only which input/output
+   * elements to read differs between them. */
+  function setUpReport(cell, input, output) {
+    const icon = cell.querySelector(".dl-report-icon");
+    const box = cell.querySelector(".dl-report-doors");
+    if (!icon || !box) return;
+    icon.addEventListener("click", () => {
+      const open = icon.getAttribute("aria-expanded") === "true";
+      icon.setAttribute("aria-expanded", String(!open));
+      box.hidden = open;
+      if (!open) updateCellReportLinks(box, input.value, output.innerText);
+    });
+  }
+
   /* Wires up one cell's buttons and restores its saved text if it is a
    * persisted cell with something already saved. Returns whether it was
    * restored, so the caller can give it its automatic first run. */
@@ -258,6 +305,7 @@
       if (file) loadCell(cell, file);
       loadInput.value = "";
     });
+    setUpReport(cell, input, cell.querySelector(".dl-sql-output"));
 
     return restorePersisted(cell);
   }
@@ -321,6 +369,7 @@
     const original = input.value;
     cell.querySelector(".dl-py-run").addEventListener("click", () => runPyCell(cell, cells, pyCells));
     cell.querySelector(".dl-py-reset").addEventListener("click", () => resetPyCell(cell, original));
+    setUpReport(cell, input, cell.querySelector(".dl-py-output"));
   }
 
   const cells = Array.from(document.querySelectorAll(".dl-sql-cell"));

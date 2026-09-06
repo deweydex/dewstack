@@ -557,3 +557,66 @@ class TestFeedbackFooter:
         (tmp_path / "planning").mkdir(parents=True, exist_ok=True)
         (tmp_path / "planning" / "feedback.yaml").write_text("enabled: false\n")
         assert build.feedback_enabled() is False
+
+
+class TestCellReportPanel:
+    """The report icon and its panel on a SQL or Python cell. code/output
+    are filled in by assets/sql-cell.js at open time, not at build time —
+    see updateCellReportLinks() there. Paired with the identical class in
+    deweydex/dewlab's own tests/test_build.py, for its cell type."""
+
+    def test_report_icon_and_panel_on_a_sql_cell_by_default(self, tree, monkeypatch):
+        monkeypatch.setattr(build, "ROOT", ROOT)
+        tutorials, out = tree
+        body = "# A page\n\n```sql cell=students\nselect 1;\n```\n"
+        write_tutorial(tutorials, "first", body, version="2026.09.04.1")
+        write_order(tutorials, ["first"])
+        run_build(tree)
+
+        page = (out / "tutorials/mod/first/index.html").read_text(encoding="utf-8")
+        assert '<button type="button" class="dl-report-icon"' in page
+        assert 'class="dl-report-doors dl-cell-report-doors"' in page
+        assert "cell=sql-cell-first-0" in page
+        assert "page=mod%2Ffirst" in page
+        assert "version=2026.09.04.1" in page
+
+    def test_report_icon_and_panel_on_a_python_cell_by_default(self, tree, monkeypatch):
+        monkeypatch.setattr(build, "ROOT", ROOT)
+        tutorials, out = tree
+        body = "# A page\n\n```py cell=explore\n1 + 1\n```\n"
+        write_tutorial(tutorials, "first", body)
+        write_order(tutorials, ["first"])
+        run_build(tree)
+
+        page = (out / "tutorials/mod/first/index.html").read_text(encoding="utf-8")
+        assert '<button type="button" class="dl-report-icon"' in page
+        assert "cell=py-cell-first-0" in page
+
+    def test_report_icon_gone_when_switched_off(self, tree, monkeypatch, tmp_path):
+        monkeypatch.setattr(build, "ROOT", tmp_path)
+        (tmp_path / "planning").mkdir(parents=True, exist_ok=True)
+        (tmp_path / "planning" / "feedback.yaml").write_text("enabled: false\n")
+        tutorials, out = tree
+        body = "# A page\n\n```sql cell=students\nselect 1;\n```\n"
+        write_tutorial(tutorials, "first", body)
+        write_order(tutorials, ["first"])
+        run_build(tree)
+
+        page = (out / "tutorials/mod/first/index.html").read_text(encoding="utf-8")
+        assert "dl-report-icon" not in page
+        assert "dl-cell-report-doors" not in page
+
+    def test_cell_report_markup_returns_empty_strings_when_switched_off(self, tmp_path, monkeypatch):
+        monkeypatch.setattr(build, "ROOT", tmp_path)
+        (tmp_path / "planning").mkdir(parents=True, exist_ok=True)
+        (tmp_path / "planning" / "feedback.yaml").write_text("enabled: false\n")
+        tutorial = build.Tutorial(
+            path=ROOT / "x.md",
+            meta={
+                "title": "X", "slug": "x", "module": "mod", "module_title": "Mod",
+                "series": "ser", "version": "1.0.0.1",
+            },
+            body="",
+        )
+        icon, box = build.cell_report_markup(tutorial, "sql-cell-x-0")
+        assert icon == "" and box == ""

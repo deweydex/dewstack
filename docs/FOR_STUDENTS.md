@@ -110,8 +110,15 @@ try next.
 ## Questions and mistakes on the site
 
 If a page is confusing or something does not work, tell your teacher.
-You can also report it through
+
+Most pages also carry a line at the foot, "Something wrong on this
+page? Tell us." It opens three doors: a question, an error, or
+something wrong or hard to follow. Pick the one that fits. You do not
+need to be certain the page has a mistake before asking about it.
+
+If that line is missing, you can report it through
 [GitHub](https://github.com/deweydex/dewstack/issues), using a free
 account. A report is a message about what happened. The page title and
-the part that was unclear are useful details. You do not need to be
-certain the page has a mistake before asking about it.
+the part that was unclear are useful details either way.
+[`REPORTING_A_PROBLEM.md`](REPORTING_A_PROBLEM.md) has more on what to
+include.
