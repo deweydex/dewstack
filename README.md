@@ -126,11 +126,10 @@ this site.
 - The playground, teacher version, with solutions and notes:
   <https://deweydex.github.io/HTML-CSS-SQL-JS/teacher.html>
 
-More database tutorials are being written. They will appear on the
-course website as they are ready, in this order:
-
-1. Designing a database before typing.
-2. A real dataset, loaded, queried and charted.
+- A second series continues past the first four: designing a table
+  before building it, then loading, joining, charting and exporting a
+  real dataset, then a form that writes a row:
+  <https://deweydex.github.io/dewstack/tutorials/data/designing-a-table-before-you-build-it/>
 
 ## Full stack: putting the two together
 

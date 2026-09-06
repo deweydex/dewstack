@@ -216,11 +216,31 @@ needs one before this half of the work can start:
 
 Once A–E land, survey `planning/*.md`, `README.md`, and every doc file
 for the same "already plain, or drifted into a different register"
-check dewlab's own Phase E did. Likely lighter here: dewstack's
-planning documents have stayed close to one voice throughout this
-project's life, on the evidence of everything read while scoping this
-plan — but confirm rather than assume, the same way Phase D does for
-`settings.js`/`search.js`.
+check dewlab's own Phase E did.
+
+**Done, 2026-09-06 — lighter, as predicted.** A grep across every
+`planning/*.md`, `README.md`, and `docs/*.md` file for the consulting-
+report markers dewlab's own Phase E actually found (Implementation
+Guarantee, Technical Specification, Fundamental Requirement, Executive
+Summary, leverage, synerg-, utiliz-, and the like) turned up nothing —
+no file has drifted into a different register from the plain, direct
+voice the rest of the repository already uses. `README.md`,
+`planning/LEVEL6_COVERAGE.md` and `planning/PAGE_BY_PAGE.md` were read
+in full to confirm rather than assume the grep's own honesty; the
+larger planning documents (`planning/CONSOLIDATION_PLAN.md`,
+`planning/NEXT_STEPS.md`, `planning/CONSOLE_AND_WORKSPACE.md`) were not
+re-read cover to cover here, on the strength of substantial portions of
+each already having been read this session and this plan's own Context
+section — surveyed by the grep above rather than by a second full read.
+
+One real staleness gap did turn up, the same shape as dewlab's own
+Phase E findings: `README.md`'s "Database tutorials" section still said
+"More database tutorials are being written" and listed two items —
+"designing a database before typing" and "a real dataset, loaded,
+queried and charted" — as still to come. Both had already shipped (the
+whole `several-tables` series, Data Arc 2 included, landed earlier this
+same session). Fixed: the stale "being written" list is replaced with a
+real link into the now-complete series.
 
 ## Ledger
 
@@ -235,4 +255,4 @@ Update this table as phases clear, the same way
 | C — the shared runtime | done, 2026-09-06 |
 | D — the rest | done, 2026-09-06 (`tools/fetch_pyodide.py`'s `BASELINE` bug fixed along the way) |
 | E — cell-code-review skill + tutorials | skill written 2026-09-06; running it across tutorials not started |
-| F — whole-repo language pass | not started |
+| F — whole-repo language pass | done, 2026-09-06 (one real staleness fix in `README.md`) |

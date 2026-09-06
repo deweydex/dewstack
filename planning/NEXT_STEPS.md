@@ -13,33 +13,39 @@ repeats neither. It points.
 ## 1. Where things stand
 
 **2026-09-06, a documentation and code-comments plan, Phases A through D
-done and Phase E begun.** `planning/DOCS_AND_COMMENTS_PLAN.md` is new:
-Josh asked that every file in both repositories read as something a
-teacher or a student could follow, dewlab having already run this exact
-initiative once (its own `planning/DOCS_AND_COMMENTS_PASS.md`, closed out
-complete) while dewstack had never had it. `ARCHITECTURE.md` and
-`CONTRIBUTING.md` now exist — the build, the runtime's three cell kinds
-and the site editor, the feedback pipeline, the settings panel and
-search, and the standing "keep documentation current" rule — and
-`CLAUDE.md` points at both (`DECISIONS_LOG.md` stays an open question,
-flagged for Josh rather than decided). Seven `docs/<name>-explained.md`
-files now exist, covering this session's newest runtime code
-(`sql_tools.py`, `python_tools.py`, `sql-cell.js`), the shared runtime
-underneath the whole site (`build.py`, `site-editor.js`, `workspace.js`),
-and every `tools/*.py` script as one shared file — every one read closely
-enough to write its walkthrough, and every one already had accurate
-docstrings except one real bug: `tools/fetch_pyodide.py`'s `BASELINE` was
-still `sqlite3` alone, stale now that Data Arc 2 needs
-`pandas`/`matplotlib` too — found while scoping Phase A, fixed while
-writing Phase D's doc for that file. `.claude/skills/cell-code-review/SKILL.md`
-is new too (Phase E's first half): dewstack's own equivalent of dewlab's
-skill by the same name, adapted to four block kinds instead of one
-language — SQL cells, Python cells, full-stack `app=` cells, and the web
-track's `site=` blocks, each with its own idiom and its own
-shared-state-across-blocks rules. Running it across every tutorial
-(Phase E's second half) and Phase F's whole-repo language pass have not
-started — both are real undertakings on their own, worth a dedicated pass
-rather than folded into whichever session next touches this plan.
+and F done, Phase E's second half left as its own undertaking.**
+`planning/DOCS_AND_COMMENTS_PLAN.md` is new: Josh asked that every file
+in both repositories read as something a teacher or a student could
+follow, dewlab having already run this exact initiative once (its own
+`planning/DOCS_AND_COMMENTS_PASS.md`, closed out complete) while dewstack
+had never had it. `ARCHITECTURE.md` and `CONTRIBUTING.md` now exist — the
+build, the runtime's three cell kinds and the site editor, the feedback
+pipeline, the settings panel and search, and the standing "keep
+documentation current" rule — and `CLAUDE.md` points at both
+(`DECISIONS_LOG.md` stays an open question, flagged for Josh rather than
+decided). Seven `docs/<name>-explained.md` files now exist, covering this
+session's newest runtime code (`sql_tools.py`, `python_tools.py`,
+`sql-cell.js`), the shared runtime underneath the whole site (`build.py`,
+`site-editor.js`, `workspace.js`), and every `tools/*.py` script as one
+shared file — every one read closely enough to write its walkthrough, and
+every one already had accurate docstrings except one real bug:
+`tools/fetch_pyodide.py`'s `BASELINE` was still `sqlite3` alone, stale
+now that Data Arc 2 needs `pandas`/`matplotlib` too — found while scoping
+Phase A, fixed while writing Phase D's doc for that file.
+`.claude/skills/cell-code-review/SKILL.md` is new too (Phase E's first
+half): dewstack's own equivalent of dewlab's skill by the same name,
+adapted to four block kinds instead of one language. Phase F's whole-repo
+language pass turned out lighter, as the plan itself predicted — a grep
+for the consulting-report register markers dewlab's own Phase E actually
+found turned up nothing anywhere in `planning/*.md`, `README.md` or
+`docs/*.md`, though it did catch one real staleness gap: `README.md`'s
+"Database tutorials" section still listed the whole `several-tables`
+series (including Data Arc 2) as "being written," when all of it had
+already shipped earlier the same session. Fixed. What is left: running
+the cell-code-review skill across every tutorial, module by module —
+Phase E's second half, and the one piece of this whole plan still not
+started, tracked in its own ledger row rather than folded into whichever
+session next picks this up.
 
 **2026-09-06, the full-stack arc's first page, closing out step 8's
 second half — steps 1 to 3 of section 12's outline.** Before any of it
