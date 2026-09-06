@@ -937,7 +937,20 @@ step arrives.
     button for JavaScript, so a program runs when asked and a student
     takes time with their code, while HTML and CSS stay live. Step 1
     (the console and Run on tutorial pages) shipped the same day; see
-    Step 6 above. The design's section 8 is the order of the rest.
+    Step 6 above. Step 2, the workspace page, shipped the same day too:
+    `workspace/index.html`, built by `write_workspace()`, the same
+    component mounted by `assets/workspace.js` over CodeMirror panes
+    (`vendor-src/` builds `assets/vendor/codemirror.bundle.js`, loaded
+    on this page alone, with a CI job that fails if the committed bundle
+    drifts from its inputs), several named sites saved under
+    `dewstack:workspace:v1`, New, rename, a two-click Delete, Load files
+    and Download. A door to it on the front page, in the shape of
+    dewlab's own. Eleven Playwright tests in `tests/e2e/test_workspace.py`.
+    One thing found on the way and fixed in the component for both pages:
+    four synchronous `srcdoc` writes in one task loaded only the first,
+    so `render()` now writes once per frame load and parks the newest
+    document until then. Steps 3 and 5 remain; step 4 (the editor) is
+    done by the workspace's CodeMirror.
 
 ---
 

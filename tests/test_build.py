@@ -70,7 +70,8 @@ def test_builds_a_page_and_the_contents(tree):
 
     assert (out / "tutorials/mod/first/index.html").exists()
     assert (out / "index.html").exists()
-    assert len(pages) == 3
+    assert (out / "workspace/index.html").exists()
+    assert len(pages) == 4  # two tutorials, the contents page, the workspace
     first = (out / "tutorials/mod/first/index.html").read_text(encoding="utf-8")
     assert "{{" not in first, "an unfilled shell token shipped"
     assert 'class="dl-nav-next"' in first
@@ -342,6 +343,38 @@ def test_site_editor_without_a_js_pane_hides_the_console_and_has_no_run(tree):
     page = (out / "tutorials/mod/page/index.html").read_text(encoding="utf-8")
     assert 'class="dl-site-run"' not in page
     assert '<div class="dl-site-console" hidden>' in page
+
+
+def test_the_workspace_page_carries_the_component_and_both_scripts(tree):
+    """The workspace is the same component as a tutorial page's editor,
+    marked for assets/workspace.js to mount by hand, with all three panes,
+    no Reset (there is no tutorial version to go back to), and the
+    CodeMirror-importing module script alongside site-editor.js."""
+    tutorials, out = tree
+    write_tutorial(tutorials, "first")
+    write_order(tutorials, ["first"])
+    run_build(tree)
+    page = (out / "workspace/index.html").read_text(encoding="utf-8")
+    assert "<h1>dewstack workspace</h1>" in page
+    assert 'id="site-editor-workspace"' in page
+    assert 'data-mount="manual"' in page
+    for lang in ("html", "css", "js"):
+        assert f'data-lang="{lang}"' in page
+    assert 'class="dl-site-reset"' not in page
+    assert 'class="dl-site-run"' in page
+    assert "site-editor.js" in page
+    assert 'type="module"' in page and "workspace.js" in page
+    assert "../assets/site.css" in page  # one level down, like a tutorial page
+
+
+def test_the_front_page_has_a_door_to_the_workspace(tree):
+    tutorials, out = tree
+    write_tutorial(tutorials, "first")
+    write_order(tutorials, ["first"])
+    run_build(tree)
+    front = (out / "index.html").read_text(encoding="utf-8")
+    assert 'href="workspace/index.html"' in front
+    assert "dewstack workspace" in front
 
 
 def test_site_editor_preview_keeps_links_inside_itself():

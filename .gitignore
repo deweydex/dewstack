@@ -23,3 +23,7 @@ __pycache__/
 # .git pointer file, not real content — the actual work lands as commits on
 # its own branch instead).
 /.claude/worktrees/
+
+# The workspace page's CodeMirror build has its inputs in vendor-src/;
+# the bundle it writes to assets/vendor/ is committed, the modules are not.
+/vendor-src/node_modules/

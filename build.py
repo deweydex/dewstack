@@ -366,8 +366,17 @@ def render_site_editor(editor: dict, index: int, tutorial: Tutorial) -> str:
     reader sees where output will go before they need it, and hidden on
     an HTML/CSS-only editor until something arrives (an inline script
     can still log or throw). assets/site-editor.js owns both."""
+    return site_editor_markup(editor, f"site-editor-{tutorial.slug}-{editor['name']}")
+
+
+def site_editor_markup(editor: dict, editor_id: str, *, reset: bool = True,
+                       manual: bool = False) -> str:
+    """The component itself, for a tutorial page (`render_site_editor`) or
+    the workspace page (`render_workspace`). `reset` is the tutorial's
+    "back to the page's version" button, which the workspace has no version
+    to go back to; `manual` marks an editor assets/site-editor.js leaves
+    for assets/workspace.js to mount with its own panes."""
     files = editor["files"]
-    editor_id = f"site-editor-{tutorial.slug}-{editor['name']}"
     has_js = "js" in files
 
     panes = []
@@ -389,8 +398,10 @@ def render_site_editor(editor: dict, index: int, tutorial: Tutorial) -> str:
         )
     console_hidden = "" if has_js else " hidden"
 
+    mount_attr = ' data-mount="manual"' if manual else ""
+    reset_button = '<button type="button" class="dl-site-reset">Reset</button>' if reset else ""
     return (
-        f'<div class="dl-site-editor" id="{editor_id}" data-site-name="{html.escape(editor["name"])}">'
+        f'<div class="dl-site-editor" id="{editor_id}" data-site-name="{html.escape(editor["name"])}"{mount_attr}>'
         f'<div class="dl-site-panes">{"".join(panes)}</div>'
         f'<div class="dl-site-preview">'
         f'<div class="dl-site-preview-controls">'
@@ -409,11 +420,69 @@ def render_site_editor(editor: dict, index: int, tutorial: Tutorial) -> str:
         f'<div class="dl-site-console-output" aria-live="polite"></div>'
         f"</div>"
         f'<div class="dl-site-actions">'
-        f'<button type="button" class="dl-site-reset">Reset</button>'
+        f"{reset_button}"
         f'<button type="button" class="dl-site-download">Download these files</button>'
         f"</div>"
         f"</div>"
     )
+
+
+WORKSPACE_INTRO = (
+    "<p>This is a place to try an idea in HTML, CSS and JavaScript with no "
+    "tutorial attached. Your sites stay in this browser, on this device. "
+    "Your own site, the one you publish, still lives in your GitHub fork. "
+    "<strong>Download these files</strong> moves a site from here to there.</p>"
+    "<p>The HTML and CSS panes change the preview as you type. The "
+    "JavaScript pane runs when you press <strong>Run</strong>, or Ctrl+Enter "
+    "inside it. What the script prints, and any error it raises, shows in "
+    "the console under the preview.</p>"
+)
+
+
+def render_workspace() -> str:
+    """The dewstack workspace: the site editor component with several named
+    sites, saved in the browser (planning/CONSOLE_AND_WORKSPACE.md, section
+    5, decided 2026-09-06). The list, the name field and the file buttons
+    are static here; assets/workspace.js fills the list from localStorage,
+    mounts the editor with CodeMirror panes, and saves every edit."""
+    editor = {"name": "site", "files": {"html": "", "css": "", "js": ""}}
+    return "\n".join([
+        "<h1>dewstack workspace</h1>",
+        '<div class="dl-intro">', WORKSPACE_INTRO, "</div>",
+        '<div class="dl-workspace">',
+        '<aside class="dl-ws-sites" aria-label="Your sites">',
+        "<h2>Your sites</h2>",
+        '<ul class="dl-ws-list"></ul>',
+        '<button type="button" class="dl-ws-new">New site</button>',
+        "</aside>",
+        '<div class="dl-ws-main">',
+        '<div class="dl-ws-head">',
+        '<label for="dl-ws-name">Name</label>',
+        '<input id="dl-ws-name" class="dl-ws-name" type="text" autocomplete="off" spellcheck="false">',
+        '<button type="button" class="dl-ws-load">Load files</button>',
+        '<input type="file" class="dl-ws-file" multiple accept=".html,.css,.js" hidden>',
+        '<button type="button" class="dl-ws-delete">Delete this site</button>',
+        "</div>",
+        site_editor_markup(editor, "site-editor-workspace", reset=False, manual=True),
+        "</div>",
+        "</div>",
+    ])
+
+
+def render_workspace_card(root_base: str = "") -> str:
+    """The front page's door to the workspace, in the shape of dewlab's own
+    "Want to experiment on your own?" card."""
+    return "\n".join([
+        '<div class="dl-workspaces">',
+        "<h2>Want to try something outside a tutorial?</h2>",
+        f'<a class="dl-door dl-workspace-card" href="{root_base}workspace/index.html">',
+        "<h3>dewstack workspace</h3>",
+        "<p>An HTML, CSS and JavaScript editor with a preview and a console, "
+        "and no tutorial attached. The sites you make there stay in this "
+        "browser.</p>",
+        "</a>",
+        "</div>",
+    ])
 
 
 def extract_sql_cells(body: str, path: Path) -> tuple[str, list[dict]]:
@@ -749,6 +818,7 @@ def render_contents(tutorials: list[Tutorial], module_order: list[str], series: 
             "</div>",
             render_search_box(),
         ]
+    out.append(render_workspace_card())
     modules_seen = []
     for tutorial in tutorials:
         if tutorial.module not in modules_seen:
@@ -984,6 +1054,7 @@ def build(tutorials_dir: Path = TUTORIALS, out_dir: Path = OUT, assets_dir: Path
     modules = read_modules(tutorials_dir)
     opening = read_front(front, by_slug) if front is not None and front.exists() else None
     written.append(write_contents(tutorials, module_order, series, shell, out_dir, assets_dir, opening, modules))
+    written.append(write_workspace(shell, out_dir, assets_dir))
     write_search_index(tutorials, series, out_dir)
     return written
 
@@ -1055,6 +1126,33 @@ def write_contents(tutorials: list[Tutorial], module_order: list[str], series: d
         page="index", version="1",
     ), "contents page")
     target = out_dir / "index.html"
+    target.write_text(page, encoding="utf-8")
+    return target
+
+
+def write_workspace(shell: str, out_dir: Path, assets_dir: Path) -> Path:
+    """`workspace/index.html`: the same shell as every other page, the
+    component from render_workspace(), and two scripts — site-editor.js,
+    which owns the preview and the console, and workspace.js, a module that
+    imports the CodeMirror bundle and owns the sites. The reading column
+    widens for this one page: three editors beside a preview need the room,
+    and a `<style>` in the head is the smallest way to say so."""
+    root_base = "../"
+    scripts = "\n".join([
+        f'<script src="{asset_url(root_base, "site-editor.js", assets_dir)}"></script>',
+        f'<script type="module" src="{asset_url(root_base, "workspace.js", assets_dir)}"></script>',
+    ])
+    # `html .dl-page`, not `.dl-page`: the shell puts META ahead of the
+    # stylesheet link, so an equal-specificity rule here would lose to
+    # site.css's own max-width on the same class.
+    meta = "<style>html .dl-page, html .dl-footer { max-width: 80rem; }</style>"
+    page = fill_shell(shell, page_values(
+        title="dewstack workspace", root_base=root_base, crumbs="Workspace", nav="", toc="",
+        body=render_workspace(), page_script=scripts, meta=meta, assets_dir=assets_dir,
+        page="workspace", version="1",
+    ), "workspace page")
+    target = out_dir / "workspace" / "index.html"
+    target.parent.mkdir(parents=True, exist_ok=True)
     target.write_text(page, encoding="utf-8")
     return target
 

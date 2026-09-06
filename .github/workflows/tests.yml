@@ -28,3 +28,24 @@ jobs:
 
       - name: Build the tutorials
         run: python build.py --clean
+
+  # The workspace page's CodeMirror bundle is committed so build.py needs
+  # no Node; this rebuilds it from vendor-src/ and fails if the committed
+  # copy has drifted from its inputs (dewlab's own vendor check, ported).
+  vendor:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Rebuild assets/vendor from its pins
+        working-directory: vendor-src
+        run: |
+          npm ci
+          npm run build
+
+      - name: The committed bundle matches its inputs
+        run: git diff --exit-code -- assets/vendor

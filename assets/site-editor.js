@@ -43,6 +43,15 @@
  * rest of this page or anything it can see. Messages are matched to an
  * editor by `event.source`, the frame's own window, so one frame cannot
  * write into another's console.
+ *
+ * One component, two pages. On a tutorial page every `.dl-site-editor`
+ * is mounted here, at load, over its textareas. The workspace page
+ * (assets/workspace.js) mounts its own editor by hand through
+ * `window.dewstackSiteEditor.mount()`, supplying CodeMirror panes in
+ * place of the textareas. What a pane has to be is small: get, set,
+ * focus, selectLine, onInput. Everything above that line — the preview,
+ * the Run model, the console — is written once, against that surface,
+ * and does not know which kind it is holding.
  */
 
 (function () {
@@ -109,9 +118,31 @@
 
   const editors = [];
 
-  function valueOf(editor, lang) {
-    const field = editor.querySelector(`.dl-site-input[data-lang="${lang}"]`);
-    return field ? field.value : "";
+  /* A pane over a plain <textarea>: the tutorial-page default, and the
+   * shape a CodeMirror pane has to match (workspace.js). */
+  function textareaPane(field) {
+    return {
+      get: () => field.value,
+      set: (text) => { field.value = text; },
+      focus: () => field.focus(),
+      /* The nearest a textarea gets to a marker: select the whole line. */
+      selectLine: (line) => {
+        const lines = field.value.split("\n");
+        let pos = 0;
+        for (let i = 0; i < Math.min(line - 1, lines.length); i += 1) pos += lines[i].length + 1;
+        field.focus();
+        field.setSelectionRange(pos, pos + (lines[line - 1] || "").length);
+      },
+      onInput: (cb) => field.addEventListener("input", () => cb(field.value)),
+      onRun: (cb) => field.addEventListener("keydown", (ev) => {
+        if (ev.key === "Enter" && (ev.ctrlKey || ev.metaKey)) { ev.preventDefault(); cb(); }
+      }),
+    };
+  }
+
+  function valueOf(state, lang) {
+    const pane = state.panes[lang];
+    return pane ? pane.get() : "";
   }
 
   function countLines(text) {
@@ -137,17 +168,38 @@
     return { doc, htmlStart, jsStart };
   }
 
+  /* Rendering treats the frame as one resource. A document is written to
+   * `srcdoc` only when no earlier one is still loading; until the frame's
+   * load event, later documents wait in `pendingDoc`, newest wins, and
+   * flush() writes it. Traced in a real Chromium: four synchronous
+   * `srcdoc` writes in one task produced one load, of the *first*
+   * document, so the workspace opened on an empty preview. Coalescing
+   * on load rather than on a timer keeps a fast typist's last keystroke
+   * from being the one that is dropped. The line offsets and the
+   * console are reset at write time, so they describe the document the
+   * frame is showing, not one that never loaded. */
   function render(state) {
-    const { editor, frame } = state;
-    const built = buildPreview(valueOf(editor, "html"), valueOf(editor, "css"), state.lastRunJs);
+    state.pendingDoc = buildPreview(valueOf(state, "html"), valueOf(state, "css"), state.lastRunJs);
+    flush(state);
+  }
+
+  function flush(state) {
+    if (state.loading || !state.pendingDoc) return;
+    const built = state.pendingDoc;
+    state.pendingDoc = null;
     state.htmlStart = built.htmlStart;
     state.jsStart = built.jsStart;
     clearConsole(state);
-    frame.srcdoc = built.doc;
+    state.loading = true;
+    /* A load event that never comes (a frame detached mid-navigation)
+     * must not wedge the preview: give up waiting after a moment. */
+    clearTimeout(state.loadTimer);
+    state.loadTimer = setTimeout(() => { state.loading = false; flush(state); }, 2000);
+    state.frame.srcdoc = built.doc;
   }
 
   function run(state) {
-    state.lastRunJs = valueOf(state.editor, "js");
+    state.lastRunJs = valueOf(state, "js");
     render(state);
   }
 
@@ -198,14 +250,13 @@
     const text = document.createElement("span");
     text.textContent = where ? `${message} (${where.label}, line ${where.line})` : message;
     line.appendChild(text);
-    if (where) {
-      /* The nearest a textarea gets to a marker: name the line, and make
-       * the entry a button that puts the caret on it. */
+    if (where && state.panes[where.lang]) {
+      /* Name the line, and make the entry a button that lands on it. */
       const go = document.createElement("button");
       go.type = "button";
       go.className = "dl-site-console-goto";
       go.textContent = "Go to line";
-      go.addEventListener("click", () => moveCaretToLine(state, where.lang, where.line));
+      go.addEventListener("click", () => state.panes[where.lang].selectLine(where.line));
       line.appendChild(go);
     }
     out.appendChild(line);
@@ -218,16 +269,6 @@
     }
   }
 
-  function moveCaretToLine(state, lang, line) {
-    const field = state.editor.querySelector(`.dl-site-input[data-lang="${lang}"]`);
-    if (!field) return;
-    const lines = field.value.split("\n");
-    let pos = 0;
-    for (let i = 0; i < Math.min(line - 1, lines.length); i += 1) pos += lines[i].length + 1;
-    field.focus();
-    field.setSelectionRange(pos, pos + (lines[line - 1] || "").length);
-  }
-
   window.addEventListener("message", (ev) => {
     const msg = ev.data;
     if (!msg || !msg.dlSite) return;
@@ -235,33 +276,45 @@
     if (state) appendConsoleLine(state, msg);
   });
 
-  /* -------------------------------------------------------------- set-up */
+  /* --------------------------------------------------------------- mount */
 
-  function setUp(editor) {
+  /* Mounts one `.dl-site-editor`. `createPane(field, lang)` may replace
+   * the default textarea pane; it receives the textarea the markup
+   * carries and must return the pane surface textareaPane() defines.
+   * `onChange(lang, text)` fires on every edit in any pane, for a page
+   * that saves. Returns a handle the workspace page drives. */
+  function mount(editor, { createPane = null, onChange = null } = {}) {
     const frame = editor.querySelector(".dl-site-frame");
-    const inputs = editor.querySelectorAll(".dl-site-input");
-    const original = new Map();
-    inputs.forEach((field) => original.set(field, field.value));
+    const fields = editor.querySelectorAll(".dl-site-input");
+    const original = {};
+    const panes = {};
+    fields.forEach((field) => {
+      const lang = field.dataset.lang;
+      original[lang] = field.value;
+      panes[lang] = (createPane && createPane(field, lang)) || textareaPane(field);
+    });
 
     const state = {
-      editor, frame,
-      lastRunJs: valueOf(editor, "js"),
+      editor, frame, panes, original,
+      lastRunJs: panes.js ? panes.js.get() : "",
       console: editor.querySelector(".dl-site-console"),
       consoleOutput: editor.querySelector(".dl-site-console-output"),
       htmlStart: 0, jsStart: 0,
+      pendingDoc: null, loading: false, loadTimer: null,
     };
     editors.push(state);
+    frame.addEventListener("load", () => {
+      clearTimeout(state.loadTimer);
+      state.loading = false;
+      flush(state);
+    });
 
-    inputs.forEach((field) => {
-      if (field.dataset.lang === "js") {
-        field.addEventListener("keydown", (ev) => {
-          if (ev.key === "Enter" && (ev.ctrlKey || ev.metaKey)) {
-            ev.preventDefault();
-            run(state);
-          }
-        });
+    Object.entries(panes).forEach(([lang, pane]) => {
+      if (lang === "js") {
+        pane.onRun(() => run(state));
+        if (onChange) pane.onInput((text) => onChange(lang, text));
       } else {
-        field.addEventListener("input", () => render(state));
+        pane.onInput((text) => { if (onChange) onChange(lang, text); render(state); });
       }
     });
 
@@ -286,28 +339,41 @@
     const resetButton = editor.querySelector(".dl-site-reset");
     if (resetButton) {
       resetButton.addEventListener("click", () => {
-        inputs.forEach((field) => { field.value = original.get(field); });
+        Object.entries(panes).forEach(([lang, pane]) => pane.set(original[lang]));
+        if (onChange) Object.keys(panes).forEach((lang) => onChange(lang, original[lang]));
         run(state);
       });
     }
 
     const downloadButton = editor.querySelector(".dl-site-download");
     if (downloadButton) {
-      downloadButton.addEventListener("click", () => downloadFiles(editor, inputs));
+      downloadButton.addEventListener("click", () => downloadFiles(editor, panes));
     }
 
     render(state);
+
+    return {
+      values: () => Object.fromEntries(Object.entries(panes).map(([lang, pane]) => [lang, pane.get()])),
+      /* Replaces every pane's text at once (a different site, a loaded
+       * file) and runs, so the preview and console show the new site. */
+      load: (files) => {
+        Object.entries(panes).forEach(([lang, pane]) => pane.set(files[lang] || ""));
+        run(state);
+      },
+      run: () => run(state),
+      focus: (lang) => panes[lang] && panes[lang].focus(),
+    };
   }
 
   const EXTENSIONS = { html: "html", css: "css", js: "js" };
 
   /* One file per pane, named after the page: "card.html", "card.css",
    * "card.js". A reader drops these straight into their own fork. */
-  function downloadFiles(editor, inputs) {
+  function downloadFiles(editor, panes) {
     const base = editor.dataset.siteName || "site";
-    inputs.forEach((field) => {
-      const ext = EXTENSIONS[field.dataset.lang] || "txt";
-      const blob = new Blob([field.value], { type: "text/plain" });
+    Object.entries(panes).forEach(([lang, pane]) => {
+      const ext = EXTENSIONS[lang] || "txt";
+      const blob = new Blob([pane.get()], { type: "text/plain" });
       const url = URL.createObjectURL(blob);
       const link = document.createElement("a");
       link.href = url;
@@ -319,5 +385,9 @@
     });
   }
 
-  document.querySelectorAll(".dl-site-editor").forEach(setUp);
+  /* Tutorial pages: every editor, over its textareas, now. The workspace
+   * page marks its editor `data-mount="manual"` and mounts it itself. */
+  document.querySelectorAll('.dl-site-editor:not([data-mount="manual"])').forEach((el) => mount(el));
+
+  window.dewstackSiteEditor = { mount, textareaPane };
 })();

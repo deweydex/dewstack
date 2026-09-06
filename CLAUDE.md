@@ -27,7 +27,10 @@ python3 -m pytest                       # the build's checks
 python3 tools/measure_sentences.py README.md tutorials/**/*.md   # longest sentences, for the trim test
 ```
 
-`site/` is gitignored and rebuilt every time. Never edit it.
+`site/` is gitignored and rebuilt every time. Never edit it. If you
+change anything under `vendor-src/`, rebuild `assets/vendor/` with
+`npm ci && npm run build` in `vendor-src/` and commit the result, or CI
+fails. Only the workspace page loads that bundle.
 
 ## Before you write a word a student will read
 

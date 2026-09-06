@@ -338,7 +338,12 @@ GitHub Pages already publish; the workspace does not compete with them.
 **Decided here:** a dewstack-native page, not a link to dewmini; the
 three additions; the bridge button. **Decided by Josh, 2026-09-06:** the
 page is called the dewstack workspace, plain, and reads as "the
-workspace" in prose.
+workspace" in prose. **Built the same day**, step 2 of section 8, as
+designed, with one discovery recorded in `assets/site-editor.js`: the
+preview frame loads only the first of several `srcdoc` writes made in
+one task, so the component now writes once per frame load. The editor
+is CodeMirror on this page (section 7, option 2), which also gave the
+console's Go to line a real selection rather than a textarea's.
 
 ---
 
