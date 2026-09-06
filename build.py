@@ -366,16 +366,21 @@ def render_site_editor(editor: dict, index: int, tutorial: Tutorial) -> str:
     reader sees where output will go before they need it, and hidden on
     an HTML/CSS-only editor until something arrives (an inline script
     can still log or throw). assets/site-editor.js owns both."""
-    return site_editor_markup(editor, f"site-editor-{tutorial.slug}-{editor['name']}")
+    root_base = "../" * len(tutorial.rel_dir.parts)
+    return site_editor_markup(editor, f"site-editor-{tutorial.slug}-{editor['name']}",
+                              workspace_href=f"{root_base}workspace/index.html")
 
 
 def site_editor_markup(editor: dict, editor_id: str, *, reset: bool = True,
-                       manual: bool = False) -> str:
+                       manual: bool = False, workspace_href: str | None = None) -> str:
     """The component itself, for a tutorial page (`render_site_editor`) or
     the workspace page (`render_workspace`). `reset` is the tutorial's
     "back to the page's version" button, which the workspace has no version
     to go back to; `manual` marks an editor assets/site-editor.js leaves
-    for assets/workspace.js to mount with its own panes."""
+    for assets/workspace.js to mount with its own panes; `workspace_href`
+    adds the "Open in the workspace" link a tutorial page carries and the
+    workspace itself does not — assets/site-editor.js stashes the three
+    panes for assets/workspace.js to pick up on arrival."""
     files = editor["files"]
     has_js = "js" in files
 
@@ -400,6 +405,11 @@ def site_editor_markup(editor: dict, editor_id: str, *, reset: bool = True,
 
     mount_attr = ' data-mount="manual"' if manual else ""
     reset_button = '<button type="button" class="dl-site-reset">Reset</button>' if reset else ""
+    open_link = (
+        f'<a class="dl-site-open-workspace" href="{html.escape(workspace_href, quote=True)}">'
+        "Open in the workspace</a>"
+        if workspace_href else ""
+    )
     return (
         f'<div class="dl-site-editor" id="{editor_id}" data-site-name="{html.escape(editor["name"])}"{mount_attr}>'
         f'<div class="dl-site-panes">{"".join(panes)}</div>'
@@ -422,6 +432,7 @@ def site_editor_markup(editor: dict, editor_id: str, *, reset: bool = True,
         f'<div class="dl-site-actions">'
         f"{reset_button}"
         f'<button type="button" class="dl-site-download">Download these files</button>'
+        f"{open_link}"
         f"</div>"
         f"</div>"
     )

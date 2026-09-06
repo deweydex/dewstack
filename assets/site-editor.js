@@ -118,6 +118,9 @@
 
   const editors = [];
 
+  /* Where "Open in the workspace" leaves a site for workspace.js. */
+  const INCOMING_KEY = "dewstack:workspace:incoming";
+
   /* A pane over a plain <textarea>: the tutorial-page default, and the
    * shape a CodeMirror pane has to match (workspace.js). */
   function textareaPane(field) {
@@ -348,6 +351,26 @@
     const downloadButton = editor.querySelector(".dl-site-download");
     if (downloadButton) {
       downloadButton.addEventListener("click", () => downloadFiles(editor, panes));
+    }
+
+    /* Open in the workspace: the three panes go into localStorage under a
+     * hand-off key, then the link is followed as normal. workspace.js
+     * reads the key on arrival, makes a site from it named after this
+     * page and this editor, and removes it. A separate key rather than
+     * an edit to the workspace's own saved state, so a workspace tab
+     * already open elsewhere is never written under. */
+    const openLink = editor.querySelector(".dl-site-open-workspace");
+    if (openLink) {
+      openLink.addEventListener("click", () => {
+        const slug = (document.querySelector('meta[name="tutorial-slug"]') || {}).content || "";
+        const name = [slug, editor.dataset.siteName || "site"].filter(Boolean).join(" ");
+        try {
+          localStorage.setItem(INCOMING_KEY, JSON.stringify({
+            name,
+            html: valueOf(state, "html"), css: valueOf(state, "css"), js: valueOf(state, "js"),
+          }));
+        } catch (e) { /* storage blocked: the workspace opens on its own sites instead */ }
+      });
     }
 
     render(state);

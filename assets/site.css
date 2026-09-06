@@ -966,7 +966,9 @@ p code, li code, td code {
 }
 
 .dl-site-actions { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.85rem; }
-.dl-site-actions button {
+.dl-site-actions button, .dl-site-actions a {
+  display: inline-block;
+  text-decoration: none;
   font-family: var(--dl-mono);
   font-size: 0.78rem;
   padding: 0.4rem 0.75rem;
@@ -976,7 +978,7 @@ p code, li code, td code {
   color: var(--dl-fg);
   cursor: pointer;
 }
-.dl-site-actions button:hover { color: var(--dl-orange-text); border-color: var(--dl-orange); }
+.dl-site-actions button:hover, .dl-site-actions a:hover { color: var(--dl-orange-text); border-color: var(--dl-orange); }
 
 /* The data track's cell types: a textarea, a Run/Reset pair, and an
    output area, sharing .dl-site-input's look so every cell type on the

@@ -178,9 +178,10 @@ start again when you return; **Download these files** keeps a copy.
 The [dewstack workspace](https://deweydex.github.io/dewstack/workspace/)
 is a page with the same website editor and no tutorial attached. It
 keeps several named sites in this browser, on this device, the way
-**Your table** keeps its SQL. Use it to try an idea. Your own site still
-lives in your fork, and **Download these files** moves a site from the
-workspace to there.
+**Your table** keeps its SQL. Use it to try an idea, or press **Open in
+the workspace** under a tutorial's editor to keep changing that example.
+Your own site still lives in your fork, and **Download these files**
+moves a site from the workspace to there.
 
 [Using dewstack](docs/FOR_STUDENTS.md) explains these controls in more
 detail.

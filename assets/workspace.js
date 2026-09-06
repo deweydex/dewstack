@@ -25,6 +25,9 @@
 import { createCodeEditor } from "./vendor/codemirror.bundle.js";
 
 const KEY = "dewstack:workspace:v1";
+/* A site handed over by a tutorial page's "Open in the workspace"
+   (site-editor.js writes it, this page consumes it once). */
+const INCOMING_KEY = "dewstack:workspace:incoming";
 
 /* A new site's starting text, so the first thing a student sees is a page
  * and a console line, not three empty boxes. */
@@ -49,12 +52,20 @@ function readState() {
 }
 
 let saveTimer = null;
+let pendingSave = null;
+function writeState(state) {
+  clearTimeout(saveTimer);
+  pendingSave = null;
+  try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) { /* this visit does not save */ }
+}
+/* Debounced, so a keystroke does not serialise every site; flushed on
+ * pagehide, so a tab closed inside the debounce loses nothing. */
 function saveState(state) {
   clearTimeout(saveTimer);
-  saveTimer = setTimeout(() => {
-    try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) { /* this visit does not save */ }
-  }, 150);
+  pendingSave = state;
+  saveTimer = setTimeout(() => writeState(state), 150);
 }
+window.addEventListener("pagehide", () => { if (pendingSave) writeState(pendingSave); });
 
 function newSite(name) {
   return { id: `s${Date.now().toString(36)}${Math.random().toString(36).slice(2, 6)}`, name, ...STARTER };
@@ -228,4 +239,23 @@ function applyTheme() {
 new MutationObserver(applyTheme).observe(root, { attributes: true, attributeFilter: ["data-theme"] });
 darkQuery.addEventListener("change", applyTheme);
 
+/* A site arriving from a tutorial page becomes a new site here, opened,
+ * and the hand-off is cleared so a reload does not make it twice. */
+function takeIncoming() {
+  let incoming = null;
+  try {
+    const raw = localStorage.getItem(INCOMING_KEY);
+    if (raw) incoming = JSON.parse(raw);
+    localStorage.removeItem(INCOMING_KEY);
+  } catch (e) { return; }
+  if (!incoming || typeof incoming !== "object") return;
+  const s = newSite(String(incoming.name || nextName(state)));
+  s.html = String(incoming.html || "");
+  s.css = String(incoming.css || "");
+  s.js = String(incoming.js || "");
+  state.sites.push(s);
+  state.active = s.id;
+}
+
+takeIncoming();
 openSite(state.active);

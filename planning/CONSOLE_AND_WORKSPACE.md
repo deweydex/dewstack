@@ -484,4 +484,5 @@ block on a page today works unchanged after them.
    `assets/site-editor.js`'s `FRIENDLY` table, four of them, for review
    there rather than here.
 
-Step 1 is built. Steps 2 to 5 follow in section 8's order.
+Steps 1 to 4 are built (4 by the workspace's CodeMirror). Step 5, the
+console in dewmini's Site view, is dewlab's own work and follows.

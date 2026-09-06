@@ -224,3 +224,28 @@ class TestErrors:
         )
         expect(page.locator(f"{PLAIN} .dl-site-console")).to_be_visible()
         expect(console_lines(page, PLAIN).nth(0)).to_have_text("from html")
+
+
+class TestOpenInTheWorkspace:
+    def test_the_editor_arrives_as_a_new_named_site(self, page):
+        js_pane(page, SCRIPTED).fill('console.log("carried");')
+        page.locator(f"{SCRIPTED} .dl-site-open-workspace").click()
+        page.wait_for_url("**/workspace/index.html")
+        expect(page.locator(".dl-ws-name")).to_have_value("site-console scripted")
+        html_pane = page.locator('#site-editor-workspace .dl-site-input[data-lang="html"] + .dl-site-cm .cm-content')
+        expect(html_pane).to_contain_text('<p id="greeting">Hello</p>')
+        expect(page.locator("#site-editor-workspace .dl-site-console-line").first).to_have_text("carried")
+        assert page.evaluate("() => localStorage.getItem('dewstack:workspace:incoming')") is None
+        # The list shows the site by the same name, and a reload keeps it once.
+        page.wait_for_timeout(400)  # past the save debounce
+        page.reload()
+        expect(page.locator(".dl-ws-list button")).to_have_count(2)
+
+    def test_a_tab_closed_at_once_still_keeps_the_carried_site(self, page):
+        """pagehide flushes the debounced save: navigating away inside the
+        150 ms window must not lose the site that just arrived."""
+        page.locator(f"{SCRIPTED} .dl-site-open-workspace").click()
+        page.wait_for_url("**/workspace/index.html")
+        expect(page.locator(".dl-ws-name")).to_have_value("site-console scripted")
+        page.goto(page.url)  # at once, no wait
+        expect(page.locator(".dl-ws-list button")).to_have_count(2)

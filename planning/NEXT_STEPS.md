@@ -949,8 +949,13 @@ step arrives.
     One thing found on the way and fixed in the component for both pages:
     four synchronous `srcdoc` writes in one task loaded only the first,
     so `render()` now writes once per frame load and parks the newest
-    document until then. Steps 3 and 5 remain; step 4 (the editor) is
-    done by the workspace's CodeMirror.
+    document until then. Step 3, "Open in the workspace" under every
+    tutorial-page editor, shipped the same day: the three panes go into
+    a hand-off key (`dewstack:workspace:incoming`) and the workspace
+    makes a site from them on arrival, named after the page and the
+    editor, with the save flushed on `pagehide` so a tab closed at once
+    keeps it. Step 4 (the editor) is done by the workspace's CodeMirror.
+    Step 5, the console in dewmini's Site view, is dewlab's and remains.
 
 ---
 

@@ -365,6 +365,17 @@ def test_the_workspace_page_carries_the_component_and_both_scripts(tree):
     assert "site-editor.js" in page
     assert 'type="module"' in page and "workspace.js" in page
     assert "../assets/site.css" in page  # one level down, like a tutorial page
+    assert "Open in the workspace" not in page  # it is the workspace
+
+
+def test_a_tutorial_editor_links_to_the_workspace_from_its_own_depth(tree):
+    tutorials, out = tree
+    body = "# A page\n\n```html site=card\n<p>Hi</p>\n```\n"
+    write_tutorial(tutorials, "page", body)
+    write_order(tutorials, ["page"])
+    run_build(tree)
+    page = (out / "tutorials/mod/page/index.html").read_text(encoding="utf-8")
+    assert '<a class="dl-site-open-workspace" href="../../../workspace/index.html">Open in the workspace</a>' in page
 
 
 def test_the_front_page_has_a_door_to_the_workspace(tree):
