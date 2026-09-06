@@ -824,13 +824,34 @@ p code, li code, td code {
 
 .dl-site-panes { display: flex; flex-direction: column; gap: 0.85rem; }
 
+.dl-site-pane-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-bottom: 0.3rem;
+}
 .dl-site-pane label {
   display: block;
-  margin-bottom: 0.3rem;
   font-family: var(--dl-mono);
   font-size: 0.78rem;
   color: var(--dl-muted);
 }
+/* The JavaScript pane's own Run, in its header rather than the actions
+   row at the bottom: it belongs beside the text it runs. Same face as the
+   other buttons, in the brand orange so it reads as the one that does
+   something. */
+.dl-site-run {
+  font-family: var(--dl-mono);
+  font-size: 0.78rem;
+  padding: 0.25rem 0.7rem;
+  border: 1px solid var(--dl-orange);
+  border-radius: 4px;
+  background: none;
+  color: var(--dl-orange-text);
+  cursor: pointer;
+}
+.dl-site-run:hover { background: var(--dl-orange); color: #fff; }
 
 .dl-site-input {
   display: block;
@@ -847,6 +868,11 @@ p code, li code, td code {
   border-radius: 4px;
   resize: vertical;
 }
+
+/* The component's textarea is display:block above, so the browser's own
+   [hidden] would lose to it; spelled out for the workspace page, which
+   hides each textarea behind a CodeMirror pane. */
+.dl-site-input[hidden] { display: none; }
 
 .dl-site-preview { margin-top: 1rem; }
 
@@ -879,8 +905,70 @@ p code, li code, td code {
   background: #fff;
 }
 
+/* The console under the preview: what the reader's script printed, and
+   every error it raised, with the pane and line the error came from. An
+   author rule setting display would beat the browser's own [hidden], so
+   the hidden state is spelled out (the same trap dewlab's log records at
+   7.121). */
+.dl-site-console {
+  margin-top: 0.85rem;
+  border: 1px solid var(--dl-cell-border);
+  border-radius: 4px;
+  background: var(--dl-output-bg);
+}
+.dl-site-console[hidden] { display: none; }
+.dl-site-console-head {
+  padding: 0.3rem 0.7rem;
+  font-family: var(--dl-mono);
+  font-size: 0.78rem;
+  color: var(--dl-muted);
+  border-bottom: 1px solid var(--dl-cell-border);
+}
+.dl-site-console-output {
+  min-height: 1.6rem;
+  max-height: 14rem;
+  overflow: auto;
+  padding: 0.4rem 0.7rem;
+  font-family: var(--dl-mono);
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: var(--dl-fg);
+}
+.dl-site-console-line { white-space: pre-wrap; word-break: break-word; }
+.dl-site-console-warn { color: var(--dl-orange-text); }
+.dl-site-console-error {
+  font-weight: bold;
+  border-left: 3px solid var(--dl-orange);
+  padding-left: 0.6rem;
+  margin: 0.2rem 0;
+}
+.dl-site-console-goto {
+  margin-left: 0.6rem;
+  font: inherit;
+  font-weight: normal;
+  font-size: 0.78rem;
+  padding: 0 0.4rem;
+  border: 1px solid var(--dl-cell-border);
+  border-radius: 4px;
+  background: none;
+  color: var(--dl-fg);
+  cursor: pointer;
+}
+.dl-site-console-goto:hover { color: var(--dl-orange-text); border-color: var(--dl-orange); }
+/* The plain-language second line under an error: reading type, not code,
+   so it looks like the page talking rather than the browser. */
+.dl-site-console-hint {
+  font-family: var(--dl-font-family);
+  font-size: 0.9rem;
+  color: var(--dl-fg);
+  padding-left: 0.6rem;
+  margin-bottom: 0.4rem;
+}
+
 .dl-site-actions { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.85rem; }
-.dl-site-actions button {
+.dl-site-actions button, .dl-site-actions a {
+  display: inline-block;
+  text-decoration: none;
   font-family: var(--dl-mono);
   font-size: 0.78rem;
   padding: 0.4rem 0.75rem;
@@ -890,7 +978,7 @@ p code, li code, td code {
   color: var(--dl-fg);
   cursor: pointer;
 }
-.dl-site-actions button:hover { color: var(--dl-orange-text); border-color: var(--dl-orange); }
+.dl-site-actions button:hover, .dl-site-actions a:hover { color: var(--dl-orange-text); border-color: var(--dl-orange); }
 
 /* The data track's cell types: a textarea, a Run/Reset pair, and an
    output area, sharing .dl-site-input's look so every cell type on the
@@ -1068,3 +1156,77 @@ p code, li code, td code {
   pre.dl-static { background: #f7f6f3 !important; color: #111 !important; border-color: #ddd !important; }
   a { color: #1b2a4a !important; text-decoration: underline; }
 }
+
+/* ------------------------------------------------------------- workspace */
+
+/* The dewstack workspace (build.py's render_workspace(), assets/
+   workspace.js): the site list down one side, the component beside it,
+   and inside the component the three panes beside the preview and console
+   once there is room. The page's own head widens .dl-page for this. */
+.dl-workspace { display: grid; grid-template-columns: 1fr; gap: 1.25rem; margin-top: 1.5rem; }
+@media (min-width: 60rem) {
+  .dl-workspace { grid-template-columns: 12rem minmax(0, 1fr); align-items: start; }
+}
+.dl-ws-sites h2 { font-size: 0.95rem; margin: 0 0 0.5rem; }
+.dl-ws-list { list-style: none; margin: 0 0 0.6rem; padding: 0; }
+.dl-ws-list li { margin: 0 0 0.3rem; }
+.dl-ws-list button, .dl-ws-new, .dl-ws-load, .dl-ws-delete {
+  font-family: var(--dl-mono);
+  font-size: 0.78rem;
+  padding: 0.4rem 0.75rem;
+  border: 1px solid var(--dl-cell-border);
+  border-radius: 4px;
+  background: none;
+  color: var(--dl-fg);
+  cursor: pointer;
+}
+.dl-ws-list button { display: block; width: 100%; text-align: left; }
+.dl-ws-list button:hover, .dl-ws-new:hover, .dl-ws-load:hover, .dl-ws-delete:hover {
+  color: var(--dl-orange-text);
+  border-color: var(--dl-orange);
+}
+.dl-ws-list .dl-ws-current { border-color: var(--dl-orange); color: var(--dl-orange-text); font-weight: bold; }
+.dl-ws-delete.dl-ws-armed { border-color: var(--dl-orange); background: var(--dl-orange); color: #fff; }
+
+.dl-ws-head { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; }
+.dl-ws-head label { font-family: var(--dl-mono); font-size: 0.78rem; color: var(--dl-muted); }
+.dl-ws-name {
+  flex: 1 1 10rem;
+  min-width: 0;
+  font-family: var(--dl-mono);
+  font-size: 0.85rem;
+  padding: 0.35rem 0.5rem;
+  border: 1px solid var(--dl-cell-border);
+  border-radius: 4px;
+  background: var(--dl-output-bg);
+  color: var(--dl-fg);
+}
+.dl-workspace .dl-site-editor { margin: 0.75rem 0 0; }
+@media (min-width: 60rem) {
+  .dl-workspace .dl-site-editor {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    grid-template-areas:
+      "panes preview"
+      "panes console"
+      "actions actions";
+    align-items: start;
+    column-gap: 1rem;
+  }
+  .dl-workspace .dl-site-panes { grid-area: panes; }
+  .dl-workspace .dl-site-preview { grid-area: preview; margin-top: 0; }
+  .dl-workspace .dl-site-console { grid-area: console; }
+  .dl-workspace .dl-site-actions { grid-area: actions; }
+  .dl-workspace .dl-site-frame { height: 24rem; }
+}
+
+/* A CodeMirror pane, in the textarea's clothes. */
+.dl-site-cm {
+  font-family: var(--dl-mono);
+  border: 1px solid var(--dl-cell-border);
+  border-radius: 4px;
+  background: var(--dl-output-bg);
+}
+.dl-site-cm .cm-editor { min-height: 6rem; }
+.dl-site-cm .cm-editor.cm-focused { outline: 2px solid var(--dl-orange); outline-offset: -1px; }
+.dl-site-cm .cm-scroller { max-height: 20rem; line-height: 1.5; }

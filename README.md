@@ -175,6 +175,14 @@ button lets you keep the text. In the older playground, copy your SQL
 into a file of your own. The small website editors inside tutorials also
 start again when you return; **Download these files** keeps a copy.
 
+The [dewstack workspace](https://deweydex.github.io/dewstack/workspace/)
+is a page with the same website editor and no tutorial attached. It
+keeps several named sites in this browser, on this device, the way
+**Your table** keeps its SQL. Use it to try an idea, or press **Open in
+the workspace** under a tutorial's editor to keep changing that example.
+Your own site still lives in your fork, and **Download these files**
+moves a site from the workspace to there.
+
 [Using dewstack](docs/FOR_STUDENTS.md) explains these controls in more
 detail.
 
@@ -223,8 +231,10 @@ How the site is made: `build.py` turns the markdown files under
 on every push to `main` and publishes the result. The front page comes
 from `tutorials/front.md`, followed by the list of tutorials. Every
 built page has a Settings button and links to the page before it and the
-page after it. [`CLAUDE.md`](CLAUDE.md) says how to run the build and
-its checks.
+page after it. The workspace page is built by the same script, and is the
+one page that loads a code editor (CodeMirror, built from `vendor-src/`
+into `assets/vendor/`). [`CLAUDE.md`](CLAUDE.md) says how to run the
+build and its checks.
 
 Copies of the two older sites live in [`sources/`](sources/).
 `sources/wadb/` is a copy of `WADB_Tutorials`, and `sources/playground/`

@@ -373,6 +373,25 @@ wrap across three rows at 30%, with no page-level sideways scroll at
 Done when D1, Flexbox first steps, ships with it and a reader can drag
 the preview narrower and watch a row wrap.
 
+**Console and Run, added 2026-09-06** (`planning/CONSOLE_AND_WORKSPACE.md`,
+step 1 of its section 8). A JavaScript pane now carries a Run button in
+its header and runs only on Run or Ctrl/Cmd+Enter; HTML and CSS stay
+live, and the preview keeps the last-run script while they change. A
+console under the preview shows `console.log` output and every uncaught
+error with the pane and line it came from, a Go to line button that
+puts the caret there, and a plain-language second line for the four
+errors a first term meets most (`FRIENDLY` in `assets/site-editor.js`,
+data rather than code). The console is open from the start on an editor
+with a JavaScript pane and hidden on an HTML/CSS-only one until
+something arrives. `</script` typed into the pane no longer ends the
+script element early. Fourteen Playwright tests in
+`tests/e2e/test_site_console.py`, with their own fixture and no Pyodide,
+cover the line arithmetic for a runtime error, a syntax error and an
+error inside a click handler, the Run model, Reset, Go to line, and the
+hidden console opening for an inline script. The markdown contract is
+unchanged; no tutorial had a `js site=` block on the day this shipped,
+so nothing a student sees today has moved.
+
 ### Step 5. Web Arc 1, sixteen concept pages
 
 In the starter's order, each page the explanation behind the exercise a
@@ -965,6 +984,43 @@ step arrives.
     stages describe Arc 1; Arc 2 stays Arc 2, under its own existing name
     (step 6), rather than being folded in or given a fifth stage name it
     was never asked to have.
+19. **A console for the site editor, and a workspace page, designed
+    2026-09-06.** `planning/CONSOLE_AND_WORKSPACE.md` is the design:
+    a console under the site editor's preview (console output, every
+    uncaught error, the exact JavaScript-pane line, a plain-language
+    second line for the common errors), then a page of dewstack's own
+    where a student keeps several named sites in the browser, with an
+    "Open in the workspace" button on tutorial-page editors as the
+    bridge. The console is the thing that unblocks the JavaScript
+    track: today a script that throws just stops the preview changing.
+    Decided 2026-09-06, all four of its section 9 calls: CodeMirror on
+    the workspace page only, with textareas staying on tutorial pages;
+    "port in shape" stays the only rule between the repositories, no
+    twinned files; the console opens whenever an editor has a
+    JavaScript pane; and the page is called the dewstack workspace.
+    Josh's own addition, which replaced the design's debounce: a Run
+    button for JavaScript, so a program runs when asked and a student
+    takes time with their code, while HTML and CSS stay live. Step 1
+    (the console and Run on tutorial pages) shipped the same day; see
+    Step 6 above. Step 2, the workspace page, shipped the same day too:
+    `workspace/index.html`, built by `write_workspace()`, the same
+    component mounted by `assets/workspace.js` over CodeMirror panes
+    (`vendor-src/` builds `assets/vendor/codemirror.bundle.js`, loaded
+    on this page alone, with a CI job that fails if the committed bundle
+    drifts from its inputs), several named sites saved under
+    `dewstack:workspace:v1`, New, rename, a two-click Delete, Load files
+    and Download. A door to it on the front page, in the shape of
+    dewlab's own. Eleven Playwright tests in `tests/e2e/test_workspace.py`.
+    One thing found on the way and fixed in the component for both pages:
+    four synchronous `srcdoc` writes in one task loaded only the first,
+    so `render()` now writes once per frame load and parks the newest
+    document until then. Step 3, "Open in the workspace" under every
+    tutorial-page editor, shipped the same day: the three panes go into
+    a hand-off key (`dewstack:workspace:incoming`) and the workspace
+    makes a site from them on arrival, named after the page and the
+    editor, with the save flushed on `pagehide` so a tab closed at once
+    keeps it. Step 4 (the editor) is done by the workspace's CodeMirror.
+    Step 5, the console in dewmini's Site view, is dewlab's and remains.
 
 ---
 

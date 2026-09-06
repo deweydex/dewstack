@@ -70,7 +70,8 @@ def test_builds_a_page_and_the_contents(tree):
 
     assert (out / "tutorials/mod/first/index.html").exists()
     assert (out / "index.html").exists()
-    assert len(pages) == 3
+    assert (out / "workspace/index.html").exists()
+    assert len(pages) == 4  # two tutorials, the contents page, the workspace
     first = (out / "tutorials/mod/first/index.html").read_text(encoding="utf-8")
     assert "{{" not in first, "an unfilled shell token shipped"
     assert 'class="dl-nav-next"' in first
@@ -305,6 +306,86 @@ def test_page_without_a_site_block_has_no_editor_script(tree):
     run_build(tree)
     page = (out / "tutorials/mod/plain/index.html").read_text(encoding="utf-8")
     assert "site-editor.js" not in page
+
+
+def test_site_editor_with_a_js_pane_has_run_and_an_open_console(tree):
+    """JavaScript runs on Run, not on every keystroke, so the pane carries
+    the button; and the console is open from the start so a reader sees
+    where output will go before they need it."""
+    tutorials, out = tree
+    body = (
+        "# A page\n\n"
+        "```html site=card\n<p id=\"x\">Hi</p>\n```\n"
+        "```js site=card\nconsole.log('hi');\n```\n"
+    )
+    write_tutorial(tutorials, "page", body)
+    write_order(tutorials, ["page"])
+    run_build(tree)
+    page = (out / "tutorials/mod/page/index.html").read_text(encoding="utf-8")
+    assert 'class="dl-site-run"' in page
+    assert '<div class="dl-site-console">' in page
+    assert 'class="dl-site-console-output"' in page
+
+
+def test_site_editor_without_a_js_pane_hides_the_console_and_has_no_run(tree):
+    """An HTML/CSS editor has nothing to run. Its console still exists,
+    hidden, because an inline script in the HTML pane can still log or
+    throw, and site-editor.js shows it the moment something arrives."""
+    tutorials, out = tree
+    body = (
+        "# A page\n\n"
+        "```html site=card\n<p>Hi</p>\n```\n"
+        "```css site=card\np { color: red; }\n```\n"
+    )
+    write_tutorial(tutorials, "page", body)
+    write_order(tutorials, ["page"])
+    run_build(tree)
+    page = (out / "tutorials/mod/page/index.html").read_text(encoding="utf-8")
+    assert 'class="dl-site-run"' not in page
+    assert '<div class="dl-site-console" hidden>' in page
+
+
+def test_the_workspace_page_carries_the_component_and_both_scripts(tree):
+    """The workspace is the same component as a tutorial page's editor,
+    marked for assets/workspace.js to mount by hand, with all three panes,
+    no Reset (there is no tutorial version to go back to), and the
+    CodeMirror-importing module script alongside site-editor.js."""
+    tutorials, out = tree
+    write_tutorial(tutorials, "first")
+    write_order(tutorials, ["first"])
+    run_build(tree)
+    page = (out / "workspace/index.html").read_text(encoding="utf-8")
+    assert "<h1>dewstack workspace</h1>" in page
+    assert 'id="site-editor-workspace"' in page
+    assert 'data-mount="manual"' in page
+    for lang in ("html", "css", "js"):
+        assert f'data-lang="{lang}"' in page
+    assert 'class="dl-site-reset"' not in page
+    assert 'class="dl-site-run"' in page
+    assert "site-editor.js" in page
+    assert 'type="module"' in page and "workspace.js" in page
+    assert "../assets/site.css" in page  # one level down, like a tutorial page
+    assert "Open in the workspace" not in page  # it is the workspace
+
+
+def test_a_tutorial_editor_links_to_the_workspace_from_its_own_depth(tree):
+    tutorials, out = tree
+    body = "# A page\n\n```html site=card\n<p>Hi</p>\n```\n"
+    write_tutorial(tutorials, "page", body)
+    write_order(tutorials, ["page"])
+    run_build(tree)
+    page = (out / "tutorials/mod/page/index.html").read_text(encoding="utf-8")
+    assert '<a class="dl-site-open-workspace" href="../../../workspace/index.html">Open in the workspace</a>' in page
+
+
+def test_the_front_page_has_a_door_to_the_workspace(tree):
+    tutorials, out = tree
+    write_tutorial(tutorials, "first")
+    write_order(tutorials, ["first"])
+    run_build(tree)
+    front = (out / "index.html").read_text(encoding="utf-8")
+    assert 'href="workspace/index.html"' in front
+    assert "dewstack workspace" in front
 
 
 def test_site_editor_preview_keeps_links_inside_itself():
