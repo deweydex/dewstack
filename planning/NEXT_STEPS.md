@@ -900,6 +900,18 @@ step arrives.
     stages describe Arc 1; Arc 2 stays Arc 2, under its own existing name
     (step 6), rather than being folded in or given a fifth stage name it
     was never asked to have.
+19. **A console for the site editor, and a workspace page, designed
+    2026-09-06.** `planning/CONSOLE_AND_WORKSPACE.md` is the design:
+    a console under the site editor's preview (console output, every
+    uncaught error, the exact JavaScript-pane line, a plain-language
+    second line for the common errors), then a page of dewstack's own
+    where a student keeps several named sites in the browser, with an
+    "Open in the workspace" button on tutorial-page editors as the
+    bridge. The console is the thing that unblocks the JavaScript
+    track: today a script that throws just stops the preview changing.
+    Its section 9 lists the calls left to Josh, the largest being
+    whether the workspace page gets CodeMirror. Not built yet; the
+    design's section 8 is the order of work.
 
 ---
 
