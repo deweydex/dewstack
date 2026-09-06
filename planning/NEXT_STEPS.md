@@ -12,6 +12,19 @@ repeats neither. It points.
 
 ## 1. Where things stand
 
+**2026-09-06, a documentation and code-comments plan, laid out but not
+yet started.** `planning/DOCS_AND_COMMENTS_PLAN.md` is new: Josh asked
+that every file in both repositories read as something a teacher or a
+student could follow, dewlab having already run this exact initiative
+once (its own `planning/DOCS_AND_COMMENTS_PASS.md`, closed out
+complete) while dewstack has never had it — no `ARCHITECTURE.md`, no
+`CONTRIBUTING.md`, no `docs/<name>-explained.md` files, no tutorial-cell
+review skill. The new plan sequences building all of that from scratch,
+phase by phase, with its own ledger. Nothing in it has started yet;
+read it before picking up any of the numbered steps below, since
+`ARCHITECTURE.md`/`CONTRIBUTING.md` (its Phase A) are meant to exist
+before later phases cite them.
+
 **2026-09-06, the full-stack arc's first page, closing out step 8's
 second half — steps 1 to 3 of section 12's outline.** Before any of it
 could be built, section 12's own outline needed a real gap closed:
