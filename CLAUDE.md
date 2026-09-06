@@ -5,7 +5,10 @@ is written for the student, from `tutorials/front.md` and the module list;
 the README is the longer map for people who read the repository. The two
 are different texts on purpose. `build.py` turns `tutorials/**/*.md` into
 `site/`, which GitHub Pages serves. There is no backend and no database
-behind the site.
+behind the site. `ARCHITECTURE.md` has the map of how the pieces fit
+together; `CONTRIBUTING.md` has what to run before a pull request, and the
+standing rule that documentation and comments stay current as the code
+changes.
 
 `sources/` holds verbatim copies of the two older sites, `WADB_Tutorials`
 in `sources/wadb/` and `HTML-CSS-SQL-JS` in `sources/playground/`. They
@@ -47,6 +50,18 @@ dash, say what a thing is before what it is not, mark sequences, no
 metaphor in place of a plain statement, no idiom from any dialect and no
 rare word where a common one works, hedge what is not a binary. "We" for
 the learning, "you" for what is the student's own. No emoji.
+
+## Where the rest lives
+
+| Doing | Read |
+|---|---|
+| Changing the build or the runtime | `CONTRIBUTING.md`, then `ARCHITECTURE.md` |
+| Working an issue opened through the report doors | `.claude/skills/triage-report/SKILL.md` |
+| Wondering where a piece of content is coming from | `planning/CONSOLIDATION_PLAN.md` |
+
+`CONTRIBUTING.md` has the rule that matters most when you touch code: a
+change is not finished until the document describing that behaviour
+describes the new behaviour. A stale comment is worse than no comment.
 
 ## Two traps
 
