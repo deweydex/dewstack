@@ -157,15 +157,19 @@ fix `BASELINE` and its docstring together when Phase D reaches this file.
 
 ### Phase C — the shared runtime the rest of the site leans on
 
-- [ ] `build.py` (1326 lines) — the whole file: markdown pipeline, the
-      site editor's own block extraction, page assembly, the front
-      page and module listing, the feedback-doors rendering.
-      `docs/build-explained.md`.
-- [ ] `assets/site-editor.js` (416 lines) — the HTML/CSS/JS panes, the
+- [x] `build.py` (1326 lines) — the whole file, read start to finish:
+      reading/validating tutorials, the markdown pipeline, all four
+      fenced-block kinds, page assembly, the front page and module
+      listing, the feedback-doors rendering, the shell, `build()` and
+      the `write_*` functions. `docs/build-explained.md`, written
+      2026-09-06. No stale docstrings found anywhere in the file.
+- [x] `assets/site-editor.js` (416 lines) — the HTML/CSS/JS panes, the
       sandboxed preview, the console and Run model PR #43 added.
-      `docs/site-editor-js-explained.md`.
-- [ ] `assets/workspace.js` (261 lines) — the standalone workspace page
-      built on the same component. `docs/workspace-js-explained.md`.
+      `docs/site-editor-js-explained.md`, written 2026-09-06. Same
+      finding: already accurate.
+- [x] `assets/workspace.js` (261 lines) — the standalone workspace page
+      built on the same component. `docs/workspace-js-explained.md`,
+      written 2026-09-06. Same finding.
 
 ### Phase D — the rest
 
@@ -221,7 +225,7 @@ Update this table as phases clear, the same way
 |---|---|
 | A — the map and the rule | `ARCHITECTURE.md`/`CONTRIBUTING.md`/`CLAUDE.md` done, 2026-09-06; `DECISIONS_LOG.md` still Josh's call |
 | B — this session's new code | done, 2026-09-06 |
-| C — the shared runtime | not started |
+| C — the shared runtime | done, 2026-09-06 |
 | D — the rest | not started (a real bug already found: `tools/fetch_pyodide.py`'s `BASELINE`, see above) |
 | E — cell-code-review skill + tutorials | not started |
 | F — whole-repo language pass | not started |
