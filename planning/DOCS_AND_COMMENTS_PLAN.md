@@ -204,8 +204,8 @@ needs one before this half of the work can start:
       does** — a rename is only ever a rename, matching dewlab's own hard
       rule; a tutorial's `slug` and a block's own `name` are both
       contracts, neither this skill's to touch.
-- [~] Run it across every tutorial, module by module, tracked in this
-      file's own ledger below as each module clears.
+- [x] Run it across every tutorial, module by module, tracked in this
+      file's own ledger below as each module cleared.
       - [x] `full-stack` (1 tutorial) — clean. `read`/`search` app cells
             already use semantic names throughout (`draw`, `rows`,
             `filter`), `root`/`dlQuery` correctly left untouched, the
@@ -231,8 +231,19 @@ needs one before this half of the work can start:
             `troubleshooting`'s correct/incorrect HTML and CSS pairs)
             are deliberately minimal UI examples, not real teaching
             code, and need no naming review.
-      - [ ] `web` (30 tutorials, 27 with runnable blocks) — not started;
-            by far the largest module, worth its own session.
+      - [x] `web` (30 tutorials, 27 with runnable blocks) — clean, all
+            30, both series (`first-site`'s 22 pages and
+            `several-pages`'s 8). Every class name already read as what
+            it was for (`.button--danger`, `.toggle-content`,
+            `.area-header`), BEM modifiers and CSS custom properties
+            already followed the pattern the tutorials themselves teach,
+            and illustrative HTML/CSS fragments in "Your turn" sections
+            needed nothing. No renames, no missing comments — the
+            largest module in the site turned out to need no code
+            changes at all.
+
+This closes Phase E entirely: the skill exists, and every tutorial in
+every module has been read against it.
 
 ### Phase F — the whole-repo language pass
 
@@ -276,5 +287,5 @@ Update this table as phases clear, the same way
 | B — this session's new code | done, 2026-09-06 |
 | C — the shared runtime | done, 2026-09-06 |
 | D — the rest | done, 2026-09-06 (`tools/fetch_pyodide.py`'s `BASELINE` bug fixed along the way) |
-| E — cell-code-review skill + tutorials | skill written 2026-09-06; `full-stack`/`data`/`getting-started`/`reference` cleared same day; `web` (30 tutorials) not started |
+| E — cell-code-review skill + tutorials | done, 2026-09-06 — skill written, all five modules (43 tutorials) reviewed |
 | F — whole-repo language pass | done, 2026-09-06 (one real staleness fix in `README.md`) |
