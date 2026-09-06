@@ -12,6 +12,66 @@ repeats neither. It points.
 
 ## 1. Where things stand
 
+**2026-09-06, Data Arc 2, pages 2 to 6, closing out step 8's first half.**
+The dataset question (open question 8, below) is resolved differently
+than expected: rather than the population/life-expectancy placeholder,
+the arc uses the World Inequality Database's "income share of the
+top 1%" series (Our World in Data, CC BY) — the same dataset Josh's own
+Database Methods project brief already teaches, via a sample-solution
+notebook Josh shared mid-session. Building Data Arc 2 straight off that
+notebook ties the tutorial directly to the real assessed project
+students go on to do, rather than to an invented example.
+
+`assets/python_tools.py` gained two functions, both now in every Python
+cell's own namespace alongside `read_sql`: `load_csv(url)`, ported from
+dewlab's `tutorial_tools.load_csv()` (`pyodide.http.pyfetch`, since
+plain `pandas.read_csv(url)` fails inside Pyodide with a message —
+`urlopen error unknown url type: https` — that explains nothing, the
+same failure dewlab's own hint text was written for); and
+`download_csv(dataframe, filename)`, new, using `js.Blob` and
+`URL.createObjectURL` the way `sql-cell.js`'s own Download button
+already does, for the one thing dewlab's tutorials never had to solve —
+a query's result leaving the browser as a file.
+
+Five pages, in the `several-tables` series after page 1:
+`loading-a-real-dataset` (`load_csv` into a DataFrame, cleaning —
+renaming columns, checking what is missing — then `to_sql` into a named
+SQL connection); `joining-two-real-tables` (a small hand-authored
+`country_regions` table, one country deliberately spelled differently
+than the income dataset does, so an inner `JOIN` silently drops it and
+a `LEFT JOIN` makes the gap visible — a controllable stand-in for "data
+that is actually messy," rather than a second live fetch that would be
+neither controllable nor reliable); `charting-a-querys-result`
+(`read_sql` into a DataFrame, `groupby`, one `matplotlib` line per
+country); `exporting-a-query-to-a-file` (`download_csv`); and
+`a-form-that-writes-a-row` (not a real form — the `INSERT` a submission
+to the web track's own `a-form` page would run, with the actual wiring
+left to the full-stack arc, per Josh's own call recorded in the
+page-by-page breakdown below).
+
+This sandbox's egress proxy blocks `ourworldindata.org`, the same as it
+already blocked it for the Python/pandas engine slice — so every page's
+`load_csv()` cell is verified only up to the point of a real network
+fetch: built a scratch page outside the tutorials tree and drove it
+through a real, self-hosted Pyodide with Playwright, confirming a
+blocked fetch fails as a caught, rendered `ConnectionError` rather than
+a raw crash, and that every cell downstream of it fails cleanly too
+(`NameError`, then a `sqlite3` "no such table" once nothing was ever
+loaded) rather than doing something worse. `download_csv()` was
+verified independently, since none of the five pages' own cells ever
+reach it while the network call above them fails: a scratch page with a
+small hand-built DataFrame, run through the same real Pyodide, produced
+an actual browser download with the right filename and the right CSV
+text inside it. `joining-two-real-tables`'s own `country_regions` table
+(no network dependency) ran correctly end to end the same way. What
+none of this confirms yet is a real, successful `load_csv()` fetch —
+that needs an environment with a route to Our World in Data, which this
+one does not have. `python3 -m pytest -q`: 117 passed (pandas and
+matplotlib are not installed by default in this environment either;
+installed alongside `requirements-build.txt` to match what CI already
+does, the same gap noted on the Python/pandas engine slice below).
+`python3 build.py --clean`: 55 pages.
+
 **2026-09-05, student feedback pathway, sixth slice.** The cell-level
 report icon dewlab already had (fourth slice) now exists here too, on
 both the SQL cell and the Python cell built in step 7 and step 8's
@@ -703,7 +763,9 @@ packages the same way a SQL cell declares `sqlite3`, and only pages using
 it pay for the download. Then the three full-stack pages, with plan
 section 12 as the outline of the first.
 
-**The page-by-page breakdown, decided 2026-09-05.** Six pages, not the
+**The page-by-page breakdown, decided 2026-09-05, all six now built —
+see "Where things stand" above for the 2026-09-06 slice that finished
+pages 2 to 6.** Six pages, not the
 original four — more pages is fine where each one stays short, and each
 title says what the page does rather than naming a theme:
 
@@ -809,9 +871,12 @@ step arrives.
 7. **A Pages site for `web`** (plan question 6, still open). It would let
    the starter's README show a live example. Not needed for the tutorial
    to work.
-8. **The Our World in Data dataset** for data Arc 2. Small, familiar and
-   with a join in it: population and life expectancy by country, say.
-   Licence is CC BY; the page credits it. Josh's content may settle this.
+8. **The Our World in Data dataset** for data Arc 2. Resolved
+   2026-09-06, by Josh's own content rather than the population/life-
+   expectancy guess: the World Inequality Database's "income share of
+   the top 1%" series, the same one his Database Methods project brief
+   already teaches. Licence is CC BY; the pages credit it. See "Where
+   things stand" above for what is and is not yet verified against it.
 9. **The high-contrast fix.** dewlab#114, open, fixes elements the
    high-contrast mode silently skipped. The shell's CSS was copied before
    that fix. Check whether it applies here once #114 merges.

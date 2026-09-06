@@ -4,3 +4,8 @@
 series: A database with several tables
 order:
   - designing-a-table-before-you-build-it
+  - loading-a-real-dataset
+  - joining-two-real-tables
+  - charting-a-querys-result
+  - exporting-a-query-to-a-file
+  - a-form-that-writes-a-row

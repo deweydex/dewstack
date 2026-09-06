@@ -37,7 +37,7 @@ _namespaces: dict[str, dict] = {}
 
 def _namespace(name: str) -> dict:
     if name not in _namespaces:
-        _namespaces[name] = {"read_sql": read_sql}
+        _namespaces[name] = {"read_sql": read_sql, "load_csv": load_csv, "download_csv": download_csv}
     return _namespaces[name]
 
 
@@ -57,6 +57,72 @@ def read_sql(db_name: str, query: str):
     import sql_tools
 
     return pd.read_sql_query(query, sql_tools.get_connection(db_name))
+
+
+async def load_csv(url: str, **read_csv_kwargs):
+    """Fetches a CSV from `url` and returns it as a DataFrame.
+
+    Ported from dewlab's `tutorial_tools.load_csv()`, trimmed to the one
+    case dewstack needs: dewstack has no shared `/data/` folder the way
+    a dewlab tutorial does, so `url` is always a full address, never a
+    filename.
+
+    Plain `pandas.read_csv(url)` fails here with a message that explains
+    nothing — `urlopen error unknown url type: https` — because this
+    Python runs inside a browser tab with no network connection of its
+    own; it has to borrow the browser's, through `pyodide.http.pyfetch`
+    rather than the stdlib `urllib` pandas reaches for by default. A
+    genuine refusal (the site declining to let another page read it, the
+    CORS rule every browser enforces) is rarer than that first failure,
+    but gets its own message too, since nothing in a reader's own code
+    would explain it either.
+    """
+    import pandas as pd
+    from pyodide.http import pyfetch  # pragma: no cover - browser only
+
+    try:
+        response = await pyfetch(url)
+    except Exception as exc:  # pragma: no cover - browser-only failure path
+        raise ConnectionError(
+            f"Couldn't fetch {url}.\n\n"
+            "That address is on another website, and a browser only lets "
+            "this page read it if that site allows it — most public data "
+            "sites do, but not all of them. Nothing is wrong with your "
+            "code; try the address in a new tab to check it still exists."
+        ) from exc
+
+    if response.status != 200:
+        raise ConnectionError(
+            f"{url} returned HTTP {response.status}.\n\n"
+            "The address may have changed, or that site may not be "
+            "handing this file out any more."
+        )
+    return pd.read_csv(io.BytesIO(await response.bytes()), **read_csv_kwargs)
+
+
+def download_csv(dataframe, filename: str) -> None:
+    """Saves `dataframe` as `filename` on the reader's own computer.
+
+    A query's result leaving the browser needs a real click-and-save,
+    the same as a SQL cell's own Download button — there is no folder
+    here to write a file into, only the reader's own Downloads. Calling
+    this from a cell's own code is what stands in for clicking a
+    button: a query built entirely inside the page, exported the moment
+    a reader chooses to keep it, the same way `sql-cell.js`'s
+    `downloadCell()` saves a cell's text.
+    """
+    import js  # pragma: no cover - browser only
+
+    csv_text = dataframe.to_csv(index=False)
+    blob = js.Blob.new([csv_text])
+    url = js.URL.createObjectURL(blob)
+    link = js.document.createElement("a")
+    link.href = url
+    link.download = filename
+    js.document.body.appendChild(link)
+    link.click()
+    link.remove()
+    js.URL.revokeObjectURL(url)
 
 
 def _pandas():
