@@ -190,20 +190,27 @@ dewlab could point its own `cell-code-review` skill at every tutorial
 because the skill already existed. dewstack has no equivalent, and
 needs one before this half of the work can start:
 
-- [ ] Write `.claude/skills/dewstack-cell-code-review/SKILL.md` (or
-      fold into a repo-scoped version of dewlab's own, if the
-      Skill tool's directory-scoping — see the harness's own
-      instructions — makes a same-named, per-repo skill the cleaner
-      fit): semantic names over single letters, why-not-what comments,
-      read in the context of the surrounding prose, applied across all
-      four kinds of tutorial code here — SQL cells, Python cells,
-      full-stack `app=` cells, and the web track's `site=` HTML/CSS/JS
-      blocks. **Never change what a cell does** — a rename is only ever
-      a rename, matching dewlab's own hard rule, and a slug is a
-      contract the same way a cell id is.
+- [x] `.claude/skills/cell-code-review/SKILL.md` — written 2026-09-06, as
+      a repo-scoped skill sharing dewlab's own skill name rather than a
+      `dewstack-`-prefixed one, per the harness's directory-scoping
+      convention (both repos are in scope this session, and the one
+      whose directory holds the tutorial being reviewed is the one that
+      applies). Covers semantic names over single letters and why-not-
+      what comments, adapted per block kind (SQL cells, Python cells,
+      full-stack `app=` cells, the web track's `site=` HTML/CSS/JS
+      blocks) since each has its own idiom and its own shared-state
+      rules (a `db`/cell name crossing block boundaries, an app cell's
+      HTML/CSS/JS panes reviewed together). **Never change what a block
+      does** — a rename is only ever a rename, matching dewlab's own hard
+      rule; a tutorial's `slug` and a block's own `name` are both
+      contracts, neither this skill's to touch.
 - [ ] Run it across every tutorial, module by module (`getting-started`,
       `web`, `data`, `full-stack`, `reference`), tracked in this file's
-      own ledger below as each module clears.
+      own ledger below as each module clears. Not started — the skill's
+      own "Tracking coverage" section names this same gap and points
+      back here. A real undertaking on its own (dozens of tutorials
+      across five modules), worth picking up as its own dedicated pass
+      rather than folded into whichever session next touches this plan.
 
 ### Phase F — the whole-repo language pass
 
@@ -227,5 +234,5 @@ Update this table as phases clear, the same way
 | B — this session's new code | done, 2026-09-06 |
 | C — the shared runtime | done, 2026-09-06 |
 | D — the rest | done, 2026-09-06 (`tools/fetch_pyodide.py`'s `BASELINE` bug fixed along the way) |
-| E — cell-code-review skill + tutorials | not started |
+| E — cell-code-review skill + tutorials | skill written 2026-09-06; running it across tutorials not started |
 | F — whole-repo language pass | not started |
