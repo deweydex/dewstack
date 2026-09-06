@@ -1125,6 +1125,15 @@ step arrives.
     keeps it. Step 4 (the editor) is done by the workspace's CodeMirror.
     Step 5, the console in dewmini's Site view, is dewlab's and remains.
 
+20. **Hints that appear after a cell has errored or run some number of
+    times.** Raised by Josh 2026-09-06 for both repositories. Designed,
+    nothing built: the whole note is `planning/CELL_HINTS.md` in dewlab;
+    this repository's `planning/CELL_HINTS.md` records only what differs
+    here (what a run and an error are per cell kind, the quiz's checks as
+    the natural first trigger, the web track's live panes having no run).
+    Thirteen shared questions and three dewstack-only ones wait on Josh
+    before any of it is built. Blocks nothing.
+
 ---
 
 ## 5. How to start the next session
