@@ -12,6 +12,122 @@ repeats neither. It points.
 
 ## 1. Where things stand
 
+**2026-09-06, the full-stack arc's first page, closing out step 8's
+second half — steps 1 to 3 of section 12's outline.** Before any of it
+could be built, section 12's own outline needed a real gap closed:
+"Pyodide exposes a Python function to the page" assumes a web cell's
+JavaScript can reach this page's Pyodide, but the site editor's preview
+(section 13) is deliberately sandboxed with no route back to anything
+else on the page — exactly the channel this needs. Three ways through
+it went to Josh — bridge the sandbox with `postMessage`, open a real
+hole in it with `allow-same-origin`, or give this cell type no iframe
+at all — and his call was the third, for a teaching reason as much as
+an architectural one: every other "cell reaches another" example on
+this site (`read_sql()`, `download_csv()`) is already direct, and
+`postMessage` would be the one place a student meets indirection with
+no story reason for it.
+
+`build.py` gained a third cell kind, `app=name` (consecutive
+`html`/`css`/`js` blocks, grouped the way `site=` blocks are, rendered
+straight into the page — no separate document to sandbox in the first
+place). `assets/sql_tools.py`'s new `query_rows(db_name, sql, params)`
+is the Python half of the bridge; `assets/sql-cell.js` exposes it as
+`window.dlQuery` only on a page that actually has an app cell.
+`params` was added once the search-box step was actually being
+written: pasting a visitor's typed text into SQL text directly is a
+real anti-pattern worth not teaching even once, and a `?` placeholder
+is the natural, real fix to name at exactly that moment — the
+tutorial's own closing terms are query, result set, full stack, and
+placeholder.
+
+Step 4 (a form's `INSERT`) is deliberately not in this page — Data Arc
+2's own `a-form-that-writes-a-row` already promised that wiring as "a
+full-stack page still being written," so it becomes page two rather
+than being pre-empted here. Step 5 (Download/Load for the whole
+database) is superseded before being built, the same way Data Arc 1's
+own version was: `persist` is the pattern this site actually converged
+on for "where your work is saved."
+
+Verified live against a real self-hosted Pyodide through Playwright: a
+query edited from `WHERE price < 10` to `WHERE price > 10` and rerun
+changed which rows drew; a search box's placeholder-bound query matched
+"bag" against "Tote bag" and nothing else; resetting one app cell
+cleared only its own preview, confirmed by a second, unrelated app cell
+still reading the same shared table correctly afterward — this caught a
+real bug (an app cell's Reset must not call `sql_tools.reset()`, since
+it owns no connection of its own the way a SQL or Python cell does; an
+earlier draft did, and would have silently dropped a table other cells
+on the page still needed); a bad SQL query and a bad JavaScript
+reference each rendered in the cell's own error box with zero page or
+console errors, catching a second real bug on the way (the error box
+had no `id`, so `document.getElementById()` returned null and the
+handler meant to show an error crashed trying to write to it instead).
+`python3 -m pytest -q`: 169 tests (10 new in `tests/test_build.py`, 6
+in `tests/test_sql_tools.py`, 4 new e2e in
+`tests/e2e/test_full_stack_cell.py`). `python3 build.py --clean`: 57
+pages. `modules.yaml`'s `full-stack` entry is out of `planned:` now
+that it has a real page; `README.md`'s "Full stack" section links it.
+
+**2026-09-06, Data Arc 2, pages 2 to 6, closing out step 8's first half.**
+The dataset question (open question 8, below) is resolved differently
+than expected: rather than the population/life-expectancy placeholder,
+the arc uses the World Inequality Database's "income share of the
+top 1%" series (Our World in Data, CC BY) — the same dataset Josh's own
+Database Methods project brief already teaches, via a sample-solution
+notebook Josh shared mid-session. Building Data Arc 2 straight off that
+notebook ties the tutorial directly to the real assessed project
+students go on to do, rather than to an invented example.
+
+`assets/python_tools.py` gained two functions, both now in every Python
+cell's own namespace alongside `read_sql`: `load_csv(url)`, ported from
+dewlab's `tutorial_tools.load_csv()` (`pyodide.http.pyfetch`, since
+plain `pandas.read_csv(url)` fails inside Pyodide with a message —
+`urlopen error unknown url type: https` — that explains nothing, the
+same failure dewlab's own hint text was written for); and
+`download_csv(dataframe, filename)`, new, using `js.Blob` and
+`URL.createObjectURL` the way `sql-cell.js`'s own Download button
+already does, for the one thing dewlab's tutorials never had to solve —
+a query's result leaving the browser as a file.
+
+Five pages, in the `several-tables` series after page 1:
+`loading-a-real-dataset` (`load_csv` into a DataFrame, cleaning —
+renaming columns, checking what is missing — then `to_sql` into a named
+SQL connection); `joining-two-real-tables` (a small hand-authored
+`country_regions` table, one country deliberately spelled differently
+than the income dataset does, so an inner `JOIN` silently drops it and
+a `LEFT JOIN` makes the gap visible — a controllable stand-in for "data
+that is actually messy," rather than a second live fetch that would be
+neither controllable nor reliable); `charting-a-querys-result`
+(`read_sql` into a DataFrame, `groupby`, one `matplotlib` line per
+country); `exporting-a-query-to-a-file` (`download_csv`); and
+`a-form-that-writes-a-row` (not a real form — the `INSERT` a submission
+to the web track's own `a-form` page would run, with the actual wiring
+left to the full-stack arc, per Josh's own call recorded in the
+page-by-page breakdown below).
+
+This sandbox's egress proxy blocks `ourworldindata.org`, the same as it
+already blocked it for the Python/pandas engine slice — so every page's
+`load_csv()` cell is verified only up to the point of a real network
+fetch: built a scratch page outside the tutorials tree and drove it
+through a real, self-hosted Pyodide with Playwright, confirming a
+blocked fetch fails as a caught, rendered `ConnectionError` rather than
+a raw crash, and that every cell downstream of it fails cleanly too
+(`NameError`, then a `sqlite3` "no such table" once nothing was ever
+loaded) rather than doing something worse. `download_csv()` was
+verified independently, since none of the five pages' own cells ever
+reach it while the network call above them fails: a scratch page with a
+small hand-built DataFrame, run through the same real Pyodide, produced
+an actual browser download with the right filename and the right CSV
+text inside it. `joining-two-real-tables`'s own `country_regions` table
+(no network dependency) ran correctly end to end the same way. What
+none of this confirms yet is a real, successful `load_csv()` fetch —
+that needs an environment with a route to Our World in Data, which this
+one does not have. `python3 -m pytest -q`: 117 passed (pandas and
+matplotlib are not installed by default in this environment either;
+installed alongside `requirements-build.txt` to match what CI already
+does, the same gap noted on the Python/pandas engine slice below).
+`python3 build.py --clean`: 55 pages.
+
 **2026-09-05, student feedback pathway, sixth slice.** The cell-level
 report icon dewlab already had (fourth slice) now exists here too, on
 both the SQL cell and the Python cell built in step 7 and step 8's
@@ -722,7 +838,9 @@ packages the same way a SQL cell declares `sqlite3`, and only pages using
 it pay for the download. Then the three full-stack pages, with plan
 section 12 as the outline of the first.
 
-**The page-by-page breakdown, decided 2026-09-05.** Six pages, not the
+**The page-by-page breakdown, decided 2026-09-05, all six now built —
+see "Where things stand" above for the 2026-09-06 slice that finished
+pages 2 to 6.** Six pages, not the
 original four — more pages is fine where each one stays short, and each
 title says what the page does rather than naming a theme:
 
@@ -781,6 +899,14 @@ same split dewlab draws around its own `run_cell()`); CI now installs
 `pandas`/`matplotlib` alongside `requirements-build.txt`, matching
 dewlab's own `unit` job.
 
+**The full-stack arc's first page, built 2026-09-06** — see "Where
+things stand" above for the full account, and `CONSOLIDATION_PLAN.md`
+section 12 for the architecture decision behind it (a new cell type,
+not the site editor's sandboxed one) and what it changes about the
+outline there. `tutorials/full-stack/putting-it-together.order.yaml` is
+the arc's own series; `modules.yaml`'s `full-stack` entry is out of
+`planned:` now that it has a real page.
+
 ### Ongoing, every step
 
 - When a rewritten page lands, the front page links it and the ledger in
@@ -828,9 +954,12 @@ step arrives.
 7. **A Pages site for `web`** (plan question 6, still open). It would let
    the starter's README show a live example. Not needed for the tutorial
    to work.
-8. **The Our World in Data dataset** for data Arc 2. Small, familiar and
-   with a join in it: population and life expectancy by country, say.
-   Licence is CC BY; the page credits it. Josh's content may settle this.
+8. **The Our World in Data dataset** for data Arc 2. Resolved
+   2026-09-06, by Josh's own content rather than the population/life-
+   expectancy guess: the World Inequality Database's "income share of
+   the top 1%" series, the same one his Database Methods project brief
+   already teaches. Licence is CC BY; the pages credit it. See "Where
+   things stand" above for what is and is not yet verified against it.
 9. **The high-contrast fix.** dewlab#114, open, fixes elements the
    high-contrast mode silently skipped. The shell's CSS was copied before
    that fix. Check whether it applies here once #114 merges.

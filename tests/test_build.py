@@ -554,6 +554,133 @@ def test_page_without_a_sql_block_has_no_cell_script(tree):
     assert "sql-cell.js" not in page
 
 
+class TestAppCell:
+    """The full-stack module's own cell type: consecutive `app=name`
+    blocks grouped the way `site=name` blocks are, rendered straight
+    into the page rather than a sandboxed iframe (build.py's
+    extract_app_cells() docstring explains why)."""
+
+    def body(self, extra_js: str = "") -> str:
+        return (
+            "# A page\n\n"
+            '```html app=widget\n<table><tbody></tbody></table>\n```\n'
+            '```css app=widget\ntable { width: 100%; }\n```\n'
+            f'```js app=widget\nconst rows = await dlQuery("products", "SELECT 1");{extra_js}\n```\n'
+        )
+
+    def test_app_blocks_become_one_cell(self, tree):
+        tutorials, out = tree
+        write_tutorial(tutorials, "page", self.body())
+        write_order(tutorials, ["page"])
+        run_build(tree)
+        page = (out / "tutorials/mod/page/index.html").read_text(encoding="utf-8")
+        assert 'class="dl-app-cell"' in page
+        assert page.count('class="dl-app-pane"') == 3
+        for lang in ("html", "css", "js"):
+            assert f'data-lang="{lang}"' in page
+        assert "SELECT 1" in page
+        assert "sql-cell.js" in page
+
+    def test_app_cell_needs_sqlite3_even_alone(self, tree):
+        # No sql or py cell on the page at all — an app cell's own
+        # dlQuery() still needs sql_tools.py, so sqlite3 has to be there.
+        tutorials, out = tree
+        write_tutorial(tutorials, "page", self.body())
+        write_order(tutorials, ["page"])
+        run_build(tree)
+        page = (out / "tutorials/mod/page/index.html").read_text(encoding="utf-8")
+        assert 'window.DEWSTACK_SQL_PACKAGES = ["sqlite3"];' in page
+
+    def test_app_cell_does_not_pull_in_pandas_or_matplotlib(self, tree):
+        tutorials, out = tree
+        write_tutorial(tutorials, "page", self.body())
+        write_order(tutorials, ["page"])
+        run_build(tree)
+        page = (out / "tutorials/mod/page/index.html").read_text(encoding="utf-8")
+        assert "pandas" not in page
+        assert "matplotlib" not in page
+
+    def test_app_cell_has_run_reset_and_no_data_attribute(self, tree):
+        # Unlike a SQL or Python cell, an app cell owns no connection or
+        # namespace of its own to key by name (render_app_cell()'s own
+        # docstring explains why), so nothing here carries a data-db or
+        # data-name attribute the way those cells' markup does.
+        tutorials, out = tree
+        write_tutorial(tutorials, "page", self.body())
+        write_order(tutorials, ["page"])
+        run_build(tree)
+        page = (out / "tutorials/mod/page/index.html").read_text(encoding="utf-8")
+        assert 'class="dl-app-run"' in page
+        assert 'class="dl-app-reset"' in page
+        assert "data-db" not in page.split('class="dl-app-cell"', 1)[1].split(">", 1)[0]
+
+    def test_app_cell_html_pane_is_optional(self, tree):
+        # An app cell needs a js pane (extract_app_cells() requires it),
+        # but html and css are each optional, the same as a site editor's.
+        tutorials, out = tree
+        body = "# A page\n\n```js app=widget\nconst x = 1;\n```\n"
+        write_tutorial(tutorials, "page", body)
+        write_order(tutorials, ["page"])
+        run_build(tree)
+        page = (out / "tutorials/mod/page/index.html").read_text(encoding="utf-8")
+        assert page.count('class="dl-app-pane"') == 1
+
+    def test_app_block_with_no_js_pane_is_an_error(self, tree):
+        tutorials, out = tree
+        body = "# A page\n\n```html app=widget\n<p>Hi</p>\n```\n"
+        write_tutorial(tutorials, "page", body)
+        write_order(tutorials, ["page"])
+        with pytest.raises(BuildError, match="has no js pane"):
+            run_build(tree)
+
+    def test_app_blocks_named_the_same_must_be_consecutive(self, tree):
+        tutorials, out = tree
+        body = (
+            "# A page\n\n"
+            '```js app=widget\nconst x = 1;\n```\n\n'
+            "Some prose breaks the run.\n\n"
+            '```js app=widget\nconst y = 2;\n```\n'
+        )
+        write_tutorial(tutorials, "page", body)
+        write_order(tutorials, ["page"])
+        with pytest.raises(BuildError, match="are not consecutive"):
+            run_build(tree)
+
+    def test_two_differently_named_app_cells_both_render(self, tree):
+        tutorials, out = tree
+        body = (
+            "# A page\n\n"
+            '```js app=first\nconst x = 1;\n```\n\n'
+            '```js app=second\nconst y = 2;\n```\n'
+        )
+        write_tutorial(tutorials, "page", body)
+        write_order(tutorials, ["page"])
+        run_build(tree)
+        page = (out / "tutorials/mod/page/index.html").read_text(encoding="utf-8")
+        assert page.count('class="dl-app-cell"') == 2
+
+    def test_page_without_an_app_block_has_no_app_cell(self, tree):
+        tutorials, out = tree
+        write_tutorial(tutorials, "plain")
+        write_order(tutorials, ["plain"])
+        run_build(tree)
+        page = (out / "tutorials/mod/plain/index.html").read_text(encoding="utf-8")
+        assert 'class="dl-app-cell"' not in page
+        assert "sql-cell.js" not in page
+
+    def test_app_cell_preview_and_error_box_each_have_an_id(self, tree):
+        # assets/sql-cell.js writes into these by id at runtime; a missing
+        # id means document.getElementById() returns null and the write
+        # throws instead of showing an error or a result.
+        tutorials, out = tree
+        write_tutorial(tutorials, "page", self.body())
+        write_order(tutorials, ["page"])
+        run_build(tree)
+        page = (out / "tutorials/mod/page/index.html").read_text(encoding="utf-8")
+        assert '<div class="dl-app-preview" id="app-cell-page-0-preview">' in page
+        assert '<pre class="dl-app-error" id="app-cell-page-0-error"' in page
+
+
 class TestFeedbackFooter:
     """The footer's "three doors" report disclosure. On by default;
     planning/feedback.yaml is the kill switch."""

@@ -986,7 +986,7 @@ p code, li code, td code {
    Python, sharing every rule below except its own actions have no
    Download/Load pair (a Python cell's own variables have nothing to
    save as a file the way a SQL cell's table does). */
-.dl-sql-cell, .dl-py-cell {
+.dl-sql-cell, .dl-py-cell, .dl-app-cell {
   margin: 1.5rem 0;
   padding: 1rem;
   border: 1px solid var(--dl-cell-border);
@@ -1025,14 +1025,14 @@ p code, li code, td code {
   margin: 0.4rem 0 0;
 }
 
-.dl-sql-actions, .dl-py-actions {
+.dl-sql-actions, .dl-py-actions, .dl-app-actions {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   gap: 0.5rem;
   margin-top: 0.6rem;
 }
-.dl-sql-actions button, .dl-py-actions button {
+.dl-sql-actions button, .dl-py-actions button, .dl-app-actions button {
   font-family: var(--dl-mono);
   font-size: 0.78rem;
   padding: 0.4rem 0.75rem;
@@ -1042,15 +1042,15 @@ p code, li code, td code {
   color: var(--dl-fg);
   cursor: pointer;
 }
-.dl-sql-actions button:hover, .dl-py-actions button:hover { color: var(--dl-orange-text); border-color: var(--dl-orange); }
-.dl-sql-actions button:disabled, .dl-py-actions button:disabled { opacity: 0.6; cursor: default; }
+.dl-sql-actions button:hover, .dl-py-actions button:hover, .dl-app-actions button:hover { color: var(--dl-orange-text); border-color: var(--dl-orange); }
+.dl-sql-actions button:disabled, .dl-py-actions button:disabled, .dl-app-actions button:disabled { opacity: 0.6; cursor: default; }
 
-.dl-sql-status, .dl-py-status { font-size: 0.78rem; color: var(--dl-muted); }
+.dl-sql-status, .dl-py-status, .dl-app-status { font-size: 0.78rem; color: var(--dl-muted); }
 
 .dl-sql-output:not(:empty), .dl-py-output:not(:empty) { margin-top: 0.85rem; }
 .dl-sql-result { overflow-x: auto; }
 .dl-sql-note { font-size: 0.85rem; color: var(--dl-muted); margin-top: 0.4rem; }
-.dl-sql-error, .dl-error {
+.dl-sql-error, .dl-error, .dl-app-error:not(:empty) {
   font-family: var(--dl-mono);
   font-size: 0.85rem;
   font-weight: bold;
@@ -1058,6 +1058,48 @@ p code, li code, td code {
   border-left: 3px solid var(--dl-orange);
   padding-left: 0.6rem;
 }
+
+/* A full-stack cell (build.py's render_app_cell()): HTML, CSS and
+   JavaScript panes above, sharing .dl-site-pane's own look so it reads
+   as a relative of the site editor rather than a fourth, unrelated
+   shape — then a preview that renders straight into the page, not a
+   sandboxed iframe (extract_app_cells()'s docstring in build.py says
+   why). .dl-app-error is empty and collapsed until a run actually
+   fails. */
+.dl-app-panes { display: flex; flex-direction: column; gap: 0.85rem; }
+.dl-app-pane label {
+  display: block;
+  margin-bottom: 0.3rem;
+  font-family: var(--dl-mono);
+  font-size: 0.78rem;
+  color: var(--dl-muted);
+}
+.dl-app-input {
+  display: block;
+  width: 100%;
+  min-height: 5rem;
+  padding: 0.6rem 0.7rem;
+  box-sizing: border-box;
+  font-family: var(--dl-mono);
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: var(--dl-fg);
+  background: var(--dl-output-bg);
+  border: 1px solid var(--dl-cell-border);
+  border-radius: 4px;
+  resize: vertical;
+}
+.dl-app-error { margin: 0; }
+.dl-app-error:empty { display: none; }
+.dl-app-preview {
+  margin-top: 0.85rem;
+  padding: 0.85rem;
+  border: 1px solid var(--dl-cell-border);
+  border-radius: 4px;
+  background: var(--dl-output-bg);
+  overflow-x: auto;
+}
+.dl-app-preview:empty { display: none; }
 
 /* A Python cell's own output kinds, ported in shape from dewlab's
    tutorial-style.css: printed text plain, a bare value's repr in navy so

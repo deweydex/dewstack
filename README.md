@@ -139,9 +139,12 @@ example, a visitor might search a list of products or use a form to add
 a new product. We bring together the website and data skills from the
 earlier tutorials.
 
-This part of the course is being written. The first tutorial will show a
-page that reads rows from a database and draws them as a table. It uses
-the same engine as the playground. It will appear here when it is ready.
+The first tutorial is live:
+<https://deweydex.github.io/dewstack/tutorials/full-stack/a-page-that-reads-from-a-database/>.
+It shows a page whose own JavaScript asks a database a question and
+draws what comes back, then adds a search box a visitor can actually
+type into. The rest of this part of the course is still being written
+and will appear here as it is ready.
 
 ## Projects and the exam
 

@@ -4,6 +4,13 @@
  * pandas and matplotlib for the other) through Pyodide in the reader's
  * own browser tab. No server, no database anywhere but here.
  *
+ * The full-stack module's own cell kind lives here too: consecutive
+ * ```html app=name```/```css app=name```/```js app=name``` blocks
+ * become one `.dl-app-cell` (build.py's extract_app_cells()), whose
+ * JavaScript pane gets `dlQuery(dbName, sql, params)` — a real call
+ * into `assets/sql_tools.py`'s `query_rows()`, no separate document to
+ * bridge across the way the site editor's sandboxed preview would need.
+ *
  * Ported in shape from dewlab's assets/pyodide-engine.js (its main-thread
  * path, not the Worker one — a query or a chart on a student-sized
  * table finishes fast enough that the page staying responsive during a
@@ -77,10 +84,11 @@
   let tools = null; // the imported sql_tools Python module, once ready
   let pyTools = null; // the imported python_tools Python module, once ready (only if the page has a py cell)
 
-  function statusElements(cells, pyCells) {
+  function statusElements(cells, pyCells, appCells) {
     const sqlStatus = cells.map((cell) => cell.querySelector(".dl-sql-status"));
     const pyStatus = pyCells.map((cell) => cell.querySelector(".dl-py-status"));
-    return sqlStatus.concat(pyStatus).filter(Boolean);
+    const appStatus = (appCells || []).map((cell) => cell.querySelector(".dl-app-status"));
+    return sqlStatus.concat(pyStatus, appStatus).filter(Boolean);
   }
 
   function setStatus(statuses, text) {
@@ -102,8 +110,8 @@
     return pyodide.pyimport(filename.replace(/\.py$/, ""));
   }
 
-  async function boot(cells, pyCells) {
-    const statuses = statusElements(cells, pyCells);
+  async function boot(cells, pyCells, appCells) {
+    const statuses = statusElements(cells, pyCells, appCells);
     setStatus(statuses, "Starting Python…");
     const base = pyodideBase();
     const { loadPyodide } = await import(/* webpackIgnore: true */ base + "pyodide.mjs");
@@ -121,12 +129,25 @@
     tools = await loadModule(pyodide, "sql_tools.py");
     if (pyCells.length) pyTools = await loadModule(pyodide, "python_tools.py");
 
+    /* A full-stack cell's own bridge: its JavaScript pane gets this
+     * function directly (see extract_app_cells()'s docstring in build.py
+     * for why there is no iframe to cross instead), a thin wrapper round
+     * sql_tools.py's query_rows() that hands back a plain JS array of
+     * plain objects rather than a PyProxy the reader would have to know
+     * how to unwrap. */
+    if (appCells && appCells.length) {
+      window.dlQuery = async (dbName, sql, params) => {
+        const rows = tools.query_rows(dbName, sql, params || []);
+        return rows.toJs({ dict_converter: Object.fromEntries });
+      };
+    }
+
     setStatus(statuses, "");
   }
 
-  function ensureBooted(cells, pyCells) {
-    if (!booting) booting = boot(cells, pyCells).catch((err) => {
-      setStatus(statusElements(cells, pyCells), "Python didn't start. Reloading the page usually fixes this.");
+  function ensureBooted(cells, pyCells, appCells) {
+    if (!booting) booting = boot(cells, pyCells, appCells).catch((err) => {
+      setStatus(statusElements(cells, pyCells, appCells), "Python didn't start. Reloading the page usually fixes this.");
       booting = null; // a later click can try again rather than staying stuck
       throw err;
     });
@@ -184,7 +205,7 @@
     }
   }
 
-  async function runCell(cell, cells, pyCells) {
+  async function runCell(cell, cells, pyCells, appCells) {
     const input = cell.querySelector(".dl-sql-input");
     const output = cell.querySelector(".dl-sql-output");
     const runButton = cell.querySelector(".dl-sql-run");
@@ -193,7 +214,7 @@
     savePersisted(cell);
     runButton.disabled = true;
     try {
-      await ensureBooted(cells, pyCells);
+      await ensureBooted(cells, pyCells, appCells);
       output.innerHTML = tools.run_sql(dbName, input.value);
     } catch (err) {
       output.innerHTML = `<p class="dl-sql-error">${String(err)}</p>`;
@@ -291,12 +312,12 @@
   /* Wires up one cell's buttons and restores its saved text if it is a
    * persisted cell with something already saved. Returns whether it was
    * restored, so the caller can give it its automatic first run. */
-  function setUp(cell, cells, pyCells) {
+  function setUp(cell, cells, pyCells, appCells) {
     const input = cell.querySelector(".dl-sql-input");
     const original = input.value;
     const loadInput = cell.querySelector(".dl-sql-load-input");
 
-    cell.querySelector(".dl-sql-run").addEventListener("click", () => runCell(cell, cells, pyCells));
+    cell.querySelector(".dl-sql-run").addEventListener("click", () => runCell(cell, cells, pyCells, appCells));
     cell.querySelector(".dl-sql-reset").addEventListener("click", () => resetCell(cell, original));
     cell.querySelector(".dl-sql-download").addEventListener("click", () => downloadCell(cell));
     cell.querySelector(".dl-sql-load").addEventListener("click", () => loadInput.click());
@@ -313,7 +334,7 @@
   /* One self-check button: calls the named check_* function in
    * sql_tools.py against the named connection and shows what it says.
    * Instant, and never sent anywhere — a check, not a grade. */
-  function setUpCheck(check, cells, pyCells) {
+  function setUpCheck(check, cells, pyCells, appCells) {
     const button = check.querySelector(".dl-sql-check-run");
     const output = check.querySelector(".dl-sql-check-output");
     const dbName = check.dataset.db;
@@ -322,7 +343,7 @@
     button.addEventListener("click", async () => {
       button.disabled = true;
       try {
-        await ensureBooted(cells, pyCells);
+        await ensureBooted(cells, pyCells, appCells);
         const fn = tools[task];
         output.innerHTML = fn
           ? fn(dbName)
@@ -339,7 +360,7 @@
    * this cell's namespace name and current text, and drops whatever
    * HTML comes back straight into the output area — python_tools.py has
    * already turned any DataFrame, figure, print, or error into HTML. */
-  async function runPyCell(cell, cells, pyCells) {
+  async function runPyCell(cell, cells, pyCells, appCells) {
     const input = cell.querySelector(".dl-py-input");
     const output = cell.querySelector(".dl-py-output");
     const runButton = cell.querySelector(".dl-py-run");
@@ -347,7 +368,7 @@
 
     runButton.disabled = true;
     try {
-      await ensureBooted(cells, pyCells);
+      await ensureBooted(cells, pyCells, appCells);
       output.innerHTML = await pyTools.run_python(name, input.value);
     } catch (err) {
       output.innerHTML = `<p class="dl-sql-error">${String(err)}</p>`;
@@ -364,24 +385,138 @@
     if (pyTools) pyTools.reset(cell.dataset.name);
   }
 
-  function setUpPy(cell, cells, pyCells) {
+  function setUpPy(cell, cells, pyCells, appCells) {
     const input = cell.querySelector(".dl-py-input");
     const original = input.value;
-    cell.querySelector(".dl-py-run").addEventListener("click", () => runPyCell(cell, cells, pyCells));
+    cell.querySelector(".dl-py-run").addEventListener("click", () => runPyCell(cell, cells, pyCells, appCells));
     cell.querySelector(".dl-py-reset").addEventListener("click", () => resetPyCell(cell, original));
     setUpReport(cell, input, cell.querySelector(".dl-py-output"));
+  }
+
+  function appPane(cell, lang) {
+    return cell.querySelector(`.dl-app-input[data-lang="${lang}"]`);
+  }
+
+  /* HTML and CSS redraw the moment a cell runs, the same as a site
+   * editor's live panes — but here there is no separate document to
+   * write them into. The HTML pane's text becomes the preview's own
+   * innerHTML directly; the CSS pane's text is wrapped in `@scope` so
+   * a reader's selectors reach only this cell's own preview, the same
+   * separation an iframe would have given for free, kept without one. */
+  function renderAppPreview(cell, preview) {
+    const htmlPane = appPane(cell, "html");
+    const cssPane = appPane(cell, "css");
+    preview.innerHTML = htmlPane ? htmlPane.value : "";
+
+    let style = cell.querySelector(".dl-app-style");
+    const css = cssPane ? cssPane.value : "";
+    if (!css) {
+      if (style) style.remove();
+      return;
+    }
+    if (!style) {
+      style = document.createElement("style");
+      style.className = "dl-app-style";
+      cell.appendChild(style);
+    }
+    style.textContent = `@scope (#${preview.id}) {\n${css}\n}`;
+  }
+
+  /* The JS pane's own Run: rebuilds the preview from the current HTML
+   * and CSS, then runs the current JavaScript as a real <script> element
+   * (an assignment to innerHTML never executes one — this is why a new
+   * element is created and appended each time rather than reused).
+   * Wrapped in an async IIFE so `root` and `dlQuery` reach the reader's
+   * code as plain parameters, nothing added to the page's own global
+   * scope, and so a thrown error or a rejected await both land in the
+   * same .catch(). */
+  async function runAppCell(cell, cells, pyCells, appCells) {
+    const jsPane = appPane(cell, "js");
+    const errorBox = cell.querySelector(".dl-app-error");
+    const preview = cell.querySelector(".dl-app-preview");
+    const runButton = cell.querySelector(".dl-app-run");
+
+    runButton.disabled = true;
+    errorBox.textContent = "";
+    try {
+      await ensureBooted(cells, pyCells, appCells);
+      renderAppPreview(cell, preview);
+
+      const old = cell.querySelector(".dl-app-script");
+      if (old) old.remove();
+      const script = document.createElement("script");
+      script.className = "dl-app-script";
+      script.textContent =
+        `(async function (root, dlQuery) {\n${jsPane.value}\n})` +
+        `(document.getElementById(${JSON.stringify(preview.id)}), window.dlQuery)` +
+        `.catch((err) => { document.getElementById(${JSON.stringify(errorBox.id)}).textContent = String(err); });`;
+      cell.appendChild(script);
+    } catch (err) {
+      errorBox.textContent = String(err);
+    } finally {
+      runButton.disabled = false;
+    }
+  }
+
+  /* Unlike a SQL or Python cell's own Reset, this never calls
+   * tools.reset(): an app cell doesn't own a connection the way those
+   * do, only ever reading one through whatever name its own dlQuery()
+   * calls happen to pass — often a SQL cell's, elsewhere on the same
+   * page, that other cells still depend on. Resetting the panes and the
+   * preview is what "start this cell over" can safely mean here. */
+  function resetAppCell(cell, originals) {
+    ["html", "css", "js"].forEach((lang) => {
+      const pane = appPane(cell, lang);
+      if (pane) pane.value = originals[lang];
+    });
+    cell.querySelector(".dl-app-preview").innerHTML = "";
+    cell.querySelector(".dl-app-error").textContent = "";
+    const style = cell.querySelector(".dl-app-style");
+    if (style) style.remove();
+    const script = cell.querySelector(".dl-app-script");
+    if (script) script.remove();
+  }
+
+  function setUpApp(cell, cells, pyCells, appCells) {
+    const originals = {};
+    ["html", "css", "js"].forEach((lang) => {
+      const pane = appPane(cell, lang);
+      if (pane) originals[lang] = pane.value;
+    });
+    cell.querySelector(".dl-app-run").addEventListener("click", () => runAppCell(cell, cells, pyCells, appCells));
+    cell.querySelector(".dl-app-reset").addEventListener("click", () => resetAppCell(cell, originals));
+
+    /* Not setUpReport(): that helper reads one `.dl-*-input`, and this
+     * cell has three panes to read instead — the same open/close-a-panel
+     * shape, just its own fill-in of what "this cell's code" means. */
+    const icon = cell.querySelector(".dl-report-icon");
+    const box = cell.querySelector(".dl-report-doors");
+    if (!icon || !box) return;
+    icon.addEventListener("click", () => {
+      const open = icon.getAttribute("aria-expanded") === "true";
+      icon.setAttribute("aria-expanded", String(!open));
+      box.hidden = open;
+      if (open) return;
+      const code = ["html", "css", "js"]
+        .filter((lang) => appPane(cell, lang))
+        .map((lang) => `=== ${lang.toUpperCase()} ===\n${appPane(cell, lang).value}`)
+        .join("\n\n");
+      updateCellReportLinks(box, code, cell.querySelector(".dl-app-error").innerText);
+    });
   }
 
   const cells = Array.from(document.querySelectorAll(".dl-sql-cell"));
   const checks = Array.from(document.querySelectorAll(".dl-sql-check"));
   const pyCells = Array.from(document.querySelectorAll(".dl-py-cell"));
-  if (cells.length || checks.length || pyCells.length) {
-    const restored = cells.filter((cell) => setUp(cell, cells, pyCells));
-    checks.forEach((check) => setUpCheck(check, cells, pyCells));
-    pyCells.forEach((cell) => setUpPy(cell, cells, pyCells));
-    const booted = ensureBooted(cells, pyCells);
+  const appCells = Array.from(document.querySelectorAll(".dl-app-cell"));
+  if (cells.length || checks.length || pyCells.length || appCells.length) {
+    const restored = cells.filter((cell) => setUp(cell, cells, pyCells, appCells));
+    checks.forEach((check) => setUpCheck(check, cells, pyCells, appCells));
+    pyCells.forEach((cell) => setUpPy(cell, cells, pyCells, appCells));
+    appCells.forEach((cell) => setUpApp(cell, cells, pyCells, appCells));
+    const booted = ensureBooted(cells, pyCells, appCells);
     if (restored.length) {
-      booted.then(() => restored.forEach((cell) => runCell(cell, cells, pyCells))).catch(() => {});
+      booted.then(() => restored.forEach((cell) => runCell(cell, cells, pyCells, appCells))).catch(() => {});
     }
   }
 })();

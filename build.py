@@ -303,6 +303,13 @@ SQL_CHECK_PLACEHOLDER = "<!--SQL-CHECK:{}-->"
 PY_BLOCK = re.compile(r"```py cell=(?P<name>[a-z0-9-]+)\n(?P<code>.*?)\n```\n?", re.DOTALL)
 PY_PLACEHOLDER = "<!--PY-CELL:{}-->"
 
+# A full-stack cell: consecutive blocks tagged `app=name`, the same grouping
+# `site=` blocks use, but rendered straight into the page rather than a
+# sandboxed iframe — see extract_app_cells()'s own docstring for why.
+APP_BLOCK = re.compile(r"```(?P<lang>[a-zA-Z]+) app=(?P<name>[a-z0-9-]+)\n(?P<code>.*?)\n```\n?", re.DOTALL)
+APP_LANGS = {"html": "HTML", "css": "CSS", "js": "JavaScript"}
+APP_PLACEHOLDER = "<!--APP-CELL:{}-->"
+
 
 def extract_site_editors(body: str, path: Path) -> tuple[str, list[dict]]:
     """Pulls `site=` fenced blocks out of the markdown source, leaving a
@@ -649,6 +656,114 @@ def render_py_cell(cell: dict, index: int, tutorial: Tutorial) -> str:
     )
 
 
+def extract_app_cells(body: str, path: Path) -> tuple[str, list[dict]]:
+    """Pulls `app=` fenced blocks out of the markdown source, grouped the
+    same way `extract_site_editors()` groups `site=` blocks: consecutive
+    blocks sharing a name become one cell's HTML, CSS and JavaScript.
+
+    Unlike a site editor, this cell's JavaScript is not sandboxed in an
+    iframe with no way back to this page's own data. A full-stack page's
+    whole point is a query's result becoming what a visitor sees, and the
+    site editor's iframe was built, deliberately, to stop a reader's
+    script reaching anything else on the page — exactly the connection
+    this needs. Rather than bridge across that wall with a message
+    protocol, or open a real hole in it, an `app=` cell renders straight
+    into the page instead, the same way a SQL or Python cell's own output
+    already does: no separate document, so no wall to cross. Its
+    JavaScript gets `dlQuery(dbName, sql)`, `assets/sql-cell.js`'s bridge
+    to `assets/sql_tools.py`'s `query_rows()` — a real Python function,
+    reached directly, the way `CONSOLIDATION_PLAN.md` section 12
+    describes."""
+    matches = list(APP_BLOCK.finditer(body))
+    if not matches:
+        return body, []
+
+    runs: list[list[re.Match]] = [[matches[0]]]
+    for prev, cur in zip(matches, matches[1:]):
+        same_name = cur.group("name") == prev.group("name")
+        only_blank_between = body[prev.end():cur.start()].strip() == ""
+        if same_name and only_blank_between:
+            runs[-1].append(cur)
+        else:
+            runs.append([cur])
+
+    cells: list[dict] = []
+    seen_names: set[str] = set()
+    for run in runs:
+        name = run[0].group("name")
+        if name in seen_names:
+            raise BuildError(f"{path}: app blocks named {name!r} are not consecutive")
+        seen_names.add(name)
+        files: dict[str, str] = {}
+        for match in run:
+            lang = match.group("lang").lower()
+            if lang not in APP_LANGS:
+                raise BuildError(
+                    f"{path}: app block {name!r} has an unknown language {match.group('lang')!r}; "
+                    f"expected one of {', '.join(APP_LANGS)}"
+                )
+            if lang in files:
+                raise BuildError(f"{path}: app block {name!r} has two {lang} files")
+            files[lang] = match.group("code")
+        if "js" not in files:
+            raise BuildError(f"{path}: app block {name!r} has no js pane; a cell with nothing to run is not a cell")
+        cells.append({"name": name, "files": files})
+
+    new_body = body
+    for index, run in reversed(list(enumerate(runs))):
+        start, end = run[0].start(), run[-1].end()
+        new_body = new_body[:start] + f"\n\n{APP_PLACEHOLDER.format(index)}\n\n" + new_body[end:]
+    return new_body, cells
+
+
+def render_app_cell(cell: dict, index: int, tutorial: Tutorial) -> str:
+    """One full-stack cell: HTML, CSS and JavaScript panes like a site
+    editor's, a preview that renders straight into the page (no iframe —
+    see `extract_app_cells()`), and Run/Reset. The js pane's code
+    receives `root` (this cell's own preview element, the only part of
+    the page it is meant to touch) and `dlQuery` (see
+    `assets/sql_tools.py`'s `query_rows()`); unlike a SQL or Python
+    cell, `cell["name"]` names nothing at runtime beyond grouping this
+    cell's own panes together in the source — an app cell owns no
+    connection or namespace of its own to key by name, only ever
+    reading one through whatever name its own `dlQuery()` calls choose
+    to pass, so nothing here renders it into the page as a `data-*`
+    attribute."""
+    cell_id = f"app-cell-{tutorial.slug}-{index}"
+    files = cell["files"]
+    preview_id = f"{cell_id}-preview"
+    error_id = f"{cell_id}-error"
+
+    panes = []
+    for lang, label in APP_LANGS.items():
+        if lang not in files:
+            continue
+        field_id = f"{cell_id}-{lang}"
+        panes.append(
+            f'<div class="dl-app-pane">'
+            f'<label for="{field_id}">{label}</label>'
+            f'<textarea id="{field_id}" class="dl-app-input" data-lang="{lang}" '
+            f'spellcheck="false" autocapitalize="off">{html.escape(files[lang])}</textarea>'
+            f"</div>"
+        )
+
+    report_icon, report_box = cell_report_markup(tutorial, cell_id)
+    return (
+        f'<div class="dl-app-cell" id="{cell_id}">'
+        f'<div class="dl-app-panes">{"".join(panes)}</div>'
+        f'<div class="dl-app-actions">'
+        f'<button type="button" class="dl-app-run">Run</button>'
+        f'<button type="button" class="dl-app-reset">Reset</button>'
+        f'{report_icon}'
+        f'<span class="dl-app-status" role="status"></span>'
+        f"</div>"
+        f'<pre class="dl-app-error" id="{error_id}" aria-live="polite"></pre>'
+        f'<div class="dl-app-preview" id="{preview_id}"></div>'
+        f'{report_box}'
+        f"</div>"
+    )
+
+
 def render_body(tutorial: Tutorial, by_slug: dict[str, Tutorial]) -> tuple[str, str, bool, list[str]]:
     """The tutorial's HTML, its table of contents, whether it needs the site
     editor's script, and the Pyodide packages it needs (empty if none).
@@ -665,8 +780,9 @@ def render_body(tutorial: Tutorial, by_slug: dict[str, Tutorial]) -> tuple[str, 
     source, sql_cells = extract_sql_cells(source, tutorial.path)
     source, sql_checks = extract_sql_checks(source, tutorial.path)
     source, py_cells = extract_py_cells(source, tutorial.path)
+    source, app_cells = extract_app_cells(source, tutorial.path)
     required_packages: set[str] = set()
-    if sql_cells or sql_checks or py_cells:
+    if sql_cells or sql_checks or py_cells or app_cells:
         required_packages.add("sqlite3")
     if py_cells:
         required_packages.add("pandas")
@@ -687,6 +803,8 @@ def render_body(tutorial: Tutorial, by_slug: dict[str, Tutorial]) -> tuple[str, 
         rendered = rendered.replace(SQL_CHECK_PLACEHOLDER.format(index), render_sql_check(check, index, tutorial))
     for index, cell in enumerate(py_cells):
         rendered = rendered.replace(PY_PLACEHOLDER.format(index), render_py_cell(cell, index, tutorial))
+    for index, cell in enumerate(app_cells):
+        rendered = rendered.replace(APP_PLACEHOLDER.format(index), render_app_cell(cell, index, tutorial))
     return rendered, render_toc(md.toc_tokens), bool(editors), sorted(required_packages)
 
 

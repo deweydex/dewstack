@@ -51,6 +51,12 @@ def test_a_fresh_namespace_already_has_read_sql():
     assert pt._namespace("explore")["read_sql"] is pt.read_sql
 
 
+def test_a_fresh_namespace_already_has_load_csv_and_download_csv():
+    ns = pt._namespace("explore")
+    assert ns["load_csv"] is pt.load_csv
+    assert ns["download_csv"] is pt.download_csv
+
+
 def test_sharing_a_name_shares_the_namespace():
     pt._namespace("a")["x"] = 1
     assert pt._namespace("a")["x"] == 1

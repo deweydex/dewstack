@@ -45,6 +45,31 @@ def get_connection(db_name: str) -> sqlite3.Connection:
     return _connection(db_name)
 
 
+def query_rows(db_name: str, sql: str, params: list | None = None) -> list[dict]:
+    """Runs one SELECT against the named connection and returns its rows
+    as a list of dicts, column name to value — the bridge a full-stack
+    page's own JavaScript calls directly as `dlQuery()`
+    (`assets/sql-cell.js`), the "Pyodide exposes a Python function to
+    the page" `CONSOLIDATION_PLAN.md` section 12 describes.
+
+    `params` fills in any `?` placeholders in `sql` — the way a value
+    that came from a visitor (typed into a search box, say) belongs in a
+    query. Pasting that value directly into the SQL text instead is how
+    a stray quote breaks a query, or worse, changes what it does; a
+    placeholder holds its place as one value, never as SQL of its own,
+    however it is spelled.
+
+    A bad query raises `sqlite3.Error` the same as `run_sql()`'s own
+    statements do; unlike `run_sql()`, nothing here renders it as HTML —
+    the reader's own JavaScript decides what a failed query looks like
+    on the page.
+    """
+    conn = _connection(db_name)
+    cursor = conn.execute(sql, params or [])
+    columns = [description[0] for description in cursor.description or []]
+    return [dict(zip(columns, row)) for row in cursor.fetchall()]
+
+
 def reset(db_name: str) -> None:
     """Closes and drops a named connection, so the next run starts fresh.
 
