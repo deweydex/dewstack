@@ -1126,16 +1126,18 @@ step arrives.
     Step 5, the console in dewmini's Site view, is dewlab's and remains.
 
 20. **Hints that appear after a cell has errored or run some number of
-    times.** Raised by Josh 2026-09-06 for both repositories. Designed,
-    nothing built: the whole note is `planning/CELL_HINTS.md` in dewlab;
-    this repository's `planning/CELL_HINTS.md` records only what differs
-    here (what a run and an error are per cell kind, the quiz's checks as
-    the natural first trigger, the web track's live panes having no run).
-    dewlab's half is built (its DECISIONS_LOG.md 7.135): a ```` ```hint ````
-    fence with `for:`/`after:`/`title:` header lines, `expect:` on a cell,
-    a JSON run report, counters in the saved record, two Settings rows.
-    Porting the shape here is the next step when Josh asks for it; the
-    three dewstack-only questions in the note still wait. Blocks nothing.
+    times.** Raised by Josh 2026-09-06 for both repositories; dewlab's
+    half built the same day (its DECISIONS_LOG.md 7.135). Built here
+    2026-09-07 for `sql-check` blocks only — this repository's
+    `planning/CELL_HINTS.md` §6 records what shipped: the same
+    ```` ```hint ```` fence, `for:` naming a check's `task=` value and
+    always required (no "block above" to default to), `after:` reading
+    `check-fails`/`runs`/`minutes` only, the runtime ported into
+    `assets/sql-cell.js`, one Settings row (no page-wide restart action
+    to hang a second one off), tried on the tentacular-plushies quiz's
+    Tasks 1 and 3. SQL/Python cell hints, the web track, a generic SQL
+    `expect`, and a browser end-to-end test are not built — §6 lists them
+    as the next pieces. Blocks nothing.
 
 ---
 

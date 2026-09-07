@@ -153,6 +153,27 @@
 
     <button type="button" class="dl-texture-reset" id="dl-texture-reset">reset to defaults</button>
   </section>
+
+  <!-- Staged hints (planning/CELL_HINTS.md): a fold an author wrote for a
+       quiz's sql-check task, shown only after that check has been tried
+       and come back wrong some number of times. Ported from dewlab's own
+       "Hints as you work" row; the note underneath is the whole of what a
+       reader is told about the counting, on purpose — no count is ever
+       shown on a check. Hidden at load on a page with no sql-check blocks
+       at all (initStagedHintsToggle(), the data track's own cell script)
+       — there is nothing here to turn on or off on a page that never had
+       one. -->
+  <section class="dl-settings-section" id="dl-settings-hints" hidden>
+    <h3>Hints as you work</h3>
+    <div class="dl-texture-row">
+      <span id="dl-seg-hints-label">Hints as you work</span>
+      <div class="dl-seg" data-staged-hints role="radiogroup" aria-labelledby="dl-seg-hints-label">
+        <button type="button" data-value="on" role="radio">on</button>
+        <button type="button" data-value="off" role="radio">off</button>
+      </div>
+    </div>
+    <p class="dl-panel-note">A hint can appear under a check after you have tried it a few times without getting there. Nothing is counted against you, and nothing is sent anywhere.</p>
+  </section>
 </div>
 
 <script src="{{SETTINGS_URL}}"></script>

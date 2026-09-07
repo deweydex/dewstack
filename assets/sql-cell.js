@@ -331,14 +331,149 @@
     return restorePersisted(cell);
   }
 
+  /* ---- staged hints: folds that wait for a check attempt ----
+   * planning/CELL_HINTS.md — ported in shape from dewlab's own
+   * tutorial-runtime.js (its "staged hints" section), for `sql-check`
+   * blocks only for now: the counter is nearly free there, since a check
+   * already reports pass or fail on every click, and nothing on the SQL
+   * or Python cell tracks needs it yet.
+   */
+
+  const STAGED_HINTS_KEY = "dewstack:staged-hints";
+
+  function freshCheckAttempts() {
+    return { runs: 0, checkFails: 0, firstRunAt: null };
+  }
+
+  /* The folds build.py wrote for this check — every `details.dl-hint-staged`
+   * whose data-for is this check's own task, in source order, each with
+   * its `data-after` parsed once into {signal: count}. build.py has
+   * already validated the grammar, so an unreadable term here is a bug,
+   * not an author's slip, and is skipped rather than breaking the page. */
+  function collectStagedHints(task) {
+    const marker = document.querySelector(
+      `.dl-sql-check[data-task="${CSS.escape(task)}"] .dl-hint-marker`,
+    );
+    const folds = document.querySelectorAll(
+      `details.dl-hint-staged[data-for="${CSS.escape(task)}"]`,
+    );
+    return Array.from(folds).map((el) => {
+      const terms = {};
+      for (const term of (el.dataset.after || "").split(/\s+/)) {
+        const [key, count] = term.split(":");
+        if (key && /^\d+$/.test(count || "")) terms[key] = Number(count);
+      }
+      /* Opening the fold is what the marker was asking for, so it goes. */
+      el.addEventListener("toggle", () => { if (el.open && marker) marker.hidden = true; });
+      return { el, terms, revealed: false };
+    });
+  }
+
+  /* Whether every term of a hint's `data-after` holds against the counters.
+   * `check-fails:2` means two clicks in a row came back wrong; `runs:3` is
+   * three clicks total, right or wrong; `minutes` is measured from the
+   * first click. */
+  function triggerHolds(terms, attempts) {
+    const value = {
+      "check-fails": attempts.checkFails,
+      "runs": attempts.runs,
+      "minutes": attempts.firstRunAt == null ? 0 : (Date.now() - attempts.firstRunAt) / 60000,
+    };
+    return Object.entries(terms).every(([key, count]) => (value[key] ?? 0) >= count);
+  }
+
+  /* Updates a check's counters from one click's result. */
+  function noteCheckAttempt(attempts, passed) {
+    attempts.runs += 1;
+    if (attempts.firstRunAt == null) attempts.firstRunAt = Date.now();
+    attempts.checkFails = passed ? 0 : attempts.checkFails + 1;
+  }
+
+  /* Removes `hidden` from a revealed fold, closed, in normal flow — the
+   * check grows by one summary line below it, nothing is covered and
+   * nothing is opened for the reader. */
+  function showStagedHint(check, hint) {
+    hint.el.hidden = false;
+    hint.el.classList.add("dl-hint-arrived");
+    const marker = check.querySelector(".dl-hint-marker");
+    if (marker && !hint.el.open) marker.hidden = false;
+  }
+
+  /* At most one hint arrives per click, in the order the author wrote them. */
+  function maybeRevealHint(check, hints, attempts) {
+    for (const hint of hints) {
+      if (hint.revealed) continue;
+      if (!triggerHolds(hint.terms, attempts)) continue;
+      hint.revealed = true;
+      if (readStagedHints()) showStagedHint(check, hint);
+      return;
+    }
+  }
+
+  /* Every revealed hint shown or hidden to match the setting — called when
+   * the setting changes. Nothing here is persisted (planning/CELL_HINTS.md
+   * §3), so there is nothing to restore at load; a hint only ever arrives
+   * from a click made this same page view. */
+  function syncStagedHints(allHints) {
+    const on = readStagedHints();
+    for (const hint of allHints) {
+      if (hint.revealed) hint.el.hidden = !on;
+    }
+  }
+
+  function readStagedHints() {
+    try {
+      return localStorage.getItem(STAGED_HINTS_KEY) !== "off";
+    } catch (err) {
+      return true;
+    }
+  }
+
+  function writeStagedHints(mode) {
+    try {
+      localStorage.setItem(STAGED_HINTS_KEY, mode);
+    } catch (err) {
+      /* This reader's own choice only; forgotten after it. */
+    }
+  }
+
+  /* The Settings row for staged hints — shown only on a page that has at
+   * least one sql-check block, whether or not this particular page has a
+   * staged hint written for it yet: the setting is a standing preference,
+   * not a per-page one. */
+  function initStagedHintsToggle(hasChecks, allHints) {
+    const section = document.getElementById("dl-settings-hints");
+    const onOff = document.querySelector("[data-staged-hints]");
+    if (!section || !onOff || !hasChecks) return;
+    section.hidden = false;
+    const sync = () => {
+      const on = readStagedHints();
+      for (const btn of onOff.querySelectorAll("button")) {
+        btn.setAttribute("aria-pressed", String(btn.dataset.value === (on ? "on" : "off")));
+      }
+    };
+    onOff.addEventListener("click", (ev) => {
+      const btn = ev.target.closest("button");
+      if (!btn) return;
+      writeStagedHints(btn.dataset.value);
+      syncStagedHints(allHints);
+      sync();
+    });
+    sync();
+  }
+
   /* One self-check button: calls the named check_* function in
    * sql_tools.py against the named connection and shows what it says.
-   * Instant, and never sent anywhere — a check, not a grade. */
+   * Instant, and never sent anywhere — a check, not a grade. Returns the
+   * staged hints collected for this check, so the caller can fold them
+   * into the one page-wide list initStagedHintsToggle() needs. */
   function setUpCheck(check, cells, pyCells, appCells) {
     const button = check.querySelector(".dl-sql-check-run");
     const output = check.querySelector(".dl-sql-check-output");
     const dbName = check.dataset.db;
     const task = check.dataset.task;
+    const attempts = freshCheckAttempts();
+    const hints = collectStagedHints(task);
 
     button.addEventListener("click", async () => {
       button.disabled = true;
@@ -348,12 +483,18 @@
         output.innerHTML = fn
           ? fn(dbName)
           : `<p class="dl-sql-error">No such check: ${task}</p>`;
+        if (fn) {
+          noteCheckAttempt(attempts, !!output.querySelector(".dl-check-pass"));
+          maybeRevealHint(check, hints, attempts);
+        }
       } catch (err) {
         output.innerHTML = `<p class="dl-sql-error">${String(err)}</p>`;
       } finally {
         button.disabled = false;
       }
     });
+
+    return hints;
   }
 
   /* A Python cell's own Run: calls python_tools.py's run_python() with
@@ -511,7 +652,9 @@
   const appCells = Array.from(document.querySelectorAll(".dl-app-cell"));
   if (cells.length || checks.length || pyCells.length || appCells.length) {
     const restored = cells.filter((cell) => setUp(cell, cells, pyCells, appCells));
-    checks.forEach((check) => setUpCheck(check, cells, pyCells, appCells));
+    const allStagedHints = [];
+    checks.forEach((check) => allStagedHints.push(...setUpCheck(check, cells, pyCells, appCells)));
+    initStagedHintsToggle(checks.length > 0, allStagedHints);
     pyCells.forEach((cell) => setUpPy(cell, cells, pyCells, appCells));
     appCells.forEach((cell) => setUpApp(cell, cells, pyCells, appCells));
     const booted = ensureBooted(cells, pyCells, appCells);

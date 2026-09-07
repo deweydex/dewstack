@@ -310,6 +310,38 @@ APP_BLOCK = re.compile(r"```(?P<lang>[a-zA-Z]+) app=(?P<name>[a-z0-9-]+)\n(?P<co
 APP_LANGS = {"html": "HTML", "css": "CSS", "js": "JavaScript"}
 APP_PLACEHOLDER = "<!--APP-CELL:{}-->"
 
+# A staged hint (planning/CELL_HINTS.md, the dewlab half its DECISIONS_LOG.md
+# 7.135/7.139 built, ported in shape here per this repo's own note): a fold
+# that stays hidden until the reader has tried and failed some number of
+# times. Ported for `sql-check` blocks only, for now — the dewlab note's
+# own §5 "assumed" answer, since the counter there is nearly free and
+# nothing on the SQL/Python cell or web tracks needs it yet. `for:` names a
+# `sql-check` block's own `task=` value (already unique per page — the same
+# thing `data-task` on the rendered check already carries) and is always
+# required: extract_hints() runs as its own pass rather than a single
+# left-to-right walk the way build.py's cell fences do, so there is no
+# "the block above" to default to the way dewlab's `for:` defaults to the
+# preceding exec cell.
+HINT_BLOCK = re.compile(r"```hint\n(?P<body>.*?)\n```\n?", re.DOTALL)
+HINT_PLACEHOLDER = "<!--SQL-HINT:{}-->"
+HINT_HEADER_RE = re.compile(r"^\s*(for|after|title)\s*:\s*(.*)$")
+# `after:` accepts a plain phrase or a key:number term, several joined with a
+# comma or "and". Only the three signals a `sql-check` click can actually
+# tell apart — dewlab's own note (§2 of this repo's CELL_HINTS.md), "a check
+# has no code" rules out `unchanged`, and a check click either passes or
+# fails rather than raising, which rules out `errors`/`same-errors` too.
+TRIGGER_KEYS = {
+    "failed checks": "check-fails", "failed check": "check-fails",
+    "check-fails": "check-fails", "failed-checks": "check-fails",
+    "runs": "runs", "run": "runs", "checks": "runs", "clicks": "runs", "click": "runs",
+    "minutes": "minutes", "minute": "minutes",
+}
+TRIGGER_TERM_RE = re.compile(
+    r"^(?:(?P<n1>\d+)\s+(?P<k1>[a-z][a-z -]*[a-z])|(?P<k2>[a-z][a-z-]*)\s*:\s*(?P<n2>\d+))$"
+)
+DEFAULT_HINT_AFTER = "check-fails:2"
+DEFAULT_HINT_TITLE = "Let’s slow down a moment…"
+
 
 def extract_site_editors(body: str, path: Path) -> tuple[str, list[dict]]:
     """Pulls `site=` fenced blocks out of the markdown source, leaving a
@@ -599,14 +631,134 @@ def render_sql_check(check: dict, index: int, tutorial: Tutorial) -> str:
     """One self-check button: click it, and assets/sql-cell.js calls the
     named `check_*` function against `data-db`'s connection and shows
     what it says. Instant, and never sent anywhere — a check, not a
-    grade."""
+    grade.
+
+    The marker span is planning/CELL_HINTS.md's staged-hints feature
+    (ported from dewlab's own `.dl-hint-marker`, build.py's render_cell()):
+    lit by assets/sql-cell.js when a staged hint below this check has
+    appeared and gone dark again once it is opened. Present on every
+    check, whether or not this page happens to have a staged hint for
+    it — cheaper than threading that knowledge through here, and inert
+    either way."""
     check_id = f"sql-check-{tutorial.slug}-{index}"
     return (
         f'<div class="dl-sql-check" id="{check_id}" '
         f'data-db="{html.escape(check["db"])}" data-task="{html.escape(check["task"])}">'
         f'<button type="button" class="dl-sql-check-run">Check my work</button>'
+        f'<span class="dl-hint-marker" hidden aria-hidden="true" '
+        f'title="A hint has appeared below this check"></span>'
         f'<div class="dl-sql-check-output" aria-live="polite"></div>'
         f"</div>"
+    )
+
+
+def parse_trigger(text: str, path: Path) -> str:
+    """Turn an `after:` line into the runtime's `key:number` form — ported
+    from dewlab's build.py, trimmed to the three signals a `sql-check`
+    click can tell apart (see TRIGGER_KEYS's own comment).
+
+    `2 failed checks`, `2 failed checks and 1 minute`, `check-fails:2,
+    minutes:1` all parse; the first two become the third. Every term must be
+    one TRIGGER_KEYS knows, so a typo fails the build here rather than
+    producing a hint that never appears.
+    """
+    terms = []
+    for raw in re.split(r"\s*(?:,|\band\b|&)\s*", text.strip().lower()):
+        if not raw:
+            continue
+        match = TRIGGER_TERM_RE.match(raw)
+        if not match:
+            raise BuildError(f"{path}: a hint's after: line has a term I cannot "
+                              f"read: {raw!r} — write it like `2 failed checks` "
+                              f"or `check-fails:2`")
+        key = match.group("k1") or match.group("k2")
+        count = int(match.group("n1") or match.group("n2"))
+        canonical = TRIGGER_KEYS.get(key.strip())
+        if canonical is None:
+            raise BuildError(f"{path}: a hint's after: line names a signal a "
+                              f"sql-check click does not track: {key!r} — one "
+                              f"of failed checks, runs, minutes")
+        if count < 1:
+            raise BuildError(f"{path}: a hint's after: count must be at least 1, not {count}")
+        terms.append(f"{canonical}:{count}")
+    if not terms:
+        raise BuildError(f"{path}: a hint's after: line is empty")
+    return " ".join(terms)
+
+
+def extract_hints(body: str, path: Path) -> tuple[str, list[dict]]:
+    """Pulls ```hint fenced blocks out of the markdown source, leaving a
+    placeholder that `render_staged_hint()` fills back in once the rest of
+    the page has been through markdown — the same two-pass trick every
+    other block on this page uses, and needed here for the same reason
+    `render_staged_hint()`'s own docstring gives: a fold's body has to be
+    converted on its own, separately from the page around it.
+
+    Unlike an exec cell's `hint:` fence on dewlab, `for:` is always
+    required here — see HINT_BLOCK's own comment for why there is no
+    "the block above" to default to. What `for:` actually names is
+    validated by the caller, once the sql-check blocks it might name have
+    been extracted too.
+    """
+    matches = list(HINT_BLOCK.finditer(body))
+    if not matches:
+        return body, []
+
+    hints = []
+    hints_per_target: dict[str, int] = {}
+    for match in matches:
+        lines = match.group("body").split("\n")
+        header: dict[str, str] = {}
+        while lines:
+            header_match = HINT_HEADER_RE.match(lines[0])
+            if not header_match or header_match.group(1) in header:
+                break
+            header[header_match.group(1)] = header_match.group(2).strip()
+            lines.pop(0)
+        target = header.get("for")
+        if not target:
+            raise BuildError(f"{path}: a hint fence has no `for:` line naming "
+                              f"the sql-check task it belongs to")
+        text = "\n".join(lines).strip("\n")
+        if not text.strip():
+            raise BuildError(f"{path}: the hint for {target!r} has no text in it")
+        index = hints_per_target.get(target, 0)
+        hints_per_target[target] = index + 1
+        hints.append({
+            "for": target,
+            "after": parse_trigger(header.get("after") or DEFAULT_HINT_AFTER, path),
+            "title": header.get("title") or DEFAULT_HINT_TITLE,
+            "body": text,
+            "index": index,
+        })
+
+    new_body = body
+    for index, match in reversed(list(enumerate(matches))):
+        new_body = new_body[:match.start()] + f"\n\n{HINT_PLACEHOLDER.format(index)}\n\n" + new_body[match.end():]
+    return new_body, hints
+
+
+def render_staged_hint(hint: dict, tutorial: "Tutorial") -> str:
+    """The fold a ```hint fence becomes — ported from dewlab's
+    render_staged_hint(). Its body is converted on its own, through a fresh
+    `make_markdown()`, the same reason `extract_notes()`-style raw HTML
+    handling exists anywhere in this file: a `<details>` block is raw HTML
+    to Python-Markdown all the way to its closing tag, so a body left
+    inside the tags in the source would come out as literal text.
+    `hidden` is what assets/sql-cell.js removes once `data-after`'s
+    counters are met; with JavaScript off the fold stays hidden, as a
+    sql-check button stays unclickable-to-any-effect either way.
+    """
+    body_html = make_markdown().convert(hint["body"])
+    safe_target = html.escape(hint["for"], quote=True)
+    hint_id = f"sql-hint-{tutorial.slug}-{safe_target}-{hint['index']}"
+    return (
+        f'<details class="dl-hint dl-hint-staged" '
+        f'id="{hint_id}" data-for="{safe_target}" '
+        f'data-after="{html.escape(hint["after"], quote=True)}" hidden>'
+        f"<summary>{html.escape(hint['title'])}</summary>\n"
+        f"{body_html}\n"
+        f"</details>"
     )
 
 
@@ -779,6 +931,13 @@ def render_body(tutorial: Tutorial, by_slug: dict[str, Tutorial]) -> tuple[str, 
     source, editors = extract_site_editors(tutorial.body, tutorial.path)
     source, sql_cells = extract_sql_cells(source, tutorial.path)
     source, sql_checks = extract_sql_checks(source, tutorial.path)
+    source, hints = extract_hints(source, tutorial.path)
+    check_tasks = {check["task"] for check in sql_checks}
+    for hint in hints:
+        if hint["for"] not in check_tasks:
+            raise BuildError(f"{tutorial.path}: a hint's for: line names a "
+                              f"sql-check task this page does not have: "
+                              f"{hint['for']!r}")
     source, py_cells = extract_py_cells(source, tutorial.path)
     source, app_cells = extract_app_cells(source, tutorial.path)
     required_packages: set[str] = set()
@@ -801,6 +960,8 @@ def render_body(tutorial: Tutorial, by_slug: dict[str, Tutorial]) -> tuple[str, 
         rendered = rendered.replace(SQL_PLACEHOLDER.format(index), render_sql_cell(cell, index, tutorial))
     for index, check in enumerate(sql_checks):
         rendered = rendered.replace(SQL_CHECK_PLACEHOLDER.format(index), render_sql_check(check, index, tutorial))
+    for index, hint in enumerate(hints):
+        rendered = rendered.replace(HINT_PLACEHOLDER.format(index), render_staged_hint(hint, tutorial))
     for index, cell in enumerate(py_cells):
         rendered = rendered.replace(PY_PLACEHOLDER.format(index), render_py_cell(cell, index, tutorial))
     for index, cell in enumerate(app_cells):

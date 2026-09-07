@@ -1177,6 +1177,39 @@ p code, li code, td code {
 .dl-answer[open] { border-left-color: var(--dl-navy); }
 .dl-hint > :not(summary), .dl-answer > :not(summary) { font-size: 0.95rem; }
 
+/* A staged hint (planning/CELL_HINTS.md): the same fold, written by the
+ * author for one sql-check task and kept hidden by build.py until
+ * assets/sql-cell.js decides the reader has tried enough times. Ported
+ * from dewlab's own tutorial-style.css. It arrives closed and in normal
+ * flow — the page grows by one summary line, nothing is covered and
+ * nothing is opened for the reader. The short fade only makes the
+ * arrival noticeable when the eye is on the check above; a reader who
+ * has asked their system for less motion does not get it. */
+.dl-hint-staged[hidden] { display: none; }
+.dl-hint-arrived { animation: dl-hint-arrive 0.5s ease-out; }
+@keyframes dl-hint-arrive {
+  from { opacity: 0; transform: translateY(-0.25rem); }
+  to { opacity: 1; transform: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .dl-hint-arrived { animation: none; }
+}
+
+/* The marker a check's own row shows while a staged hint below it is
+ * waiting to be opened — gone the moment the fold is opened. A dot, not
+ * a count: how many tries it took is not the reader's business to be
+ * reminded of. */
+.dl-hint-marker {
+  display: inline-block;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background: var(--dl-orange);
+  margin: 0 0.35rem;
+  vertical-align: middle;
+}
+.dl-hint-marker[hidden] { display: none; }
+
 /* A quiz task's self-check result: instant, private, never sent
  * anywhere — a check, not a grade. */
 .dl-check-pass, .dl-check-fail {
