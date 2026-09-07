@@ -51,8 +51,8 @@ change how the page looks.
 
 ## Your turn
 
-Open your fork and find the closing `</section>` tag of the about-preview
-section. Add a new section straight after it:
+Let's open your fork and find the closing `</section>` tag of the
+about-preview section. Try adding a new section straight after it:
 
 ```html
 <section id="skills" class="section skills-section">

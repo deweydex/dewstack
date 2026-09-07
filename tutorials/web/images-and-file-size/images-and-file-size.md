@@ -54,11 +54,11 @@ an image before you save it.
 
 ## Your turn
 
-Open your fork of `project_wad`. Add an `images/` folder, and replace
-the placeholder images in `gallery.html` with your own, resized and
-compressed first. Write a real `alt` description for each one; [Images,
-paths and alt
-text](tutorial:images-and-alt-text) covers what makes a good one.
+Let's open your fork of `project_wad`. Try adding an `images/` folder,
+and replacing the stand-in images in `gallery.html` with your own,
+resized and compressed first. Write a real `alt` description for each
+one; [Images, paths and alt text](tutorial:images-and-alt-text) covers
+what makes a good one.
 
 ## What you have now
 

@@ -26,7 +26,7 @@ last, for the data track.
 | `<strong>` | Marks text as important. Shown bold by default. |
 | `<em>` | Marks text as emphasised. Shown in italics by default. |
 | `<a href="…">` | Makes a link. `href` names the address it goes to. |
-| `<img src="…" alt="…">` | Shows an image. `src` names its file; `alt` describes it for a reader who can't see it. |
+| `<img src="…" alt="…">` | Shows an image. `src` names its file; `alt` describes it for a reader who cannot see it. |
 | `<ul>`, `<ol>`, `<li>` | Make an unordered list, an ordered list, and one item inside either. |
 | `<nav>` | Groups the links a reader uses to move around the site. |
 | `<header>`, `<main>`, `<footer>` | Mark the page's header, its main content, and its footer. Use one `<main>` per page. |
@@ -47,7 +47,7 @@ information about that element.
 | `class="…"` | Names a group an element belongs to, for CSS or JavaScript to target. Any number of elements can share one. |
 | `href="…"` | Names the address a link or a stylesheet points to. |
 | `src="…"` | Names the file an image or a script loads. |
-| `alt="…"` | Describes an image for a reader who can't see it. Required on every `<img>`. |
+| `alt="…"` | Describes an image for a reader who cannot see it. Required on every `<img>`. |
 | `target="_blank"` | Opens a link in a new tab. |
 | `placeholder="…"` | Shows faint hint text inside an empty form field. |
 | `required` | Stops a form submitting until this field has a value. |

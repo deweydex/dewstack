@@ -46,10 +46,10 @@ settling back as smoothly as it arrived.
 
 ## Your turn
 
-Open your fork and find the `.card:hover` rule you added earlier. Try
-`transform: scale(1.05)` instead of `translateY(-5px)`, so the card grows
-rather than lifts. Then change `0.2s` to `1s` on the base `.card` rule and
-hover again, to watch the same animation in slow motion.
+Let's open your fork and find the `.card:hover` rule you added earlier.
+Try `transform: scale(1.05)` instead of `translateY(-5px)`, so the card
+grows rather than lifts. Then try changing `0.2s` to `1s` on the base
+`.card` rule and hover again, to watch the same animation in slow motion.
 
 ## What you have now
 

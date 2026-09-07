@@ -11,7 +11,7 @@ version: 2026.09.04.1
 
 Where does a web page actually live? It lives in a plain text file,
 sitting in your fork, that you can open and read like any other document.
-Try changing the text below and watch what the browser builds from it.
+Let's try changing the text below and see what the browser builds from it.
 
 ```html site=first-page
 <h1>A heading</h1>
@@ -19,9 +19,9 @@ Try changing the text below and watch what the browser builds from it.
 text in it.</p>
 ```
 
-Add a second paragraph. Change a word inside the `<strong>` tags. Nothing
-you do here can break anything; this is just a small copy of the same idea
-your fork uses.
+Try adding a second paragraph, or changing a word inside the `<strong>`
+tags. Nothing you do here can break anything; this is a small copy of the
+same idea your fork uses.
 
 ## Why this happens
 
@@ -40,9 +40,9 @@ to recognise the shape.
 
 ## Your turn
 
-Open your fork of the starter and find `index.html`. Near the top, inside
-the `<head>` section, is a `<title>` element. It currently says "My
-Portfolio". Change it to your name, or to anything else, then save.
+Let's open your fork of the starter and find `index.html`. Near the top,
+inside the `<head>` section, is a `<title>` element. It currently says "My
+Portfolio". Try changing it to your name, or to anything else, then save.
 
 If you are working on your own computer, refresh the browser to see the
 change. If you are using GitHub's web editor, commit the change first, then

@@ -39,11 +39,11 @@ the form submit.
 
 ## Your turn
 
-Open your fork of `project_wad` and its `contact.html`. Confirm every
-field has a `<label>` whose `for` matches its input's `id`, by clicking
-each label and watching focus land on the right field. The `required`
-attribute is already on all three fields, which stops the form
-submitting with any of them empty.
+Let's open your fork of `project_wad` and its `contact.html`. Try
+clicking each label and watching focus land on the right field — that
+confirms every field has a `<label>` whose `for` matches its input's
+`id`. The `required` attribute is already on all three fields, which
+stops the form submitting with any of them empty.
 
 ## What you have now
 

@@ -52,11 +52,12 @@ clearly than a row that almost fits.
 
 ## Your turn
 
-Open your fork of `project_wad`, find the `@media (max-width: 480px)`
-block in `styles.css`, and check your site at a phone width in your
-browser's device mode. The navigation should already stack into a
-column. If you changed your page names while planning your site map,
-confirm the stacked menu still shows the right links in the right order.
+Let's open your fork of `project_wad` and find the
+`@media (max-width: 480px)` block in `styles.css`. Try checking your
+site at a phone width in your browser's device mode. The navigation
+should already stack into a column. If you changed your page names while
+planning your site map, confirm the stacked menu still shows the right
+links in the right order.
 
 ## What you have now
 

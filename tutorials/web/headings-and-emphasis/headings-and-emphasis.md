@@ -39,12 +39,14 @@ search engine. `<strong>` and `<em>` do.
 
 ## Your turn
 
-Open your fork and find the paragraph below your `<h1>`, marked with
-`class="hero-text"`. Rewrite it in your own words: who you are, what you
-are working on, what interests you. A few sentences is enough.
+Let's open your fork and find the paragraph below your `<h1>`, marked
+with `class="hero-text"`. Try rewriting it in your own words: who you
+are, what you are working on, what interests you. A few sentences is
+enough.
 
-Then wrap one important word or phrase in `<strong>` tags, and something
-you want to emphasise in `<em>` tags. Save and refresh to see them render.
+Then try wrapping one important word or phrase in `<strong>` tags, and
+something you want to emphasise in `<em>` tags. Save and refresh to see
+them appear on the page.
 
 ## What you have now
 

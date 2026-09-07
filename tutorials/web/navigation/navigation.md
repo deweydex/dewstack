@@ -46,8 +46,9 @@ a page has more than one `<nav>` on it.
 
 ## Your turn
 
-Open your fork and find the `<nav>` element in the header. Update its
-links to point at your sections, reusing the `id`s you already added:
+Let's open your fork and find the `<nav>` element in the header. Try
+updating its links to point at your sections, reusing the `id`s you
+already added:
 
 ```html
 <nav class="main-nav" aria-label="Main">
@@ -60,9 +61,9 @@ links to point at your sections, reusing the `id`s you already added:
 </nav>
 ```
 
-Save and refresh, then click the Skills link. The page should scroll
-smoothly there. Look in `styles.css` for `scroll-behavior: smooth`, which
-is what creates that. The links in this nav sit in a row rather than a
+Save and refresh, then try clicking the Skills link. The page should
+scroll smoothly there. Look in `styles.css` for `scroll-behavior: smooth`,
+which is what creates that. The links in this nav sit in a row rather than a
 column; [Flexbox first steps](tutorial:flexbox-first-steps) explains why
 once you reach it.
 

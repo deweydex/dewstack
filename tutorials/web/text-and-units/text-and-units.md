@@ -9,8 +9,8 @@ version: 2026.09.04.1
 
 # Text and units
 
-Change `html { font-size: 20px; }` below to `40px`. One box's spacing
-doubles. The other's stays exactly the same.
+Try changing `html { font-size: 20px; }` below to `40px`. One box's
+spacing doubles. The other's stays exactly the same.
 
 ```html site=units
 <div class="box-px">Measured in px</div>
@@ -46,7 +46,7 @@ wide one.
 
 ## Your turn
 
-Open your fork and find the `.hero` rule in `styles.css`. It sets
+Let's open your fork and find the `.hero` rule in `styles.css`. It sets
 `text-align: center`. Try `text-align: left`, then `text-align: right`,
 and notice how differently the same words sit on the page.
 

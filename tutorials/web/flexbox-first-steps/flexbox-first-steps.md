@@ -59,12 +59,13 @@ three their minimum, one moves down.
 
 ## Your turn
 
-Open your fork of the starter and find `styles.css`. Its `.cta-buttons`
-rule already sets `display: flex` and `flex-wrap: wrap`, on the buttons
-below the introduction. Narrow your browser window the way you just
-narrowed the preview above, and watch for the point where a button drops
-to its own line. Then try removing `flex-wrap: wrap` for a moment and
-narrow the window again, to see what the row does without it.
+Let's open your fork of the starter and find `styles.css`. Its
+`.cta-buttons` rule already sets `display: flex` and `flex-wrap: wrap`,
+on the buttons below the introduction. Try narrowing your browser window
+the way you just narrowed the preview above, and watch for the point
+where a button drops to its own line. Then try removing `flex-wrap: wrap`
+for a moment and narrowing the window again, to see what the row does
+without it.
 
 ## What you have now
 
