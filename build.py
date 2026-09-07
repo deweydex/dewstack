@@ -255,6 +255,29 @@ def make_markdown() -> markdown.Markdown:
     )
 
 
+def convert_fold_bodies(page_html: str) -> str:
+    """Convert the markdown inside a hand-written `dl-hint`/`dl-answer` fold.
+
+    Python-Markdown treats a `<details>` block as raw HTML through to its
+    closing tag, so a fold's numbered steps and backtick code would
+    otherwise reach the page as literal text rather than a real list and
+    `<code>` — ported from dewlab's build.py (its DECISIONS_LOG.md 7.139),
+    where the same bug was found and fixed the same way. Converting the
+    body on its own, through a fresh `make_markdown()`, is the same trick
+    `render_staged_hint()` already uses for a ```hint fence's own body.
+    Run against `page_html` straight out of `md.convert(source)`, before
+    any placeholder substitution: a fold's body is still the untouched
+    source text at that point, and a staged hint's own `dl-hint-staged`
+    fold does not exist in the page yet (`render_staged_hint()` has not
+    run), so there is nothing here for FOLD_RE to clash with.
+    """
+    def one(match: re.Match) -> str:
+        body_html = make_markdown().convert(match.group("body"))
+        return f'{match.group("open")}\n{body_html}\n{match.group("close")}'
+
+    return FOLD_RE.sub(one, page_html)
+
+
 TUTORIAL_LINK = re.compile(r'href="tutorial:([a-z0-9-]+)(#[^"]*)?"')
 IMG_TAG = re.compile(r"<img\b[^>]*>", re.IGNORECASE)
 ALT_ATTR = re.compile(r'\balt\s*=\s*"', re.IGNORECASE)
@@ -341,6 +364,19 @@ TRIGGER_TERM_RE = re.compile(
 )
 DEFAULT_HINT_AFTER = "check-fails:2"
 DEFAULT_HINT_TITLE = "Let’s slow down a moment…"
+
+# A hand-written `dl-hint`/`dl-answer` fold's own body, matched against the
+# page *before* `render_staged_hint()`'s own placeholder substitution has
+# turned a staged hint's placeholder comment into a real `<details>` —
+# see convert_fold_bodies()'s own comment for why the timing matters, and
+# dewlab's build.py (its DECISIONS_LOG.md 7.139) for where this was ported
+# from.
+FOLD_RE = re.compile(
+    r'(?P<open><details class="(?:dl-hint|dl-answer)"><summary>[^<]*</summary>)'
+    r"\s*(?P<body>.*?)\s*"
+    r"(?P<close></details>)",
+    re.DOTALL,
+)
 
 
 def extract_site_editors(body: str, path: Path) -> tuple[str, list[dict]]:
@@ -948,6 +984,7 @@ def render_body(tutorial: Tutorial, by_slug: dict[str, Tutorial]) -> tuple[str, 
         required_packages.add("matplotlib")
     md = make_markdown()
     rendered = md.convert(source)
+    rendered = convert_fold_bodies(rendered)
     # tabindex="0" so a static code block that ends up wider than the reading
     # column, and so scrolls sideways, can be reached and scrolled by keyboard
     # rather than only by touch or a mouse.
