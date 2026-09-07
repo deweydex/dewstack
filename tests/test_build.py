@@ -490,6 +490,151 @@ def test_sql_check_alone_still_pulls_in_sql_cell_js(tree):
     assert 'class="dl-sql-cell"' not in page
 
 
+def test_staged_hint_becomes_a_hidden_fold_on_its_check(tree):
+    tutorials, out = tree
+    body = (
+        "# A page\n\n"
+        "```sql-check db=quiz task=check_products_table\n```\n\n"
+        "```hint\n"
+        "for: check_products_table\n"
+        "after: 2 failed checks\n"
+        "\n"
+        "Read what the check says is missing.\n"
+        "```\n"
+    )
+    write_tutorial(tutorials, "page", body)
+    write_order(tutorials, ["page"])
+    run_build(tree)
+    page = (out / "tutorials/mod/page/index.html").read_text(encoding="utf-8")
+    assert 'class="dl-hint dl-hint-staged"' in page
+    assert 'data-for="check_products_table"' in page
+    assert 'data-after="check-fails:2"' in page
+    assert "hidden>" in page
+    assert "<p>Read what the check says is missing.</p>" in page
+    assert '<span class="dl-hint-marker" hidden aria-hidden="true"' in page
+
+
+def test_staged_hint_default_after_and_title(tree):
+    tutorials, out = tree
+    body = (
+        "# A page\n\n"
+        "```sql-check db=quiz task=check_products_table\n```\n\n"
+        "```hint\n"
+        "for: check_products_table\n"
+        "\n"
+        "Some text.\n"
+        "```\n"
+    )
+    write_tutorial(tutorials, "page", body)
+    write_order(tutorials, ["page"])
+    run_build(tree)
+    page = (out / "tutorials/mod/page/index.html").read_text(encoding="utf-8")
+    assert 'data-after="check-fails:2"' in page
+    assert "Let’s slow down a moment…" in page
+
+
+def test_staged_hint_after_line_reads_key_colon_number_too(tree):
+    tutorials, out = tree
+    body = (
+        "# A page\n\n"
+        "```sql-check db=quiz task=check_products_table\n```\n\n"
+        "```hint\n"
+        "for: check_products_table\n"
+        "after: check-fails:3\n"
+        "\n"
+        "Some text.\n"
+        "```\n"
+    )
+    write_tutorial(tutorials, "page", body)
+    write_order(tutorials, ["page"])
+    run_build(tree)
+    page = (out / "tutorials/mod/page/index.html").read_text(encoding="utf-8")
+    assert 'data-after="check-fails:3"' in page
+
+
+def test_staged_hint_needs_a_for_line(tree):
+    tutorials, out = tree
+    body = (
+        "# A page\n\n"
+        "```sql-check db=quiz task=check_products_table\n```\n\n"
+        "```hint\nSome text with no header.\n```\n"
+    )
+    write_tutorial(tutorials, "page", body)
+    write_order(tutorials, ["page"])
+    with pytest.raises(BuildError, match="for:"):
+        run_build(tree)
+
+
+def test_staged_hint_for_line_must_name_a_real_check(tree):
+    tutorials, out = tree
+    body = (
+        "# A page\n\n"
+        "```sql-check db=quiz task=check_products_table\n```\n\n"
+        "```hint\nfor: check_ghost\n\nSome text.\n```\n"
+    )
+    write_tutorial(tutorials, "page", body)
+    write_order(tutorials, ["page"])
+    with pytest.raises(BuildError, match="check_ghost"):
+        run_build(tree)
+
+
+def test_staged_hint_after_line_rejects_a_signal_a_check_cannot_tell(tree):
+    # "errors" and "unchanged" are dewlab's exec-cell signals; a check has
+    # no code to raise or leave unchanged (this repo's CELL_HINTS.md, §2).
+    tutorials, out = tree
+    body = (
+        "# A page\n\n"
+        "```sql-check db=quiz task=check_products_table\n```\n\n"
+        "```hint\nfor: check_products_table\nafter: 3 errors\n\nSome text.\n```\n"
+    )
+    write_tutorial(tutorials, "page", body)
+    write_order(tutorials, ["page"])
+    with pytest.raises(BuildError, match="errors"):
+        run_build(tree)
+
+
+def test_staged_hint_after_line_rejects_an_unreadable_term(tree):
+    tutorials, out = tree
+    body = (
+        "# A page\n\n"
+        "```sql-check db=quiz task=check_products_table\n```\n\n"
+        "```hint\nfor: check_products_table\nafter: soon\n\nSome text.\n```\n"
+    )
+    write_tutorial(tutorials, "page", body)
+    write_order(tutorials, ["page"])
+    with pytest.raises(BuildError, match="cannot read"):
+        run_build(tree)
+
+
+def test_staged_hint_needs_text(tree):
+    tutorials, out = tree
+    body = (
+        "# A page\n\n"
+        "```sql-check db=quiz task=check_products_table\n```\n\n"
+        "```hint\nfor: check_products_table\n```\n"
+    )
+    write_tutorial(tutorials, "page", body)
+    write_order(tutorials, ["page"])
+    with pytest.raises(BuildError, match="no text"):
+        run_build(tree)
+
+
+def test_two_staged_hints_on_the_same_check_get_distinct_ids(tree):
+    tutorials, out = tree
+    body = (
+        "# A page\n\n"
+        "```sql-check db=quiz task=check_products_table\n```\n\n"
+        "```hint\nfor: check_products_table\nafter: 1 failed check\n\nFirst.\n```\n\n"
+        "```hint\nfor: check_products_table\nafter: 3 failed checks\n\nSecond.\n```\n"
+    )
+    write_tutorial(tutorials, "page", body)
+    write_order(tutorials, ["page"])
+    run_build(tree)
+    page = (out / "tutorials/mod/page/index.html").read_text(encoding="utf-8")
+    assert "sql-hint-page-check_products_table-0" in page
+    assert "sql-hint-page-check_products_table-1" in page
+
+
 def test_py_block_becomes_a_cell(tree):
     tutorials, out = tree
     body = "# A page\n\n```py cell=explore\n1 + 1\n```\n"

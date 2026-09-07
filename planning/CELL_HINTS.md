@@ -11,14 +11,15 @@ repositories end up with the same authoring surface and each with its own
 runtime, the same way `sql-cell.js` was ported in shape from dewlab's
 engine rather than shared with it.
 
-Nothing here is built. dewlab's half is (its DECISIONS_LOG.md 7.135),
-and two of its decisions change what this note should say: the authoring
-surface is a ```` ```hint ```` fence with `for:`/`after:`/`title:` header
-lines, not two attributes on a hand-written fold, and `after:` reads both
-`5 errors` and `errors:5`. Read the examples below with that in mind — the
-fold they show is what the fence *renders to*, and what `sql-cell.js` would
-read. Josh's order, 2026-09-06: dewlab first, "I am more concerned about it
-for python cells."
+**Built 2026-09-07 — §6 records what shipped and how it differs from the
+plan below.** dewlab's half was built first (its DECISIONS_LOG.md 7.135),
+and two of its decisions changed what this note said before it was built:
+the authoring surface is a ```` ```hint ```` fence with `for:`/`after:`/
+`title:` header lines, not two attributes on a hand-written fold, and
+`after:` reads both `5 errors` and `errors:5`. Read the examples below
+with that in mind — the fold they show is what the fence *renders to*,
+and what `sql-cell.js` would read. Josh's order, 2026-09-06: dewlab first,
+"I am more concerned about it for python cells."
 
 ---
 
@@ -141,3 +142,92 @@ about this site:
 
 The ledger in `CONSOLIDATION_PLAN.md` and `NEXT_STEPS.md` should carry a
 line for this once any of it is built.
+
+## 6. What was built, and how it differs from the plan above
+
+Josh: "let's fix that bug and build the sql hints." Built for `sql-check`
+blocks only — §5's question 1, answered (a), same as assumed. The web
+track (question 2) and a generic SQL `expect` (question 3) are still not
+built, also as assumed.
+
+**The authoring surface is exactly §1's fence, ```` ```hint ````, with
+`for:`/`after:`/`title:` header lines — dewlab's shape, not the
+attributes-on-a-fold shape this note originally showed.** Two differences
+from dewlab's own fence, both because a `sql-check` block is not an exec
+cell:
+
+- **`for:` is always required.** dewlab's `for:` defaults to the exec cell
+  just above it in the source, because `extract_blocks()` walks the page
+  once, left to right, and always knows what came last. This repo's
+  `extract_hints()` is its own pass, run after `extract_sql_checks()`
+  rather than interleaved with it, so there is no "the block above" to
+  fall back on. `for:` names a `sql-check` block's own `task=` value —
+  already unique per page, the same thing its rendered `data-task`
+  attribute carries — and a hint whose `for:` names no check on the page
+  fails the build.
+- **`after:` only reads three signals: `failed checks` (`check-fails`),
+  `runs`, and `minutes`.** §2's own table gives the reason: a check has no
+  code to raise or leave unchanged, so `errors`, `same-errors` and
+  `unchanged` — three of dewlab's six — have nothing to mean here. Only
+  `check-fails`, `runs` and `minutes` describe what a click on "Check my
+  work" can tell the runtime. `after:` with no line at all defaults to
+  `check-fails:2`.
+
+**The runtime is `assets/sql-cell.js`'s own staged-hints section** —
+`collectStagedHints()`, `triggerHolds()`, `noteCheckAttempt()`,
+`maybeRevealHint()`, `showStagedHint()`, `syncStagedHints()` — ported in
+shape from `tutorial-runtime.js`'s. A check's counters
+(`freshCheckAttempts()`: `runs`, `checkFails`, `firstRunAt`) live as a
+plain object closed over by `setUpCheck()`, since there is no per-check
+object the way dewlab keeps one per cell. Nothing is persisted, exactly as
+§3 said it wouldn't be: a reload clears every counter and every revealed
+hint, the same as leaving the page.
+
+**One Settings row, not two.** dewlab's second row — "after a restart,
+keep hints or hide them" — governs what a `Restart Python` click does to
+already-revealed hints. This site has no page-wide "restart everything"
+action to hook that into; a SQL cell's own Reset only restores its
+starter text. So only the on/off row exists here
+(`#dl-settings-hints`, `assets/shell.html`), wired by
+`initStagedHintsToggle()`. It is a static section on every page, the same
+way dewlab's own settings rows are, `hidden` by default and shown only
+when the page has at least one `sql-check` block — not only when this
+particular page happens to have a staged hint, since the setting is a
+standing preference, not a per-page one.
+
+**A small marker, not the cell bar dewlab has.** A `sql-check` block has
+no equivalent of a cell's bar to put a dot on, so `render_sql_check()`
+adds one `<span class="dl-hint-marker" hidden>` next to the "Check my
+work" button, on every check whether or not it has a staged hint — cheap,
+and inert either way.
+
+**Tried on `data/the-tentacular-plushies-quiz`**, per §4's own plan:
+`check-fails:2` hints under Task 1 (`check_products_table`) and Task 3
+(`check_products_rows`), each a question and one move, in the house order
+§1 sets out. `data/asking-questions-of-a-table` and
+`data/charting-a-querys-result` are not done — the quiz alone is enough to
+prove the shape works, and both of those still need `sql`/`py` cell
+support this build does not have yet.
+
+**Not built, on purpose, past the scope above:**
+
+- SQL and Python cell hints (`sql cell=`/`py cell=`) — §2's `unchanged`
+  and `same-error` both need a cell's current text and its last error, and
+  wiring that into `sql-cell.js`'s `runCell()`/`runPyCell()` is its own
+  piece of work, not a small extension of the check-only runtime above.
+- The web track and a generic SQL `expect` — §5's questions 2 and 3,
+  still open.
+- A browser end-to-end test (`tests/e2e/test_cell_hints_staged.py`, as §4
+  proposed) — the build-time half has full coverage
+  (`tests/test_build.py`, the `test_staged_hint_*` tests), but a real
+  click-through in Chromium is not written yet. Worth adding alongside
+  whichever of the pieces above gets built next, when there is a second
+  runtime path to exercise together with this one.
+
+*Cost to change: `HINT_BLOCK`/`HINT_HEADER_RE`/`TRIGGER_KEYS`/
+`parse_trigger()`/`extract_hints()`/`render_staged_hint()` in `build.py`;
+the marker span in `render_sql_check()`; the staged-hints section in
+`assets/sql-cell.js`; the `.dl-hint-staged`/`.dl-hint-marker` rules in
+`assets/site.css`; the `#dl-settings-hints` section in `assets/shell.html`;
+two `hint` fences in the quiz. Ten new tests in `tests/test_build.py`.
+Full unit suite green; a fresh full-site build confirmed clean.*

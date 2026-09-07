@@ -50,8 +50,8 @@ The pipeline, roughly in the order the code runs it:
    build — a build that silently skips a broken file is a build that ships a
    stale page nobody asked for.
 
-2. **Pull the site's four kinds of fenced block out before markdown ever
-   sees them**, each its own `extract_*`/`render_*` pair:
+2. **Pull the site's fenced block kinds out before markdown ever sees
+   them**, each its own `extract_*`/`render_*` pair:
    - `extract_site_editors()` / `render_site_editor()` — the web track's
      `site=name` blocks: HTML, CSS and JS panes beside a live sandboxed
      preview (§2).
@@ -64,6 +64,13 @@ The pipeline, roughly in the order the code runs it:
    - `extract_app_cells()` / `render_app_cell()` — the full-stack track's
      `html app=name` / `css app=name` / `js app=name` groups, rendered
      straight into the page rather than into a sandboxed frame (§3).
+   - `extract_hints()` / `render_staged_hint()` — a ```` ```hint ```` block:
+     a fold that stays hidden until its named `sql-check` task has been
+     tried and failed some number of times (`planning/CELL_HINTS.md`,
+     ported from dewlab's own staged hints). `for:` names the task; the
+     fold's body is converted through its own `make_markdown()` call,
+     since Python-Markdown treats a `<details>` block as raw HTML through
+     to its closing tag.
 
    Every `extract_*` function replaces its blocks with a numbered
    placeholder comment and records the block's own content as a small dict;

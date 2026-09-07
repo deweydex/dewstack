@@ -44,6 +44,22 @@ type, the way the pages before this quiz did.
 ```sql-check db=quiz task=check_products_table
 ```
 
+```hint
+for: check_products_table
+after: 2 failed checks
+
+Read what the check says is missing. It names the exact column it could
+not find.
+
+Compare that name, letter by letter, with the list task 1 asks for. A
+column name with an extra space, a different case, or a small spelling
+change is the most common reason this check still says something is
+missing, even after you create the table.
+
+**Try this:** run `PRAGMA table_info(products);` in the SQL box, and read
+the `name` column of its result against the list above.
+```
+
 ## Task 2: a transactions table
 
 Create a second table, `transactions`, that refers to `products`:
@@ -80,6 +96,20 @@ work well for a shop like this. One `INSERT INTO products (...) VALUES
 </details>
 
 ```sql-check db=quiz task=check_products_rows
+```
+
+```hint
+for: check_products_rows
+after: 2 failed checks
+
+Read what the check counted: how many rows it found, and how many
+different categories among them. Both numbers are in its message.
+
+Count your own `INSERT` statements the same way. A single `INSERT INTO
+products (...) VALUES (...), (...), (...), (...);` with four rows and
+four different `category` values meets both counts in one statement —
+adding rows one at a time, or repeating the same category, is the usual
+reason one count comes up short.
 ```
 
 ## Task 4: add transactions
