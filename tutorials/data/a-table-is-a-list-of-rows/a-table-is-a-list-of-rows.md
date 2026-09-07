@@ -69,13 +69,14 @@ rule is what keeps it correct while they do.
 
 ## Your turn
 
-Edit the box above: change a dinosaur's name, add a seventh row, or add a
-column of your own to the `CREATE TABLE` line. Run it again and see what
-changes.
+Try changing something in the box above — a different dinosaur name, a
+seventh row, even a new column in the `CREATE TABLE` line. Run it again
+and see what happens. Nothing here breaks anything that Reset cannot
+fix.
 
-Then build a table of your own, about something you know well: books, a
-football squad, a music collection. Give it at least three columns and
-four rows.
+Then let's build a table of your own, about something you know well:
+books, a football squad, a music collection. Start with three columns
+and four rows — you can always add more later.
 
 ```sql cell=my-table persist
 -- Write your own CREATE TABLE and INSERT statements here, then run them.

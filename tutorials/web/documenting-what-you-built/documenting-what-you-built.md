@@ -35,11 +35,12 @@ marks whether you have thought it through.
 
 ## Your turn
 
-Open your fork of `project_wad`. Finish building all five pages first.
-Then complete `readme.md`: what the site is, how the pages connect, your
-colour and layout choices, and what you tested. Finish `maintenance.md`
-with a short, realistic plan. Rename `readme.md` to `README.md` (or copy
-its contents in), so it is the page GitHub shows first.
+Let's open your fork of `project_wad`. Finish building all five pages
+first. Then try completing `readme.md`: what the site is, how the pages
+connect, your colour and layout choices, and what you tested. Finish
+`maintenance.md` with a short, realistic plan. Rename `readme.md` to
+`README.md` (or copy its contents in), so it is the page GitHub shows
+first.
 
 ## What you have now
 

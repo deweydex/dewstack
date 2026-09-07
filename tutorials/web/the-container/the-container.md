@@ -43,11 +43,11 @@ which centres the box.
 
 ## Your turn
 
-Open your fork and find the `.container` rule in `styles.css`. It sets
-`max-width: 1200px` and `margin: 0 auto`. Try `max-width: 600px`, then
-`max-width: 100%`, and watch the page's content grow and shrink between
-them. Then remove `margin: 0 auto` for a moment and see the container
-line up on the left instead of sitting in the middle.
+Let's open your fork and find the `.container` rule in `styles.css`. It
+sets `max-width: 1200px` and `margin: 0 auto`. Try `max-width: 600px`,
+then `max-width: 100%`, and watch the page's content grow and shrink
+between them. Then try removing `margin: 0 auto` for a moment and see
+the container line up on the left instead of sitting in the middle.
 
 ## What you have now
 

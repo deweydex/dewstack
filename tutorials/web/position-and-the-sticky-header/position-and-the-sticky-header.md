@@ -67,11 +67,11 @@ that pushes the footer itself down to the bottom of the page.
 
 ## Your turn
 
-Open your fork and find the `header` rule in `styles.css`. It sets
+Let's open your fork and find the `header` rule in `styles.css`. It sets
 `position: sticky` and `top: 0`. Scroll your page and watch the header
-stay in view. Then change `position: sticky` to `position: fixed` and
-scroll again; look at the content behind the header for a clue about what
-changed. Change it to `position: relative`, the default, and the header
+stay in view. Then try changing `position: sticky` to `position: fixed`
+and scroll again; look at the content behind the header for a clue about
+what changed. Try `position: relative`, the default, and the header
 scrolls away with everything else. Set it back to `sticky` when you are
 done.
 

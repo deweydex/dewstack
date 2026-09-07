@@ -16,7 +16,8 @@ button that tells you, instantly and only in your own browser, whether
 that task's requirements are met. Use it as often as you like.
 
 Write your SQL in this box as you go. It saves in this browser as you
-run it, so a reload does not lose your work.
+run it, so a reload does not lose your work. Use the hints if you need
+them — they are there for that.
 
 ```sql cell=quiz persist
 -- Build the database here, one task at a time. Run this box after
@@ -99,7 +100,7 @@ belongs to which product.
 
 ## Task 5: query the data
 
-Write, and run, each of these three queries in turn:
+Try writing and running each of these three queries:
 
 - Products with a `price` over 30, ordered by `price` from highest to
   lowest.

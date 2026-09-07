@@ -55,10 +55,12 @@ before you decide exactly how it looks?
 
 ## Your turn
 
-Open your fork of `project_wad` and its `planning.md`. Answer the
-purpose and audience questions, and fill in the site map table with what
-each of your five pages will actually be about. Sketch a wireframe for
-at least one page, however rough. Do this before changing any HTML file.
+Let's open your fork of `project_wad` and its `planning.md`. Try
+answering the purpose and audience questions, and filling in the site
+map table with what each of your five pages will actually be about.
+Sketch a wireframe for at least one page, however rough — it does not
+have to look good, just show where things go. Do this before changing
+any HTML file.
 
 ## What you have now
 
