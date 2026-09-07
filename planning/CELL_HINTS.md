@@ -11,7 +11,14 @@ repositories end up with the same authoring surface and each with its own
 runtime, the same way `sql-cell.js` was ported in shape from dewlab's
 engine rather than shared with it.
 
-Nothing here is built.
+Nothing here is built. dewlab's half is (its DECISIONS_LOG.md 7.135),
+and two of its decisions change what this note should say: the authoring
+surface is a ```` ```hint ```` fence with `for:`/`after:`/`title:` header
+lines, not two attributes on a hand-written fold, and `after:` reads both
+`5 errors` and `errors:5`. Read the examples below with that in mind — the
+fold they show is what the fence *renders to*, and what `sql-cell.js` would
+read. Josh's order, 2026-09-06: dewlab first, "I am more concerned about it
+for python cells."
 
 ---
 

@@ -1131,8 +1131,11 @@ step arrives.
     this repository's `planning/CELL_HINTS.md` records only what differs
     here (what a run and an error are per cell kind, the quiz's checks as
     the natural first trigger, the web track's live panes having no run).
-    Thirteen shared questions and three dewstack-only ones wait on Josh
-    before any of it is built. Blocks nothing.
+    dewlab's half is built (its DECISIONS_LOG.md 7.135): a ```` ```hint ````
+    fence with `for:`/`after:`/`title:` header lines, `expect:` on a cell,
+    a JSON run report, counters in the saved record, two Settings rows.
+    Porting the shape here is the next step when Josh asks for it; the
+    three dewstack-only questions in the note still wait. Blocks nothing.
 
 ---
 
