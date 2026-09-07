@@ -81,12 +81,20 @@ The pipeline, roughly in the order the code runs it:
    markdown by mistake.
 
 3. **Convert what's left with `markdown.Markdown()`** (`make_markdown()`),
-   then reinsert every placeholder. `render_body()` is where all four
-   extraction passes and the conversion itself happen, in order, and it is
-   also where a page's required Pyodide packages get decided: `sqlite3`
-   alone if the page has any SQL cell, check, Python cell or app cell;
-   `pandas` and `matplotlib` on top of that if it has a Python cell. A page
-   with none of the four loads no Pyodide packages at all.
+   then run `convert_fold_bodies()` before reinserting any placeholder.
+   The same raw-HTML-passthrough behaviour that makes a ```` ```hint ````
+   fence convert its own body separately means a hand-written
+   `<details class="dl-hint">`/`<details class="dl-answer">` fold's body
+   never gets touched by the main conversion either — `convert_fold_bodies()`
+   finds each one and runs its body through its own `make_markdown()` call,
+   the same trick `render_staged_hint()` uses, before any staged hint's own
+   `dl-hint-staged` fold exists on the page to be confused with one.
+   `render_body()` is where all four extraction passes and the conversion
+   itself happen, in order, and it is also where a page's required Pyodide
+   packages get decided: `sqlite3` alone if the page has any SQL cell,
+   check, Python cell or app cell; `pandas` and `matplotlib` on top of that
+   if it has a Python cell. A page with none of the four loads no Pyodide
+   packages at all.
 
 4. **Resolve cross-tutorial links and validate structure.** A
    `tutorial:slug#anchor` link becomes a real relative href

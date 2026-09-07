@@ -490,6 +490,81 @@ def test_sql_check_alone_still_pulls_in_sql_cell_js(tree):
     assert 'class="dl-sql-cell"' not in page
 
 
+def test_hand_written_hint_fold_converts_its_markdown(tree):
+    # Python-Markdown treats <details> as raw HTML to its closing tag, so
+    # a fold's own markdown needs a conversion pass of its own — the same
+    # bug and fix as dewlab's build.py (its DECISIONS_LOG.md 7.139).
+    tutorials, out = tree
+    body = (
+        "# A page\n\n"
+        '<details class="dl-hint"><summary>hint</summary>\n\n'
+        "1. Run `SELECT 1;` first.\n"
+        "2. Then try `SELECT 2;`.\n\n"
+        "**Try this:** run both.\n\n"
+        "</details>\n"
+    )
+    write_tutorial(tutorials, "page", body)
+    write_order(tutorials, ["page"])
+    run_build(tree)
+    page = (out / "tutorials/mod/page/index.html").read_text(encoding="utf-8")
+    assert "<ol>" in page
+    assert "<li>Run <code>SELECT 1;</code> first.</li>" in page
+    assert "<strong>Try this:</strong>" in page
+    assert "1. Run `SELECT 1;`" not in page
+
+
+def test_hand_written_answer_fold_converts_its_markdown(tree):
+    tutorials, out = tree
+    body = (
+        "# A page\n\n"
+        '<details class="dl-answer"><summary>answer</summary>\n\n'
+        "The answer is `42`.\n\n"
+        "</details>\n"
+    )
+    write_tutorial(tutorials, "page", body)
+    write_order(tutorials, ["page"])
+    run_build(tree)
+    page = (out / "tutorials/mod/page/index.html").read_text(encoding="utf-8")
+    assert "<p>The answer is <code>42</code>.</p>" in page
+
+
+def test_hand_written_fold_summary_line_is_untouched(tree):
+    tutorials, out = tree
+    body = (
+        "# A page\n\n"
+        '<details class="dl-hint"><summary>hint</summary>\n\n'
+        "Some text.\n\n"
+        "</details>\n"
+    )
+    write_tutorial(tutorials, "page", body)
+    write_order(tutorials, ["page"])
+    run_build(tree)
+    page = (out / "tutorials/mod/page/index.html").read_text(encoding="utf-8")
+    assert '<details class="dl-hint"><summary>hint</summary>' in page
+
+
+def test_staged_hint_fold_is_not_touched_by_the_hand_written_conversion(tree):
+    # convert_fold_bodies() runs before render_staged_hint() places its
+    # own fold, so a staged hint's already-converted body (and its
+    # dl-hint-staged class) must never be re-processed or double-escaped.
+    tutorials, out = tree
+    body = (
+        "# A page\n\n"
+        "```sql-check db=quiz task=check_products_table\n```\n\n"
+        "```hint\n"
+        "for: check_products_table\n"
+        "\n"
+        "Read `this` carefully.\n"
+        "```\n"
+    )
+    write_tutorial(tutorials, "page", body)
+    write_order(tutorials, ["page"])
+    run_build(tree)
+    page = (out / "tutorials/mod/page/index.html").read_text(encoding="utf-8")
+    assert "<p>Read <code>this</code> carefully.</p>" in page
+    assert 'class="dl-hint dl-hint-staged"' in page
+
+
 def test_staged_hint_becomes_a_hidden_fold_on_its_check(tree):
     tutorials, out = tree
     body = (
