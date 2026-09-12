@@ -19,8 +19,8 @@ this series you need. The rest is about publishing a website.
 
 Press `F12`, or `Ctrl+Shift+I` on Windows and Linux, or `Cmd+Option+I` on
 a Mac. Alternatively, right-click anything on a page and choose
-**Inspect**. Both open the same panel, usually docked to one side or the
-bottom of the window. The second method also selects whatever you
+**Inspect**. Both open the same panel, usually on one side or the bottom
+of the window. The second method also selects whatever you
 clicked on.
 
 The panel has several tabs. Two matter for now.

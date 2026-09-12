@@ -203,10 +203,10 @@ detail.
 ## For teachers
 
 **How a student's report reaches you.** Most pages carry a line at the
-foot, "Something wrong on this page? Tell us.", and a SQL or Python cell
-has its own smaller version of the same thing among its own buttons. Both
-open the same three doors: a question goes to GitHub Discussions, an
-error or a page that is wrong or hard to follow both open a prefilled
+bottom, "Something wrong on this page? Tell us.", and a SQL or Python
+cell has its own smaller version of the same thing among its own buttons.
+Both offer the same three choices: a question goes to GitHub Discussions,
+an error or a page that is wrong or hard to follow both open a prefilled
 GitHub issue — a report opened from a cell's own icon already carries
 that cell's id, its current code, and whatever it last showed.
 [`docs/REPORTING_A_PROBLEM.md`](docs/REPORTING_A_PROBLEM.md) is the
@@ -219,7 +219,7 @@ workflows run against a report once it exists: `label-report` applies a
 `page:`/`kind:` label the moment one opens, creating either the first
 time it is needed; `report-patterns` runs weekly and opens or updates a
 `pattern` issue for any page with three or more open reports, or any
-cell with two or more, in the last fortnight (`tools/report_patterns.py`).
+cell with two or more, in the last two weeks (`tools/report_patterns.py`).
 
 The planning notes are in [`planning/`](planning/).
 [`planning/CONSOLIDATION_PLAN.md`](planning/CONSOLIDATION_PLAN.md) says how

@@ -134,8 +134,8 @@ try next.
 
 If a page is confusing or something does not work, tell your teacher.
 
-Most pages also carry a line at the foot, "Something wrong on this
-page? Tell us." It opens three doors: a question, an error, or
+Most pages also carry a line at the bottom, "Something wrong on this
+page? Tell us." It offers three choices: a question, an error, or
 something wrong or hard to follow. Pick the one that fits. You do not
 need to be certain the page has a mistake before asking about it.
 
