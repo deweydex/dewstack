@@ -63,6 +63,27 @@ Tutorial slugs, cell identifiers, reading order, and runtime code stay
 the same. Tutorial version fields stay the same because the changes are
 prose and static examples, not runnable cells or saved-work identities.
 
+## Vocabulary and idiom sweep
+
+Applied 2026-09-12, following the same rule-9 sweep done across dewlab.
+Checked all student-facing surfaces for British/Irish idiom and
+vocabulary a B1 reader would need to look up.
+
+| Pattern | Replacement | Where |
+|---|---|---|
+| "at the foot" | "at the bottom" | `docs/FOR_STUDENTS.md`, `docs/REPORTING_A_PROBLEM.md`, `tutorials/getting-started/a-github-account/a-github-account.md`, `README.md` |
+| "three doors" (metaphor) | "three choices" | `docs/FOR_STUDENTS.md`, `docs/REPORTING_A_PROBLEM.md`, `tutorials/getting-started/a-github-account/a-github-account.md`, `README.md` |
+| "Whichever door you take" | "Whichever you choose" | `docs/REPORTING_A_PROBLEM.md` |
+| "If the doors are missing" | "If these choices are missing" | `docs/REPORTING_A_PROBLEM.md` |
+| "The doors can be turned off" | "These choices can be turned off" | `docs/REPORTING_A_PROBLEM.md` |
+| "Have a quick look at" | "Look at" | `docs/REPORTING_A_PROBLEM.md` |
+| "docked to one side" | "on one side" | `tutorials/getting-started/the-inspector/the-inspector.md` |
+| "fortnight" | "two weeks" | `README.md` |
+
+The "three doors" metaphor is kept in contributor-facing files
+(`CONTRIBUTING.md`, `ARCHITECTURE.md`, planning docs) where it serves as
+project shorthand mapping to the function name `report_doors_links()`.
+
 ## Further batches
 
 1. Review the remaining getting-started tutorials in teaching order.
