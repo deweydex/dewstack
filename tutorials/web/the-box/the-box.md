@@ -36,10 +36,10 @@ screen. Each box has three layers around its content, from the inside
 out.
 
 **Padding** is space between the content and the border. It takes on the
-box's own background colour, the way the space inside a picture frame
+box's own background color, the way the space inside a picture frame
 does.
 
-**Border** is the edge of the box. It can be visible, with a colour and a
+**Border** is the edge of the box. It can be visible, with a color and a
 style, or invisible, with no width at all. `border-radius` rounds its
 corners.
 
@@ -61,6 +61,6 @@ have a feel for those, try adding a visible border with
 A box with three layers you can now name and change on purpose.
 
 - **Padding** — space between content and border; takes the box's
-  background colour.
+  background color.
 - **Border** — the box's edge, visible or not.
 - **Margin** — space outside the border, always transparent.

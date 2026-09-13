@@ -12,7 +12,7 @@ version: 2026.09.05.3
 Everything in this course, on either track, starts with a GitHub
 account. It costs nothing and takes a few minutes to set up.
 
-## What GitHub actually does
+## What GitHub does
 
 GitHub stores your files online, in a project folder called a
 repository, or "repo" for short. Every change you save there is kept.
@@ -25,7 +25,7 @@ files can be turned into a live site with GitHub Pages, at no cost.
 
 Repositories are usually public, meaning anyone with the link can see the
 files. Private repositories exist too, but a public one is normally what
-you want here. It is what lets a page you publish actually be seen, and
+you want here. It is what lets a page you publish be seen, and
 what lets a teacher check your work.
 
 ## Creating an account

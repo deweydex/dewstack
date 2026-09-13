@@ -10,7 +10,7 @@ version: 2026.09.04.1
 # Media queries
 
 Drag the preview width slider from wide to narrow. Somewhere along the
-way, the message below changes colour, with nothing else on the page
+way, the message below changes color, with nothing else on the page
 touched.
 
 ```html site=media

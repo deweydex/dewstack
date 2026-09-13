@@ -27,7 +27,7 @@ would show up in the browser tab instead, not in the preview here.
 Every HTML page splits into two parts. Let's see why the title
 disappeared from the preview. The **head** holds information about the
 page: its `<title>`, and other details a visitor does not see directly.
-The **body** holds everything a visitor actually sees: headings,
+The **body** holds everything a visitor sees: headings,
 paragraphs, images, and the rest.
 
 `<title>` lives in the head, which is why its text goes to the browser tab

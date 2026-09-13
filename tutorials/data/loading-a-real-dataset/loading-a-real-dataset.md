@@ -63,7 +63,7 @@ income_share["share"].isna().sum(), income_share["share_extrapolated"].isna().su
 ```
 
 `share` is missing for thousands of rows — the original survey data
-simply does not reach every country in every year. `share_extrapolated`
+does not reach every country in every year. `share_extrapolated`
 fills those gaps with an estimate, worked out from related data, so it
 is missing far less often. The rest of this arc uses
 `share_extrapolated`, and says so at each query, rather than treating an

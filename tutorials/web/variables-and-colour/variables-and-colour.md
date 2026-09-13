@@ -1,5 +1,5 @@
 ---
-title: "Variables and colour"
+title: "Variables and Color"
 slug: variables-and-colour
 module: web
 module_title: "Web authoring"
@@ -7,10 +7,10 @@ series: first-site
 version: 2026.09.04.1
 ---
 
-# Variables and colour
+# Variables and Color
 
-Change the one colour near the top below, and both boxes update, even
-though neither box's own rule mentions a colour.
+Change the one color near the top below, and both boxes update, even
+though neither box's own rule mentions a color.
 
 ```html site=variables
 <div class="header">Header</div>
@@ -36,18 +36,18 @@ though neither box's own rule mentions a colour.
 wherever it is used. Change the definition, and everywhere that reads it
 changes too.
 
-Without a variable, changing a colour used in ten places means editing ten
+Without a variable, changing a color used in ten places means editing ten
 rules, and it is easy to miss one.
 
 ## Your turn
 
 Let's open your fork's `styles.css` and find the `:root` section near
-the top. Try changing `--primary-color` and `--accent-color` to colours
+the top. Try changing `--primary-color` and `--accent-color` to colors
 you like. Save and refresh: the header, the hero section, the footer
 and the buttons all change at once, because they all read the same two
 variables.
 
-The starter's default colours were chosen so that text stays readable: a
+The starter's default colors were chosen so that text stays readable: a
 contrast checker, such as the one at
 [webaim.org](https://webaim.org/resources/contrastchecker/), confirms
 this. Try checking whether your own choices still pass.

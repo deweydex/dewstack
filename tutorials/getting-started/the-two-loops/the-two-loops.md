@@ -55,7 +55,7 @@ A useful habit: if a change is not showing up, ask which loop you are
 in. Still editing locally means you need to save and refresh. Already
 committed means you need to wait for GitHub, then refresh. Confusing the
 two is the single most common reason a change "isn't working" when
-nothing is actually wrong.
+nothing is wrong.
 
 ## What you have now
 
