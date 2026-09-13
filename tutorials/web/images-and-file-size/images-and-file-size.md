@@ -46,7 +46,7 @@ size and is usually the smallest of the three.
 ## Keeping file size down
 
 Before adding a photo to your site, resize it to roughly the size it
-will actually display at. An image twice as wide as it needs to be costs
+will display at. An image twice as wide as it needs to be costs
 twice the download for no visible benefit. CSS scales an image down to
 fit, regardless of how large the file underneath still is. Most image
 editors, including the ones built into phones, can resize and compress

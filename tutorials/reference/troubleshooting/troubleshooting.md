@@ -66,7 +66,7 @@ disagreeing about the same element.
 - Does the `src` match the image's file name and folder, including
   capital letters? `Photo.jpg` and `photo.jpg` are different files on
   many systems.
-- Does the file extension match what is actually saved, such as `.jpg`
+- Does the file extension match what is saved, such as `.jpg`
   against a file really saved as `.png`?
 - The `alt` text still shows if the image itself fails to load. If you
   see the alt text where the picture should be, the path is wrong, not

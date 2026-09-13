@@ -56,8 +56,8 @@ information about that element.
 
 | Property | What it does |
 |---|---|
-| `color` | Sets the text's colour. |
-| `background-color` | Sets the element's background colour. |
+| `color` | Sets the text's color. |
+| `background-color` | Sets the element's background color. |
 | `font-family` | Chooses the typeface. Always list a plain fallback last, such as `sans-serif`. |
 | `font-size` | Sets the text's size. Needs a unit, such as `16px` or `1rem`. |
 | `font-weight` | Sets how bold the text is: `normal`, `bold`, or a number from 100 to 900. |
@@ -117,4 +117,4 @@ Assumes a table already exists in the database you are querying.
 |---|---|
 | "no such table" | The table hasn't been created yet in this session, or its name is spelled differently than you typed. |
 | A query runs but changes nothing | An `INSERT`, `UPDATE` or `DELETE` needs to be followed by saving the change, or it is lost. |
-| A `WHERE` matches nothing you expect | Check the value's spelling and case match what's actually stored. |
+| A `WHERE` matches nothing you expect | Check the value's spelling and case match what's stored. |

@@ -9,8 +9,8 @@ version: 2026.09.05.1
 
 # CSS variables and BEM names
 
-Two buttons below share one rule for padding, shape and colour. Only the
-second one looks different, and its own rule sets nothing but a colour.
+Two buttons below share one rule for padding, shape and color. Only the
+second one looks different, and its own rule sets nothing but a color.
 
 ```html site=buttons
 <button class="button button--primary">Save</button>
@@ -65,7 +65,7 @@ Let's try adding a third button to the HTML above, with a class of
 `button button--success`. Give `.button--success` its own rule that sets
 `--button-color` to a green of your choosing, the same way
 `.button--danger` does. Run it and check that the new button picks up
-its own colour without any change to `.button`'s own rule.
+its own color without any change to `.button`'s own rule.
 
 ## What you have now
 

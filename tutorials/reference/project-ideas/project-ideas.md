@@ -50,7 +50,7 @@ rather than a grid.
 ## A database of your own
 
 Once you have made your first table and asked it a question, build one on
-a topic that is actually yours. A collection you own, a hobby with lists
+a topic that is yours. A collection you own, a hobby with lists
 attached to it, and a running record of something you do every week all
 work well. Design it before you type anything: decide what the columns
 are and what each row means. Then load it, query it, and see what it
@@ -71,7 +71,7 @@ typeface for body text, at 16 pixels or larger. Keep a comfortable line
 height, around 1.5 to 1.8 times the text size. Check that text and its
 background reach a contrast the [WebAIM contrast
 checker](https://webaim.org/resources/contrastchecker/) calls a pass, not
-just a colour that looks fine to you. None of this takes long, and a
+just a color that looks fine to you. None of this takes long, and a
 reader notices all of it before they notice anything else about the page.
 
 ## If you get stuck

@@ -27,7 +27,7 @@ are learning on your own, either path is open to you.
   its SQL text in this browser. **Download** gives you a copy to keep.
   The [FAQ](tutorial:faq) explains more about saving.
 - **The Settings button lets you change how the page looks.** Choose a
-  colour scheme, font, text size and line width. Your choices are saved
+  color scheme, font, text size and line width. Your choices are saved
   in this browser.
 - **The list below is grouped by subject.** Getting started comes first,
   then the website tutorials, the data tutorials, and the pages where

@@ -17,7 +17,7 @@ stranger and for your future self alike.
 ## What readme.md is for
 
 `planning.md` was written before any code, saying what you meant to
-build. `readme.md` is written after, saying what you actually built:
+build. `readme.md` is written after, saying what you built:
 what the site covers, how its pages connect, and the design choices you
 made and why. It also records how you tested it. The two documents
 rarely match exactly. A plan changes once building starts, and
@@ -30,14 +30,14 @@ A site does not stay finished. Links move, information goes out of date,
 new pages get added. `maintenance.md` says how you would keep this one
 current: how you would add a page later, and what you would check
 periodically. It also says what you would build next, if you kept going.
-Nobody expects you to actually do that work after submitting. The brief
+Nobody expects you to do that work after submitting. The brief
 marks whether you have thought it through.
 
 ## Your turn
 
 Let's open your fork of `project_wad`. Finish building all five pages
 first. Then try completing `readme.md`: what the site is, how the pages
-connect, your colour and layout choices, and what you tested. Finish
+connect, your color and layout choices, and what you tested. Finish
 `maintenance.md` with a short, realistic plan. Rename `readme.md` to
 `README.md` (or copy its contents in), so it is the page GitHub shows
 first.

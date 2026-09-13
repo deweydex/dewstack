@@ -9,8 +9,8 @@ version: 2026.09.04.1
 
 # A rule, and where it lives
 
-Try changing one line below and both paragraphs change colour, not just
-one. Neither paragraph mentions colour at all.
+Try changing one line below and both paragraphs change color, not just
+one. Neither paragraph mentions color at all.
 
 ```html site=rule
 <p>First paragraph.</p>
@@ -52,7 +52,7 @@ does; browse them when you are curious.
 
 ## What you have now
 
-A rule traced from the page it styles to the file it actually lives in.
+A rule traced from the page it styles to the file it lives in.
 
 - **Selector** — the part of a rule saying which elements to style.
 - **Declaration** — a property and a value, inside a rule's braces.

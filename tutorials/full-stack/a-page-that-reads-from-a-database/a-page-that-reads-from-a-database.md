@@ -12,7 +12,7 @@ version: 2026.09.06.1
 Every earlier page kept its database and its page apart: a SQL cell's
 own table on one side, HTML and CSS on the other, never in the same
 sentence. A real website is not built that way. A shop's page shows the
-products actually in its database, not a copy typed into the HTML by
+products in its database, not a copy typed into the HTML by
 hand — the two are joined. This page joins them for the first time, in
 about a dozen lines.
 

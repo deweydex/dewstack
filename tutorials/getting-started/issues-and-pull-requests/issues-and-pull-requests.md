@@ -14,7 +14,7 @@ of every problem anyone has reported and every change anyone has
 proposed. Both are worth reading, because they are how we fix this course
 when something is wrong.
 
-## What a repository actually holds
+## What a repository holds
 
 Open [github.com/deweydex/dewstack](https://github.com/deweydex/dewstack)
 and you are looking at this course's own repository, the kind of thing

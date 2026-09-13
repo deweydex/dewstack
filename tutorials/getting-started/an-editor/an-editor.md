@@ -44,4 +44,4 @@ see your changes on the published site instead.
 A way to write and edit the files this course asks you to create, with
 or without installing anything. Next: [your copy of the
 starter](tutorial:your-copy-of-the-starter), the first file you will
-actually open.
+open.

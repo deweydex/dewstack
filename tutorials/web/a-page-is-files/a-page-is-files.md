@@ -9,7 +9,7 @@ version: 2026.09.04.1
 
 # A page is files
 
-Where does a web page actually live? It lives in a plain text file,
+Where does a web page live? It lives in a plain text file,
 sitting in your fork, that you can open and read like any other document.
 Let's try changing the text below and see what the browser builds from it.
 

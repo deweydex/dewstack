@@ -30,7 +30,7 @@ value probably wants its own table.
 
 Every column has a name and a kind of value. `price` is a number.
 `product_name` is text. Deciding this before writing SQL is what
-`CREATE TABLE` actually asks for: a list of columns, and for each one, a
+`CREATE TABLE` asks for: a list of columns, and for each one, a
 name and a type.
 
 `INTEGER PRIMARY KEY` names the column that gives each row its own

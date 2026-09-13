@@ -9,8 +9,8 @@ version: 2026.09.04.1
 
 # The browser inspector
 
-Every browser has a tool that shows you the HTML and CSS actually
-running a page, on your own site or anyone else's. It is called the
+Every browser has a tool that shows you the HTML and CSS running a
+page, on your own site or anyone else's. It is called the
 inspector, and it is the fastest way to find out why something looks
 wrong. If you are on the data track, this is one of only two pages in
 this series you need. The rest is about publishing a website.
@@ -36,7 +36,7 @@ Click an element in this tree, and the matching part of the page
 highlights so you can see exactly what you selected. Alongside the tree,
 a panel lists every CSS rule affecting that element, including ones
 overridden by something more specific. This is usually the fastest way
-to find out why a style you wrote is not the one actually showing.
+to find out why a style you wrote is not the one showing.
 
 You can also double-click any piece of text, tag or attribute in this
 tab to change it. The change only exists in your browser; it disappears

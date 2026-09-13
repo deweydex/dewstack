@@ -105,7 +105,7 @@ keep using them after the course. SQL work saved in your browser stays
 there until it is removed. Downloaded files give you a copy to keep
 outside the browser.
 
-## Something here is actually broken. What do I do?
+## Something here is broken. What do I do?
 
 [Troubleshooting](tutorial:troubleshooting) groups the problems people
 meet most often: a blank page, styles that will not apply, GitHub not
